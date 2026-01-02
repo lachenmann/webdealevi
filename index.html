@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Repositorio Creativo</title>
+    <style>
+        /* Estilos Generales */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        /* Encabezado */
+        header {
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        header h1 { margin: 0; font-size: 2.5rem; }
+        header p { margin-top: 10px; font-style: italic; opacity: 0.8; }
+
+        /* Navegación */
+        nav {
+            background-color: #34495e;
+            position: sticky; /* Hace que el menú se quede fijo arriba */
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        nav ul li { margin: 0; }
+        
+        nav ul li a {
+            display: block;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        nav ul li a:hover { background-color: #1abc9c; }
+
+        /* Contenido Principal */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        section {
+            padding: 40px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        section h2 {
+            color: #2c3e50;
+            border-left: 5px solid #1abc9c;
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* Tarjetas de contenido (Items) */
+        .item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #fdfdfd;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+        }
+
+        .item h3 { margin-top: 0; }
+
+        /* Botones y Enlaces */
+        .btn {
+            display: inline-block;
+            background-color: #2980b9;
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        .btn:hover { background-color: #3498db; }
+
+        /* Pie de página */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: white;
+            margin-top: 40px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Alevi Peña</h1>
+        <p>Repositorio de obras creativas y archivo personal</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#partituras">Partituras</a></li>
+            <li><a href="#grabaciones">Grabaciones</a></li>
+            <li><a href="#ensayos">Ensayos</a></li>
+            <li><a href="#poesia">Poesía</a></li>
+            <li><a href="#narrativa">Narrativa</a></li>
+            <li><a href="#teatro">Teatro</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <section id="partituras">
+            <h2>Partituras</h2>
+            <p>Composiciones originales y arreglos musicales disponibles para descarga.</p>
+            
+            <div class="item">
+                <h3>Ütrëfke</h3>
+                <p>Instrumentación: Contrabajo solo. Año: 2006-2008.</p>
+                <a href="utrefke.pdf" class="btn" download>Descargar PDF</a>
+            </div>
+        </section>
+
+        <section id="grabaciones">
+            <h2>Grabaciones</h2>
+            <p>Archivo de audio y ejecuciones musicales.</p>
+            
+            <div class="item">
+                <h3>Interpretación Nocturna</h3>
+                <p>Descripción breve de la grabación.</p>
+                <audio controls style="width: 100%;">
+                    <source src="tu-audio.mp3" type="audio/mpeg">
+                    Tu navegador no soporta el elemento de audio.
+                </audio>
+            </div>
+            
+            <div class="item">
+                <h3>Video de Concierto</h3>
+                <p><a href="https://youtube.com" target="_blank">Ver en YouTube</a></p>
+            </div>
+        </section>
+
+        <section id="ensayos">
+            <h2>Ensayos</h2>
+            <p>Reflexiones teóricas y artículos.</p>
+            
+            <div class="item">
+                <h3>Título del Ensayo</h3>
+                <p>Un breve resumen de qué trata este texto para invitar a la lectura...</p>
+                <a href="#" class="btn">Leer texto completo</a>
+            </div>
+        </section>
+
+        <section id="poesia">
+            <h2>Poesía</h2>
+            
+            <div class="item">
+                <h3>Título del Poema</h3>
+                <p><i>"Fragmento del poema / que aparece aquí / como muestra..."</i></p>
+                <a href="#" class="btn">Leer más</a>
+            </div>
+        </section>
+
+        <section id="narrativa">
+            <h2>Narrativa</h2>
+            <p>Cuentos, relatos breves y novelas.</p>
+            
+            <div class="item">
+                <h3>Título del Cuento</h3>
+                <p>Sinopsis breve de la trama o el tema central del relato.</p>
+                <a href="#" class="btn">Descargar PDF</a>
+            </div>
+        </section>
+
+        <section id="teatro">
+            <h2>Teatro</h2>
+            <p>Dramaturgia y guiones.</p>
+            
+            <div class="item">
+                <h3>Título de la Obra Dramática</h3>
+                <p>Género: Tragedia/Comedia. Personajes: 4.</p>
+                <a href="#" class="btn">Descargar Guion</a>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Mi Nombre. Todos los derechos reservados.</p>
+        <p>Contacto: micorreo@email.com</p>
+    </footer>
+
+</body>
+</html>
