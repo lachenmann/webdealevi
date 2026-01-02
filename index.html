@@ -5,33 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Repositorio Creativo</title>
     <style>
+        /* --- TEMA OSCURO --- */
+        
         /* Estilos Generales */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            color: #333;
-            background-color: #f9f9f9;
+            color: #e0e0e0; /* Texto claro */
+            background-color: #121212; /* Fondo muy oscuro */
         }
         
         /* Encabezado */
         header {
-            background-color: #2c3e50;
-            color: #fff;
-            padding: 2rem 0;
+            background-color: #1a1a1a; /* Gris casi negro */
+            color: #ffffff;
+            padding: 3rem 0;
             text-align: center;
+            border-bottom: 2px solid #333;
         }
         
-        header h1 { margin: 0; font-size: 2.5rem; }
-        header p { margin-top: 10px; font-style: italic; opacity: 0.8; }
+        header h1 { margin: 0; font-size: 2.8rem; letter-spacing: 1px; }
+        header p { margin-top: 10px; color: #aaa; font-style: italic; }
 
         /* Navegación */
         nav {
-            background-color: #34495e;
-            position: sticky; /* Hace que el menú se quede fijo arriba */
+            background-color: #000000; /* Negro puro */
+            position: sticky;
             top: 0;
             z-index: 1000;
+            border-bottom: 1px solid #333;
         }
         
         nav ul {
@@ -47,68 +51,96 @@
         
         nav ul li a {
             display: block;
-            padding: 15px 20px;
-            color: white;
+            padding: 15px 25px;
+            color: #cccccc;
             text-decoration: none;
-            font-weight: bold;
-            transition: background 0.3s;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
         }
         
-        nav ul li a:hover { background-color: #1abc9c; }
+        nav ul li a:hover { 
+            background-color: #333; 
+            color: #fff;
+            border-bottom: 3px solid #1abc9c; /* Detalle de color al pasar mouse */
+        }
 
         /* Contenido Principal */
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 40px;
+            background-color: #1e1e1e; /* Gris oscuro para el papel */
+            min-height: 80vh;
         }
 
         section {
             padding: 40px 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #333; /* Líneas separadoras sutiles */
         }
 
         section h2 {
-            color: #2c3e50;
-            border-left: 5px solid #1abc9c;
+            color: #1abc9c; /* Color turquesa elegante para títulos */
+            border-left: 4px solid #1abc9c;
             padding-left: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            font-weight: 300;
+            font-size: 2rem;
         }
 
         /* Tarjetas de contenido (Items) */
         .item {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #fdfdfd;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #252525; /* Tarjetas un poco más claras que el fondo */
+            border: 1px solid #333;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        
+        .item:hover {
+            transform: translateY(-3px); /* Efecto de levitación sutil */
+            border-color: #444;
         }
 
-        .item h3 { margin-top: 0; }
+        .item h3 { 
+            margin-top: 0; 
+            color: #fff;
+        }
+        
+        .item p {
+            color: #bbb;
+        }
 
         /* Botones y Enlaces */
         .btn {
             display: inline-block;
-            background-color: #2980b9;
+            background-color: #2c3e50;
             color: white;
-            padding: 8px 15px;
+            padding: 10px 20px;
             text-decoration: none;
             border-radius: 4px;
             font-size: 0.9rem;
-            margin-top: 10px;
+            margin-top: 15px;
+            border: 1px solid #1abc9c;
+            transition: background 0.3s;
         }
-        .btn:hover { background-color: #3498db; }
+        .btn:hover { 
+            background-color: #1abc9c; 
+            color: #000; /* Texto negro al pasar el mouse para contraste */
+            font-weight: bold;
+        }
 
         /* Pie de página */
         footer {
             text-align: center;
-            padding: 20px;
-            background-color: #2c3e50;
-            color: white;
-            margin-top: 40px;
-            font-size: 0.9rem;
+            padding: 40px;
+            background-color: #111;
+            color: #666;
+            margin-top: 0;
+            font-size: 0.85rem;
+            border-top: 1px solid #222;
         }
     </style>
 </head>
