@@ -407,11 +407,11 @@
 
         // Configuration mapping for radii and colors of each concentric circle
         const WHEEL_CONFIGS = [
-            { id: "wheel-0", rMin: 325, rMax: 390, stroke: "rgba(212, 163, 89, 0.45)", strokeW: 2.0, charSize: 15, font: "'Cinzel', serif" },
-            { id: "wheel-1", rMin: 260, rMax: 325, stroke: "rgba(212, 163, 89, 0.35)", strokeW: 1.5, charSize: 14, font: "'Inter', sans-serif" },
-            { id: "wheel-2", rMin: 195, rMax: 260, stroke: "rgba(212, 163, 89, 0.30)", strokeW: 1.2, charSize: 14, font: "'Inter', sans-serif" },
-            { id: "wheel-3", rMin: 130, rMax: 195, stroke: "rgba(212, 163, 89, 0.25)", strokeW: 1.0, charSize: 13, font: "'Fira Code', monospace" },
-            { id: "wheel-4", rMin: 65,  rMax: 130, stroke: "rgba(212, 163, 89, 0.22)", strokeW: 1.0, charSize: 18, font: "'Inter', sans-serif" }
+            { id: "wheel-0", rMin: 325, rMax: 390, stroke: "rgba(212, 163, 89, 0.45)", strokeW: 2.0, charSize: 24, font: "'Cinzel', serif" }, // R1: Latino (Antes 15)
+            { id: "wheel-1", rMin: 260, rMax: 325, stroke: "rgba(212, 163, 89, 0.35)", strokeW: 1.5, charSize: 22, font: "'Inter', sans-serif" }, // R2: Griego (Antes 14)
+            { id: "wheel-2", rMin: 195, rMax: 260, stroke: "rgba(212, 163, 89, 0.30)", strokeW: 1.2, charSize: 22, font: "'Inter', sans-serif" }, // R3: Hebreo (Antes 14)
+            { id: "wheel-3", rMin: 130, rMax: 195, stroke: "rgba(212, 163, 89, 0.25)", strokeW: 1.0, charSize: 18, font: "'Fira Code', monospace" }, // R4: Rúnico (Antes 13)
+            { id: "wheel-4", rMin: 65,  rMax: 130, stroke: "rgba(212, 163, 89, 0.22)", strokeW: 1.0, charSize: 28, font: "'Inter', sans-serif" }  // R5: Astro  (Antes 18)
         ];
 
         // Dynamically compute the sectors based on natural array sizes of BRUNO_DATA
