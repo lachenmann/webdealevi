@@ -12,54 +12,45 @@ page-layout: full
 </header>
 
 <section class="literature-group" aria-labelledby="narrativa-heading">
-<div class="literature-group-heading">
-<h2 id="narrativa-heading">Narrativa</h2>
-<span>2 textos</span>
-</div>
+<h2 id="narrativa-heading" class="literature-group-title">Narrativa</h2>
 
-<div class="literature-list">
-<a class="literature-entry" href="/literatura/narrativa/la-muerte-de-nicanor.html">
-<div class="literature-entry-main">
-<span class="literature-entry-meta">Cuento · 2014 · rev. 2017</span>
-<h3>La Muerte de Nicanor</h3>
-<p>Cuento sobre la inmortalidad, la política y el destino de un poeta supercentenario.</p>
-</div>
-<span class="literature-entry-arrow" aria-hidden="true">→</span>
+<div class="literature-button-list">
+<a class="literature-button" href="/literatura/narrativa/la-muerte-de-nicanor.html">
+<span class="literature-button-text">
+<span class="literature-button-title">La Muerte de Nicanor</span>
+<span class="literature-button-meta">Cuento · 2014 · rev. 2017</span>
+</span>
+<span class="literature-button-arrow" aria-hidden="true">→</span>
 </a>
 
-<a class="literature-entry" href="/literatura/narrativa/business-hotel.html">
-<div class="literature-entry-main">
-<span class="literature-entry-meta">Cuento · 2012–2018</span>
-<h3>Business Hotel</h3>
-<p>Cuento sobre un ejecutivo alojado en un hotel de negocios y una extraña esfera metálica que altera su rutina y su percepción.</p>
-</div>
-<span class="literature-entry-arrow" aria-hidden="true">→</span>
+<a class="literature-button" href="/literatura/narrativa/business-hotel.html">
+<span class="literature-button-text">
+<span class="literature-button-title">Business Hotel</span>
+<span class="literature-button-meta">Cuento · 2012–2018</span>
+</span>
+<span class="literature-button-arrow" aria-hidden="true">→</span>
 </a>
 </div>
 </section>
 
 <section class="literature-group" aria-labelledby="ensayo-heading">
-<div class="literature-group-heading">
-<h2 id="ensayo-heading">Ensayo</h2>
-<span>1 texto</span>
-</div>
+<h2 id="ensayo-heading" class="literature-group-title">Ensayo</h2>
 
-<div class="literature-list">
-<a class="literature-entry" href="/literatura/ensayo/sobre-la-ficcion-y-la-invencion.html">
-<div class="literature-entry-main">
-<span class="literature-entry-meta">Ensayo</span>
-<h3>Sobre la ficción y la invención</h3>
-<p>Ensayo sobre los límites entre realidad y ficción y una concepción de la invención como hallazgo, vinculada con la imaginación y la tradición alquímica.</p>
-</div>
-<span class="literature-entry-arrow" aria-hidden="true">→</span>
+<div class="literature-button-list">
+<a class="literature-button" href="/literatura/ensayo/sobre-la-ficcion-y-la-invencion.html">
+<span class="literature-button-text">
+<span class="literature-button-title">Sobre la ficción y la invención</span>
+<span class="literature-button-meta">Ensayo</span>
+</span>
+<span class="literature-button-arrow" aria-hidden="true">→</span>
 </a>
 </div>
 </section>
 
-<div class="literature-future">
-<span class="literature-entry-meta">Próximamente</span>
+<section class="literature-future" aria-labelledby="proximamente-heading">
+<h2 id="proximamente-heading" class="literature-group-title">Próximamente</h2>
 <p>Poesía · Teatro</p>
-</div>
+</section>
 
 <p class="literature-license-note">Cada obra indica sus condiciones de uso en su propia página. La política actual para nuevos textos literarios es CC BY-NC-ND 4.0.</p>
 
