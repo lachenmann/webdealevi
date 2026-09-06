@@ -1,6 +1,6 @@
 # Content Schema
 
-Estado: esquema incremental. El subesquema `musical-work` queda fijado en ALEVI-WEB-0003; las demás familias siguen provisionales hasta su primera migración real.
+Estado: esquema incremental. Los subesquemas `musical-work` y `short-story` quedan fijados respectivamente en ALEVI-WEB-0003 y ALEVI-WEB-0005; las demás familias siguen provisionales hasta su primera migración real.
 
 ## Tipos editoriales
 
@@ -73,4 +73,30 @@ Campos opcionales:
 - No se inventan día ni mes cuando la fuente sólo proporciona un año.
 - `score` conserva las rutas históricas `/partituras/*.pdf` mientras exista compatibilidad con el sitio anterior.
 - El cuerpo Markdown puede ampliar los metadatos con contexto, dedicatorias, estrenos y enlaces a registros.
+- El contenido público nuevo se escribe preferentemente en Markdown estándar compatible con Obsidian y Quarto.
+
+# `short-story` v1
+
+Campos obligatorios:
+
+- `title`
+- `type: short-story`
+- `status`
+- `author`
+- `year`
+- `description`
+- `license`
+
+Campos opcionales:
+
+- `revision-year`: año de una revisión posterior.
+- `legacy-url`: ruta pública histórica que se conserva por compatibilidad.
+- `categories`: clasificación editorial para navegación y búsqueda.
+
+## Convenciones
+
+- La migración desde HTML legado conserva el texto literario sin reescritura ni corrección silenciosa.
+- `year` registra el año declarado por la pieza; `revision-year` registra una revisión explícita posterior.
+- Si una página histórica contiene una declaración de derechos específica, ésta prevalece sobre declaraciones globales contradictorias del sitio antiguo.
+- La ruta histórica puede seguir disponible como recurso estático aunque el Markdown pase a ser la fuente editorial canónica.
 - El contenido público nuevo se escribe preferentemente en Markdown estándar compatible con Obsidian y Quarto.
