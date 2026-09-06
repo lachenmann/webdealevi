@@ -18,6 +18,6 @@ Instrumento interactivo de ruedas concéntricas y correspondencias simbólicas i
 
 <a href="ruedabruniana/rueda_luliana_bruniana_simplificada.html" class="btn-alevi" target="_blank" rel="noopener">Abrir Rueda Bruniana</a>
 
-[Ver ficha editorial](fichas/rueda-bruniana.md){.btn-alevi-outline}
+<a href="fichas/rueda-bruniana.html" class="btn-alevi-outline">Ver ficha editorial</a>
 :::
 :::
