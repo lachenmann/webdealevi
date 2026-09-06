@@ -53,5 +53,7 @@ lang: es
 format:
   html:
     theme: darkly
-    css: styles.css
+    css:
+      - styles.css
+      - literature.css
     toc: false
