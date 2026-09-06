@@ -13,6 +13,7 @@ project:
     - investigacion/*.md
     - aplicaciones/index.md
   resources:
+    - "CNAME"
     - "aplicaciones/**"
     - "audio/**"
     - "cuentos/**"
@@ -21,6 +22,7 @@ project:
 
 website:
   title: "Alevi Peña"
+  site-url: "https://alevipena.cl"
   description: "Archivo autoral de música, literatura, matemáticas, investigación y herramientas digitales."
   navbar:
     background: "#0b0f14"
