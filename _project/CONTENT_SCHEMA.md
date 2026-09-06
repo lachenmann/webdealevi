@@ -97,7 +97,8 @@ Campos opcionales:
 
 - La migración desde HTML legado conserva el texto literario sin reescritura ni corrección silenciosa.
 - `year` registra el año declarado por la pieza; `revision-year` registra una revisión explícita posterior.
-- Si una página histórica contiene una declaración de derechos específica, ésta prevalece sobre declaraciones globales contradictorias del sitio antiguo.
+- Si una página histórica contiene una declaración de derechos específica, ésta prevalece sobre declaraciones globales contradictorias del sitio antiguo salvo que una instrucción autoral posterior y explícita la sustituya.
+- Para nuevas obras literarias públicas, la licencia editorial por defecto es `CC BY-NC-ND 4.0`, conforme a `_project/EDITORIAL_POLICY.md`.
 - La ruta histórica puede seguir disponible como recurso estático aunque el Markdown pase a ser la fuente editorial canónica.
 - El contenido público nuevo se escribe preferentemente en Markdown estándar compatible con Obsidian y Quarto.
 

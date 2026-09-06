@@ -46,8 +46,8 @@ Estado: cerrado en `10d66547a59e05137099b605aaae01e5243a732c` tras gate técnico
 - `literatura/index.md` → catálogo literario basado en listing Quarto.
 - `short-story` v1 queda fijado en `_project/CONTENT_SCHEMA.md`.
 - Se conservan `year: 2014` y `revision-year: 2017` según la pieza histórica.
-- La declaración específica `Todos los derechos reservados` de la página del cuento se conserva como licencia de la pieza; no se hereda la antigua declaración global contradictoria del sitio.
-- `/cuentos/muertenicanor.html` permanece intacto como URL histórica de compatibilidad.
+- La página histórica declaraba originalmente `Todos los derechos reservados`; por instrucción autoral expresa posterior, desde ALEVI-WEB-0008 *La Muerte de Nicanor* pasa a `CC BY-NC-ND 4.0` tanto en su fuente Markdown como en la ruta histórica.
+- `/cuentos/muertenicanor.html` permanece como URL histórica de compatibilidad.
 - Poesía, ensayo y teatro continúan pendientes; no se crean piezas ficticias ni placeholders editoriales individuales.
 
 ## ALEVI-WEB-0006 — Talleres

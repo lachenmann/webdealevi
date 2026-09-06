@@ -7,7 +7,7 @@ year: 2014
 revision-year: 2017
 description: "Cuento sobre la inmortalidad, la política y el destino de un poeta supercentenario."
 categories: [literatura, narrativa, cuento]
-license: "Todos los derechos reservados"
+license: "CC BY-NC-ND 4.0"
 legacy-url: "/cuentos/muertenicanor.html"
 ---
 
@@ -17,4 +17,4 @@ Las celebraciones de los cien años duraron varios días. Rara vez un poeta pued
 Luego que la persona ya se había diluido completamente en el mito, emergió un extraño rumor. En un programa nocturno de temas misteriosos apareció un supuesto informante, exagente de inteligencia. Por supuesto su rostro estaba oscurecido y su voz alterada electrónicamente para proteger su identidad. Una de las cosas que dijo fue que el secreto de la inmortalidad biológica humana había sido descubierto hacía tiempo, y que se encontraba en manos de la élite de poder. El entrevistador pidió más detalles. El exagente reﬁrió una experiencia que vivió años antes cuando estaba destinado en una instalación ultrasecreta. En ella supuestamente había tenido contacto con una persona que, para ese entonces, ya contaba con 203 años. Dijo que en los genes de ese hombre habían localizado el secreto. Estaba escrito en su ADN, en el código de su cuerpo. Su cuerpo mismo era el cifrado de ese secreto. Decía haber sido poeta, pero su sentido de la realidad se hallaba completamente trastocado por su longevidad y por el encierro. Trágicamente, al parecer este hombre no podía morir. Estas declaraciones —casi por completo ignoradas por el público— fueron rumor durante un tiempo en los círculos conspirativos, hasta que, como todo lo extraño y lo inusual, fueron cayendo lentamente en el olvido de la vida corriente.
 :::
 
-<p class="literary-rights">© Alevi Peña, 2014, rev. 2017 · Todos los derechos reservados.</p>
+<p class="literary-rights">© Alevi Peña, 2014, rev. 2017 · <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="license noopener">CC BY-NC-ND 4.0</a>.</p>
