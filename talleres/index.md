@@ -1,17 +1,19 @@
 ---
 title: "Talleres"
-description: "Programas y materiales de talleres de Alevi Peña."
+description: "Programas y archivos de talleres de Alevi Peña."
 page-layout: full
+listing:
+  contents:
+    - imaginacion-activa-2026.md
+  type: default
+  sort: false
+  sort-ui: false
+  filter-ui: true
+  page-size: 20
 ---
 
 ::: {.section-intro}
 <p class="eyebrow">Formación</p>
 
-Esta sección reúne programas y materiales de instancias de formación, diálogo y práctica creativa.
-
-## Imaginación Activa: Una Ventana al Alma
-
-Taller teórico-práctico realizado en dos sesiones online durante marzo de 2026, centrado en la técnica de la imaginación activa y en herramientas para dialogar con el inconsciente y potenciar procesos creativos.
-
-[Ver programa](/programas/imaginacionactiva.html){.btn-alevi}
+Esta sección reúne programas y archivos de instancias de formación, diálogo y práctica creativa. Cada edición se conserva como documento propio para que futuras versiones puedan evolucionar sin sobrescribir el registro anterior.
 :::

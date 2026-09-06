@@ -275,6 +275,41 @@ h2 {
   text-align: right;
 }
 
+.workshop-summary,
+.workshop-ethics {
+  max-width: var(--alevi-reading);
+  margin: 1.5rem auto 2rem;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--alevi-border);
+  border-radius: var(--alevi-radius);
+  background: var(--alevi-surface);
+}
+
+.workshop-summary {
+  border-left: 4px solid var(--alevi-accent);
+}
+
+.workshop-ethics {
+  border-left: 4px solid #c16d66;
+  background: #171719;
+}
+
+.workshop-ethics h3 {
+  margin-top: 0;
+}
+
+.workshop-summary + h2,
+.workshop-summary ~ h2,
+.workshop-summary ~ h3,
+.workshop-summary ~ p,
+.workshop-summary ~ ul,
+.workshop-ethics,
+.workshop-ethics + p {
+  max-width: var(--alevi-reading);
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .page-footer {
   border-top-color: var(--alevi-border) !important;
 }
@@ -301,5 +336,10 @@ h2 {
   .literary-work p {
     font-size: 1.08rem;
     line-height: 1.82;
+  }
+
+  .workshop-summary,
+  .workshop-ethics {
+    padding: 1rem;
   }
 }

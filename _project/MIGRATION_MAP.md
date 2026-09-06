@@ -12,7 +12,7 @@
 - `partituras/*.pdf` → recursos estáticos y URLs históricas conservadas.
 - `audio/cienaga.mp3` → recurso estático asociado a *Ciénaga*.
 - `cuentos/muertenicanor.html` → preservado como ruta histórica de compatibilidad; su fuente editorial canónica pasa a Markdown en ALEVI-WEB-0005.
-- `programas/imaginacionactiva.html` → preservado durante la transición; pendiente de migración editorial.
+- `programas/imaginacionactiva.html` → preservado como ruta histórica de compatibilidad; su fuente editorial canónica pasa a Markdown en ALEVI-WEB-0006.
 - `aplicaciones/ruedabruniana/rueda_luliana_bruniana_simplificada.html` → aplicación autónoma preservada como HTML/JS estático.
 - `_legacy/index.html` → copia exacta de la antigua portada, fuera de la raíz de render de Quarto.
 
@@ -40,7 +40,7 @@ Estado: cerrado en `c189b266785c7546154358b7879ed411d39698d2` tras gate técnico
 
 ## ALEVI-WEB-0005 — Literatura
 
-Estado: implementado en `quarto-v2`, pendiente de gate local.
+Estado: cerrado en `10d66547a59e05137099b605aaae01e5243a732c` tras gate técnico y QA visual.
 
 - `literatura/narrativa/la-muerte-de-nicanor.md` → fuente editorial Markdown del cuento ya público.
 - `literatura/index.md` → catálogo literario basado en listing Quarto.
@@ -50,11 +50,23 @@ Estado: implementado en `quarto-v2`, pendiente de gate local.
 - `/cuentos/muertenicanor.html` permanece intacto como URL histórica de compatibilidad.
 - Poesía, ensayo y teatro continúan pendientes; no se crean piezas ficticias ni placeholders editoriales individuales.
 
+## ALEVI-WEB-0006 — Talleres
+
+Estado: implementado en `quarto-v2`, pendiente de gate local y QA visual.
+
+- `talleres/imaginacion-activa-2026.md` → fuente editorial Markdown de la edición realizada los días 14 y 21 de marzo de 2026.
+- `talleres/index.md` → catálogo de talleres basado en listing Quarto.
+- `workshop` v1 queda fijado en `_project/CONTENT_SCHEMA.md`.
+- La ficha separa `status: published` de `event-status: completed` para distinguir publicación editorial de vigencia del evento.
+- Se preservan modalidad online/en vivo, dos sesiones de 90–120 minutos y el encuadre ético del programa histórico.
+- La nueva ficha no presenta una llamada a inscripción porque la edición ya concluyó.
+- `/programas/imaginacionactiva.html` se conserva como URL histórica de compatibilidad.
+
 ## Arquitectura objetivo
 
 - `musica/` — colección editorial activa.
 - `literatura/` — colección editorial activa; Narrativa iniciada.
-- `talleres/` — landing activa; colección editorial pendiente.
+- `talleres/` — colección editorial activa; primera edición archivada.
 - `investigacion/` — landing activa; colección editorial pendiente.
 - `aplicaciones/` — landing activa y aplicación autónoma preservada.
 - `_project/` — activa.

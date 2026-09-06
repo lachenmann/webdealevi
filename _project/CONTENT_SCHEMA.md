@@ -1,6 +1,6 @@
 # Content Schema
 
-Estado: esquema incremental. Los subesquemas `musical-work` y `short-story` quedan fijados respectivamente en ALEVI-WEB-0003 y ALEVI-WEB-0005; las demás familias siguen provisionales hasta su primera migración real.
+Estado: esquema incremental. Los subesquemas `musical-work`, `short-story` y `workshop` quedan fijados respectivamente en ALEVI-WEB-0003, ALEVI-WEB-0005 y ALEVI-WEB-0006; las demás familias siguen provisionales hasta su primera migración real.
 
 ## Tipos editoriales
 
@@ -100,3 +100,42 @@ Campos opcionales:
 - Si una página histórica contiene una declaración de derechos específica, ésta prevalece sobre declaraciones globales contradictorias del sitio antiguo.
 - La ruta histórica puede seguir disponible como recurso estático aunque el Markdown pase a ser la fuente editorial canónica.
 - El contenido público nuevo se escribe preferentemente en Markdown estándar compatible con Obsidian y Quarto.
+
+# `workshop` v1
+
+Campos obligatorios:
+
+- `title`
+- `type: workshop`
+- `status`
+- `event-status`
+- `author`
+- `year`
+- `start-date`
+- `end-date`
+- `sessions`
+- `session-duration`
+- `modality`
+- `description`
+
+Campos opcionales:
+
+- `categories`: clasificación editorial para navegación y búsqueda.
+- `legacy-url`: ruta pública histórica preservada por compatibilidad.
+- `license`: sólo cuando la pieza o colección tenga una declaración explícita de licencia.
+
+Valores iniciales de `event-status`:
+
+- `upcoming`
+- `open`
+- `completed`
+- `cancelled`
+
+## Convenciones
+
+- `status` describe el estado editorial de la ficha; `event-status` describe el estado temporal de la edición del taller.
+- Cada edición fechada se conserva como documento propio para no sobrescribir el registro histórico cuando exista una nueva convocatoria.
+- Las fechas se registran en formato ISO `YYYY-MM-DD` y sólo cuando están documentadas por una fuente pública o registro editorial confiable.
+- Una edición completada no debe presentar una llamada a inscripción como si siguiera abierta.
+- `legacy-url` puede conservar una página histórica aunque la ficha Markdown pase a ser la fuente editorial canónica.
+- Los encuadres éticos y límites declarados en la fuente original se preservan de manera visible en la migración.
