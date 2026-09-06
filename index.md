@@ -3,11 +3,11 @@ page-layout: full
 ---
 
 ::: {.hero}
-<p class="hero-kicker">Música · literatura · investigación · herramientas digitales</p>
+<p class="hero-kicker">Música · literatura · matemáticas · investigación · herramientas digitales</p>
 
 # Alevi Peña
 
-<p class="hero-lead">Archivo autoral de creación, estudio y herramientas abiertas: música contemporánea, escritura, investigación y aplicaciones digitales.</p>
+<p class="hero-lead">Archivo autoral de creación, estudio y herramientas abiertas: música contemporánea, escritura, matemáticas, investigación y aplicaciones digitales.</p>
 
 [Explorar música](musica/index.md){.btn-alevi}
 [Conocer el archivo](#sobre-el-archivo){.btn-alevi-outline}
@@ -16,7 +16,7 @@ page-layout: full
 ::: {.home-section}
 <p class="eyebrow">Archivo</p>
 
-## Cinco áreas, una misma práctica
+## Seis áreas, una misma práctica
 
 El sitio reúne obras terminadas, documentos de trabajo destinados a circulación pública y herramientas digitales. Cada área conserva su propia lógica editorial sin convertir el repositorio público en un espejo de notas privadas.
 :::
@@ -33,9 +33,17 @@ Partituras, fichas de obra y registros sonoros. El catálogo musical ya reúne n
 ::: {.section-card}
 ### Literatura
 
-Narrativa, poesía, ensayo y teatro. La sección preserva por ahora los textos ya publicados mientras se consolida el catálogo editorial.
+Narrativa, ensayo y, progresivamente, poesía y teatro, organizados como una colección de lectura pública.
 
 [Entrar a Literatura](literatura/index.md)
+:::
+
+::: {.section-card}
+### Matemáticas
+
+Estudio, escritura y publicación matemática, con una futura conexión al proyecto independiente Matemática Abierta.
+
+[Entrar a Matemáticas](matematicas/index.md)
 :::
 
 ::: {.section-card}

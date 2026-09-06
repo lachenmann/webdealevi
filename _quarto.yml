@@ -8,6 +8,7 @@ project:
     - literatura/*.md
     - literatura/narrativa/*.md
     - literatura/ensayo/*.md
+    - matematicas/*.md
     - talleres/*.md
     - investigacion/*.md
     - aplicaciones/index.md
@@ -20,7 +21,7 @@ project:
 
 website:
   title: "Alevi Peña"
-  description: "Archivo autoral de música, literatura, investigación y herramientas digitales."
+  description: "Archivo autoral de música, literatura, matemáticas, investigación y herramientas digitales."
   navbar:
     background: "#0b0f14"
     foreground: "#f2f5f7"
@@ -34,6 +35,8 @@ website:
         text: Música
       - href: literatura/index.md
         text: Literatura
+      - href: matematicas/index.md
+        text: Matemáticas
       - href: investigacion/index.md
         text: Investigación
       - href: talleres/index.md

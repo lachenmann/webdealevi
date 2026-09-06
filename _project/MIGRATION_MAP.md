@@ -105,10 +105,24 @@ Estado: implementado en `quarto-v2`; pendiente de gate local y QA visual.
 - Las páginas individuales y sus textos permanecen intactos.
 - No se modifica `main`, Pages, DNS ni dominio.
 
+## ALEVI-WEB-0009 — Literatura mobile-first y sección Matemáticas
+
+Estado: implementado en `quarto-v2`; pendiente de gate local y QA visual responsivo.
+
+- La portada de Literatura abandona las tarjetas grandes y adopta una lista editorial de una sola columna, con filas completas clicables, menor densidad visual y mejor comportamiento táctil en pantallas pequeñas.
+- Narrativa y Ensayo mantienen jerarquía explícita, pero eliminan fondos y contenedores redundantes.
+- `literature.css` pasa a una presentación mobile-first para el índice, preservando sin cambios las reglas de lectura y dedicatorias de las obras individuales.
+- Se crea `matematicas/index.md` como nueva sección global del archivo autoral.
+- La navbar y la portada incorporan `Matemáticas`; la portada pasa de cinco a seis áreas.
+- La sección Matemáticas queda preparada como futuro punto de acceso a *Matemática Abierta*, sin duplicar todavía su contenido ni establecer un enlace externo definitivo.
+- `_quarto.yml` incorpora `matematicas/*.md` al render.
+- No se modifica `main`, Pages, DNS ni dominio.
+
 ## Arquitectura objetivo
 
 - `musica/` — colección editorial activa.
 - `literatura/` — colección editorial activa; Narrativa: dos cuentos; Ensayo: un ensayo.
+- `matematicas/` — landing activa; futura conexión con el proyecto independiente *Matemática Abierta*.
 - `talleres/` — colección editorial activa; primera edición archivada.
 - `investigacion/` — landing activa; colección editorial pendiente.
 - `aplicaciones/` — colección editorial activa; primera aplicación catalogada y ejecutable autónomo preservado.
