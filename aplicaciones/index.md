@@ -16,8 +16,8 @@ Aplicaciones e instrumentos interactivos vinculados con investigación, memoria,
 
 Instrumento interactivo de ruedas concéntricas y correspondencias simbólicas inspirado en *De Umbris Idearum* de Giordano Bruno.
 
-<a href="ruedabruniana/rueda_luliana_bruniana_simplificada.html" class="btn-alevi" target="_blank" rel="noopener">Abrir Rueda Bruniana</a>
+<a href="/aplicaciones/ruedabruniana/rueda_luliana_bruniana_simplificada.html" class="btn-alevi" target="_blank" rel="noopener">Abrir Rueda Bruniana</a>
 
-<a href="fichas/rueda-bruniana.html" class="btn-alevi-outline">Ver ficha editorial</a>
+<a href="/aplicaciones/fichas/rueda-bruniana.html" class="btn-alevi-outline">Ver ficha editorial</a>
 :::
 :::
