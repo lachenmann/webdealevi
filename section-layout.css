@@ -1,0 +1,27 @@
+/* ALEVI-WEB-0009 — alineación global de encabezados de sección */
+
+/*
+   Las landings usan `page-layout: full`. Quarto permite que la descripción
+   del title block se extienda a una columna distinta del título; aquí
+   normalizamos título y bajada para que compartan el mismo eje izquierdo
+   que el contenido de la sección.
+*/
+body.fullcontent #title-block-header.quarto-title-block.default .quarto-title {
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+body.fullcontent #title-block-header.quarto-title-block.default .quarto-title > .title,
+body.fullcontent #title-block-header.quarto-title-block.default .quarto-title > .description {
+  grid-column: auto !important;
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+  text-align: left;
+}
+
+body.fullcontent #title-block-header.quarto-title-block.default .quarto-title > .description {
+  margin-top: 0.25rem;
+}
