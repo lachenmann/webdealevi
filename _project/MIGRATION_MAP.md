@@ -92,6 +92,19 @@ Estado: implementado en `quarto-v2`; pendiente de gate local, render y QA visual
 - Los PDFs privados de origen no se incorporan al repositorio público; la derivación pública es textual y editorial.
 - No se modifica `main`, Pages, DNS ni dominio.
 
+## ALEVI-WEB-0008B — Rediseño editorial de Literatura
+
+Estado: implementado en `quarto-v2`; pendiente de gate local y QA visual.
+
+- La portada `literatura/index.md` deja de depender del listing genérico de Quarto y pasa a ser una landing editorial curada manualmente.
+- Narrativa se presenta como una colección de dos tarjetas: *La Muerte de Nicanor* y *Business Hotel*.
+- Ensayo presenta *Sobre la ficción y la invención* como pieza propia, sin repetir el autor en cada entrada.
+- Cada tarjeta muestra género, información temporal documentada cuando existe, descripción breve y un CTA directo de lectura.
+- Poesía y Teatro pasan a un bloque discreto de `Próximamente`, sin crear obras o fichas ficticias.
+- `literature.css` incorpora componentes visuales específicos para la landing literaria, conservando el sistema de color, bordes y tipografía del sitio.
+- Las páginas individuales y sus textos permanecen intactos.
+- No se modifica `main`, Pages, DNS ni dominio.
+
 ## Arquitectura objetivo
 
 - `musica/` — colección editorial activa.
