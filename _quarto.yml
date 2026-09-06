@@ -59,4 +59,5 @@ format:
     css:
       - styles.css
       - literature.css
+      - section-layout.css
     toc: false
