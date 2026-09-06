@@ -1,0 +1,30 @@
+/* ALEVI-WEB-0008+ — presentación de obras literarias */
+
+/*
+   Si una obra comienza con una dedicatoria íntegramente en cursiva,
+   esa línea no recibe la capitular. La capitular pasa al primer párrafo
+   narrativo inmediatamente posterior.
+*/
+.literary-work > p:first-of-type:has(> em:only-child) {
+  margin-bottom: 2rem;
+  color: var(--alevi-muted);
+  font-size: 1rem;
+  line-height: 1.55;
+  text-align: right;
+}
+
+.literary-work > p:first-of-type:has(> em:only-child)::first-letter {
+  float: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.literary-work > p:first-of-type:has(> em:only-child) + p::first-letter {
+  float: left;
+  padding: 0.12em 0.12em 0 0;
+  color: var(--alevi-accent);
+  font-size: 3.8em;
+  line-height: 0.72;
+}

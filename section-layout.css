@@ -1,0 +1,43 @@
+/* ALEVI-WEB-0009 — alineación global de encabezados de sección */
+
+/*
+   Estructura confirmada en Quarto 1.10.18:
+
+   <main class="content column-page">
+     <header id="title-block-header" class="quarto-title-block default">
+       <div class="quarto-title">...</div>
+       <div><div class="description">...</div></div>
+       <div class="quarto-title-meta column-page">...</div>
+     </header>
+   </main>
+
+   El título y la descripción son hermanos distintos. Ambos reciben aquí
+   exactamente el mismo ancho y los mismos márgenes horizontales.
+*/
+main.content.column-page > #title-block-header.quarto-title-block.default > .quarto-title,
+main.content.column-page > #title-block-header.quarto-title-block.default > .quarto-title + div {
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: var(--alevi-reading) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+main.content.column-page > #title-block-header.quarto-title-block.default > .quarto-title + div > .description {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0.25rem 0 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
+}
+
+@media (max-width: 767px) {
+  main.content.column-page > #title-block-header.quarto-title-block.default > .quarto-title,
+  main.content.column-page > #title-block-header.quarto-title-block.default > .quarto-title + div {
+    max-width: none !important;
+    padding-left: 0.2rem !important;
+    padding-right: 0.2rem !important;
+  }
+}

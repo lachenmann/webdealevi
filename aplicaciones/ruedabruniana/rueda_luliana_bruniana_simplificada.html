@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rueda Luliana-Bruniana | De Umbris Idearum</title>
+    <!-- Tailwind CSS for modern responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for esoteric and elegant typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;750;900&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #050407;
+            background-image: 
+                radial-gradient(at 50% 50%, rgba(60, 36, 94, 0.25) 0px, transparent 75%),
+                radial-gradient(at 0% 100%, rgba(14, 9, 26, 0.95) 0px, transparent 65%);
+        }
+        .font-mystic {
+            font-family: 'Cinzel', serif;
+        }
+        .font-esoteric-code {
+            font-family: 'Fira Code', monospace;
+        }
+        /* Custom scrollbars for a premium dark interface */
+        .parchment-scroll::-webkit-scrollbar {
+            width: 5px;
+        }
+        .parchment-scroll::-webkit-scrollbar-track {
+            background: rgba(20, 15, 10, 0.3);
+        }
+        .parchment-scroll::-webkit-scrollbar-thumb {
+            background: rgba(212, 163, 89, 0.3);
+            border-radius: 4px;
+        }
+        .parchment-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 163, 89, 0.6);
+        }
+        /* Hermetic golden glows */
+        .gold-glow {
+            text-shadow: 0 0 10px rgba(245, 158, 11, 0.4), 0 0 20px rgba(245, 158, 11, 0.15);
+        }
+        .gold-border-glow {
+            box-shadow: 0 0 25px rgba(212, 163, 89, 0.12);
+        }
+        .bg-esoteric {
+            background-color: rgba(12, 10, 16, 0.95);
+            border: 1px solid rgba(212, 163, 89, 0.22);
+            backdrop-filter: blur(20px);
+        }
+        /* CSS 3D Rotations for perfect concentric rendering */
+        .wheel-group {
+            transform-origin: 400px 400px !important;
+            transform-box: view-box !important;
+            will-change: transform;
+            transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .tab-btn.active {
+            border-color: #d4af37;
+            color: #f59e0b;
+            background-color: rgba(212, 163, 89, 0.15);
+        }
+    </style>
+</head>
+<body class="text-stone-200 min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-amber-950/80 selection:text-amber-200">
+
+    <header class="border-b border-amber-950/40 bg-black/70 backdrop-blur-md px-6 py-4 z-10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-center md:text-left">
+                <span class="text-xs tracking-[0.4em] text-amber-500 uppercase font-mystic font-bold">Astrolabio Combinatorio Puro</span>
+                <h1 class="text-2xl md:text-3xl font-black font-mystic tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-400 to-amber-200 gold-glow">
+                    DE UMBRIS IDEARUM
+                </h1>
+            </div>
+            
+            <div class="flex items-center gap-3 flex-wrap justify-center">
+                <button id="btn-sound-toggle" class="flex items-center gap-2 px-4 py-2 rounded-lg border border-amber-950/60 bg-stone-900/60 hover:bg-amber-950/30 hover:border-amber-500/50 transition-all text-xs font-mystic text-amber-400">
+                    <span id="sound-icon">🔊</span> <span id="sound-text">Sintetizador: Activo</span>
+                </button>
+                <button id="btn-guide-toggle" class="px-4 py-2 rounded-lg border border-amber-950/60 bg-stone-900/60 hover:bg-amber-950/30 hover:border-amber-500/50 transition-all text-xs font-mystic text-amber-400">
+                    📖 El Tratado
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8 w-full items-center">
+        
+        <!-- COLUMN 1: INTERACTIVE WHEEL CANVASES (SVG) -->
+        <section class="lg:col-span-6 flex flex-col items-center justify-center relative">
+            <div class="absolute w-[80%] h-[80%] rounded-full bg-gradient-to-tr from-purple-950/10 via-amber-950/10 to-transparent blur-3xl -z-10 animate-pulse"></div>
+
+            <!-- Interative SVG Wrapper -->
+            <div class="w-full max-w-[560px] aspect-square relative select-none">
+                <svg id="volvelle" viewBox="0 0 800 800" class="w-full h-full cursor-grab active:cursor-grabbing overflow-visible">
+                    
+                    <defs>
+                        <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#3c2415" />
+                            <stop offset="70%" stop-color="#0f0c16" />
+                            <stop offset="100%" stop-color="#050407" />
+                        </radialGradient>
+                        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#8a6f27" />
+                            <stop offset="50%" stop-color="#f5ce75" />
+                            <stop offset="100%" stop-color="#ab8235" />
+                        </linearGradient>
+                        
+                        <!-- Rich gradient definitions for each concentric wheel to establish visual hierarchy -->
+                        <radialGradient id="wheel0" cx="50%" cy="50%" r="50%"><stop offset="75%" stop-color="#14111a" /><stop offset="100%" stop-color="#09070c" /></radialGradient>
+                        <radialGradient id="wheel1" cx="50%" cy="50%" r="50%"><stop offset="75%" stop-color="#101524" /><stop offset="100%" stop-color="#04060e" /></radialGradient>
+                        <radialGradient id="wheel2" cx="50%" cy="50%" r="50%"><stop offset="75%" stop-color="#0e1b14" /><stop offset="100%" stop-color="#030906" /></radialGradient>
+                        <radialGradient id="wheel3" cx="50%" cy="50%" r="50%"><stop offset="75%" stop-color="#1e1611" /><stop offset="100%" stop-color="#090503" /></radialGradient>
+                        <radialGradient id="wheel4" cx="50%" cy="50%" r="50%"><stop offset="70%" stop-color="#2a1413" /><stop offset="100%" stop-color="#0c0403" /></radialGradient>
+                    </defs>
+
+                    <!-- Starry boundary of Giordano Bruno's infinite universe -->
+                    <circle cx="400" cy="400" r="395" fill="none" stroke="rgba(212, 163, 89, 0.16)" stroke-width="1.2" />
+                    <circle cx="400" cy="400" r="388" fill="none" stroke="rgba(212, 163, 89, 0.3)" stroke-width="1.5" stroke-dasharray="3,6" />
+
+                    <!-- Concentric independently rotating wheels -->
+                    <g id="wheel-0" class="wheel-group"></g> <!-- Wheel I: Latino (Exactly 26 sectors) -->
+                    <g id="wheel-1" class="wheel-group"></g> <!-- Wheel II: Griego (Exactly 24 sectors) -->
+                    <g id="wheel-2" class="wheel-group"></g> <!-- Wheel III: Hebreo (Exactly 22 sectors) -->
+                    <g id="wheel-3" class="wheel-group"></g> <!-- Wheel IV: Rúnico Único (Exactly 31 sectors) -->
+                    <g id="wheel-4" class="wheel-group"></g> <!-- Wheel V: Zodíaco Purificado (Exactly 12 sectors) -->
+
+                    <!-- Central Monad -->
+                    <g id="wheel-center" class="pointer-events-none">
+                        <circle cx="400" cy="400" r="35" fill="url(#centerGlow)" stroke="url(#goldGradient)" stroke-width="2.5" />
+                        <circle cx="400" cy="400" r="28" fill="none" stroke="rgba(212, 163, 89, 0.4)" stroke-width="1" stroke-dasharray="2,2" />
+                        <circle cx="400" cy="400" r="6" fill="#f5ce75" />
+                        <path d="M400,378 L400,384 M400,416 L400,422 M378,400 L384,400 M416,400 L422,400" stroke="#f5ce75" stroke-width="1.2" />
+                    </g>
+
+                    <!-- Eye of Providence aligned mathematically with the center of the viewport -->
+                    <g id="pointer-eye" class="pointer-events-none">
+                        <!-- Strict alignment axis line crossing all wheels -->
+                        <line x1="400" y1="5" x2="400" y2="395" stroke="rgba(245, 158, 11, 0.75)" stroke-width="1.5" stroke-dasharray="3,3" />
+                        <path d="M390,3 L410,3 L400,18 Z" fill="url(#goldGradient)" />
+                        <!-- Eye Sigil Seal -->
+                        <circle cx="400" cy="28" r="15" fill="#08070b" stroke="url(#goldGradient)" stroke-width="2" />
+                        <text x="400" y="34" font-size="14" text-anchor="middle" style="user-select: none;">👁️</text>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="mt-4 flex flex-col items-center gap-1.5 text-xs text-stone-400 bg-stone-950/80 px-5 py-3 rounded-lg border border-stone-850 font-esoteric-code text-center w-full max-w-[500px]">
+                <span class="text-amber-400 font-semibold">⚡ Sincronización Polar Geométrica</span>
+                <span>Arrastra los anillos para girarlos de forma independiente y alinearlos bajo el ojo óptico.</span>
+            </div>
+        </section>
+
+        <!-- COLUMN 2: PANELS, ESSAYS, GLOSSARY -->
+        <section class="lg:col-span-6 flex flex-col gap-5">
+            
+            <div class="bg-esoteric p-5 rounded-xl border border-amber-950/50 relative overflow-hidden gold-border-glow">
+                <div class="absolute -top-12 -right-12 w-28 h-28 bg-amber-500/5 rounded-full blur-2xl pointer-events-none"></div>
+                
+                <h3 class="text-xs tracking-widest text-amber-500 uppercase font-mystic font-bold mb-3 flex justify-between items-center">
+                    <span>Oráculo de Correspondencias</span>
+                    <span id="mnemonic-key" class="text-[10px] font-esoteric-code text-stone-300 bg-stone-900/75 px-2.5 py-0.5 rounded border border-stone-800">Cargando...</span>
+                </h3>
+                
+                <div class="bg-stone-950/95 rounded-lg p-4 border border-amber-950/30 min-h-[145px] flex flex-col justify-between">
+                    <p id="oracle-text" class="text-sm italic leading-relaxed text-stone-300 font-serif">
+                        Inicializando y sincronizando esferas celestes...
+                    </p>
+                    
+                    <div class="mt-4 pt-3 border-t border-stone-900/90 flex justify-between items-center text-[10px] font-esoteric-code">
+                        <span class="text-amber-500/80">Sello Activo: <strong id="code-phonetic" class="text-amber-400 text-xs">-</strong></span>
+                        <span id="oracle-author" class="text-stone-500">Giordano Bruno — De Umbris Idearum (1582)</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <button id="btn-chaos" class="bg-stone-900 hover:bg-amber-950/30 text-amber-400 font-mystic border border-amber-900/40 py-2 rounded-lg text-xs transition-all flex items-center justify-center gap-1.5 shadow-md">
+                        <span>🌀 Giro de Ruedas</span>
+                    </button>
+                    <button id="btn-save" class="bg-gradient-to-r from-amber-700 to-amber-900 hover:from-amber-600 hover:to-amber-800 text-stone-100 font-mystic py-2 rounded-lg text-xs transition-all flex items-center justify-center gap-1.5 shadow-md">
+                        <span>💾 Salvar en Códice</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- SEARCHABLE GLOSSARY OF TRUE ALPHABETS -->
+            <div class="bg-esoteric p-5 rounded-xl border border-amber-950/50 flex flex-col h-[380px] max-h-[420px]">
+                <h3 class="text-xs tracking-widest text-amber-500 uppercase font-mystic font-bold mb-2 flex justify-between items-center">
+                    <span>Glosario de Alfabetos Limpios</span>
+                    <span class="text-[9px] font-esoteric-code text-amber-600">Pureza de los Ciclos</span>
+                </h3>
+                
+                <!-- Search Box and Filtering Tabs -->
+                <div class="flex flex-col gap-2 mb-3">
+                    <input id="glossary-search" type="text" placeholder="Buscar símbolo, letra o significado..." class="bg-stone-950 border border-amber-950/40 rounded-lg px-3 py-1.5 text-xs text-stone-200 focus:outline-none focus:border-amber-600 font-esoteric-code placeholder-stone-600">
+                    
+                    <div class="flex gap-1 overflow-x-auto pb-1 parchment-scroll">
+                        <button class="tab-btn active px-2.5 py-1 text-[9px] font-mystic uppercase border border-amber-950/30 rounded-md whitespace-nowrap transition-all" onclick="filterGlossary('all', this)">Todo</button>
+                        <button class="tab-btn px-2.5 py-1 text-[9px] font-mystic uppercase border border-amber-950/30 rounded-md whitespace-nowrap transition-all" onclick="filterGlossary('wheel-0', this)">R1: Latino (26)</button>
+                        <button class="tab-btn px-2.5 py-1 text-[9px] font-mystic uppercase border border-amber-950/30 rounded-md whitespace-nowrap transition-all" onclick="filterGlossary('wheel-1', this)">R2: Griego (24)</button>
+                        <button class="tab-btn px-2.5 py-1 text-[9px] font-mystic uppercase border border-amber-950/30 rounded-md whitespace-nowrap transition-all" onclick="filterGlossary('wheel-2', this)">R3: Hebreo (22)</button>
+                        <button class="tab-btn px-2.5 py-1 text-[9px] font-mystic uppercase border border-amber-950/30 rounded-md whitespace-nowrap transition-all" onclick="filterGlossary('wheel-3', this)">R4: Runas (31)</button>
+                        <button class="tab-btn px-2.5 py-1 text-[9px] font-mystic uppercase border border-amber-950/30 rounded-md whitespace-nowrap transition-all" onclick="filterGlossary('wheel-4', this)">R5: Astro (12)</button>
+                    </div>
+                </div>
+
+                <!-- Glossary Dynamic List Container -->
+                <div id="glossary-list" class="flex-grow overflow-y-auto parchment-scroll flex flex-col gap-2 pr-1"></div>
+            </div>
+
+            <!-- CODEX GRIMOIRE OF SAVED MEMORIES -->
+            <div class="bg-esoteric p-4 rounded-xl border border-amber-950/50">
+                <div class="flex justify-between items-center mb-2">
+                    <h4 class="text-xs tracking-wider text-amber-500 uppercase font-mystic font-bold">Códice de Visiones Salvadas</h4>
+                    <div class="flex gap-3">
+                        <button id="btn-export-grimoire" class="text-[10px] font-esoteric-code text-amber-400 hover:underline">💾 Exportar TXT</button>
+                        <button id="btn-clear-grimoire" class="text-[10px] font-esoteric-code text-red-400 hover:underline">🧹 Purgar</button>
+                    </div>
+                </div>
+                <div id="grimoire-list" class="max-h-[90px] overflow-y-auto parchment-scroll flex flex-col gap-2 pr-1">
+                    <div class="text-[11px] text-stone-500 italic text-center py-2">
+                        No hay memorias preservadas en este ciclo hermético.
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- INSTRUCTION GUIDE MODAL -->
+    <div id="guide-modal" class="fixed inset-0 bg-black/95 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-[#0b080f] border-2 border-amber-600/35 max-w-4xl w-full h-[85vh] rounded-xl flex flex-col overflow-hidden shadow-2xl">
+            <header class="p-4 border-b border-amber-950/70 bg-black/60 flex justify-between items-center">
+                <h2 class="text-base font-mystic text-amber-400 font-bold tracking-wider">EL TRATADO DE LAS SOMBRAS (DE UMBRIS IDEARUM)</h2>
+                <button id="btn-close-modal" class="text-stone-400 hover:text-white text-xl p-1">✕</button>
+            </header>
+            
+            <div class="flex-grow overflow-y-auto parchment-scroll p-6 space-y-6 text-sm text-stone-300 leading-relaxed">
+                <div>
+                    <h3 class="font-mystic text-amber-400 text-sm mb-2">Las Sombras de las Ideas</h3>
+                    <p>
+                        Para Giordano Bruno, el intelecto humano no puede contemplar la luz pura de la Verdad divina directamente. Lo único que nos es dado percibir son las <strong>sombras de las ideas</strong>. Así, la memoria asociativa (mnemotecnia) se convierte en una herramienta espiritual para unificar la multiplicidad del cosmos físico en la unidad divina interior.
+                    </p>
+                </div>
+                
+                <div class="border-t border-amber-950/40 pt-4">
+                    <h3 class="font-mystic text-amber-400 text-sm mb-2">Estructura Purificada sin Letras Rellenas</h3>
+                    <p class="mb-3 text-xs text-stone-400">
+                        En este astrolabio, se ha removido cualquier letra de relleno artificial o duplicado para que cada círculo represente la pureza natural e histórica de su propio alfabeto. Cada esfera rota bajo sus propias proporciones geométricas:
+                    </p>
+                    <ul class="space-y-3 list-disc pl-5 text-xs text-stone-400">
+                        <li><strong>Rueda I (Latina - 26 Sectores):</strong> El alfabeto de la expresión del lenguaje terrenal (A-Z). Paso angular exacto de 13.85°.</li>
+                        <li><strong>Rueda II (Griega - 24 Sectores):</strong> El plano del pensamiento filosófico clásico (&alpha;-&omega;). Paso angular exacto de 15.00°.</li>
+                        <li><strong>Rueda III (Hebrea - 22 Sectores):</strong> La sabiduría mística de las emanaciones cabalísticas (&aleph;-&tau;). Paso angular de 16.36°.</li>
+                        <li><strong>Rueda IV (Rúnica - 31 Sectores):</strong> Fusión limpia del Futhark Antiguo y las runas Armanen, filtrada rigurosamente para eliminar cualquier duplicado formal. Paso angular de 11.61°.</li>
+                        <li><strong>Rueda V (Astrológica - 12 Sectores):</strong> El macrocosmos estelar y el Zodíaco. Cada signo actúa como paraguas, cobrando una mayor latitud angular (30.00° por signo) para envolver las posibilidades del microsubconsciente humano exterior.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <footer class="p-4 border-t border-amber-950/65 bg-black/60 text-right">
+                <button id="btn-close-modal-bottom" class="bg-amber-600 hover:bg-amber-500 text-stone-950 font-mystic font-bold px-6 py-2 rounded-lg text-xs transition-all">
+                    Cerrar Tratado
+                </button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- RENAISSANCE FOOTER -->
+    <footer class="border-t border-amber-950/20 bg-black/60 px-6 py-3 text-center text-[10px] text-stone-500 font-esoteric-code">
+        <p>·IN GIRUM IMUS NOCTE ET CONSUMIMUR IGNI· Rueda Luliana-Bruniana de esferas adaptativas y ojo concéntrico © 1582 - 2026</p>
+    </footer>
+
+    <script>
+        // STRICT PRISTINE DATABASE - EXACT ALPHABETS WITHOUT DUPLICATES OR PADDING
+        const BRUNO_DATA = {
+            "wheel-0": [ // Rueda I: Latino (Exactly 26 letters)
+                { char: "A", desc: "Ars (Arte): El inicio mnemotécnico de la codificación celestial y mundana." },
+                { char: "B", desc: "Bonitas (Bondad): Atributo luliano de la benevolencia inherente del ser racional." },
+                { char: "C", desc: "Caelum (Cielo): El lienzo infinito donde residen las sombras de las ideas sagradas." },
+                { char: "D", desc: "Duratio (Duración): La permanencia temporal necesaria para asentar imágenes." },
+                { char: "E", desc: "Essentia (Esencia): Núcleo absoluto e inalterable de un arquetipo ideado." },
+                { char: "F", desc: "Figura (Forma): Geometría o espectro visual que contiene el concepto mental." },
+                { char: "G", desc: "Gnosis (Conocimiento): La iluminación intuitiva y directa del intelecto humano." },
+                { char: "H", desc: "Hermes (Revelación): Mensajero divino que asocia los lenguajes terrenales y sagrados." },
+                { char: "I", desc: "Idea (Arquetipo): La forma original incorpórea proyectada en el alma humana." },
+                { char: "J", desc: "Janua (Puerta): Umbral de transición entre la percepción y la memoria profunda." },
+                { char: "K", desc: "Kalendae (Ciclos): Estructuras periódicas de ordenación espacial en el palacio." },
+                { char: "L", desc: "Lumen (Luz): El intelecto agente y activo que disipa las brumas del olvido." },
+                { char: "M", desc: "Monas (Mónada): El punto central indivisible, origen y meta del pensamiento." },
+                { char: "N", desc: "Natura (Naturaleza): Lienzo material físico donde se imprimen los arquetipos celestes." },
+                { char: "O", desc: "Origo (Origen): Principio cósmico primigenio del que fluyen todas las ruedas." },
+                { char: "P", desc: "Phantasma (Imagen): El fantasma o imagen mental dinámica para la combinatoria." },
+                { char: "Q", desc: "Quintaessentia (Éter): Fuerza fluida celeste que conecta el cosmos material." },
+                { char: "R", desc: "Ratio (Razón): La facultad racional para clasificar y organizar correspondencias." },
+                { char: "S", desc: "Signum (Signo): Representación externa y visible de una verdad oculta." },
+                { char: "T", desc: "Templum (Templo): Sala consagrada de la mente donde reposan los fantasmas." },
+                { char: "U", desc: "Unitas (Unidad): Coherencia del todo mnemotécnico en un solo centro espiritual." },
+                { char: "V", desc: "Veritas (Verdad): Armonía y concordancia perfecta entre creador, alma y mundo." },
+                { char: "W", desc: "Wisdom (Sabiduría): Entendimiento transcultural de las firmas cósmicas." },
+                { char: "X", desc: "Xenon (Extranjero): Las influencias e ideas externas aún no asimiladas por el intelecto." },
+                { char: "Y", desc: "Ypsilon (Encrucijada): El sendero pitagórico de bifurcación moral y elección divina." },
+                { char: "Z", desc: "Zodiacus (Zodíaco): El anillo estelar que engloba las formas temporales físicas." }
+            ],
+            "wheel-1": [ // Rueda II: Griego (Exactly 24 letters)
+                { char: "α", desc: "Alpha: Principio iniciador de la filosofía y el pensamiento dialéctico griego." },
+                { char: "β", desc: "Beta: La división y dualidad primordial necesaria para distinguir las ideas." },
+                { char: "γ", desc: "Gamma: Triada de la naturaleza, el nexo hermético entre polos opuestos." },
+                { char: "δ", desc: "Delta: Cuaternario terrestre, estabilidad sólida sobre la cual cimentar salas." },
+                { char: "ε", desc: "Epsilon: Aliento vital que dinamiza las combinaciones mentales en el cerebro." },
+                { char: "ζ", desc: "Zeta: Intuición espiritual, destello fulgurante de conocimiento hermético." },
+                { char: "η", desc: "Eta: Dualidad armónica que equilibra los deseos terrenales y celestes." },
+                { char: "θ", desc: "Theta: La bóveda celeste, círculo ideal atravesado por el rayo de luz divina." },
+                { char: "ι", desc: "Iota: Eje de conexión vertical entre el plano telúrico e intelectual." },
+                { char: "κ", desc: "Kappa: Bifurcación racional del intelecto lógico en categorías organizadas." },
+                { char: "λ", desc: "Lambda: Escala de ascenso místico para los fantasmas de la memoria." },
+                { char: "μ", desc: "Mu: Marea y flujo cambiante de impresiones y percepciones sensoriales." },
+                { char: "ν", desc: "Nu: Vacío creador del pensamiento donde se deposita la sabiduría." },
+                { char: "ξ", desc: "Xi: Triple plano ordenador del macrocosmos, microcosmos y mesocosmos." },
+                { char: "ο", desc: "Omicron: El huevo primordial divino que unifica la totalidad del ser." },
+                { char: "π", desc: "Pi: Portal sagrado del templo de la memoria custodiado por columnas." },
+                { char: "ρ", desc: "Rho: Voluntad solar que impulsa la transmutación del intelecto pasivo." },
+                { char: "σ", desc: "Sigma: Espiral del movimiento continuo que viaja por las ruedas." },
+                { char: "τ", desc: "Tau: Límite y frontera rústica, salvaguarda de las visiones." },
+                { char: "υ", desc: "Upsilon: La encrucijada del alma dividida entre vicio y sabiduría excelsa." },
+                { char: "φ", desc: "Phi: Proporción áurea cósmica, geometría perfecta de las deidades de Bruno." },
+                { char: "χ", desc: "Chi: Punto de cruce estelar donde el intelecto humano toca al Uno divinal." },
+                { char: "ψ", desc: "Psi: Alma humana, mediadora absoluta entre el lodo terrenal y la estrella mística." },
+                { char: "ω", desc: "Omega: Fin del viaje combinatorio y reintegración de la multiplicidad al Uno." }
+            ],
+            "wheel-2": [ // Rueda III: Hebreo (Exactly 22 letters)
+                { char: "א", desc: "Aleph: El soplo original incorpóreo, primer intelecto que rige la rueda." },
+                { char: "ב", desc: "Beth: Casa hermética y contenedor sagrado que almacena la memoria." },
+                { char: "ג", desc: "Gimel: Puente o camello, el viaje del iniciado a través del desierto mental." },
+                { char: "ד", desc: "Daleth: Portal de entrada abierto al plano invisible de los arquetipos." },
+                { char: "ה", desc: "He: Ventana contemplativa que permite respirar y asimilar la divinidad." },
+                { char: "ו", desc: "Vav: El clavo de sujeción que une e imanta la tierra con el firmamento." },
+                { char: "ז", desc: "Zayin: Cetro defensivo, la espada mental que corta las distracciones físicas." },
+                { char: "ח", desc: "Heth: Cerca protectora que mantiene el secreto y la pureza en el templo." },
+                { char: "ט", desc: "Teth: Refugio divino donde germinan y maduran los fantasmas mnemónicos." },
+                { char: "י", desc: "Yod: La chispa inefable indivisible, origen infinitesimal de todo pensamiento." },
+                { char: "כ", desc: "Kaph: Palma receptiva de asimilación, fijación firme de las correspondencias." },
+                { char: "ל", desc: "Lamed: Aguijón dinámico de aprendizaje que eslabona las combinaciones." },
+                { char: "מ", desc: "Mem: Aguas primordiales fluidas, mar infinito de la imaginación humana." },
+                { char: "נ", desc: "Nun: Renovación y renacimiento de ideas soterradas tras el letargo." },
+                { char: "ס", desc: "Samekh: El círculo cerrado que protege al palacio de la disolución." },
+                { char: "ע", desc: "Ayin: Ojo interior del intelecto que devela el secreto tras la sombra." },
+                { char: "פ", desc: "Pe: La vibración de la palabra hablada que cristaliza las ideas en el ser." },
+                { char: "צ", desc: "Tzadi: Rectitud y equilibrio moral dentro de las operaciones teúrgicas." },
+                { char: "ק", desc: "Qoph: Horizonte de frontera estelar, el velo entre luz pura y sombra densa." },
+                { char: "ר", desc: "Resh: Cabeza del sabio, sede del intelecto activo y los palacios mnemónicos." },
+                { char: "ש", desc: "Shin: El fuego divino purificador que extirpa el olvido de la mente." },
+                { char: "ת", desc: "Tav: El sello alquímico final que solidifica la memoria por toda la eternidad." }
+            ],
+            "wheel-3": [ // Rueda IV: Runas (Elder Futhark + Armanen - STRICTLY UNIQUE 31 runas)
+                { char: "ᚠ", desc: "Fehu / Fa: Riqueza móvil, flujo energético y el fuego primigenio de la mente." },
+                { char: "ᚢ", desc: "Uruz / Ur: Fuerza telúrica primordial, vitalidad y salud indómita del alma." },
+                { char: "ᚦ", desc: "Thurisaz / Thurs / Dorn: Espina cósmica, el umbral protector contra el caos exterior." },
+                { char: "ᚨ", desc: "Ansuz: Sabiduría ancestral, el aliento sagrado y canalización del verbo." },
+                { char: "ᚱ", desc: "Raidho / Rit: Sendero cósmico, la ley de los ciclos y el viaje mnemotécnico." },
+                { char: "ᚲ", desc: "Kenaz: La antorcha sagrada de la inteligencia y la transmutación ígnea." },
+                { char: "ᚷ", desc: "Gebo: Ley del intercambio y la sintonía mística entre el ser y el cosmos." },
+                { char: "ᚹ", desc: "Wunjo: Armonía del éxito, alegría y alineación perfecta de los propósitos." },
+                { char: "ᚺ", desc: "Hagalaz: Granizo destructor de patrones obsoletos, renovación necesaria de las ideas." },
+                { char: "ᚾ", desc: "Nauthiz / Nauth: Fuerza de la necesidad y la perseverancia bajo el rigor espiritual." },
+                { char: "ᛁ", desc: "Isa / Is: El hielo cósmico, cristalización estática que preserva del olvido." },
+                { char: "ᛃ", desc: "Jera: La cosecha anual de la constancia y la maduración de los fantasmas." },
+                { char: "ᛇ", desc: "Eihwaz: El tejo sagrado, resistencia extrema y canal de los mundos." },
+                { char: "ᛈ", desc: "Perthro: El pozo de las suertes y los misterios arquetípicos del destino." },
+                { char: "ᛉ", desc: "Algiz: Runa de la protección sagrada y el escudo de las visiones místicas." },
+                { char: "ᛋ", desc: "Sowilo / Sig: La victoria de la luz solar disipando las tinieblas de la mente." },
+                { char: "ᛏ", desc: "Tiwaz / Tyr: Sacrificio heroico y la Estrella Polar que guía al navegante." },
+                { char: "ᛒ", desc: "Berkanan / Bar: Incubación fértil del abedul y nacimiento de nuevos conceptos." },
+                { char: "ᛖ", desc: "Ehwaz / Eh: El caballo del viaje astral, cooperación fluida de los planos de existencia." },
+                { char: "ᛗ", desc: "Mannaz: El microcosmos humano unificado en la inteligencia mundana." },
+                { char: "ᛚ", desc: "Laguz / Laf: Las aguas de la memoria intuitiva y el flujo del subconsciente." },
+                { char: "ᛜ", desc: "Ingwaz: Semilla creadora de potencial latente y gestación silenciosa interna." },
+                { char: "ᛟ", desc: "Othala / Odal: El palacio inviolable de la mente, la herencia y hogar de las ideas." },
+                { char: "ᛞ", desc: "Dagaz: El despertar definitivo y la luz diurna del entendimiento pleno." },
+                // Armanen-Exclusive (Formally unique from standard Elder Futhark)
+                { char: "ᚵ", desc: "Gibor (Armanen): Runa final del ciclo, dador del regalo de la vida y conciencia solar." },
+                { char: "ᛘ", desc: "Man (Armanen): El hombre erguido que atrae los influjos cósmicos del cielo." },
+                { char: "ᛦ", desc: "Yr (Armanen): Runa de la noche, el arco y la muerte mística transformadora." },
+                { char: "ᚬ", desc: "Os (Armanen): Boca de la elocuencia y el soplo de la sabiduría divina." },
+                { char: "ᛅ", desc: "Ar (Armanen): Fuego espiritual, nobleza iniciada y purificación áurea." },
+                { char: "ᚴ", desc: "Ka (Armanen): Capacidad generadora de la imaginación y geometría hermética." },
+                { char: "ᚼ", desc: "Hag (Armanen): Runa hexagonal matriz de la que emanan todos los glifos sagrados." }
+            ],
+            "wheel-4": [ // Rueda V: Zodíaco Purificado (Exactly 12 sectors)
+                { char: "♈", desc: "Aries: Impulso inicial creador, fuego primordial de la voluntad hermética y el despertar del ser." },
+                { char: "♉", desc: "Tauro: Estabilidad material del suelo sagrado donde se levantan los templos y salas de la memoria." },
+                { char: "♊", desc: "Géminis: Dualidad intelectual, correspondencia simétrica perfecta de los fantasmas en el cerebro." },
+                { char: "♋", desc: "Cáncer: El grial de agua sagrada y matriz receptiva donde reposan las impresiones sensoriales." },
+                { char: "♌", desc: "Leo: El calor radiante del intelecto agente que disipa las brumas de la ignorancia y del olvido." },
+                { char: "♍", desc: "Virgo: Pureza analítica y categorización de correspondencias bajo un orden de pulcritud inmaculado." },
+                { char: "♎", desc: "Libra: Balanza geométrica que distribuye con perfecta justicia y simetría las salas lógicas." },
+                { char: "♏", desc: "Escorpio: Transmutación, purificación y muerte selectiva de las impresiones burdas que deben olvidarse." },
+                { char: "♐", desc: "Sagitario: Enfoque absoluto de la flecha de la voluntad sobre el centro estelar del macrocosmos." },
+                { char: "♑", desc: "Capricornio: Rigor del tiempo y estructura saturnina que solidifica los palacios de la mente para siempre." },
+                { char: "♒", desc: "Acuario: Sabiduría fluida y éter cósmico vertido directamente para despertar el genio intelectual." },
+                { char: "♓", desc: "Piscis: Disolución mística de los fantasmas individuales en el gran océano unificado del Alma del Mundo." }
+            ]
+        };
+
+        // Configuration mapping for radii and colors of each concentric circle
+        const WHEEL_CONFIGS = [
+            { id: "wheel-0", rMin: 325, rMax: 390, stroke: "rgba(212, 163, 89, 0.45)", strokeW: 2.0, charSize: 24, font: "'Cinzel', serif" }, // R1: Latino (Antes 15)
+            { id: "wheel-1", rMin: 260, rMax: 325, stroke: "rgba(212, 163, 89, 0.35)", strokeW: 1.5, charSize: 22, font: "'Inter', sans-serif" }, // R2: Griego (Antes 14)
+            { id: "wheel-2", rMin: 195, rMax: 260, stroke: "rgba(212, 163, 89, 0.30)", strokeW: 1.2, charSize: 22, font: "'Inter', sans-serif" }, // R3: Hebreo (Antes 14)
+            { id: "wheel-3", rMin: 130, rMax: 195, stroke: "rgba(212, 163, 89, 0.25)", strokeW: 1.0, charSize: 18, font: "'Fira Code', monospace" }, // R4: Rúnico (Antes 13)
+            { id: "wheel-4", rMin: 65,  rMax: 130, stroke: "rgba(212, 163, 89, 0.22)", strokeW: 1.0, charSize: 28, font: "'Inter', sans-serif" }  // R5: Astro  (Antes 18)
+        ];
+
+        // Dynamically compute the sectors based on natural array sizes of BRUNO_DATA
+        WHEEL_CONFIGS.forEach((config, idx) => {
+            const key = `wheel-${idx}`;
+            config.sectors = BRUNO_DATA[key].length;
+        });
+
+        let wheelAngles = [0, 0, 0, 0, 0];
+        let activeWheelIndex = null;
+        let isDragging = false;
+        let dragStartAngle = 0;
+        let dragStartWheelAngle = 0;
+        let lastPlayedAngleIndex = [0, 0, 0, 0, 0];
+        let isSoundActive = true;
+        let audioCtx = null;
+        let currentGlossaryFilter = 'all';
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // Mechanical clicking sound for brass wheel rotation
+        function playTick(wheelIdx) {
+            if (!isSoundActive) return;
+            initAudio();
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                // Outer wheels sound higher pitch, inner wheels sound heavy and deep
+                const baseFreq = 420 - (wheelIdx * 70);
+                osc.frequency.setValueAtTime(baseFreq, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(8, audioCtx.currentTime + 0.04);
+                
+                gain.gain.setValueAtTime(0.06 - (wheelIdx * 0.007), audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.04);
+                
+                osc.type = 'triangle';
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.045);
+            } catch (e) {
+                console.warn("Audio Tick Error:", e);
+            }
+        }
+
+        // Ethereal chime chord triggered upon alignment / selection
+        function playChime() {
+            if (!isSoundActive) return;
+            initAudio();
+            try {
+                const now = audioCtx.currentTime;
+                // Pythagorean tuning ratios (harmonic triad)
+                const chords = [196.00, 246.94, 293.66, 392.00, 493.88]; 
+                
+                chords.forEach((freq, idx) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    
+                    osc.frequency.setValueAtTime(freq, now + (idx * 0.05));
+                    osc.type = 'sine';
+                    
+                    gain.gain.setValueAtTime(0, now + (idx * 0.05));
+                    gain.gain.linearRampToValueAtTime(0.07, now + (idx * 0.05) + 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + (idx * 0.05) + 2.0);
+                    
+                    osc.start(now + (idx * 0.05));
+                    osc.stop(now + (idx * 0.05) + 2.2);
+                });
+            } catch (e) {
+                console.warn("Audio Chime Error:", e);
+            }
+        }
+
+        function createVolvelleWheels() {
+            const keys = ["wheel-0", "wheel-1", "wheel-2", "wheel-3", "wheel-4"];
+            
+            for (let w = 0; w < 5; w++) {
+                const group = document.getElementById(`wheel-${w}`);
+                const rConf = WHEEL_CONFIGS[w];
+                const dataSet = BRUNO_DATA[keys[w]];
+                const numSectors = rConf.sectors;
+                const sectorDeg = 360 / numSectors;
+                
+                group.innerHTML = ""; // Clear existing geometry
+                group.style.transformOrigin = "400px 400px";
+
+                // Background circular layer for the sector band
+                const bgCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                bgCircle.setAttribute("cx", "400");
+                bgCircle.setAttribute("cy", "400");
+                bgCircle.setAttribute("r", rConf.rMax);
+                bgCircle.setAttribute("fill", `url(#wheel${w})`);
+                bgCircle.setAttribute("stroke", rConf.stroke);
+                bgCircle.setAttribute("stroke-width", rConf.strokeW);
+                group.appendChild(bgCircle);
+
+                // Inner containment ring
+                const innerCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                innerCircle.setAttribute("cx", "400");
+                innerCircle.setAttribute("cy", "400");
+                innerCircle.setAttribute("r", rConf.rMin);
+                innerCircle.setAttribute("fill", "none");
+                innerCircle.setAttribute("stroke", rConf.stroke);
+                innerCircle.setAttribute("stroke-width", "0.8");
+                group.appendChild(innerCircle);
+
+                // Generating exact math-oriented subdivisions and clean glyph placements
+                for (let i = 0; i < numSectors; i++) {
+                    const item = dataSet[i];
+                    
+                    // Dividing radial line situated exactly in between sector intervals
+                    const divAngle = i * sectorDeg - (sectorDeg / 2);
+                    
+                    const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                    line.setAttribute("x1", "400");
+                    line.setAttribute("y1", (400 - rConf.rMin).toString());
+                    line.setAttribute("x2", "400");
+                    line.setAttribute("y2", (400 - rConf.rMax).toString());
+                    line.setAttribute("stroke", "rgba(212, 163, 89, 0.16)");
+                    line.setAttribute("stroke-width", "0.8");
+                    line.setAttribute("transform", `rotate(${divAngle}, 400, 400)`);
+                    group.appendChild(line);
+
+                    // Perfectly center the character in the middle of each sector slice
+                    const labelAngle = i * sectorDeg;
+                    const labelGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+                    labelGroup.setAttribute("transform", `rotate(${labelAngle}, 400, 400)`);
+
+                    const textChar = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    textChar.setAttribute("x", "400");
+                    
+                    const midRadius = (rConf.rMin + rConf.rMax) / 2;
+                    const charY = 400 - midRadius + (rConf.charSize / 2.7);
+                    
+                    textChar.setAttribute("y", charY.toString());
+                    textChar.setAttribute("text-anchor", "middle");
+                    textChar.setAttribute("font-family", rConf.font);
+                    textChar.setAttribute("font-size", rConf.charSize.toString());
+                    textChar.setAttribute("fill", "#f5ce75");
+                    textChar.setAttribute("font-weight", "600");
+                    textChar.textContent = item.char;
+                    
+                    labelGroup.appendChild(textChar);
+                    group.appendChild(labelGroup);
+                }
+            }
+        }
+
+        const svg = document.getElementById("volvelle");
+
+        // Helper to map client mouse/touch coordinates into local 800x800 coordinate space
+        function getSVGCoords(e) {
+            const rect = svg.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            const x = (clientX - rect.left) * (800 / rect.width) - 400;
+            const y = (clientY - rect.top) * (800 / rect.height) - 400;
+            return { x, y };
+        }
+
+        // Computes radial angle and absolute distance from center point
+        function getAngleAndRadius(e) {
+            const coords = getSVGCoords(e);
+            const radius = Math.sqrt(coords.x * coords.x + coords.y * coords.y);
+            let angle = Math.atan2(coords.y, coords.x) * (180 / Math.PI);
+            if (angle < 0) angle += 360;
+            return { angle, radius };
+        }
+
+        // Resolves which concentric wheel has been touched based on radius boundaries
+        function determineWheelIndex(radius) {
+            for (let i = 0; i < 5; i++) {
+                if (radius >= WHEEL_CONFIGS[i].rMin && radius <= WHEEL_CONFIGS[i].rMax) {
+                    return i;
+                }
+            }
+            return null;
+        }
+
+        // Updates CSS transforms for pristine, hardware-accelerated centering
+        function updateWheelRotation(wheelIdx) {
+            const el = document.getElementById(`wheel-${wheelIdx}`);
+            if (el) {
+                el.style.transformOrigin = "400px 400px";
+                el.style.transform = `rotate(${wheelAngles[wheelIdx]}deg)`;
+            }
+        }
+
+        function handleStart(e) {
+            if (e.type === "touchstart") {
+                const target = e.target;
+                if (target.closest("#volvelle")) {
+                    e.preventDefault(); // Lock scroll while manipulating wheels
+                }
+            }
+            initAudio();
+            const data = getAngleAndRadius(e);
+            const wheelIdx = determineWheelIndex(data.radius);
+
+            if (wheelIdx !== null) {
+                isDragging = true;
+                activeWheelIndex = wheelIdx;
+                dragStartAngle = data.angle;
+                dragStartWheelAngle = wheelAngles[wheelIdx];
+                svg.style.cursor = "grabbing";
+
+                const el = document.getElementById(`wheel-${wheelIdx}`);
+                if (el) el.style.transition = "none";
+            }
+        }
+
+        function handleMove(e) {
+            if (!isDragging || activeWheelIndex === null) return;
+            const data = getAngleAndRadius(e);
+            let diff = data.angle - dragStartAngle;
+
+            if (diff > 180) diff -= 360;
+            if (diff < -180) diff += 360;
+
+            let targetAngle = (dragStartWheelAngle + diff) % 360;
+            if (targetAngle < 0) targetAngle += 360;
+
+            wheelAngles[activeWheelIndex] = targetAngle;
+            updateWheelRotation(activeWheelIndex);
+
+            const numSectors = WHEEL_CONFIGS[activeWheelIndex].sectors;
+            const degPerSec = 360 / numSectors;
+            const currentSectorIdx = Math.floor(targetAngle / degPerSec);
+            
+            if (currentSectorIdx !== lastPlayedAngleIndex[activeWheelIndex]) {
+                playTick(activeWheelIndex);
+                lastPlayedAngleIndex[activeWheelIndex] = currentSectorIdx;
+                updateAlignmentPanel();
+            }
+        }
+
+        function handleEnd() {
+            if (isDragging && activeWheelIndex !== null) {
+                const numSectors = WHEEL_CONFIGS[activeWheelIndex].sectors;
+                const degPerSec = 360 / numSectors;
+                
+                // Precision magnetic snapping according to specific wheel configuration
+                const targetAngle = Math.round(wheelAngles[activeWheelIndex] / degPerSec) * degPerSec;
+                const el = document.getElementById(`wheel-${activeWheelIndex}`);
+                
+                if (el) {
+                    el.style.transition = "transform 0.4s cubic-bezier(0.19, 1, 0.22, 1)";
+                }
+                wheelAngles[activeWheelIndex] = targetAngle % 360;
+                updateWheelRotation(activeWheelIndex);
+
+                setTimeout(() => {
+                    if (el) el.style.transition = "none";
+                }, 400);
+
+                playTick(activeWheelIndex);
+                updateAlignmentPanel();
+                generateMnemonicOracle(false);
+            }
+            isDragging = false;
+            activeWheelIndex = null;
+            svg.style.cursor = "grab";
+        }
+
+        svg.addEventListener("mousedown", handleStart);
+        window.addEventListener("mousemove", handleMove);
+        window.addEventListener("mouseup", handleEnd);
+
+        svg.addEventListener("touchstart", handleStart, { passive: false });
+        window.addEventListener("touchmove", handleMove, { passive: false });
+        window.addEventListener("touchend", handleEnd);
+
+        function getAlignedIndices() {
+            return wheelAngles.map((angle, w) => {
+                const numSectors = WHEEL_CONFIGS[w].sectors;
+                const degPerSec = 360 / numSectors;
+                
+                // Rotations are clockwise, so the active sector pointing strictly North (0 degrees)
+                // corresponds to the opposite offset angle
+                let normAngle = (360 - (angle % 360)) % 360;
+                let sectorIdx = Math.round(normAngle / degPerSec);
+                return sectorIdx % numSectors;
+            });
+        }
+
+        function updateAlignmentPanel() {
+            const indices = getAlignedIndices();
+            
+            const char0 = BRUNO_DATA["wheel-0"][indices[0]].char;
+            const char1 = BRUNO_DATA["wheel-1"][indices[1]].char;
+            const char2 = BRUNO_DATA["wheel-2"][indices[2]].char;
+            const char3 = BRUNO_DATA["wheel-3"][indices[3]].char;
+            const char4 = BRUNO_DATA["wheel-4"][indices[4]].char;
+
+            document.getElementById("mnemonic-key").innerText = `${char0} - ${char1} - ${char2} - ${char3} - ${char4}`;
+            document.getElementById("code-phonetic").innerText = `${char0}${char4}`;
+        }
+
+        const BRUNO_INTRO_TEXTS = [
+            "La Sombra de la Idea proyecta su verdad sobre la mente activa. Bajo la mirada fija del Ojo Norte se devela:",
+            "Para grabar en el templo indestructible de tu memoria esta verdad primordial, contempla la conjunción:",
+            "Al entrelazar los anillos cósmicos y despertar la facultad hermética del alma, queda sellada la sombra:",
+            "La luz inefable del Uno penetra el velo oscuro del olvido material. Medita en esta constelación unificada:"
+        ];
+
+        function generateMnemonicOracle(playAudioChime = true) {
+            const indices = getAlignedIndices();
+
+            const r0 = BRUNO_DATA["wheel-0"][indices[0]]; 
+            const r1 = BRUNO_DATA["wheel-1"][indices[1]]; 
+            const r2 = BRUNO_DATA["wheel-2"][indices[2]]; 
+            const r3 = BRUNO_DATA["wheel-3"][indices[3]]; 
+            const r4 = BRUNO_DATA["wheel-4"][indices[4]]; 
+
+            const introIdx = (indices[0] + indices[1] + indices[2]) % BRUNO_INTRO_TEXTS.length;
+            const intro = BRUNO_INTRO_TEXTS[introIdx];
+
+            const formula = `
+                ${intro}<br/><br/>
+                La idea racional de la letra latina <strong>${r0.char} (${r0.desc.split(':')[0]})</strong> 
+                se dinamiza e intensifica bajo la fuerza arquetípica del pensamiento griego <strong>${r1.char} (${r1.desc.split(':')[0]})</strong>, 
+                asimilándose en el espíritu por la emanación cabalística hebrea <strong>${r2.char} (${r2.desc.split(':')[0]})</strong>, 
+                estableciendo su palacio dentro de la marca rúnica y geográfica de <strong>${r3.char} (${r3.desc.split(':')[0]})</strong>, 
+                y quedando finalmente unificada y contenida bajo el influjo estelar del signo de <strong>${r4.char} (${r4.desc.split(':')[0]})</strong>.
+            `;
+
+            const textEl = document.getElementById("oracle-text");
+            textEl.style.opacity = 0;
+            setTimeout(() => {
+                textEl.innerHTML = formula;
+                textEl.style.opacity = 1;
+            }, 120);
+
+            if (playAudioChime) {
+                playChime();
+            }
+        }
+
+        function buildGlossaryUI() {
+            const glossaryContainer = document.getElementById("glossary-list");
+            glossaryContainer.innerHTML = "";
+            const searchQuery = document.getElementById("glossary-search").value.toLowerCase();
+
+            const wheelTitles = {
+                "wheel-0": "Rueda I (Latina - Base Lingüística - 26)",
+                "wheel-1": "Rueda II (Griega - Filosofía y Razón - 24)",
+                "wheel-2": "Rueda III (Hebrea - Emanaciones Sagradas - 22)",
+                "wheel-3": "Rueda IV (Rúnica - Elder Futhark & Armanen Únicos - 31)",
+                "wheel-4": "Rueda V (Astrológica - Zodíaco del Macrocosmos - 12)"
+            };
+
+            for (const [wheelId, list] of Object.entries(BRUNO_DATA)) {
+                if (currentGlossaryFilter !== 'all' && currentGlossaryFilter !== wheelId) {
+                    continue;
+                }
+
+                const header = document.createElement("div");
+                header.className = "text-amber-500 font-mystic text-[11px] font-bold border-b border-amber-950/40 pb-1 pt-2 sticky top-0 bg-stone-950 z-10 uppercase tracking-wider";
+                header.innerText = wheelTitles[wheelId];
+                
+                let groupItemsCount = 0;
+                const itemsContainer = document.createElement("div");
+                itemsContainer.className = "flex flex-col gap-2 mt-2";
+
+                list.forEach((item, index) => {
+                    const cleanDesc = item.desc.toLowerCase();
+                    const cleanChar = item.char.toLowerCase();
+
+                    if (searchQuery && !cleanDesc.includes(searchQuery) && !cleanChar.includes(searchQuery)) {
+                        return;
+                    }
+
+                    groupItemsCount++;
+
+                    // Individual glossary card
+                    const card = document.createElement("div");
+                    card.className = "flex items-center gap-3 bg-stone-950/80 p-2 rounded-lg border border-amber-950/30 hover:bg-amber-950/20 hover:border-amber-500/40 transition-all cursor-pointer";
+                    
+                    card.addEventListener("click", () => {
+                        const wheelNum = parseInt(wheelId.replace("wheel-", ""));
+                        alignWheelToSector(wheelNum, index);
+                    });
+
+                    card.innerHTML = `
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full border border-amber-500/30 bg-stone-900 flex items-center justify-center font-bold text-amber-400 font-esoteric-code">
+                            ${item.char}
+                        </div>
+                        <div class="flex-grow min-w-0">
+                            <div class="flex justify-between items-center mb-0.5">
+                                <span class="font-mystic text-amber-200 text-xs font-semibold truncate">${item.desc.split(':')[0]}</span>
+                                <div class="flex gap-2 items-center text-[10px] font-esoteric-code">
+                                    <span class="text-amber-400 bg-amber-950/40 px-1.5 py-0.5 rounded border border-amber-900/40">${item.char}</span>
+                                </div>
+                            </div>
+                            <p class="text-[11px] text-stone-400 leading-tight italic line-clamp-1">${item.desc.split(':')[1] || item.desc}</p>
+                        </div>
+                    `;
+                    itemsContainer.appendChild(card);
+                });
+
+                if (groupItemsCount > 0) {
+                    glossaryContainer.appendChild(header);
+                    glossaryContainer.appendChild(itemsContainer);
+                }
+            }
+
+            if (glossaryContainer.innerHTML === "") {
+                glossaryContainer.innerHTML = `
+                    <div class="text-[11px] text-stone-500 italic text-center py-8">
+                        Ningún misterio coincide en este ciclo estelar.
+                    </div>
+                `;
+            }
+        }
+
+        // Fluent assisted rotation when clicking on the glossary items
+        function alignWheelToSector(wheelIdx, sectorIdx) {
+            initAudio();
+            const numSectors = WHEEL_CONFIGS[wheelIdx].sectors;
+            const degPerSec = 360 / numSectors;
+            
+            // Re-centers the target sector straight North (offsetting by index angle)
+            let targetAngle = (360 - (sectorIdx * degPerSec)) % 360;
+            const el = document.getElementById(`wheel-${wheelIdx}`);
+            
+            if (el) {
+                el.style.transition = "transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)";
+            }
+            wheelAngles[wheelIdx] = targetAngle;
+            updateWheelRotation(wheelIdx);
+
+            setTimeout(() => {
+                if (el) el.style.transition = "none";
+                updateAlignmentPanel();
+                generateMnemonicOracle(true);
+            }, 800);
+        }
+
+        window.filterGlossary = function(category, element) {
+            currentGlossaryFilter = category;
+            
+            document.querySelectorAll(".tab-btn").forEach(btn => {
+                btn.classList.remove("active");
+            });
+            element.classList.add("active");
+            
+            buildGlossaryUI();
+        };
+
+        document.getElementById("glossary-search").addEventListener("input", buildGlossaryUI);
+
+        // Chaotic astronomical spinning (Simulated astrolabe calibration)
+        document.getElementById("btn-chaos").addEventListener("click", () => {
+            initAudio();
+            let steps = 0;
+            const maxSteps = 22;
+            
+            const interval = setInterval(() => {
+                for (let w = 0; w < 5; w++) {
+                    const push = (Math.random() * 80 + 35) * (5 - w) * 0.16;
+                    wheelAngles[w] = (wheelAngles[w] + push) % 360;
+                    updateWheelRotation(w);
+                }
+                
+                if (steps % 3 === 0) {
+                    playTick(Math.floor(Math.random() * 5));
+                }
+                
+                steps++;
+                if (steps >= maxSteps) {
+                    clearInterval(interval);
+                    
+                    // Final precise snap calibration for all wheels
+                    for (let w = 0; w < 5; w++) {
+                        const numSectors = WHEEL_CONFIGS[w].sectors;
+                        const degPerSec = 360 / numSectors;
+                        const alignedAngle = Math.round(wheelAngles[w] / degPerSec) * degPerSec;
+                        const el = document.getElementById(`wheel-${w}`);
+                        
+                        if (el) el.style.transition = "transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.15)";
+                        wheelAngles[w] = alignedAngle % 360;
+                        updateWheelRotation(w);
+                    }
+                    
+                    setTimeout(() => {
+                        updateAlignmentPanel();
+                        generateMnemonicOracle(true);
+                    }, 500);
+                }
+            }, 45);
+        });
+
+        const grimoireMemory = [];
+        const grimoireListContainer = document.getElementById("grimoire-list");
+
+        document.getElementById("btn-save").addEventListener("click", () => {
+            const indices = getAlignedIndices();
+            const textContent = document.getElementById("oracle-text").innerHTML;
+            const keyString = indices.map((idx, w) => {
+                const keys = ["wheel-0", "wheel-1", "wheel-2", "wheel-3", "wheel-4"];
+                return BRUNO_DATA[keys[w]][idx].char;
+            }).join("-");
+            
+            if (grimoireMemory.some(item => item.key === keyString)) {
+                return; // Guard against redundant duplicates
+            }
+
+            const entry = {
+                key: keyString,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                html: textContent
+            };
+
+            grimoireMemory.unshift(entry);
+            updateGrimoireUI();
+            playChime();
+        });
+
+        document.getElementById("btn-clear-grimoire").addEventListener("click", () => {
+            grimoireMemory.length = 0;
+            updateGrimoireUI();
+        });
+
+        document.getElementById("btn-export-grimoire").addEventListener("click", () => {
+            if (grimoireMemory.length === 0) {
+                const originalText = document.getElementById("oracle-text").innerHTML;
+                document.getElementById("oracle-text").innerHTML = "<span class='text-red-400 font-semibold'>⚠️ El códice está vacío. Guarda alguna combinación con 'Salvar en Códice' para poder exportarla.</span>";
+                setTimeout(() => {
+                    document.getElementById("oracle-text").innerHTML = originalText;
+                }, 4000);
+                return;
+            }
+
+            let textContent = `=====================================================================\n`;
+            textContent += `     CÓDICE DE VISIONES SALVADAS - DE UMBRIS IDEARUM\n`;
+            textContent += `         Astrolabio Combinatorio Luliano-Bruniano\n`;
+            textContent += `=====================================================================\n\n`;
+            textContent += `Generado el: ${new Date().toLocaleDateString()} a las ${new Date().toLocaleTimeString()}\n`;
+            textContent += `Total de combinaciones preservadas: ${grimoireMemory.length}\n\n`;
+            textContent += `---------------------------------------------------------------------\n\n`;
+
+            grimoireMemory.forEach((entry, idx) => {
+                // Remove HTML tags and clean up spacing for comfortable reading in a TXT editor
+                const cleanDesc = entry.html
+                    .replace(/<br\s*\/?>/gi, '\n')
+                    .replace(/<\/?[^>]+(>|$)/g, "")
+                    .replace(/\s+/g, ' ')
+                    .trim();
+
+                textContent += `VISIÓN #${grimoireMemory.length - idx}\n`;
+                textContent += `Sello Combinatorio: ${entry.key}\n`;
+                textContent += `Hora de Captura:   ${entry.time}\n`;
+                textContent += `Develación Hermética:\n`;
+                textContent += `${cleanDesc}\n`;
+                textContent += `\n---------------------------------------------------------------------\n\n`;
+            });
+
+            textContent += `In tristitia hilaris, in hilaritate tristis. © 1582 - 2026`;
+
+            // Setup download process in memory
+            const BOM = new Uint8Array([0xEF, 0xBB, 0xBF]);
+            const blob = new Blob([textContent], { type: "text/plain;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = `Codice_Luliano_Bruniano_${new Date().toISOString().slice(0, 10)}.txt`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        });
+
+        function updateGrimoireUI() {
+            if (grimoireMemory.length === 0) {
+                grimoireListContainer.innerHTML = `
+                    <div class="text-[11px] text-stone-500 italic text-center py-2">
+                        No hay memorias preservadas en este ciclo hermético.
+                    </div>
+                `;
+                return;
+            }
+
+            grimoireListContainer.innerHTML = "";
+            grimoireMemory.forEach((entry) => {
+                const card = document.createElement("div");
+                card.className = "bg-stone-950/85 p-2 rounded-lg border border-amber-950/35 text-[11px] flex flex-col gap-1 transition-all hover:bg-stone-900/60 cursor-pointer relative";
+                card.innerHTML = `
+                    <div class="flex justify-between text-[9px] font-esoteric-code text-amber-500 border-b border-stone-900 pb-1 mb-1">
+                        <span>✨ Alianza Alquímica: ${entry.key}</span>
+                        <span>${entry.time}</span>
+                    </div>
+                    <p class="text-stone-300 italic leading-snug line-clamp-1">"${entry.html.replace(/<br\s*\/?>/gi, ' ').replace(/\s+/g, ' ').substring(0, 85)}..."</p>
+                `;
+                
+                // Restores the exact wheel configurations on click
+                card.addEventListener("click", () => {
+                    const charsArray = entry.key.split("-");
+                    const keys = ["wheel-0", "wheel-1", "wheel-2", "wheel-3", "wheel-4"];
+                    const sectorIndices = charsArray.map((char, w) => {
+                        return BRUNO_DATA[keys[w]].findIndex(item => item.char === char);
+                    });
+                    
+                    for (let w = 0; w < 5; w++) {
+                        alignWheelToSector(w, sectorIndices[w]);
+                    }
+                });
+
+                grimoireListContainer.appendChild(card);
+            });
+        }
+
+        // Sound Toggle Button listener
+        document.getElementById("btn-sound-toggle").addEventListener("click", function() {
+            isSoundActive = !isSoundActive;
+            const textEl = document.getElementById("sound-text");
+            const iconEl = document.getElementById("sound-icon");
+            if (isSoundActive) {
+                textEl.innerText = "Sintetizador: Activo";
+                iconEl.innerText = "🔊";
+                initAudio();
+                playTick(2);
+            } else {
+                textEl.innerText = "Sintetizador: Muto";
+                iconEl.innerText = "🔇";
+            }
+        });
+
+        // Modal triggers
+        const modal = document.getElementById("guide-modal");
+        document.getElementById("btn-guide-toggle").addEventListener("click", () => {
+            modal.classList.remove("hidden");
+        });
+
+        const closeModal = () => modal.classList.add("hidden");
+        document.getElementById("btn-close-modal").addEventListener("click", closeModal);
+        document.getElementById("btn-close-modal-bottom").addEventListener("click", closeModal);
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        // Initialize and kickstart simulation on window load
+        window.onload = function() {
+            createVolvelleWheels();
+            
+            // Randomize starting positions dynamically matching the exact sizes of each wheel
+            for (let w = 0; w < 5; w++) {
+                const numSectors = WHEEL_CONFIGS[w].sectors;
+                const degPerSec = 360 / numSectors;
+                const randSector = Math.floor(Math.random() * numSectors);
+                wheelAngles[w] = randSector * degPerSec;
+                updateWheelRotation(w);
+            }
+            
+            updateAlignmentPanel();
+            generateMnemonicOracle(false);
+            buildGlossaryUI();
+        };
+    </script>
+</body>
+</html>
