@@ -5,6 +5,8 @@ page-layout: full
 listing:
   contents:
     - narrativa/la-muerte-de-nicanor.md
+    - narrativa/business-hotel.md
+    - ensayo/sobre-la-ficcion-y-la-invencion.md
   type: default
   sort: false
   sort-ui: false
@@ -19,9 +21,13 @@ La sección literaria reúne textos publicados en documentos Markdown individual
 
 ## Narrativa
 
-*La Muerte de Nicanor* inaugura el catálogo literario migrado. Su antiguo HTML permanece disponible en la ruta histórica para conservar compatibilidad con enlaces previos.
+El catálogo narrativo reúne actualmente *La Muerte de Nicanor* y *Business Hotel*. La ruta HTML histórica de *La Muerte de Nicanor* se mantiene por compatibilidad con enlaces previos.
+
+## Ensayo
+
+*Sobre la ficción y la invención* inaugura la sección de ensayo con su texto completo y aparato de notas conservado en Markdown.
 
 ## Otras líneas
 
-Poesía, ensayo y teatro se incorporarán progresivamente cuando cada texto esté preparado para publicación pública.
+Poesía y teatro se incorporarán progresivamente cuando cada texto esté preparado para publicación pública.
 :::

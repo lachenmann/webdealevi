@@ -1,6 +1,6 @@
 # Content Schema
 
-Estado: esquema incremental. Los subesquemas `musical-work`, `short-story`, `workshop` y `application` quedan fijados respectivamente en ALEVI-WEB-0003, ALEVI-WEB-0005, ALEVI-WEB-0006 y ALEVI-WEB-0007; las demás familias siguen provisionales hasta su primera migración real.
+Estado: esquema incremental. Los subesquemas `musical-work`, `short-story`, `workshop`, `application` y `essay` quedan fijados respectivamente en ALEVI-WEB-0003, ALEVI-WEB-0005, ALEVI-WEB-0006, ALEVI-WEB-0007 y ALEVI-WEB-0008; las demás familias siguen provisionales hasta su primera migración real.
 
 ## Tipos editoriales
 
@@ -89,18 +89,47 @@ Campos obligatorios:
 
 Campos opcionales:
 
-- `revision-year`: año de una revisión posterior.
+- `year-end`: último año cuando la fuente declara explícitamente un período o rango de composición.
+- `revision-year`: año de una revisión posterior explícitamente documentada.
 - `legacy-url`: ruta pública histórica que se conserva por compatibilidad.
+- `dedication`: persona destinataria de una dedicatoria explícita.
 - `categories`: clasificación editorial para navegación y búsqueda.
 
 ## Convenciones
 
-- La migración desde HTML legado conserva el texto literario sin reescritura ni corrección silenciosa.
-- `year` registra el año declarado por la pieza; `revision-year` registra una revisión explícita posterior.
+- La migración conserva el texto literario sin reescritura ni corrección silenciosa; sólo se normalizan artefactos mecánicos de extracción o maquetación cuando sean inequívocos.
+- `year` registra el año inicial o único declarado por la pieza.
+- `year-end` registra el final de un rango explícito y no implica por sí mismo una revisión.
+- `revision-year` se usa únicamente cuando la fuente documenta una revisión posterior.
 - Si una página histórica contiene una declaración de derechos específica, ésta prevalece sobre declaraciones globales contradictorias del sitio antiguo salvo que una instrucción autoral posterior y explícita la sustituya.
 - Para nuevas obras literarias públicas, la licencia editorial por defecto es `CC BY-NC-ND 4.0`, conforme a `_project/EDITORIAL_POLICY.md`.
 - La ruta histórica puede seguir disponible como recurso estático aunque el Markdown pase a ser la fuente editorial canónica.
 - El contenido público nuevo se escribe preferentemente en Markdown estándar compatible con Obsidian y Quarto.
+
+# `essay` v1
+
+Campos obligatorios:
+
+- `title`
+- `type: essay`
+- `status`
+- `author`
+- `description`
+- `license`
+
+Campos opcionales:
+
+- `year`: año sólo cuando esté documentado por la fuente canónica.
+- `categories`: clasificación editorial para navegación y búsqueda.
+
+## Convenciones
+
+- No se inventa una fecha cuando la fuente canónica no la proporciona.
+- La migración conserva el texto, las notas al pie, las referencias y la estructura argumentativa de la fuente canónica sin reescritura silenciosa.
+- Sólo se normalizan artefactos mecánicos de extracción o maquetación cuando sean inequívocos.
+- Para nuevas obras literarias públicas, la licencia editorial por defecto es `CC BY-NC-ND 4.0`, conforme a `_project/EDITORIAL_POLICY.md`.
+- El contenido público se mantiene en Markdown estándar compatible con Obsidian, Pandoc y Quarto.
+- `status: published` significa pertenencia al catálogo público autoral; no implica por sí mismo despliegue del branch de migración.
 
 # `workshop` v1
 
@@ -164,7 +193,7 @@ Campos opcionales:
 
 ## Convenciones
 
-- La ficha Markdown documenta y cataloga la aplicación, pero no sustituye al ejecutable autónomo.
+- La capa editorial Markdown documenta y cataloga la aplicación, pero no sustituye al ejecutable autónomo.
 - `application-url` conserva la ruta estable del recurso ejecutable cuando éste ya forma parte del sitio público.
 - No se infieren `year`, `version` ni licencia a partir de un footer ambiguo, una fecha de copyright compuesta o una convención visual.
 - Las dependencias externas relevantes se registran para QA y preservación futura.
