@@ -3,6 +3,8 @@ project:
   output-dir: _site
   render:
     - index.md
+    - musica/*.md
+    - musica/obras/*.md
   resources:
     - "aplicaciones/**"
     - "audio/**"
@@ -17,6 +19,8 @@ website:
     left:
       - href: index.md
         text: Inicio
+      - href: musica/index.md
+        text: Música
   search: true
 
 lang: es

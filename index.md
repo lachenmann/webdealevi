@@ -5,20 +5,22 @@ page-layout: full
 
 # Archivo autoral
 
-Este es el **bootstrap de la futura versión Quarto** de `alevipena.cl`.
+Esta es la versión en reconstrucción con Quarto de `alevipena.cl`. La migración se desarrolla en la rama `quarto-v2`; el sitio público actual permanece sin cambios hasta completar los gates de publicación.
 
-La migración se desarrolla en la rama `quarto-v2`. El sitio público actual permanece sin cambios mientras se reconstruyen la arquitectura editorial, la navegación y las colecciones de contenido.
+## Música
+
+La primera colección editorial ya migrada es el catálogo de obras musicales. Cada obra tiene ahora una ficha Markdown propia con metadatos estructurados y mantiene enlazada su partitura PDF en la ruta histórica existente.
+
+[Explorar el catálogo de música](musica/index.md)
 
 ## Recursos preservados
 
-Los recursos estáticos existentes siguen formando parte del proyecto y deben copiarse al directorio de salida durante el render:
+Durante la migración continúan disponibles como recursos estáticos:
 
-- [Partitura de *Ventral*](partituras/ventral.pdf)
-- [Grabación de *Ciénaga*](audio/cienaga.mp3)
-- [La Muerte de Nicanor](cuentos/muertenicanor.html)
-- [Programa de Imaginación Activa](programas/imaginacionactiva.html)
-- [Rueda Bruniana](aplicaciones/ruedabruniana/rueda_luliana_bruniana_simplificada.html)
+- partituras PDF;
+- grabación de *Ciénaga*;
+- *La Muerte de Nicanor* en su HTML legado;
+- programa de Imaginación Activa;
+- Rueda Bruniana como aplicación autónoma.
 
-## Próxima etapa
-
-La siguiente fase separará el contenido editorial actualmente concentrado en `index.html` en colecciones Markdown para música, literatura, talleres, investigación y aplicaciones.
+Las siguientes etapas migrarán literatura, talleres, investigación y aplicaciones sin convertir el repositorio público en un espejo del Vault privado de Obsidian.
