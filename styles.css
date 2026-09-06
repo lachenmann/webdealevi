@@ -310,6 +310,34 @@ h2 {
   margin-right: auto;
 }
 
+.application-summary,
+.application-note {
+  max-width: var(--alevi-reading);
+  margin: 1.5rem auto 2rem;
+  padding: 1.25rem 1.4rem;
+  border: 1px solid var(--alevi-border);
+  border-radius: var(--alevi-radius);
+  background: var(--alevi-surface);
+}
+
+.application-summary {
+  border-left: 4px solid var(--alevi-accent);
+}
+
+.application-note {
+  border-left: 4px solid #7089a3;
+  background: #131a21;
+}
+
+.application-summary ~ h2,
+.application-summary ~ p,
+.application-summary ~ ul,
+.application-note {
+  max-width: var(--alevi-reading);
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .page-footer {
   border-top-color: var(--alevi-border) !important;
 }
@@ -339,7 +367,9 @@ h2 {
   }
 
   .workshop-summary,
-  .workshop-ethics {
+  .workshop-ethics,
+  .application-summary,
+  .application-note {
     padding: 1rem;
   }
 }

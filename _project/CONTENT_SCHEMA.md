@@ -1,6 +1,6 @@
 # Content Schema
 
-Estado: esquema incremental. Los subesquemas `musical-work`, `short-story` y `workshop` quedan fijados respectivamente en ALEVI-WEB-0003, ALEVI-WEB-0005 y ALEVI-WEB-0006; las demás familias siguen provisionales hasta su primera migración real.
+Estado: esquema incremental. Los subesquemas `musical-work`, `short-story`, `workshop` y `application` quedan fijados respectivamente en ALEVI-WEB-0003, ALEVI-WEB-0005, ALEVI-WEB-0006 y ALEVI-WEB-0007; las demás familias siguen provisionales hasta su primera migración real.
 
 ## Tipos editoriales
 
@@ -139,3 +139,33 @@ Valores iniciales de `event-status`:
 - Una edición completada no debe presentar una llamada a inscripción como si siguiera abierta.
 - `legacy-url` puede conservar una página histórica aunque la ficha Markdown pase a ser la fuente editorial canónica.
 - Los encuadres éticos y límites declarados en la fuente original se preservan de manera visible en la migración.
+
+# `application` v1
+
+Campos obligatorios:
+
+- `title`
+- `type: application`
+- `status`
+- `author`
+- `application-url`
+- `runtime`
+- `description`
+
+Campos opcionales:
+
+- `year`: año de creación o publicación sólo cuando esté documentado inequívocamente.
+- `version`: versión explícita de la aplicación.
+- `categories`: clasificación editorial para navegación y búsqueda.
+- `license`: declaración de licencia específica de la aplicación, cuando exista.
+- `historical-basis`: obra, autor o tradición que sirve de base o inspiración documentada.
+- `external-dependencies`: recursos externos que la aplicación carga en tiempo de ejecución.
+
+## Convenciones
+
+- La ficha Markdown documenta y cataloga la aplicación, pero no sustituye al ejecutable autónomo.
+- `application-url` conserva la ruta estable del recurso ejecutable cuando éste ya forma parte del sitio público.
+- No se infieren `year`, `version` ni licencia a partir de un footer ambiguo, una fecha de copyright compuesta o una convención visual.
+- Las dependencias externas relevantes se registran para QA y preservación futura.
+- Una aplicación inspirada en una fuente histórica no se describe como reconstrucción fiel o edición digital crítica salvo que exista documentación que lo sostenga.
+- Los HTML/JS autónomos pueden permanecer como recursos estáticos aunque Quarto gestione su capa editorial.

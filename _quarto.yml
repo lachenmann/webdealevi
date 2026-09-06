@@ -10,6 +10,7 @@ project:
     - talleres/*.md
     - investigacion/*.md
     - aplicaciones/index.md
+    - aplicaciones/fichas/*.md
   resources:
     - "aplicaciones/**"
     - "audio/**"
