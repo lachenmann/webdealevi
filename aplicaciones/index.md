@@ -2,14 +2,22 @@
 title: "Aplicaciones"
 description: "Instrumentos y aplicaciones digitales de Alevi Peña."
 page-layout: full
-listing:
-  contents:
-    - fichas/rueda-bruniana.md
-  type: default
-  sort: false
-  sort-ui: false
-  filter-ui: false
-  page-size: 20
 ---
 
-Aplicaciones e instrumentos interactivos vinculados con investigación, memoria, creación y experimentación. Cada ficha documenta la herramienta sin reemplazar su ejecutable autónomo.
+::: {.section-intro}
+<p class="eyebrow">Laboratorio digital</p>
+
+Aplicaciones e instrumentos interactivos vinculados con investigación, memoria, creación y experimentación. Las herramientas se abren directamente desde este catálogo; las fichas editoriales quedan disponibles como documentación complementaria.
+:::
+
+::: {.section-grid}
+::: {.section-card}
+### Rueda Bruniana: *De Umbris Idearum*
+
+Instrumento interactivo de ruedas concéntricas y correspondencias simbólicas inspirado en *De Umbris Idearum* de Giordano Bruno.
+
+<a href="ruedabruniana/rueda_luliana_bruniana_simplificada.html" class="btn-alevi" target="_blank" rel="noopener">Abrir Rueda Bruniana</a>
+
+[Ver ficha editorial](fichas/rueda-bruniana.md){.btn-alevi-outline}
+:::
+:::
