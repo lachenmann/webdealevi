@@ -16,7 +16,7 @@ categories: [aplicaciones, memoria, hermetismo, combinatoria]
 ::: {.application-summary}
 **Aplicación interactiva autónoma.** La Rueda Bruniana funciona como una herramienta de experimentación combinatoria y mnemotécnica inspirada en *De Umbris Idearum* de Giordano Bruno. La ficha que estás leyendo pertenece al catálogo Quarto; la aplicación continúa ejecutándose como un HTML/JS independiente.
 
-[Abrir la aplicación](/aplicaciones/ruedabruniana/rueda_luliana_bruniana_simplificada.html){.btn-alevi target="_blank"}
+<a href="../ruedabruniana/rueda_luliana_bruniana_simplificada.html" class="btn-alevi" target="_blank" rel="noopener">Abrir la aplicación</a>
 :::
 
 ## Qué implementa
