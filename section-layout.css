@@ -1,27 +1,53 @@
 /* ALEVI-WEB-0009 — alineación global de encabezados de sección */
 
 /*
-   Las landings usan `page-layout: full`. Quarto permite que la descripción
-   del title block se extienda a una columna distinta del título; aquí
-   normalizamos título y bajada para que compartan el mismo eje izquierdo
-   que el contenido de la sección.
+   Las landings usan `page-layout: full`. En Quarto 1.10 el título y la
+   descripción no dependen de una relación padre/hijo estable dentro de
+   `.quarto-title`, por lo que alineamos el bloque completo y después
+   normalizamos ambos elementos sin asumir esa estructura interna.
 */
-body.fullcontent #title-block-header.quarto-title-block.default .quarto-title {
-  max-width: none;
-  margin-left: 0;
-  margin-right: 0;
-}
-
-body.fullcontent #title-block-header.quarto-title-block.default .quarto-title > .title,
-body.fullcontent #title-block-header.quarto-title-block.default .quarto-title > .description {
-  grid-column: auto !important;
+body.fullcontent #title-block-header.quarto-title-block.default {
+  box-sizing: border-box;
   width: 100%;
-  max-width: none;
-  margin-left: 0;
-  margin-right: 0;
-  text-align: left;
+  max-width: 880px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: clamp(0.75rem, 3vw, 1.5rem) !important;
+  padding-right: clamp(0.75rem, 3vw, 1.5rem) !important;
 }
 
-body.fullcontent #title-block-header.quarto-title-block.default .quarto-title > .description {
-  margin-top: 0.25rem;
+body.fullcontent #title-block-header.quarto-title-block.default .quarto-title,
+body.fullcontent #title-block-header.quarto-title-block.default .quarto-title-banner,
+body.fullcontent #title-block-header.quarto-title-block.default .quarto-title-banner .quarto-title {
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+body.fullcontent #title-block-header.quarto-title-block.default .title,
+body.fullcontent #title-block-header.quarto-title-block.default .description {
+  grid-column: 1 / -1 !important;
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  text-align: left !important;
+}
+
+body.fullcontent #title-block-header.quarto-title-block.default .description {
+  margin-top: 0.25rem !important;
+}
+
+@media (max-width: 600px) {
+  body.fullcontent #title-block-header.quarto-title-block.default {
+    padding-left: 0.95rem !important;
+    padding-right: 0.95rem !important;
+  }
 }
