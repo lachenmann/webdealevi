@@ -1,0 +1,28 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - index.md
+  resources:
+    - "aplicaciones/**"
+    - "audio/**"
+    - "cuentos/**"
+    - "partituras/**"
+    - "programas/**"
+
+website:
+  title: "Alevi Peña"
+  description: "Archivo autoral de música, literatura, investigación y herramientas digitales."
+  navbar:
+    left:
+      - href: index.md
+        text: Inicio
+  search: true
+
+lang: es
+
+format:
+  html:
+    theme: darkly
+    css: styles.css
+    toc: false

@@ -1,0 +1,10 @@
+# Quarto
+/_site/
+/.quarto/
+
+# Obsidian local workspace
+/.obsidian/
+
+# OS metadata
+.DS_Store
+Thumbs.db
