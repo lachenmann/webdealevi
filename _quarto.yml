@@ -58,6 +58,7 @@ format:
     theme: darkly
     css:
       - styles.css
+      - section-index.css
       - literature.css
       - section-layout.css
     toc: false

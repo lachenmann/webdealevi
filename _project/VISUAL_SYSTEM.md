@@ -1,6 +1,6 @@
-# Visual System — v1
+# Visual System — v1.1
 
-Checkpoint: ALEVI-WEB-0004.
+Checkpoint base: ALEVI-WEB-0004. Refinamiento común de secciones: ALEVI-WEB-0010.
 
 ## Objetivo
 
@@ -11,10 +11,11 @@ Construir una identidad visual sobria para `alevipena.cl` que preserve continuid
 1. Fondo oscuro como campo principal de lectura.
 2. Turquesa `#1abc9c` como acento histórico y señal de interacción, no como color dominante.
 3. Jerarquía tipográfica amplia y aireada; evitar ornamentación innecesaria.
-4. Tarjetas y bordes discretos para separar colecciones sin convertir el sitio en un dashboard.
+4. Las portadas de sección priorizan encabezados textuales y botones táctiles para contenidos concretos, evitando listings genéricos cuando la colección es pequeña.
 5. Navegación global simple y responsiva.
 6. El contenido editorial debe seguir siendo legible sin depender de imágenes decorativas.
 7. No declarar una licencia global contradictoria: la licencia corresponde a cada obra o recurso.
+8. La interfaz debe funcionar primero en pantallas pequeñas y escalar con naturalidad a escritorio.
 
 ## Tokens base
 
@@ -29,18 +30,24 @@ Construir una identidad visual sobria para `alevipena.cl` que preserve continuid
 
 ## Tipografía
 
-Se usa una pila de fuentes de sistema para evitar una dependencia externa obligatoria. La portada utiliza escala tipográfica amplia; el cuerpo conserva una anchura de lectura aproximada de 760 px cuando la página es textual.
+Se usa una pila de fuentes de sistema para evitar una dependencia externa obligatoria. La portada utiliza escala tipográfica amplia; el cuerpo conserva una anchura de lectura aproximada de 760 px cuando la página es textual. Los títulos de contenidos dentro de botones editoriales usan una serif de sistema para diferenciarlos de la navegación y los metadatos.
 
-## Componentes v1
+## Componentes vigentes
 
 - navbar global;
 - hero de portada;
 - botones primario y secundario;
-- grid de secciones;
-- tarjetas editoriales;
-- introducción de sección;
-- bloques de lectura;
-- listing musical adaptado al mismo sistema;
+- grid de áreas en portada;
+- encabezado de sección alineado con su contenido;
+- `section-index` como patrón común para Música, Literatura, Matemáticas, Investigación, Talleres y Aplicaciones;
+- encabezados de subsección en texto plano;
+- `section-button` como acceso táctil a obras, talleres y aplicaciones;
+- estados futuros sin botones ficticios cuando aún no existe contenido público;
+- bloques de lectura para obras literarias;
 - footer común.
 
-Este sistema se considera base estable, pero podrá refinarse después del QA visual en escritorio y móvil.
+## Regla para catálogos pequeños
+
+Mientras una sección tenga una cantidad acotada de elementos, se prefiere una portada editorial curada con botones explícitos sobre un listing automático. Si una colección crece hasta requerir filtrado, búsqueda o paginación propios, podrá reintroducirse un catálogo dinámico sin alterar las URLs de las fichas individuales.
+
+Este sistema se considera la base visual estable para la fase de migración actual, sujeto a QA responsivo antes de publicación.
