@@ -45,10 +45,6 @@ website:
         text: Talleres
       - href: aplicaciones/index.md
         text: Aplicaciones
-      - href: https://matematicaabierta.cl/
-        text: Matemática abierta
-        target: _blank
-        rel: noopener noreferrer
   back-to-top-navigation: true
   page-footer:
     background: "#0b0f14"
