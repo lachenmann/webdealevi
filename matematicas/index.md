@@ -21,9 +21,10 @@ page-layout: full
 
 <section class="section-index-future" aria-labelledby="matematica-abierta-heading">
 <h2 id="matematica-abierta-heading" class="section-index-group-title">Matemática Abierta</h2>
-<p>La conexión con el proyecto matemático independiente se incorporará aquí cuando quede integrada editorialmente con este archivo.</p>
+<p><strong>Matemática Abierta</strong> es mi proyecto independiente de publicación y divulgación matemática: un espacio abierto para apuntes, textos, cursos, desarrollos y recursos digitales.</p>
+<p><a href="https://matematicaabierta.cl/" class="btn-alevi" target="_blank" rel="noopener noreferrer">Visitar Matemática Abierta</a></p>
 </section>
 
-<p class="section-index-note">El archivo autoral y Matemática Abierta permanecen como proyectos separados: esta sección funcionará como punto de acceso, no como duplicación del repositorio especializado.</p>
+<p class="section-index-note">El archivo autoral y Matemática Abierta permanecen como proyectos separados. Esta sección funciona como punto de acceso al repositorio matemático especializado, sin duplicar sus contenidos.</p>
 
 </div>
