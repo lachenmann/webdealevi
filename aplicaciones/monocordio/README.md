@@ -46,12 +46,15 @@ Por ejemplo **Do4 +64,00 cents** (referencia Do4 del temperamento igual) puede e
 
 | Subdivisión | Valor convencional | Grafía |
 | --- | ---: | --- |
-| ¼ tono | 50 cents | Ferneyhough, SMuFL E48E/E48F |
+| ¼ tono, preferido | 50 cents | Stein–Zimmermann, SMuFL E282/E280 |
+| ¼ tono alternativo | 50 cents | Ferneyhough, SMuFL E48E/E48F (grafías con cifra 4) |
 | ⅙ tono | 33⅓ cents | Sims, SMuFL E2A4/E2A1 |
 | ⅛ tono | 25 cents | Texto literal «⅛ tono» (sin reivindicar un glifo SMuFL propio) |
 | ⅓ tono | 66⅔ cents | Ferneyhough, SMuFL E48A/E48B |
 | ⅔ tono | 133⅓ cents | Ferneyhough, SMuFL E48C/E48D |
 | ¾ tono bemol | −150 cents | Grisey, SMuFL E486; ascenso +150 solo en texto |
+
+**Corrección editorial v1.2:** se rectificaron códigos SMuFL erróneos de la implementación original. El «4 con flecha» puede ser una grafía propia de Ferneyhough; para mejorar la legibilidad se selecciona por defecto el medio sostenido / bemol invertido de Stein–Zimmermann. La familia de Ferneyhough queda disponible con identificación explícita. Los códigos aquí indicados se contrastaron con las tablas oficiales de SMuFL.
 
 Los glifos SMuFL se cargan mediante Bravura (Steinberg, licencia SIL Open Font License) desde un CDN público. Si el navegador está sin conexión o la fuente no carga, los controles presentan **etiquetas textuales** de fracción de tono con dirección, y las alteraciones convencionales se dibujan con Unicode. La ausencia de la fuente no altera el audio ni los cálculos.
 
@@ -62,12 +65,42 @@ El explorador trabaja con **Do4 temperado**, cuya frecuencia es `440·2^(−9/12
 La flecha de una etiqueta numérica es únicamente direccional; **las flechas integradas en un glifo pertenecen al valor semántico propio de esa familia de signos**. No deben interpretarse arbitrariamente como comas pitagóricas o sintónicas.
 
 Fuentes de los códigos de glifos y sistemas:
+- https://smufl.formats.music/latest/tables/stein-zimmermann-accidentals-24-edo.html
 - https://smufl.formats.music/latest/tables/other-accidentals.html
 - https://smufl.formats.music/latest/tables/sims-accidentals-72-edo.html
 - https://smufl.formats.music/latest/tables/extended-stein-zimmermann-accidentals.html
 - https://github.com/steinbergmedia/bravura (licencia OFL)
 
 **Limitaciones:** la sección dibuja una secuencia de alturas (no una partitura rítmica con reglas de vigencia de alteraciones). El modo contemporáneo no pretende copiar una obra particular de Grisey o Ferneyhough; adopta signos concretos de familias documentadas y define expresamente su interpretación numérica. El soporte de ⅛ de tono es deliberadamente textual hasta validar una convención y una tipografía específicas.
+
+## Catálogo ampliado de relaciones pitagóricas
+
+El monocordio ofrece **19 proporciones seleccionables** clasificadas en consonancias fundamentales, intervalos diatónicos, microintervalos pitagóricos, tritonos enarmónicos e intervalos compuestos. Su longitud mínima es una cuarta parte de la cuerda, correspondiente a dos octavas sobre la fundamental.
+
+**Convención esencial:** los botones indican proporciones exactas de **longitud**, no razones de frecuencias. Por ejemplo, la longitud 243:256 produce el limma de frecuencia 256:243. El cálculo del sonido conserva la fracción exacta aunque el control continuo redondee la posición visible.
+
+| Intervalo | Longitud | Frecuencia respecto de la cuerda completa |
+| --- | ---: | ---: |
+| Coma pitagórica | 524288:531441 | 531441:524288 |
+| Limma | 243:256 | 256:243 |
+| Apótome | 2048:2187 | 2187:2048 |
+| Tono pitagórico | 8:9 | 9:8 |
+| Tercera menor | 27:32 | 32:27 |
+| Tercera mayor | 64:81 | 81:64 |
+| Cuarta justa | 3:4 | 4:3 |
+| Quinta disminuida | 729:1024 | 1024:729 |
+| Cuarta aumentada | 512:729 | 729:512 |
+| Quinta justa | 2:3 | 3:2 |
+| Sexta menor | 81:128 | 128:81 |
+| Sexta mayor | 16:27 | 27:16 |
+| Séptima menor | 9:16 | 16:9 |
+| Séptima mayor | 128:243 | 243:128 |
+| Octava | 1:2 | 2:1 |
+| Novena mayor | 4:9 | 9:4 |
+| Duodécima | 1:3 | 3:1 |
+| Doble octava | 1:4 | 4:1 |
+
+Se añade también el unísono 1:1. Estas razones solo involucran potencias de 2 y 3 (sistema pitagórico); no se presentan intervalos que requieran el factor 5 como si fueran pitagóricos.
 
 ## Uso
 
