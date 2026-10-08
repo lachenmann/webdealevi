@@ -85,6 +85,8 @@ function updateUI(value) {
   $("length-ratio").textContent = `${state.lengthRatio} de la cuerda`;
   $("frequency-value").textContent = `${format(state.frequencyHz)} Hz`;
   $("frequency-ratio").textContent = state.frequencyRatio;
+  $("selected-ratio-svg-label").textContent =
+    "Longitud " + state.lengthRatio + " · Frecuencia " + state.frequencyRatio;
   for (const button of presetButtons) {
     const selected = Math.abs(fraction - Number(button.dataset.fraction)) < 1e-9;
     button.classList.toggle("active", selected);
