@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#100d13">
+  <meta name="description" content="Un monocordio pitagórico virtual para explorar con el oído la relación entre longitud, frecuencia e intervalos musicales.">
+  <title>Monocordio pitagórico | La música de las esferas</title>
+  <link rel="stylesheet" href="./estilos.css">
+  <script type="module" src="./monocordio.mjs"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="topline">
+      <a class="back" href="../../index.html#aplicaciones">← Volver al laboratorio</a>
+      <span class="edition">La música de las esferas · Instrumento I</span>
+    </div>
+    <p class="eyebrow">Laboratorio de armonía antigua</p>
+    <h1>Monocordio <em>pitagórico</em></h1>
+    <p class="lead">Mueve el puente, pulsa la cuerda y escucha cómo una proporción se transforma en un intervalo.</p>
+  </header>
+
+  <main>
+    <section class="instrument-panel" aria-labelledby="instrument-heading">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">01 · Experimentación</p>
+          <h2 id="instrument-heading">La cuerda y el número</h2>
+        </div>
+        <span class="indicator" id="interval-name">Unísono</span>
+      </div>
+
+      <div class="instrument-frame">
+        <svg id="monochord" viewBox="0 0 1000 350" role="img" aria-label="Monocordio de una cuerda con puente móvil. Controla la posición también mediante el deslizador situado debajo.">
+          <defs>
+            <linearGradient id="timber" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#9b6938"/>
+              <stop offset=".43" stop-color="#6f4328"/>
+              <stop offset="1" stop-color="#38261e"/>
+            </linearGradient>
+            <linearGradient id="bridgewood" x1="0" x2="1">
+              <stop offset="0" stop-color="#ecd2a0"/>
+              <stop offset=".52" stop-color="#b88a55"/>
+              <stop offset="1" stop-color="#70472c"/>
+            </linearGradient>
+            <pattern id="grain" width="160" height="52" patternUnits="userSpaceOnUse">
+              <path d="M0 10 C40 8 78 18 160 9 M0 25 C70 18 90 36 160 24 M0 45 C60 35 110 51 160 43" stroke="#eac084" stroke-opacity=".14" fill="none" stroke-width="2"/>
+            </pattern>
+          </defs>
+          <rect x="33" y="44" width="934" height="268" rx="25" fill="#0b080c" opacity=".65"/>
+          <rect x="38" y="32" width="924" height="268" rx="22" fill="url(#timber)" stroke="#d6a76f" stroke-width="3"/>
+          <rect x="43" y="38" width="914" height="257" rx="18" fill="url(#grain)"/>
+          <rect x="57" y="59" width="886" height="216" rx="14" fill="none" stroke="#e7c38d" stroke-opacity=".36" stroke-width="2"/>
+          <path d="M 75 215 L 925 215" stroke="#271a18" stroke-opacity=".65" stroke-width="2"/>
+          <path d="M 75 222 L 925 222" stroke="#d7aa70" stroke-opacity=".28" stroke-width="1"/>
+
+          <g aria-hidden="true">
+            <rect x="73" y="112" width="26" height="92" rx="7" fill="#282026" stroke="#ddb775" stroke-width="4"/>
+            <circle cx="86" cy="157" r="10" fill="#f0cf83" stroke="#6b4928" stroke-width="3"/>
+            <rect x="903" y="112" width="26" height="92" rx="7" fill="#282026" stroke="#ddb775" stroke-width="4"/>
+            <circle cx="914" cy="157" r="10" fill="#f0cf83" stroke="#6b4928" stroke-width="3"/>
+          </g>
+
+          <line x1="86" y1="79" x2="914" y2="79" stroke="#edd4a8" stroke-opacity=".35" stroke-width="2"/>
+          <g stroke="#efd2a3" stroke-opacity=".62">
+            <path d="M86 72 v14 M293 74 v10 M500 72 v14 M707 74 v10 M914 72 v14" stroke-width="2"/>
+          </g>
+          <g fill="#ffedc5" font-size="18" text-anchor="middle" font-family="Georgia, serif">
+            <text x="86" y="106">0</text><text x="293" y="106">¼</text><text x="500" y="106">½</text><text x="707" y="106">¾</text><text x="914" y="106">1</text>
+          </g>
+          <line id="remaining-string" x1="914" y1="157" x2="914" y2="157" stroke="#5f4540" stroke-width="4"/>
+          <path id="active-string" d="M86 157 L914 157" fill="none" stroke="#fff1bc" stroke-width="3.6" stroke-linecap="round"/>
+          <g id="bridge" transform="translate(914 0)" data-bridge>
+            <rect x="-28" y="88" width="56" height="154" fill="transparent"/>
+            <path d="M -14 210 L -12 154 L 0 139 L 12 154 L 14 210 Z" fill="url(#bridgewood)" stroke="#301e17" stroke-width="3"/>
+            <path d="M-16 215 L16 215 L12 224 L-12 224Z" fill="#281a18"/>
+            <circle cx="0" cy="118" r="13" fill="#f8d99a" stroke="#594127" stroke-width="3"/>
+            <path d="M0 106 v24 M-12 118 h24" stroke="#755134" stroke-width="2"/>
+          </g>
+          <text x="500" y="260" text-anchor="middle" fill="#ecd0a0" font-size="17" font-family="Georgia,serif" letter-spacing="3">MONOCHORDUM</text>
+        </svg>
+      </div>
+
+      <div class="controls">
+        <label for="length-control" class="control-heading">Longitud vibrante de la cuerda</label>
+        <input type="range" id="length-control" min="0.25" max="1" step="0.001" value="1" aria-describedby="slider-help">
+        <p class="helper" id="slider-help">Arrastra el puente sobre el instrumento o utiliza este control con el teclado. El extremo izquierdo corresponde a la cuerda de longitud cero y no puede alcanzarse.</p>
+        <div class="preset-label">Puntos de referencia</div>
+        <div class="presets" role="group" aria-label="Proporciones musicales">
+          <button type="button" data-fraction="1" class="preset active" aria-pressed="true">1:1 <span>Unísono</span></button>
+          <button type="button" data-fraction="0.5" class="preset" aria-pressed="false">1:2 <span>Octava</span></button>
+          <button type="button" data-fraction="0.6666666666666666" class="preset" aria-pressed="false">2:3 <span>Quinta</span></button>
+          <button type="button" data-fraction="0.75" class="preset" aria-pressed="false">3:4 <span>Cuarta</span></button>
+          <button type="button" data-fraction="0.8888888888888888" class="preset" aria-pressed="false">8:9 <span>Tono</span></button>
+        </div>
+        <div class="sound-actions">
+          <button type="button" id="play-current" class="primary">▶ Pulsar cuerda</button>
+          <button type="button" id="play-open" class="secondary">Escuchar cuerda completa</button>
+          <button type="button" id="play-compare" class="secondary">Comparar ambas</button>
+        </div>
+        <p id="audio-status" class="audio-status" role="status" aria-live="polite">El sonido se activa al pulsar uno de los controles.</p>
+      </div>
+    </section>
+
+    <section class="readings" aria-label="Medidas del monocordio">
+      <article><p>Longitud vibrante</p><strong id="length-value">100,0 %</strong><span id="length-ratio">1:1 de la cuerda</span></article>
+      <article><p>Frecuencia resultante</p><strong id="frequency-value">220,00 Hz</strong><span>Fundamental de referencia: 220 Hz</span></article>
+      <article><p>Relación entre frecuencias</p><strong id="frequency-ratio">1:1</strong><span>Respecto de la cuerda completa</span></article>
+    </section>
+
+    <section class="explainer" aria-labelledby="formula-title">
+      <div>
+        <p class="eyebrow">02 · Fundamento físico</p>
+        <h2 id="formula-title">La proporción que se escucha</h2>
+        <p>Si la tensión y la densidad lineal permanecen constantes, la frecuencia fundamental es inversamente proporcional a la longitud de la parte vibrante.</p>
+        <div class="equation" aria-label="f prima dividido entre f cero es igual a L dividido entre L prima, igual a uno dividido entre x">f′ / f₀ = L / L′ = 1 / x</div>
+        <p>En este laboratorio <em>x</em> es la fracción vibrante de la cuerda y <em>f₀</em> se fija en 220 Hz. Acortar la cuerda a la mitad eleva el sonido una octava.</p>
+      </div>
+      <aside>
+        <h3>Nota sobre la reconstrucción</h3>
+        <p>El modelo representa un monocordio ideal y utiliza síntesis digital de cuerda pulsada. Las relaciones acústicas son exactas dentro del modelo; el timbre no pretende reproducir fielmente un instrumento antiguo.</p>
+        <p>Las atribuciones tradicionales del descubrimiento a Pitágoras deben distinguirse de la evidencia histórica disponible.</p>
+      </aside>
+    </section>
+  </main>
+  <footer>La música de las esferas · Laboratorio digital · <a href="../../index.html#aplicaciones">Alevi Peña</a></footer>
+  <noscript>Activa JavaScript para mover el puente y escuchar el instrumento.</noscript>
+</body>
+</html>
