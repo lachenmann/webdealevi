@@ -2,6 +2,7 @@ import {
   DIATONIC_STEPS, PYTHAGOREAN_COMMA, makeCollection,
   nextFifth, STEP_MIN, STEP_MAX
 } from "./escala-core.mjs";
+import {notationForNote} from "./notacion-core.mjs";
 
 const el = id => document.getElementById(id);
 const svg = el("pythagorean-score");
@@ -16,10 +17,13 @@ let fifthSteps = [...DIATONIC_STEPS];
 let audioContext = null;
 let activeStep = null;
 let scheduledTimeout = null;
+let notationMode = "exact";
+let notationSubdivision = "quarter";
+let hasSmuflFont = false;
 
 function centsLabel(cents) {
-  if (Math.abs(cents) < 0.05) return "0,0 ¢";
-  return (cents > 0 ? "+" : "−") + number(Math.abs(cents)) + " ¢";
+  if (Math.abs(cents) < 0.05) return "0,00 ¢";
+  return (cents > 0 ? "+" : "−") + number(Math.abs(cents), 2) + " ¢";
 }
 
 function svgElement(tag, attrs = {}, text = null) {
@@ -30,56 +34,76 @@ function svgElement(tag, attrs = {}, text = null) {
 }
 
 function drawScore(notes) {
-  const width = Math.max(760, 135 + notes.length * 103);
+  const spacing = 136;
+  const width = Math.max(760, 170 + notes.length * spacing);
   svg.setAttribute("viewBox", `0 0 ${width} 315`);
-  svg.style.width = `${width}px`;
-  svg.setAttribute("aria-label", "Notas pitagóricas en clave de sol: " +
-    notes.map(note => `${note.name}, ${centsLabel(note.centsFrom12TET)}`).join("; "));
+  svg.style.width = width + "px";
+  svg.setAttribute("aria-label","Notas pitagóricas: " + notes.map(note=>{
+    const representation=notationForNote(note,notationMode,notationSubdivision);
+    return note.name + ", desviación total " + centsLabel(representation.totalCents) +
+      (notationMode==="contemporary" ? ", glifo " + centsLabel(representation.indicatedCents) +
+      ", ajuste residual " + centsLabel(representation.residualCents) : "");
+  }).join("; "));
   svg.replaceChildren();
-  svg.append(svgElement("rect", { x: 0, y: 0, width, height: 315, fill: "#111116" }));
-
-  const from = 65, to = width - 18;
-  for (const y of [112, 132, 152, 172, 192]) {
-    svg.append(svgElement("line", { x1: from, y1: y, x2: to, y2: y,
-      stroke: "#b9b2aa", "stroke-width": 1.4 }));
+  svg.append(svgElement("rect", { x:0, y:0, width, height:315, fill:"#111116" }));
+  const from = 65, to = width-18;
+  for(const y of [112,132,152,172,192]){
+    svg.append(svgElement("line", {x1:from,y1:y,x2:to,y2:y,stroke:"#b9b2aa","stroke-width":1.4}));
   }
   svg.append(svgElement("text", {
-    x: 17, y: 194, fill: "#e8cd9a", "font-size": 75,
-    "font-family": "'Noto Music','Apple Symbols','Segoe UI Symbol',serif"
-  }, "𝄞"));
+    x:17,y:194,fill:"#e8cd9a","font-size":75,
+    "font-family":"'Noto Music','Apple Symbols','Segoe UI Symbol',serif"
+  },"𝄞"));
 
-  notes.forEach((note, index) => {
-    const x = 118 + index * 103;
-    const y = letters[note.letter];
-    const positive = note.centsFrom12TET > 0.05;
-    const negative = note.centsFrom12TET < -0.05;
-    if (note.letter === "C") {
-      svg.append(svgElement("line", { x1: x - 18, y1: 212, x2: x + 19, y2: 212,
-        stroke: "#cbc3b7", "stroke-width": 2 }));
+  notes.forEach((note,index)=>{
+    const x=134+index*spacing;
+    const y=letters[note.letter];
+    const representation=notationForNote(note,notationMode,notationSubdivision);
+    const total=representation.totalCents;
+    const positive=total>0.0001, negative=total< -0.0001;
+    if(note.letter==="C") {
+      svg.append(svgElement("line",{x1:x-18,y1:212,x2:x+19,y2:212,
+        stroke:"#cbc3b7","stroke-width":2}));
     }
-    if (note.accidental !== 0) {
+    if(note.accidental!==0){
       svg.append(svgElement("text", {
-        x: x - 34, y: y + 8, "font-family": "Georgia,serif",
-        "font-size": 28, fill: "#e8d3b8"
-      }, note.accidental === 1 ? "♯" : "♭"));
+        x: x - (representation.step ? 44 : 32), y:y+9,
+        "font-family":hasSmuflFont?"BravuraMonocordio":"Georgia,serif",
+        "font-size":hasSmuflFont?34:29,fill:"#e8d3b8","text-anchor":"middle"
+      },hasSmuflFont?String.fromCodePoint(representation.standardGlyph):
+        (note.accidental===1?"♯":"♭")));
     }
-    svg.append(svgElement("line", { x1: x + 10, y1: y, x2: x + 10, y2: y - 38,
-      stroke: "#f6eee3", "stroke-width": 2.3 }));
-    svg.append(svgElement("ellipse", {
-      cx: x, cy: y, rx: 11.5, ry: 7.7, fill: "#f4e4cc",
-      transform: `rotate(-19 ${x} ${y})`
+    if(notationMode==="contemporary" && representation.step){
+      const useGlyph=representation.isSmufl && hasSmuflFont;
+      svg.append(svgElement("text",{
+        x:useGlyph ? x-77 : x-106, y:y+8,
+        "font-family":useGlyph?"BravuraMonocordio":"Georgia,serif",
+        "font-size":useGlyph?31:14,fill:"#9fdac1",
+        "text-anchor":useGlyph?"middle":"start"
+      },useGlyph?String.fromCodePoint(representation.glyphCodepoint):representation.fallback));
+    }
+    svg.append(svgElement("line",{x1:x+10,y1:y,x2:x+10,y2:y-38,
+      stroke:"#f6eee3","stroke-width":2.3}));
+    svg.append(svgElement("ellipse",{
+      cx:x,cy:y,rx:11.5,ry:7.7,fill:"#f4e4cc",
+      transform:`rotate(-19 ${x} ${y})`
     }));
-    svg.append(svgElement("text", {
-      x, y: 65, "text-anchor": "middle", "font-size": 16,
-      "font-weight": "600", fill: positive || negative ? "#a1e3c6" : "#eacb9e"
-    }, (positive ? "↑ " : negative ? "↓ " : "") + centsLabel(note.centsFrom12TET)));
-    svg.append(svgElement("text", {
-      x, y: 261, "text-anchor": "middle", "font-size": 16,
-      "font-family": "Georgia,serif", fill: "#f4dcaf"
-    }, note.name));
-    svg.append(svgElement("text", {
-      x, y: 288, "text-anchor": "middle", "font-size": 13, fill: "#aea6aa"
-    }, note.ratioNumerator + "/" + note.ratioDenominator));
+    svg.append(svgElement("text",{
+      x,y:58,"text-anchor":"middle","font-size":15,"font-weight":"600",
+      fill:positive||negative?"#a1e3c6":"#eacb9e"
+    },"total "+centsLabel(total)));
+    if(notationMode==="contemporary") {
+      svg.append(svgElement("text",{
+        x,y:239,"text-anchor":"middle","font-size":13,fill:"#9fdac1"
+      },"res. "+centsLabel(representation.residualCents)));
+    }
+    svg.append(svgElement("text",{
+      x,y:265,"text-anchor":"middle","font-size":17,
+      "font-family":"Georgia,serif",fill:"#f4dcaf"
+    },note.name));
+    svg.append(svgElement("text",{
+      x,y:291,"text-anchor":"middle","font-size":13,fill:"#aea6aa"
+    },note.ratioNumerator+"/"+note.ratioDenominator));
   });
 }
 
@@ -229,3 +253,16 @@ el("play-pythagorean-scale").addEventListener("click", async () => {
 });
 
 render();
+
+window.addEventListener("monocordio-notation-change",event=>{
+  const requestedMode=event.detail?.mode;
+  const requestedSystem=event.detail?.system;
+  if(!["exact","contemporary"].includes(requestedMode))return;
+  notationMode=requestedMode;
+  notationSubdivision=requestedSystem;
+  render();
+});
+window.addEventListener("monocordio-smufl-ready",event=>{
+  hasSmuflFont=event.detail?.ready===true;
+  render();
+});
