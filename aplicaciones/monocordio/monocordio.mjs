@@ -7,6 +7,7 @@ const $ = id => document.getElementById(id);
 const svg = $("monochord");
 const bridge = $("bridge");
 const activeString = $("active-string");
+const hitString = $("hit-string");
 const remainingString = $("remaining-string");
 const slider = $("length-control");
 const status = $("audio-status");
@@ -35,6 +36,7 @@ function updateUI(value) {
   if (animationFrame) cancelAnimationFrame(animationFrame);
   animationFrame = 0;
   activeString.setAttribute("d", stringPath());
+  hitString.setAttribute("d", stringPath());
   remainingString.setAttribute("x1", String(x));
   bridge.setAttribute("transform", `translate(${x} 0)`);
   slider.value = String(fraction);
@@ -66,6 +68,9 @@ svg.addEventListener("pointerdown", event => {
     pointerId = event.pointerId;
     svg.setPointerCapture(pointerId);
     updateUI(coordinateToFraction(event));
+    event.preventDefault();
+  } else if (event.target.closest("[data-pluck]")) {
+    void pluckSelected();
     event.preventDefault();
   }
 });
@@ -152,14 +157,15 @@ function animateVibration() {
   animationFrame = requestAnimationFrame(step);
 }
 
-$("play-current").addEventListener("click", async () => {
+async function pluckSelected() {
   const ctx = await getAudioContext();
   if (!ctx) return;
   const model = describeFraction(fraction);
   soundPluck(ctx, model.frequencyHz);
   animateVibration();
   status.textContent = `Cuerda pulsada: ${format(model.frequencyHz)} Hz (${model.intervalName.toLowerCase()}).`;
-});
+}
+$("play-current").addEventListener("click", pluckSelected);
 
 $("play-open").addEventListener("click", async () => {
   const ctx = await getAudioContext();
