@@ -27,6 +27,44 @@ El pentagrama representa **alturas**, no una partitura rítmica. Presenta clave 
 
 **Importante:** un símbolo genérico de cuarto de tono suele denotar 50 cents y no serviría para representar fielmente las desviaciones pitagóricas de pocos cents o la coma de 23,46 cents. Por ello esta versión utiliza notación de altura + corrección numérica. Podrá añadirse una representación alternativa de alteraciones específicas de coma (p. ej. HEJI) en una etapa posterior con revisión de grafías y fuentes musicales.
 
+## v1.2 — Convención de notación avanzada
+
+Se ofrecen dos modos para la escala pitagórica, sin afectar jamás los datos acústicos:
+
+1. **Pitagórico exacto:** nota, alteración convencional y cents **totales** respecto de 12-TET, La4 = 440 Hz.
+2. **Contemporáneo:** nota, alteración usual, signo fraccionario cuando procede y cents **residuales**, además de mostrar los cents totales para control.
+
+Se emplea la descomposición matemática:
+
+```text
+cents totales = cents del signo fraccionario + cents residuales
+```
+
+Por ejemplo **Do4 +64,00 cents** (referencia Do4 del temperamento igual) puede escribirse con un signo de **¼ de tono ascendente (+50,00 cents)** y **corrección residual +14,00 cents**. La corrección no se suma dos veces. Para las notas pitagóricas habituales, cuya desviación es muy pequeña, es correcto que no aparezca un signo de cuarto de tono; se mantiene la alteración convencional y su desviación en cents.
+
+### Fracciones y signos
+
+| Subdivisión | Valor convencional | Grafía |
+| --- | ---: | --- |
+| ¼ tono | 50 cents | Ferneyhough, SMuFL E48E/E48F |
+| ⅙ tono | 33⅓ cents | Sims, SMuFL E2A4/E2A1 |
+| ⅛ tono | 25 cents | Texto literal «⅛ tono» (sin reivindicar un glifo SMuFL propio) |
+| ⅓ tono | 66⅔ cents | Ferneyhough, SMuFL E48A/E48B |
+
+Los glifos SMuFL se cargan mediante Bravura (Steinberg, licencia SIL Open Font License) desde un CDN público. Si el navegador está sin conexión o la fuente no carga, los controles presentan **etiquetas textuales** de fracción de tono con dirección, y las alteraciones convencionales se dibujan con Unicode. La ausencia de la fuente no altera el audio ni los cálculos.
+
+El explorador trabaja con **Do4 temperado**, cuya frecuencia es `440·2^(−9/12) ≈ 261,626 Hz`. Esto es deliberadamente distinto de Do4 pitagórico (`440·16/27 ≈ 260,741 Hz`). Cambiar la grafía en el explorador conserva el desplazamiento total y la frecuencia.
+
+La flecha de una etiqueta numérica es únicamente direccional; **las flechas integradas en un glifo pertenecen al valor semántico propio de esa familia de signos**. No deben interpretarse arbitrariamente como comas pitagóricas o sintónicas.
+
+Fuentes de los códigos de glifos y sistemas:
+- https://smufl.formats.music/latest/tables/other-accidentals.html
+- https://smufl.formats.music/latest/tables/sims-accidentals-72-edo.html
+- https://smufl.formats.music/latest/tables/extended-stein-zimmermann-accidentals.html
+- https://github.com/steinbergmedia/bravura (licencia OFL)
+
+**Limitaciones:** la sección dibuja una secuencia de alturas (no una partitura rítmica con reglas de vigencia de alteraciones). El modo contemporáneo no pretende copiar una obra particular de Grisey o Ferneyhough; adopta signos concretos de familias documentadas y define expresamente su interpretación numérica. El soporte de ⅛ de tono es deliberadamente textual hasta validar una convención y una tipografía específicas.
+
 ## Uso
 
 Abrir `aplicaciones/monocordio/index.html` desde un servidor web estático (necesario para los módulos ES). Los controles de quinta amplían el conjunto de alturas hasta seis pasos a cada lado; el preset de siete notas y la comparación de coma sustituyen temporalmente la colección actual.
