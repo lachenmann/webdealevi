@@ -1,5 +1,5 @@
 import {
-  BASE_FREQUENCY, INTERVALS,
+  BASE_FREQUENCY, INTERVALS, INTERVAL_GROUPS,
   normalizeFraction, describeFraction
 } from "./core.mjs";
 
@@ -11,7 +11,46 @@ const hitString = $("hit-string");
 const remainingString = $("remaining-string");
 const slider = $("length-control");
 const status = $("audio-status");
-const presetButtons = [...document.querySelectorAll("[data-fraction]")];
+const ratioGroups = $("ratio-groups");
+const presetButtons = [];
+
+function renderIntervalCatalog() {
+  const details = document.createDocumentFragment();
+  for (const group of INTERVAL_GROUPS) {
+    const items = INTERVALS.filter(item => item.group === group.id);
+    const panel = document.createElement("details");
+    panel.className = "ratio-group";
+    panel.open = ["fundamentales","escala"].includes(group.id);
+    const summary = document.createElement("summary");
+    summary.textContent = group.label + " (" + items.length + ")";
+    panel.append(summary);
+    const buttons = document.createElement("div");
+    buttons.className = "presets";
+    buttons.setAttribute("role", "group");
+    buttons.setAttribute("aria-label", group.label);
+    for (const interval of items) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "preset";
+      button.dataset.fraction = String(interval.fraction);
+      button.dataset.intervalId = interval.id;
+      button.setAttribute("aria-pressed", "false");
+      button.setAttribute("aria-label", interval.name + ": longitud " +
+        interval.numerator + " a " + interval.denominator +
+        "; frecuencia " + interval.denominator + " a " + interval.numerator);
+      button.append(document.createTextNode(interval.numerator + ":" + interval.denominator));
+      const label = document.createElement("span");
+      label.textContent = interval.name;
+      button.append(label);
+      presetButtons.push(button);
+      buttons.append(button);
+    }
+    panel.append(buttons);
+    details.append(panel);
+  }
+  ratioGroups.replaceChildren(details);
+}
+renderIntervalCatalog();
 const xStart = 86;
 const xEnd = 914;
 const yString = 157;
@@ -46,6 +85,8 @@ function updateUI(value) {
   $("length-ratio").textContent = `${state.lengthRatio} de la cuerda`;
   $("frequency-value").textContent = `${format(state.frequencyHz)} Hz`;
   $("frequency-ratio").textContent = state.frequencyRatio;
+  $("selected-ratio-svg-label").textContent =
+    "Longitud " + state.lengthRatio + " · Frecuencia " + state.frequencyRatio;
   for (const button of presetButtons) {
     const selected = Math.abs(fraction - Number(button.dataset.fraction)) < 1e-9;
     button.classList.toggle("active", selected);

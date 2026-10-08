@@ -1,0 +1,38 @@
+/* Monocordio v1.2 · notación avanzada — glifos de fuente de referencia SMuFL */
+@font-face{
+  font-family:"BravuraMonocordio";
+  src:url("https://cdn.jsdelivr.net/gh/steinbergmedia/bravura@master/redist/woff/Bravura.woff2") format("woff2");
+  font-weight:normal;font-style:normal;font-display:swap;
+}
+.notation-settings{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.notation-control{display:flex;flex-direction:column;gap:8px}
+.notation-control label{color:#f1d4a5;font-size:.83rem;letter-spacing:.015em}
+.notation-control select{width:100%;min-width:0;background:#211a24;color:var(--text);border:1px solid #91704c;border-radius:9px;padding:12px 9px}
+.notation-interpretation{font-size:.85rem;color:#bcb3b9;line-height:1.55;margin:7px 0 17px;border-left:2px solid #ab8a5f;padding-left:12px}
+.notation-smufl{font-family:"BravuraMonocordio","Noto Music",serif}
+.fraction-lab{background:#15131a;border:1px solid #55443d;border-radius:13px;margin:22px 0;padding:19px 22px}
+.fraction-intro h3{font-size:1.35rem;margin:0;color:#f8dba9}
+.fraction-intro p{margin:9px 0 18px;font-size:.88rem;max-width:780px;color:#c9bcc0}
+.fraction-preset-row{display:flex;flex-wrap:wrap;gap:8px}
+.fraction-preset-row button{border-radius:8px;border:1px solid #785d49;color:#ffe2af;background:#302630;padding:7px 14px;font-weight:600}
+.fraction-preset-row button:hover,.fraction-preset-row button[aria-pressed="true"]{background:#5a3e30;border-color:#cba36e}
+.fraction-workbench{display:grid;grid-template-columns:minmax(185px,1fr) minmax(280px,1.4fr);gap:24px;padding-top:21px}
+.fraction-slider label{display:flex;justify-content:space-between;gap:9px;align-items:center;flex-wrap:wrap;font-size:.87rem}
+.fraction-slider label strong{font-variant-numeric:tabular-nums;color:#f3d49e}
+.fraction-slider input{display:block;width:100%;margin:21px 0 13px;accent-color:var(--gold)}
+.fraction-slider p{color:#c1b2b9;font-size:.82rem}
+.fraction-slider button{border:1px solid #a78b65;border-radius:9px;padding:11px 15px}
+.fraction-preview{background:#0d1014;border:1px solid #404449;border-radius:11px;padding:4px 12px 12px;min-width:0}
+#fraction-score{width:100%;max-width:480px;display:block;margin:auto}
+.fraction-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;margin:8px 0 0}
+.fraction-metrics span{color:#aaadb3;font-size:.77rem}
+.fraction-metrics strong{display:block;color:#e9ddc7;font-size:.92rem;font-variant-numeric:tabular-nums}
+.fraction-license{color:#b6a9ad;font-size:.78rem;margin:17px 0 0;line-height:1.55}
+@media(max-width:780px){
+  .notation-settings,.fraction-workbench{grid-template-columns:1fr}
+  .fraction-lab{padding:16px 13px}
+  .fraction-metrics{grid-template-columns:1fr 1fr}
+}
+
+.font-status{font-size:.78rem;color:#c4b6ae;margin:8px 0 14px;padding:7px 10px;
+  border-left:2px solid #9b825c;background:#1c191f;border-radius:0 5px 5px 0}

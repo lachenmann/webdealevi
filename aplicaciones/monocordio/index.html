@@ -9,7 +9,9 @@
   <link rel="stylesheet" href="./estilos.css">
   <script type="module" src="./monocordio.mjs"></script>
   <script type="module" src="./escala.mjs"></script>
+  <script type="module" src="./notacion-ui.mjs"></script>
   <link rel="stylesheet" href="./escala.css">
+  <link rel="stylesheet" href="./notacion.css">
 </head>
 <body>
   <header class="site-header">
@@ -49,6 +51,10 @@
               <path d="M0 10 C40 8 78 18 160 9 M0 25 C70 18 90 36 160 24 M0 45 C60 35 110 51 160 43" stroke="#eac084" stroke-opacity=".14" fill="none" stroke-width="2"/>
             </pattern>
           </defs>
+          <text id="selected-ratio-svg-label" x="500" y="21" text-anchor="middle"
+                fill="#efcf98" font-size="17" font-family="Georgia,serif" aria-hidden="true">
+            Longitud 1:1 · Frecuencia 1:1
+          </text>
           <rect x="33" y="44" width="934" height="268" rx="25" fill="#0b080c" opacity=".65"/>
           <rect x="38" y="32" width="924" height="268" rx="22" fill="url(#timber)" stroke="#d6a76f" stroke-width="3"/>
           <rect x="43" y="38" width="914" height="257" rx="18" fill="url(#grain)"/>
@@ -87,15 +93,10 @@
       <div class="controls">
         <label for="length-control" class="control-heading">Longitud vibrante de la cuerda</label>
         <input type="range" id="length-control" min="0.25" max="1" step="0.001" value="1" aria-describedby="slider-help">
-        <p class="helper" id="slider-help">Arrastra el puente sobre el instrumento o utiliza este control con el teclado. El extremo izquierdo corresponde a la cuerda de longitud cero y no puede alcanzarse.</p>
-        <div class="preset-label">Puntos de referencia</div>
-        <div class="presets" role="group" aria-label="Proporciones musicales">
-          <button type="button" data-fraction="1" class="preset active" aria-pressed="true">1:1 <span>Unísono</span></button>
-          <button type="button" data-fraction="0.5" class="preset" aria-pressed="false">1:2 <span>Octava</span></button>
-          <button type="button" data-fraction="0.6666666666666666" class="preset" aria-pressed="false">2:3 <span>Quinta</span></button>
-          <button type="button" data-fraction="0.75" class="preset" aria-pressed="false">3:4 <span>Cuarta</span></button>
-          <button type="button" data-fraction="0.8888888888888888" class="preset" aria-pressed="false">8:9 <span>Tono</span></button>
-        </div>
+        <p class="helper" id="slider-help">Arrastra el puente sobre el instrumento o utiliza este control con el teclado. La longitud vibrante puede variar desde ¼ de cuerda hasta la cuerda completa; la longitud cero queda excluida. Las razones exactas se seleccionan en el catálogo de abajo.</p>
+        <div class="preset-label">Explorador de razones pitagóricas</div>
+        <p class="ratio-help">Cada botón representa una fracción exacta de <strong>longitud vibrante</strong>. Su relación de frecuencias es la inversa; las frecuencias se calculan con la razón exacta, incluso si el deslizador redondea su posición.</p>
+        <div id="ratio-groups" class="ratio-groups" aria-label="Intervalos pitagóricos por categorías"></div>
         <div class="sound-actions">
           <button type="button" id="play-current" class="primary">▶ Pulsar cuerda</button>
           <button type="button" id="play-open" class="secondary">Escuchar cuerda completa</button>
@@ -141,6 +142,28 @@
         <button type="button" id="reset-scale" class="scale-control">Reiniciar</button>
       </div>
       <p class="scale-chain" id="fifths-chain" aria-live="polite">Cadena de quintas: Do</p>
+      <div class="notation-settings" aria-label="Opciones de escritura musical">
+        <div class="notation-control">
+          <label for="notation-mode">Representación de la escala</label>
+          <select id="notation-mode">
+            <option value="exact">Pitagórica: alteración usual + cents totales</option>
+            <option value="contemporary">Contemporánea: fracción + cents residuales</option>
+          </select>
+        </div>
+        <div class="notation-control">
+          <label for="fraction-system">Fracción de tono representada</label>
+          <select id="fraction-system">
+            <option value="quarter">¼ tono · 50 cents (Stein–Zimmermann: medio sostenido / bemol invertido)</option>
+            <option value="quarter-ferneyhough">¼ tono · 50 cents (Ferneyhough: signos con cifra)</option>
+            <option value="sixth">⅙ tono · 33,33… cents (Sims)</option>
+            <option value="eighth">⅛ tono · 25 cents (texto explícito)</option>
+            <option value="third">⅓ tono · 66,67… cents (Ferneyhough)</option>
+            <option value="two-thirds">⅔ tono · 133,33… cents (Ferneyhough)</option>
+            <option value="three-quarters-grisey">¾ tono · 150 cents (bemol Grisey)</option>
+          </select>
+        </div>
+      </div>
+      <p id="notation-mode-description" class="notation-interpretation">La escala conserva su altura pitagórica; las cifras sobre el pentagrama indican desviaciones totales respecto de 12-TET.</p>
       <div class="score-block">
         <div class="score-heading">
           <h3>Notación microtonal</h3>
@@ -149,9 +172,45 @@
         <div class="score-scroll" tabindex="0" role="region" aria-label="Pentagrama desplazable horizontalmente">
           <svg id="pythagorean-score" viewBox="0 0 760 320" role="img" aria-label="Pentagrama con las notas seleccionadas y sus desviaciones en cents"></svg>
         </div>
-        <p class="score-legend"><strong>Lectura:</strong> altura y alteración convencional en el pentagrama; <span>↑ +n,n ¢</span> o <span>↓ −n,n ¢</span> indican la desviación respecto del temperamento igual de doce semitonos (12-TET) con La4 = 440 Hz. La cifra en cents, no la flecha, determina el ajuste exacto. No se emplean signos de cuarto de tono.</p>
+        <p class="score-legend"><strong>Lectura:</strong> los símbolos especiales siguen una convención indicada en el selector; <strong>↑/↓ en una etiqueta no suma un intervalo</strong>. El número <strong>total</strong> es siempre la desviación frente a 12-TET (La4 = 440 Hz). En el modo contemporáneo el valor <strong>res.</strong> se suma al valor definido del signo musical: <strong>total = signo + residual</strong>. Los signos de Ferneyhough pueden incorporar cifras como parte de su grafía; para cuartos de tono se ofrece por defecto la variante Stein–Zimmermann.</p>
       </div>
 
+      <p id="smufl-font-status" class="font-status" role="status" aria-live="polite">Verificando fuente musical de notación…</p>
+      <div class="fraction-lab" id="fraction-lab" aria-labelledby="fraction-lab-title">
+        <div class="fraction-intro">
+          <h3 id="fraction-lab-title">Explorador de escritura microtonal</h3>
+          <p>Demostración independiente: modifica la altura del Do4 temperado, observa cómo se descompone en un glifo fraccionario y un ajuste residual en cents, y escucha la frecuencia resultante.</p>
+        </div>
+        <div class="fraction-preset-row" role="group" aria-label="Ejemplos de alteración en cents">
+          <button type="button" data-offset="64">+64 ¢</button>
+          <button type="button" data-offset="-64">−64 ¢</button>
+          <button type="button" data-offset="25">+25 ¢</button>
+          <button type="button" data-offset="-33.3333333333333">−⅙ tono</button>
+          <button type="button" data-offset="66.6666666666667">+⅓ tono</button>
+          <button type="button" data-offset="133.3333333333333">+⅔ tono</button>
+          <button type="button" data-offset="-150">−¾ tono (Grisey)</button>
+          <button type="button" data-offset="0">0 ¢</button>
+        </div>
+        <div class="fraction-workbench">
+          <div class="fraction-slider">
+            <label for="demo-cents">Alteración total del Do4 temperado <strong id="demo-cents-label">+64,00 ¢</strong></label>
+            <input id="demo-cents" type="range" min="-170" max="170" step="0.1" value="64">
+            <p>Referencia: Do4 = 261,63 Hz (12-TET, La4 = 440 Hz). El ajuste en cents es respecto de esa nota, no del Do pitagórico.</p>
+            <button type="button" class="primary" id="play-demo-note">♪ Escuchar ejemplo</button>
+            <p id="demo-sound-status" role="status" aria-live="polite"></p>
+          </div>
+          <div class="fraction-preview">
+            <svg id="fraction-score" viewBox="0 0 480 240" role="img" aria-label="Pentagrama con la notación y corrección residual de la nota de ejemplo"></svg>
+            <div class="fraction-metrics" aria-live="polite">
+              <span>Glifo: <strong id="demo-symbol-name">¼ tono ascendente</strong></span>
+              <span>Desplazamiento del glifo: <strong id="demo-symbol-cents">+50,00 ¢</strong></span>
+              <span>Corrección adicional: <strong id="demo-residual">+14,00 ¢</strong></span>
+              <span>Frecuencia: <strong id="demo-frequency">271,48 Hz</strong></span>
+            </div>
+          </div>
+        </div>
+        <p class="fraction-license">Los signos musicales SMuFL se cargan mediante Bravura (Steinberg, SIL OFL); si no están disponibles, se emplean descripciones textuales inequívocas. Para ⅛ de tono utilizamos deliberadamente una etiqueta textual, no un glifo pretendidamente estándar.</p>
+      </div>
       <div class="scale-grid" id="pythagorean-notes" aria-label="Notas, razones, frecuencias y correcciones microtonales"></div>
       <div class="scale-footer">
         <button type="button" class="primary" id="play-pythagorean-scale">▶ Escuchar notas en orden ascendente</button>
