@@ -33,3 +33,6 @@
   .fraction-lab{padding:16px 13px}
   .fraction-metrics{grid-template-columns:1fr 1fr}
 }
+
+.font-status{font-size:.78rem;color:#c4b6ae;margin:8px 0 14px;padding:7px 10px;
+  border-left:2px solid #9b825c;background:#1c191f;border-radius:0 5px 5px 0}
