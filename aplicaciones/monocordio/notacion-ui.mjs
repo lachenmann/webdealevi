@@ -24,6 +24,12 @@ const make = (tag, attributes = {}, content = null) => {
 let fontReady = false;
 let audioContext = null;
 let demoOffsetCents = 64;
+function updateFontStatus() {
+  const indicator = byId("smufl-font-status");
+  indicator.textContent = fontReady
+    ? "Fuente musical Bravura cargada. Los signos especiales se muestran como glifos SMuFL reales."
+    : "Fuente musical no disponible: los desplazamientos aparecen expresados en cents, sin imitar signos musicales.";
+}
 
 function showDemo() {
   const cents = demoOffsetCents;
@@ -62,7 +68,7 @@ function showDemo() {
       "font-family":glyph?"BravuraMonocordio":"'Georgia',serif",
       "font-size":glyph?36:19,fill:"#f3d5a7",
       "text-anchor":glyph?"middle":"start"
-    },glyph?String.fromCodePoint(notation.glyphCodepoint):notation.fallback));
+    },glyph?String.fromCodePoint(notation.glyphCodepoint):signed(notation.indicatedCents)));
   }
   score.append(make("text",{
     x:318,y:178,"font-size":14,fill:"#a7e1c7"
@@ -130,14 +136,17 @@ byId("play-demo-note").addEventListener("click",async ()=>{
 });
 
 updateMode();
+updateFontStatus();
 if(document.fonts && document.fonts.load) {
   document.fonts.load("36px BravuraMonocordio",String.fromCodePoint(0xE48E))
     .then(fonts=>{
       fontReady=fonts.length>0;
+      updateFontStatus();
       showDemo();
       window.dispatchEvent(new CustomEvent("monocordio-smufl-ready",{detail:{ready:fontReady}}));
     }).catch(()=>{
       fontReady=false;
+      updateFontStatus();
       showDemo();
       window.dispatchEvent(new CustomEvent("monocordio-smufl-ready",{detail:{ready:false}}));
     });
