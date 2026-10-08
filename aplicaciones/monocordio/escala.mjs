@@ -80,7 +80,8 @@ function drawScore(notes) {
         "font-family":useGlyph?"BravuraMonocordio":"Georgia,serif",
         "font-size":useGlyph?31:14,fill:"#9fdac1",
         "text-anchor":useGlyph?"middle":"start"
-      },useGlyph?String.fromCodePoint(representation.glyphCodepoint):representation.fallback));
+      },useGlyph?String.fromCodePoint(representation.glyphCodepoint):
+        centsLabel(representation.indicatedCents)));
     }
     svg.append(svgElement("line",{x1:x+10,y1:y,x2:x+10,y2:y-38,
       stroke:"#f6eee3","stroke-width":2.3}));
