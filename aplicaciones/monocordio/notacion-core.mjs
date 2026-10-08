@@ -8,7 +8,8 @@
  * - la representación jamás altera la frecuencia fuente.
  *
  * SMuFL: quarter (Ferneyhough) E48E/E48F;
- * third (Ferneyhough) E48A/E48B;
+ * third (Ferneyhough) E48A/E48B; two-thirds E48C/E48D;
+ * three-quarter-tone flat (Grisey) E486;
  * sixth (Sims) E2A4/E2A1. La octava parte del tono tiene
  * indicación TEXTUAL «⅛ tono»; no se le atribuye un glifo SMuFL.
  */
@@ -20,7 +21,11 @@ export const NOTATION_SYSTEMS = Object.freeze([
   Object.freeze({ id:"eighth", label:"Octavos de tono", fractionCents:25,
     upGlyph:null, downGlyph:null, family:"Indicador textual", fraction:"⅛" }),
   Object.freeze({ id:"third", label:"Tercios de tono", fractionCents:200/3,
-    upGlyph:0xE48A, downGlyph:0xE48B, family:"Ferneyhough", fraction:"⅓" })
+    upGlyph:0xE48A, downGlyph:0xE48B, family:"Ferneyhough", fraction:"⅓" }),
+  Object.freeze({ id:"two-thirds", label:"Dos tercios de tono", fractionCents:400/3,
+    upGlyph:0xE48C, downGlyph:0xE48D, family:"Ferneyhough", fraction:"⅔" }),
+  Object.freeze({ id:"three-quarters-grisey", label:"Tres cuartos de tono", fractionCents:150,
+    upGlyph:null, downGlyph:0xE486, family:"Grisey (bemol)", fraction:"¾" })
 ]);
 
 export const STANDARD_GLYPHS = Object.freeze({ "-1":0xE260, "0":0xE261, "1":0xE262 });
