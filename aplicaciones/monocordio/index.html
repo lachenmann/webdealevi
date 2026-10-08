@@ -89,15 +89,10 @@
       <div class="controls">
         <label for="length-control" class="control-heading">Longitud vibrante de la cuerda</label>
         <input type="range" id="length-control" min="0.25" max="1" step="0.001" value="1" aria-describedby="slider-help">
-        <p class="helper" id="slider-help">Arrastra el puente sobre el instrumento o utiliza este control con el teclado. El extremo izquierdo corresponde a la cuerda de longitud cero y no puede alcanzarse.</p>
-        <div class="preset-label">Puntos de referencia</div>
-        <div class="presets" role="group" aria-label="Proporciones musicales">
-          <button type="button" data-fraction="1" class="preset active" aria-pressed="true">1:1 <span>Unísono</span></button>
-          <button type="button" data-fraction="0.5" class="preset" aria-pressed="false">1:2 <span>Octava</span></button>
-          <button type="button" data-fraction="0.6666666666666666" class="preset" aria-pressed="false">2:3 <span>Quinta</span></button>
-          <button type="button" data-fraction="0.75" class="preset" aria-pressed="false">3:4 <span>Cuarta</span></button>
-          <button type="button" data-fraction="0.8888888888888888" class="preset" aria-pressed="false">8:9 <span>Tono</span></button>
-        </div>
+        <p class="helper" id="slider-help">Arrastra el puente sobre el instrumento o utiliza este control con el teclado. La longitud vibrante puede variar desde ¼ de cuerda hasta la cuerda completa; la longitud cero queda excluida. Las razones exactas se seleccionan en el catálogo de abajo.</p>
+        <div class="preset-label">Explorador de razones pitagóricas</div>
+        <p class="ratio-help">Cada botón representa una fracción exacta de <strong>longitud vibrante</strong>. Su relación de frecuencias es la inversa; las frecuencias se calculan con la razón exacta, incluso si el deslizador redondea su posición.</p>
+        <div id="ratio-groups" class="ratio-groups" aria-label="Intervalos pitagóricos por categorías"></div>
         <div class="sound-actions">
           <button type="button" id="play-current" class="primary">▶ Pulsar cuerda</button>
           <button type="button" id="play-open" class="secondary">Escuchar cuerda completa</button>
