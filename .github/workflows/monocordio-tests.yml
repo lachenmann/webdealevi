@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - feature/monocordio-pitagorico-mvp
+      - feature/monocordio-escala-microtonal
     paths:
       - "aplicaciones/monocordio/**"
       - ".github/workflows/monocordio-tests.yml"
@@ -24,5 +25,7 @@ jobs:
         run: |
           node --check aplicaciones/monocordio/core.mjs
           node --check aplicaciones/monocordio/monocordio.mjs
+          node --check aplicaciones/monocordio/escala-core.mjs
+          node --check aplicaciones/monocordio/escala.mjs
       - name: Verificar el modelo acústico
         run: node --test aplicaciones/monocordio/tests/*.test.mjs
