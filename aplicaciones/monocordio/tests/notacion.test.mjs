@@ -9,8 +9,11 @@ import {
 import {makeCollection,DIATONIC_STEPS,makeNote} from "../escala-core.mjs";
 
 test("glifos y semántica SMuFL diferenciados por sistema",()=>{
-  assert.deepEqual(NOTATION_SYSTEMS.map(x=>x.fractionCents),[50,100/3,25,200/3,400/3,150]);
-  assert.equal(getSystem("quarter").upGlyph,0xE48E);
+  assert.deepEqual(NOTATION_SYSTEMS.map(x=>x.fractionCents),[50,50,100/3,25,200/3,400/3,150]);
+  assert.equal(getSystem("quarter").upGlyph,0xE282);
+  assert.equal(getSystem("quarter").downGlyph,0xE280);
+  assert.equal(getSystem("quarter-ferneyhough").upGlyph,0xE48E);
+  assert.equal(getSystem("quarter-ferneyhough").downGlyph,0xE48F);
   assert.equal(getSystem("third").downGlyph,0xE48B);
   assert.equal(getSystem("sixth").upGlyph,0xE2A4);
   assert.equal(getSystem("eighth").upGlyph,null);
@@ -27,12 +30,12 @@ test("+64 cents se representa como cuarto de tono (+50) con residuo +14",()=>{
   assert.equal(x.indicatedCents,50);
   assert.equal(x.residualCents,14);
   assert.equal(x.totalCents,x.indicatedCents+x.residualCents);
-  assert.equal(x.glyphCodepoint,0xE48E);
+  assert.equal(x.glyphCodepoint,0xE282);
 });
 
 test("desviación negativa sin confundir los signos",()=>{
   const x=decomposeCents(-64,"quarter");
-  assert.equal(x.glyphCodepoint,0xE48F);
+  assert.equal(x.glyphCodepoint,0xE280);
   assert.equal(x.indicatedCents,-50);
   assert.equal(x.residualCents,-14);
 });
@@ -56,6 +59,21 @@ test("modificar modo y subdivisión no cambia una sola frecuencia pitagórica",(
       assert.equal(exact.frequencyHz,note.frequencyHz);
       assert.ok(Math.abs(other.totalCents-other.indicatedCents-other.residualCents)<1e-12);
     }
+  }
+});
+
+test("SMuFL exacto Stein, Ferneyhough, Sims y Grisey sin desfases",()=>{
+  const expected = [
+    ["quarter",0xE282,0xE280],
+    ["quarter-ferneyhough",0xE48E,0xE48F],
+    ["sixth",0xE2A4,0xE2A1],
+    ["third",0xE48A,0xE48B],
+    ["two-thirds",0xE48C,0xE48D],
+    ["three-quarters-grisey",null,0xE486]
+  ];
+  for(const [id,up,down] of expected) {
+    assert.equal(getSystem(id).upGlyph,up,id+" up");
+    assert.equal(getSystem(id).downGlyph,down,id+" down");
   }
 });
 
