@@ -1,0 +1,28 @@
+name: Monocordio — verificaciones
+on:
+  push:
+    branches:
+      - feature/monocordio-pitagorico-mvp
+    paths:
+      - "aplicaciones/monocordio/**"
+      - ".github/workflows/monocordio-tests.yml"
+  pull_request:
+    paths:
+      - "aplicaciones/monocordio/**"
+      - ".github/workflows/monocordio-tests.yml"
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validar sintaxis del código
+        run: |
+          node --check aplicaciones/monocordio/core.mjs
+          node --check aplicaciones/monocordio/monocordio.mjs
+      - name: Verificar el modelo acústico
+        run: node --test aplicaciones/monocordio/tests/*.test.mjs
