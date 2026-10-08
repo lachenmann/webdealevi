@@ -89,6 +89,17 @@ test("frecuencia de Do4 temperado y redondeo reversible cents",()=>{
   }
 });
 
+test("una altura arbitraria conserva la frecuencia al cambiar todos los sistemas",()=>{
+  for(const cents of [-150,-133.3333333333333,-64,-25,0,64,133.3333333333333,150]){
+    const reference=demonstrationForOffset(cents,NOTATION_SYSTEMS[0].id).frequencyHz;
+    for(const system of NOTATION_SYSTEMS){
+      const result=demonstrationForOffset(cents,system.id);
+      assert.equal(result.frequencyHz,reference);
+      assert.ok(Math.abs(result.totalCents-result.indicatedCents-result.residualCents)<1e-10);
+    }
+  }
+});
+
 test("rechazar datos no finitos y modos desconocidos",()=>{
   assert.throws(()=>decomposeCents(NaN,"quarter"),RangeError);
   assert.throws(()=>centsToFrequency(0,30),RangeError);
