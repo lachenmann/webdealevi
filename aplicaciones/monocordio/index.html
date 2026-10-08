@@ -9,7 +9,9 @@
   <link rel="stylesheet" href="./estilos.css">
   <script type="module" src="./monocordio.mjs"></script>
   <script type="module" src="./escala.mjs"></script>
+  <script type="module" src="./notacion-ui.mjs"></script>
   <link rel="stylesheet" href="./escala.css">
+  <link rel="stylesheet" href="./notacion.css">
 </head>
 <body>
   <header class="site-header">
@@ -141,6 +143,25 @@
         <button type="button" id="reset-scale" class="scale-control">Reiniciar</button>
       </div>
       <p class="scale-chain" id="fifths-chain" aria-live="polite">Cadena de quintas: Do</p>
+      <div class="notation-settings" aria-label="Opciones de escritura musical">
+        <div class="notation-control">
+          <label for="notation-mode">Representación de la escala</label>
+          <select id="notation-mode">
+            <option value="exact">Pitagórica: alteración usual + cents totales</option>
+            <option value="contemporary">Contemporánea: fracción + cents residuales</option>
+          </select>
+        </div>
+        <div class="notation-control">
+          <label for="fraction-system">Fracción de tono representada</label>
+          <select id="fraction-system">
+            <option value="quarter">¼ tono · 50 cents (Ferneyhough)</option>
+            <option value="sixth">⅙ tono · 33,33… cents (Sims)</option>
+            <option value="eighth">⅛ tono · 25 cents (texto explícito)</option>
+            <option value="third">⅓ tono · 66,67… cents (Ferneyhough)</option>
+          </select>
+        </div>
+      </div>
+      <p id="notation-mode-description" class="notation-interpretation">La escala conserva su altura pitagórica; las cifras sobre el pentagrama indican desviaciones totales respecto de 12-TET.</p>
       <div class="score-block">
         <div class="score-heading">
           <h3>Notación microtonal</h3>
@@ -149,9 +170,42 @@
         <div class="score-scroll" tabindex="0" role="region" aria-label="Pentagrama desplazable horizontalmente">
           <svg id="pythagorean-score" viewBox="0 0 760 320" role="img" aria-label="Pentagrama con las notas seleccionadas y sus desviaciones en cents"></svg>
         </div>
-        <p class="score-legend"><strong>Lectura:</strong> altura y alteración convencional en el pentagrama; <span>↑ +n,n ¢</span> o <span>↓ −n,n ¢</span> indican la desviación respecto del temperamento igual de doce semitonos (12-TET) con La4 = 440 Hz. La cifra en cents, no la flecha, determina el ajuste exacto. No se emplean signos de cuarto de tono.</p>
+        <p class="score-legend"><strong>Lectura:</strong> en ambos modos la cifra <em>total</em> superior indica la diferencia respecto del temperamento igual (12-TET, La4 = 440 Hz). En modo contemporáneo, el glifo fraccionario desplaza una cantidad fija y <strong>«res.»</strong> es la corrección adicional (con su signo) al glifo. Las flechas que acompañan un número indican solo la dirección de la corrección: <strong>no son otro intervalo que deba sumarse</strong>.</p>
       </div>
 
+      <div class="fraction-lab" id="fraction-lab" aria-labelledby="fraction-lab-title">
+        <div class="fraction-intro">
+          <h3 id="fraction-lab-title">Explorador de escritura microtonal</h3>
+          <p>Demostración independiente: modifica la altura del Do4 temperado, observa cómo se descompone en un glifo fraccionario y un ajuste residual en cents, y escucha la frecuencia resultante.</p>
+        </div>
+        <div class="fraction-preset-row" role="group" aria-label="Ejemplos de alteración en cents">
+          <button type="button" data-offset="64">+64 ¢</button>
+          <button type="button" data-offset="-64">−64 ¢</button>
+          <button type="button" data-offset="25">+25 ¢</button>
+          <button type="button" data-offset="-33.3333333333333">−⅙ tono</button>
+          <button type="button" data-offset="66.6666666666667">+⅓ tono</button>
+          <button type="button" data-offset="0">0 ¢</button>
+        </div>
+        <div class="fraction-workbench">
+          <div class="fraction-slider">
+            <label for="demo-cents">Alteración total del Do4 temperado <strong id="demo-cents-label">+64,00 ¢</strong></label>
+            <input id="demo-cents" type="range" min="-85" max="85" step="0.1" value="64">
+            <p>Referencia: Do4 = 261,63 Hz (12-TET, La4 = 440 Hz). El ajuste en cents es respecto de esa nota, no del Do pitagórico.</p>
+            <button type="button" class="primary" id="play-demo-note">♪ Escuchar ejemplo</button>
+            <p id="demo-sound-status" role="status" aria-live="polite"></p>
+          </div>
+          <div class="fraction-preview">
+            <svg id="fraction-score" viewBox="0 0 480 240" role="img" aria-label="Pentagrama con la notación y corrección residual de la nota de ejemplo"></svg>
+            <div class="fraction-metrics" aria-live="polite">
+              <span>Glifo: <strong id="demo-symbol-name">¼ tono ascendente</strong></span>
+              <span>Desplazamiento del glifo: <strong id="demo-symbol-cents">+50,00 ¢</strong></span>
+              <span>Corrección adicional: <strong id="demo-residual">+14,00 ¢</strong></span>
+              <span>Frecuencia: <strong id="demo-frequency">271,48 Hz</strong></span>
+            </div>
+          </div>
+        </div>
+        <p class="fraction-license">Los signos musicales SMuFL se cargan mediante Bravura (Steinberg, SIL OFL); si no están disponibles, se emplean descripciones textuales inequívocas. Para ⅛ de tono utilizamos deliberadamente una etiqueta textual, no un glifo pretendidamente estándar.</p>
+      </div>
       <div class="scale-grid" id="pythagorean-notes" aria-label="Notas, razones, frecuencias y correcciones microtonales"></div>
       <div class="scale-footer">
         <button type="button" class="primary" id="play-pythagorean-scale">▶ Escuchar notas en orden ascendente</button>
