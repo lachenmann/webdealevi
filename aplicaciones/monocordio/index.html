@@ -8,6 +8,8 @@
   <title>Monocordio pitagórico | La música de las esferas</title>
   <link rel="stylesheet" href="./estilos.css">
   <script type="module" src="./monocordio.mjs"></script>
+  <script type="module" src="./escala.mjs"></script>
+  <link rel="stylesheet" href="./escala.css">
 </head>
 <body>
   <header class="site-header">
@@ -109,9 +111,56 @@
       <article><p>Relación entre frecuencias</p><strong id="frequency-ratio">1:1</strong><span>Respecto de la cuerda completa</span></article>
     </section>
 
+
+    <section class="scale-panel" id="laboratorio-escala" aria-labelledby="scale-heading">
+      <div class="scale-heading">
+        <p class="eyebrow">03 · Afinación y notación</p>
+        <h2 id="scale-heading">Construye la escala pitagórica</h2>
+        <p>Genera notas mediante quintas puras <strong>3:2</strong>. Las notas se trasladan por octavas al registro de Do4 a Do5, sin modificar su afinación. Cada nota aparece escrita en clave de sol con su desviación microtonal exacta, expresada en <strong>cents (¢)</strong>.</p>
+      </div>
+      <div class="scale-actions" role="group" aria-label="Construir la escala">
+        <button type="button" id="add-negative-fifth" class="scale-control">← Quinta descendente</button>
+        <button type="button" id="add-positive-fifth" class="scale-control">Quinta ascendente →</button>
+        <button type="button" id="build-diatonic" class="scale-control scale-featured">Escala diatónica (7 notas)</button>
+        <button type="button" id="show-comma" class="scale-control">Fa♯ frente a Sol♭</button>
+        <button type="button" id="reset-scale" class="scale-control">Reiniciar</button>
+      </div>
+      <p class="scale-chain" id="fifths-chain" aria-live="polite">Cadena de quintas: Do</p>
+      <div class="score-block">
+        <div class="score-heading">
+          <h3>Notación microtonal</h3>
+          <span>A4 = 440 Hz · clave de sol</span>
+        </div>
+        <div class="score-scroll" tabindex="0" role="region" aria-label="Pentagrama desplazable horizontalmente">
+          <svg id="pythagorean-score" viewBox="0 0 760 320" role="img" aria-label="Pentagrama con las notas seleccionadas y sus desviaciones en cents"></svg>
+        </div>
+        <p class="score-legend"><strong>Lectura:</strong> altura y alteración convencional en el pentagrama; <span>↑ +n,n ¢</span> o <span>↓ −n,n ¢</span> indican la desviación respecto del temperamento igual de doce semitonos (12-TET) con La4 = 440 Hz. La cifra en cents, no la flecha, determina el ajuste exacto. No se emplean signos de cuarto de tono.</p>
+      </div>
+
+      <div class="scale-grid" id="pythagorean-notes" aria-label="Notas, razones, frecuencias y correcciones microtonales"></div>
+      <div class="scale-footer">
+        <button type="button" class="primary" id="play-pythagorean-scale">▶ Escuchar notas en orden ascendente</button>
+        <p id="scale-audio-status" role="status" aria-live="polite">Selecciona una nota para escuchar su altura exacta.</p>
+      </div>
+      <div class="scale-details">
+        <div class="scale-explanation">
+          <h3>¿Por qué falta Fa en la serie ascendente?</h3>
+          <p>Desde Do, seis quintas ascendentes producen Do–Sol–Re–La–Mi–Si–Fa♯. Para obtener los siete grados de la escala diatónica de Do, necesitamos en cambio <strong>Fa–Do–Sol–Re–La–Mi–Si</strong>: Fa procede de una quinta descendente. Cada intervalo se reduce a una sola octava para comparar las alturas.</p>
+          <p>En nuestro modelo, <strong>La4 = 440 Hz</strong> es la referencia. Por ello Do4 se obtiene mediante la relación pitagórica inversa de tres quintas: <strong>Do4 = 440 · 16/27 Hz</strong>. El monocordio de la sección anterior mantiene su cuerda fundamental en La3 = 220 Hz.</p>
+        </div>
+        <aside class="comma-card" id="comma-explanation">
+          <h3>La coma pitagórica</h3>
+          <p>Fa♯, obtenido mediante seis quintas ascendentes desde Do, es más agudo que Sol♭, obtenido mediante seis quintas descendentes. La diferencia es una coma pitagórica:</p>
+          <div class="comma-equation">(3/2)¹² ÷ 2⁷ = 531441/524288</div>
+          <strong id="comma-cents">≈ 23,46 ¢</strong>
+          <p>Escucha las dos notas con el botón «Fa♯ frente a Sol♭». Son enarmónicas en el temperamento igual, pero no en la afinación pitagórica.</p>
+        </aside>
+      </div>
+    </section>
+
     <section class="explainer" aria-labelledby="formula-title">
       <div>
-        <p class="eyebrow">02 · Fundamento físico</p>
+        <p class="eyebrow">04 · Fundamento físico</p>
         <h2 id="formula-title">La proporción que se escucha</h2>
         <p>Si la tensión y la densidad lineal permanecen constantes, la frecuencia fundamental es inversamente proporcional a la longitud de la parte vibrante.</p>
         <div class="equation" aria-label="f prima dividido entre f cero es igual a L dividido entre L prima, igual a uno dividido entre x">f′ / f₀ = L / L′ = 1 / x</div>
