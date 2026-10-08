@@ -50,8 +50,12 @@ Por ejemplo **Do4 +64,00 cents** (referencia Do4 del temperamento igual) puede e
 | ⅙ tono | 33⅓ cents | Sims, SMuFL E2A4/E2A1 |
 | ⅛ tono | 25 cents | Texto literal «⅛ tono» (sin reivindicar un glifo SMuFL propio) |
 | ⅓ tono | 66⅔ cents | Ferneyhough, SMuFL E48A/E48B |
+| ⅔ tono | 133⅓ cents | Ferneyhough, SMuFL E48C/E48D |
+| ¾ tono bemol | −150 cents | Grisey, SMuFL E486; ascenso +150 solo en texto |
 
 Los glifos SMuFL se cargan mediante Bravura (Steinberg, licencia SIL Open Font License) desde un CDN público. Si el navegador está sin conexión o la fuente no carga, los controles presentan **etiquetas textuales** de fracción de tono con dirección, y las alteraciones convencionales se dibujan con Unicode. La ausencia de la fuente no altera el audio ni los cálculos.
+
+Los presets fraccionarios conservan internamente la fracción exacta de cent (aunque las cifras visibles se redondeen a dos decimales). El deslizador permite modificaciones de una décima de cent. La selección de un preset no debe reducirse a esa resolución.
 
 El explorador trabaja con **Do4 temperado**, cuya frecuencia es `440·2^(−9/12) ≈ 261,626 Hz`. Esto es deliberadamente distinto de Do4 pitagórico (`440·16/27 ≈ 260,741 Hz`). Cambiar la grafía en el explorador conserva el desplazamiento total y la frecuencia.
 
