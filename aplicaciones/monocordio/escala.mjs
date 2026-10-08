@@ -132,6 +132,7 @@ function renderCards(notes) {
   for (const note of notes) {
     const card = document.createElement("article");
     card.className = "note-card" + (activeStep === note.fifthStep ? " active-note" : "");
+    card.dataset.step = String(note.fifthStep);
     const header = document.createElement("div");
     header.className = "note-header";
     const label = document.createElement("span");
@@ -163,7 +164,9 @@ function renderCards(notes) {
       if (!ctx) return;
       soundNote(ctx, note.frequencyHz);
       activeStep = note.fifthStep;
-      renderCards(makeCollection(fifthSteps));
+      for (const item of noteGrid.querySelectorAll(".note-card")) {
+        item.classList.toggle("active-note", Number(item.dataset.step) === activeStep);
+      }
       status.textContent = note.name + ": " + number(note.frequencyHz, 2) +
         " Hz; desviación " + centsLabel(note.centsFrom12TET) + ".";
     });
