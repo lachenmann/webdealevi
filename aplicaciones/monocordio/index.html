@@ -158,6 +158,8 @@
             <option value="sixth">⅙ tono · 33,33… cents (Sims)</option>
             <option value="eighth">⅛ tono · 25 cents (texto explícito)</option>
             <option value="third">⅓ tono · 66,67… cents (Ferneyhough)</option>
+            <option value="two-thirds">⅔ tono · 133,33… cents (Ferneyhough)</option>
+            <option value="three-quarters-grisey">¾ tono · 150 cents (bemol Grisey)</option>
           </select>
         </div>
       </div>
@@ -184,12 +186,14 @@
           <button type="button" data-offset="25">+25 ¢</button>
           <button type="button" data-offset="-33.3333333333333">−⅙ tono</button>
           <button type="button" data-offset="66.6666666666667">+⅓ tono</button>
+          <button type="button" data-offset="133.3333333333333">+⅔ tono</button>
+          <button type="button" data-offset="-150">−¾ tono (Grisey)</button>
           <button type="button" data-offset="0">0 ¢</button>
         </div>
         <div class="fraction-workbench">
           <div class="fraction-slider">
             <label for="demo-cents">Alteración total del Do4 temperado <strong id="demo-cents-label">+64,00 ¢</strong></label>
-            <input id="demo-cents" type="range" min="-85" max="85" step="0.1" value="64">
+            <input id="demo-cents" type="range" min="-170" max="170" step="0.1" value="64">
             <p>Referencia: Do4 = 261,63 Hz (12-TET, La4 = 440 Hz). El ajuste en cents es respecto de esa nota, no del Do pitagórico.</p>
             <button type="button" class="primary" id="play-demo-note">♪ Escuchar ejemplo</button>
             <p id="demo-sound-status" role="status" aria-live="polite"></p>
