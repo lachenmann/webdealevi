@@ -9,11 +9,14 @@ import {
 import {makeCollection,DIATONIC_STEPS,makeNote} from "../escala-core.mjs";
 
 test("glifos y semántica SMuFL diferenciados por sistema",()=>{
-  assert.deepEqual(NOTATION_SYSTEMS.map(x=>x.fractionCents),[50,100/3,25,200/3]);
+  assert.deepEqual(NOTATION_SYSTEMS.map(x=>x.fractionCents),[50,100/3,25,200/3,400/3,150]);
   assert.equal(getSystem("quarter").upGlyph,0xE48E);
   assert.equal(getSystem("third").downGlyph,0xE48B);
   assert.equal(getSystem("sixth").upGlyph,0xE2A4);
   assert.equal(getSystem("eighth").upGlyph,null);
+  assert.equal(getSystem("two-thirds").upGlyph,0xE48C);
+  assert.equal(getSystem("three-quarters-grisey").downGlyph,0xE486);
+  assert.equal(getSystem("three-quarters-grisey").upGlyph,null);
   assert.equal(STANDARD_GLYPHS["-1"],0xE260);
   assert.throws(()=>getSystem("seventh"),RangeError);
 });
@@ -66,6 +69,15 @@ test("sextos, octavos y tercios: residuos correctos y caída textual",()=>{
   const third=decomposeCents(75,"third");
   assert.ok(Math.abs(third.residualCents-8.3333333333333)<1e-8);
   assert.equal(third.glyphCodepoint,0xE48A);
+  const twoThirds=decomposeCents(133.3333333333333,"two-thirds");
+  assert.equal(twoThirds.glyphCodepoint,0xE48C);
+  assert.ok(Math.abs(twoThirds.residualCents)<1e-9);
+  const grisey=decomposeCents(-150,"three-quarters-grisey");
+  assert.equal(grisey.glyphCodepoint,0xE486);
+  assert.equal(grisey.residualCents,0);
+  const griseyUp=decomposeCents(150,"three-quarters-grisey");
+  assert.equal(griseyUp.isSmufl,false);
+  assert.match(griseyUp.fallback,/¾/);
 });
 
 test("frecuencia de Do4 temperado y redondeo reversible cents",()=>{
