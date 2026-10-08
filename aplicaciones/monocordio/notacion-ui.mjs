@@ -23,9 +23,10 @@ const make = (tag, attributes = {}, content = null) => {
 };
 let fontReady = false;
 let audioContext = null;
+let demoOffsetCents = 64;
 
 function showDemo() {
-  const cents = Number(centsSlider.value);
+  const cents = demoOffsetCents;
   const notation = demonstrationForOffset(cents, subdivisionSelect.value);
   const system = getSystem(subdivisionSelect.value);
   const direction = notation.step > 0 ? "ascendente" : notation.step < 0 ? "descendente" : "";
@@ -85,10 +86,14 @@ function updateMode() {
 
 modeSelect.addEventListener("change",updateMode);
 subdivisionSelect.addEventListener("change",updateMode);
-centsSlider.addEventListener("input",showDemo);
+centsSlider.addEventListener("input",()=>{
+  demoOffsetCents=Number(centsSlider.value);
+  showDemo();
+});
 document.querySelectorAll("[data-offset]").forEach(button=>{
   button.addEventListener("click",()=>{
-    centsSlider.value=String(roundTo(Number(button.dataset.offset),1));
+    demoOffsetCents=Number(button.dataset.offset);
+    centsSlider.value=String(roundTo(demoOffsetCents,1));
     showDemo();
   });
 });
@@ -99,7 +104,7 @@ byId("play-demo-note").addEventListener("click",async ()=>{
   try {
     audioContext??=new Audio();
     if(audioContext.state!=="running") await audioContext.resume();
-    const frequency=demonstrationForOffset(Number(centsSlider.value),subdivisionSelect.value).frequencyHz;
+    const frequency=demonstrationForOffset(demoOffsetCents,subdivisionSelect.value).frequencyHz;
     const start=audioContext.currentTime+0.01;
     const envelope=audioContext.createGain();
     envelope.gain.setValueAtTime(0.0001,start);
@@ -118,7 +123,7 @@ byId("play-demo-note").addEventListener("click",async ()=>{
         if(!--live)envelope.disconnect();
       },{once:true});
     }
-    status.textContent="Ejemplo: "+format(frequency)+" Hz, desplazamiento total "+signed(Number(centsSlider.value))+".";
+    status.textContent="Ejemplo: "+format(frequency)+" Hz, desplazamiento total "+signed(demoOffsetCents)+".";
   }catch{
     status.textContent="No se ha podido reproducir el ejemplo. Comprueba el audio del navegador.";
   }
