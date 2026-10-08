@@ -7,15 +7,18 @@
  * - residualCents es la corrección ADICIONAL al glifo.
  * - la representación jamás altera la frecuencia fuente.
  *
- * SMuFL: quarter (Ferneyhough) E48E/E48F;
- * third (Ferneyhough) E48A/E48B; two-thirds E48C/E48D;
- * three-quarter-tone flat (Grisey) E486;
- * sixth (Sims) E2A4/E2A1. La octava parte del tono tiene
- * indicación TEXTUAL «⅛ tono»; no se le atribuye un glifo SMuFL.
+ * Código SMuFL contrastado con la tabla oficial W3C:
+ * Cuarto de tono Stein-Zimmermann E282 (subir), E280 (bajar).
+ * Cuarto de tono Ferneyhough E48E (subir), E48F (bajar).
+ * Tercios Ferneyhough E48A/E48B, dos tercios E48C/E48D;
+ * bemol de tres cuartos de tono Grisey E486; sextos Sims E2A4/E2A1.
+ * Para el octavo se presenta una descripción textual inequívoca.
  */
 export const NOTATION_SYSTEMS = Object.freeze([
   Object.freeze({ id:"quarter", label:"Cuartos de tono", fractionCents:50,
-    upGlyph:0xE48E, downGlyph:0xE48F, family:"Ferneyhough", fraction:"¼" }),
+    upGlyph:0xE282, downGlyph:0xE280, family:"Stein–Zimmermann", fraction:"¼" }),
+  Object.freeze({ id:"quarter-ferneyhough", label:"Cuartos de tono (Ferneyhough)", fractionCents:50,
+    upGlyph:0xE48E, downGlyph:0xE48F, family:"Ferneyhough (signos con cifra 4)", fraction:"¼" }),
   Object.freeze({ id:"sixth", label:"Sextos de tono", fractionCents:100/3,
     upGlyph:0xE2A4, downGlyph:0xE2A1, family:"Sims", fraction:"⅙" }),
   Object.freeze({ id:"eighth", label:"Octavos de tono", fractionCents:25,
