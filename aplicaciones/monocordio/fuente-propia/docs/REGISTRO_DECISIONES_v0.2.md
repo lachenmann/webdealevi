@@ -40,6 +40,10 @@ tienen estados diferenciados.
 | EM-D023 | Aprobar las ocho formas de la lámina LilyPond G2 como repertorio visual | **APROBADA POR EL AUTOR** · 10-10-2026 | «Apruebo las fuentes», tras visualizar espécimen | Cerrar G2.1 sin publicar todavía el TTF |
 | EM-D024 | Distinguir aprobación de formas, valor musical y normalización de códigos | **ACLARACIÓN EDITORIAL** | 3 madres G1 + 3 variantes convencionales aceptadas + 2 históricas comparativas | Mantener códigos privados solo para estudios de comparación |
 | EM-D025 | No utilizar el medio sostenido histórico de una barra como octavo de tono | **RESTRICCIÓN VIGENTE** | LilyPond identifica `sharp.slash.stem` como medio sostenido de 1/4 | Diseñar un octavo distinguible sin colisión |
+| EM-D026 | Explorar G2.2 con dos familias de marcas lineales sobre bases LilyPond | **PROPUESTA TÉCNICA, NO RATIFICADA** | 16 formas A (rayas) y B (horquillas) para ±1/12, ±1/8, ±1/6 y ±3/8 | Presentar comparación musical e impresión |
+| EM-D027 | Rechazar equivalencia «cantidad de marcas = cents aditivos» | **REGLA MATEMÁTICA DEL PROTOTIPO** | La clasificación visual se vincula por registro racional, no por suma de trazos | Conservar perfil exacto |
+| EM-D028 | No dar por aprobado G2.2 solo por diferencias rasterizadas a s=7 px | **RESTRICCIÓN QA VIGENTE** | A/B producen imágenes distintas, pero no hay pruebas de lectura humana | Mantener variantes abiertas y aceptar rediseño |
+
 
 
 
@@ -65,8 +69,7 @@ Los siguientes nombres y códigos son de SMuFL, no de Esferas:
 - `accidentalThreeQuarterTonesSharpStein` — U+E283
 
 La identificación de SMuFL verifica **identidad del símbolo** pero
-no autoriza a duplicar contornos propietarios específicos. El dibujo
-de Esferas tendrá una procedencia independiente.
+no autoriza a duplicar contornos propietarios específicos. Las madres de Esferas derivan legítimamente de GNU LilyPond bajo su opción GPL con excepción. Solo los trazos auxiliares nuevos de G2.2 se han diseñado independientemente; su combinación con los contornos originales sigue siendo una obra derivada.
 
 **Fuentes técnicas para cotejo**:
 
