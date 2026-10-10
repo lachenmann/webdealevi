@@ -5,6 +5,13 @@
 **Fecha:** 2026-10-10  
 **Contrato vigente:** G0 (documentación v0.2) aprobado expresamente; G1 en evaluación.
 
+> **REGISTRO HISTÓRICO / SUSTITUIDO:** el autor decidió
+> posteriormente utilizar directamente las matrices de GNU LilyPond.
+> Los contornos originales independientes de este informe no son
+> la referencia vigente. Véase
+> [EM-G1-002](./EM-G1-002-LILYPOND_REFERENCIA.md).
+> El prototipo se conserva para comparar procesos, no para publicarlo.
+
 ## Resultado entregado
 
 Se ha escrito un **generador nuevo**, `v02/build_mothers.py`, que crea
