@@ -148,7 +148,7 @@ medirse. Hasta entonces la columna «éxito visual» se marcará
 | Puerta | Comprobación | Estado actual |
 | --- | --- | --- |
 | G0 | Documentos v0.2 y valores exactos | **Aprobados por el autor** · 10-10-2026 |
-| G1 | Tres signos madre reconstruidos | **Bocetos TTF generados; pendiente revisión visual del autor** · EM-G1-001 |
+| G1 | Tres signos madre de LilyPond derivadas y cotejadas | **EM-G1-002 en evaluación**; primer boceto independiente EM-G1-001 sustituido como referencia |
 | G2 | Familia ascendente de trazos | Pendiente |
 | G3 | Familia descendente y signos fraccionarios | Pendiente |
 | G4 | Pruebas automáticas v0.2 | Suite G1 añadida; conformidad v0.2 completa pendiente |
