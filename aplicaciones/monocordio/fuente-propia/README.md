@@ -1,5 +1,38 @@
 # Esferas Microtonal — prototipo de fuente propia
 
+## Cambio de referencia G1 — GNU LilyPond / Emmentaler
+
+Por instrucción posterior del autor, **las tres matrices madre se tomarán
+directamente de los contornos reales de GNU LilyPond** (Emmentaler/Feta):
+bemol, becuadro y sostenido. El primer estudio independiente de G1 se
+preserva solamente como antecedente y **no es la referencia tipográfica
+vigente**.
+
+- [Decisión, genealogía y licencia GPL con excepción de fuentes](docs/EM-G1-002-LILYPOND_REFERENCIA.md).
+- [Generador derivado del OTF original de LilyPond](v02/build_lilypond_mothers.py).
+- [Pruebas de correspondencia geométrica y avisos](v02/test_lilypond_mothers.py).
+- [Avisos y licencias originales de LilyPond](v02/upstream/LICENSE).
+
+Para probar el nuevo G1 con LilyPond instalado y un OTF legítimo,
+usa un archivo original llamado **emmentaler-20.otf**:
+
+```bash
+cd aplicaciones/monocordio/fuente-propia/v02
+python3 build_lilypond_mothers.py --source /ruta/al/emmentaler-20.otf --out build/EsferasMicrotonal-LilyPond-G1.ttf
+python3 preview_mothers.py --origin lilypond --font build/EsferasMicrotonal-LilyPond-G1.ttf --out build/LilyPond-G1.png
+open build/LilyPond-G1.png
+```
+
+**Importante:** las madres obtenidas constituyen una **obra tipográfica
+derivada** con atribución a LilyPond; sus contornos NO deben describirse
+como originales independientes. No cambia la semántica matemática,
+ni el código del monocordio, ni la fuente oficial Leland actualmente en uso.
+
+## G1-001 — Bocetos independientes anteriores (histórico, sustituido)
+
+**El estudio siguiente se conserva para rastreabilidad, pero fue reemplazado
+como referencia por EM-G1-002.**
+
 ## G1 — Primeras matrices redibujadas (autorizado G0, 10-10-2026)
 
 **Los principios y la gramática documental v0.2 fueron aprobados por el autor.**
