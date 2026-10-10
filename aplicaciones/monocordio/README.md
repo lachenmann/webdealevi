@@ -27,7 +27,7 @@ El pentagrama representa alturas y conserva sus relaciones pitagóricas exactas.
 
 ## v1.3 — Notación microtonal unificada por signos vectoriales
 
-El sistema es una **adaptación editorial de la lámina facilitada por el autor y atribuida por él a Danny Wier**; no se declara que cada nueva solución sea un signo histórico normalizado. Para evitar el problema de los glifos que parecían un «4 con flecha», las alteraciones se dibujan con **SVG propio**. No se carga Bravura, SMuFL ni ninguna fuente tipográfica externa para las alteraciones.
+El laboratorio reúne grafías de procedencia diferente: el **medio sostenido y el bemol inverso de contorno abierto para cuartos de tono son signos convencionales del sistema Stein–Zimmermann**, no símbolos creados o elegidos personalmente por el autor (SMuFL `accidentalQuarterToneSharpStein`, U+E282, y `accidentalQuarterToneFlatStein`, U+E280). El bemol inverso abierto se distingue de la variante *rellena* catalogada por separado como `accidentalQuarterToneFlatFilledReversed` (U+E480). Los demás motivos siguen la lámina aportada y el octavo de tono emplea una indicación textual explícita. Para evitar el problema de los glifos que parecían un «4 con flecha», las alteraciones se dibujan con **SVG propio**. No se carga Bravura, SMuFL ni ninguna fuente tipográfica externa para las alteraciones.
 
 Se mantienen los dos modos del pentagrama de la escala pitagórica:
 
@@ -39,12 +39,12 @@ Se mantienen los dos modos del pentagrama de la escala pitagórica:
 | Subdivisión | Valor de una alteración | Signos en SVG |
 | --- | ---: | --- |
 | Semitono (½ tono) | ±100 cents | Bemol / sostenido tradicionales; también dobles |
-| Cuarto (¼ tono) | ±50 cents | Medio sostenido (+) y **bemol inverso sin relleno** (−) |
+| Cuarto (¼ tono) | ±50 cents | **Stein–Zimmermann**: medio sostenido (+; SMuFL E282) y bemol inverso de contorno abierto (−; SMuFL E280) |
 | Sexto (⅙ tono) | ±100/3 cents | Pentágono (+) y rombo (−), según motivos compactos de la lámina |
 | Octavo (⅛ tono) | ±25 cents | Indicación textual explícita ⅛↑ / ⅛↓; **extensión editorial** |
 | Doceavo (¹⁄₁₂ tono) | ±50/3 cents | Cuadrado (+) y medio triángulo (−), conforme a los motivos de ≈±17 cents de la lámina |
 
-Los valores ±33 y ±17 impresos en la referencia están redondeados; la frecuencia de la aplicación se calcula mediante las cantidades exactas `100/3` y `50/3` cents. Los signos compactos no deben identificarse sin más con los estándares de otros compositores.
+Los valores ±33 y ±17 impresos en la referencia están redondeados; la frecuencia de la aplicación se calcula mediante las cantidades exactas `100/3` y `50/3` cents. Los signos geométricos de otras subdivisiones no deben identificarse sin más con los estándares de otros compositores. Esta cautela **no** se aplica al medio sostenido y al bemol inverso abierto de cuarto de tono, que son signos convencionales documentados.
 
 ### Composición de las alteraciones
 
@@ -57,7 +57,7 @@ cents totales = cents cromáticos + cents de fracción + cents residuales
 Ejemplos (Do4 temperado de referencia):
 
 - `+64 cents` en modo cuarto → `+50` por medio sostenido + `+14` residuales.
-- `−50 cents` en modo cuarto → bemol inverso hueco, residuo cero.
+- `−50 cents` en modo cuarto → bemol inverso convencional de contorno abierto (Stein–Zimmermann; SMuFL E280), residuo cero.
 - `+150 cents` en modo cuarto → sostenido `+100` y cuarto ascendente `+50`.
 - `−33⅓ cents` en modo sexto → rombo `−100/3`, residuo cero.
 - `+16⅔ cents` en modo doceavo → cuadrado `+50/3`, residuo cero.
