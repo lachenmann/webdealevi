@@ -1,0 +1,44 @@
+name: NMA — conformidad matemática y serialización
+
+on:
+  push:
+    branches:
+      - proposal/notacion-microtonal-abierta-gnu-v0.1
+    paths:
+      - "propuestas/nma/**"
+      - ".github/workflows/nma-tests.yml"
+  pull_request:
+    paths:
+      - "propuestas/nma/**"
+      - ".github/workflows/nma-tests.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  mathematical-conformance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar validador de esquema JSON
+        run: python3 -m pip install --disable-pip-version-check "jsonschema>=4.18,<5"
+      - name: Compilar y verificar sintaxis
+        run: |
+          python3 -m compileall -q propuestas/nma/src propuestas/nma/tests
+          python3 -m json.tool propuestas/nma/schema/nma-event-v0.1.schema.json > /dev/null
+          python3 -m json.tool propuestas/nma/examples/casos-exactos.json > /dev/null
+      - name: Comprobar axiomas, propiedades y round-trips exactos
+        run: python3 -m unittest discover -s propuestas/nma/tests -v
+      - name: Verificar materiales normativos y textos completos de licencias
+        run: |
+          test -s propuestas/nma/LICENSES/GPL-3.0-or-later.txt
+          test -s propuestas/nma/LICENSES/GFDL-1.3-or-later.txt
+          test -s propuestas/nma/spec/NMA-0000-carta-fundacional.md
+          test -s propuestas/nma/spec/NMA-0001-modelo-matematico.md
+          test -s propuestas/nma/spec/NMA-0002-notacion-e-interoperabilidad.md
+          test -s propuestas/nma/spec/NMA-0003-gobernanza-y-conformidad.md
+          ! grep -R "MIDIDESI.*\.ttf" propuestas/nma/src propuestas/nma/tests
