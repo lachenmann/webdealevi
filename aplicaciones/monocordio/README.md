@@ -23,55 +23,94 @@ El preset de comparación muestra **Sol♭4** (seis quintas descendentes) y **Fa
 
 ## Notación para músicos
 
-El pentagrama representa **alturas**, no una partitura rítmica. Presenta clave de sol, nombres científicos y alteraciones convencionales, acompañados de la desviación microtonal en **cents** respecto de un sistema temperado de 12 semitonos (12-TET) afinado a La4 = 440 Hz. Una flecha arriba/abajo indica únicamente la dirección: la cifra numérica con signo es la especificación exacta de afinación.
+El pentagrama representa alturas y conserva sus relaciones pitagóricas exactas. Todas las correcciones en cents son relativas al temperamento igual de doce semitonos (12-TET) con **La4 = 440 Hz**. La versión refinada utiliza alteraciones SVG dibujadas localmente, agrupadas por fracciones de tono y acompañadas de corrección residual inequívoca. Los símbolos no sustituyen ni redondean la afinación matemática.
 
-**Importante:** un símbolo genérico de cuarto de tono suele denotar 50 cents y no serviría para representar fielmente las desviaciones pitagóricas de pocos cents o la coma de 23,46 cents. Por ello esta versión utiliza notación de altura + corrección numérica. Podrá añadirse una representación alternativa de alteraciones específicas de coma (p. ej. HEJI) en una etapa posterior con revisión de grafías y fuentes musicales.
+## v1.3 — Notación microtonal unificada por signos vectoriales
 
-## v1.2 — Convención de notación avanzada
+El laboratorio reúne grafías de procedencia diferente: el **medio sostenido y el bemol inverso de contorno abierto para cuartos de tono son signos convencionales del sistema Stein–Zimmermann**, no símbolos creados o elegidos personalmente por el autor (SMuFL `accidentalQuarterToneSharpStein`, U+E282, y `accidentalQuarterToneFlatStein`, U+E280). El bemol inverso abierto se distingue de la variante *rellena* catalogada por separado como `accidentalQuarterToneFlatFilledReversed` (U+E480). Los demás motivos siguen la lámina aportada y el octavo de tono emplea una indicación textual explícita. Para evitar el problema de los glifos que parecían un «4 con flecha», las alteraciones se dibujan con **SVG propio**. No se carga Bravura, SMuFL ni ninguna fuente tipográfica externa para las alteraciones.
 
-Se ofrecen dos modos para la escala pitagórica, sin afectar jamás los datos acústicos:
+Se mantienen los dos modos del pentagrama de la escala pitagórica:
 
-1. **Pitagórico exacto:** nota, alteración convencional y cents **totales** respecto de 12-TET, La4 = 440 Hz.
-2. **Contemporáneo:** nota, alteración usual, signo fraccionario cuando procede y cents **residuales**, además de mostrar los cents totales para control.
+- **Exacto:** alteración cromática habitual (si procede) y desviación TOTAL en cents respecto de 12-TET, La4 = 440 Hz. La proporción racional pitagórica sigue fijando la frecuencia.
+- **Contemporáneo:** misma nota, más alteraciones vectoriales cromáticas y/o fraccionarias cuando aproximan la desviación, además de cents residuales; siempre aparece el valor total.
 
-Se emplea la descomposición matemática:
+### Fracciones elegidas (tono temperado = 200 cents)
+
+| Subdivisión | Valor de una alteración | Signos en SVG |
+| --- | ---: | --- |
+| Semitono (½ tono) | ±100 cents | Bemol / sostenido tradicionales; también dobles |
+| Cuarto (¼ tono) | ±50 cents | **Stein–Zimmermann**: medio sostenido (+; SMuFL E282) y bemol inverso de contorno abierto (−; SMuFL E280) |
+| Sexto (⅙ tono) | ±100/3 cents | Pentágono (+) y rombo (−), según motivos compactos de la lámina |
+| Octavo (⅛ tono) | ±25 cents | Indicación textual explícita ⅛↑ / ⅛↓; **extensión editorial** |
+| Doceavo (¹⁄₁₂ tono) | ±50/3 cents | Cuadrado (+) y medio triángulo (−), conforme a los motivos de ≈±17 cents de la lámina |
+
+Los valores ±33 y ±17 impresos en la referencia están redondeados; la frecuencia de la aplicación se calcula mediante las cantidades exactas `100/3` y `50/3` cents. Los signos geométricos de otras subdivisiones no deben identificarse sin más con los estándares de otros compositores. Esta cautela **no** se aplica al medio sostenido y al bemol inverso abierto de cuarto de tono, que son signos convencionales documentados.
+
+### Composición de las alteraciones
+
+El algoritmo puede combinar hasta un signo cromático (0, ±100 o ±200 cents) con **una alteración de la fracción seleccionada**. Elige la combinación que minimiza la corrección restante y, en caso de empate, la escritura con menos signos:
 
 ```text
-cents totales = cents del signo fraccionario + cents residuales
+cents totales = cents cromáticos + cents de fracción + cents residuales
 ```
 
-Por ejemplo **Do4 +64,00 cents** (referencia Do4 del temperamento igual) puede escribirse con un signo de **¼ de tono ascendente (+50,00 cents)** y **corrección residual +14,00 cents**. La corrección no se suma dos veces. Para las notas pitagóricas habituales, cuya desviación es muy pequeña, es correcto que no aparezca un signo de cuarto de tono; se mantiene la alteración convencional y su desviación en cents.
+Ejemplos (Do4 temperado de referencia):
 
-### Fracciones y signos
+- `+64 cents` en modo cuarto → `+50` por medio sostenido + `+14` residuales.
+- `−50 cents` en modo cuarto → bemol inverso convencional de contorno abierto (Stein–Zimmermann; SMuFL E280), residuo cero.
+- `+150 cents` en modo cuarto → sostenido `+100` y cuarto ascendente `+50`.
+- `−33⅓ cents` en modo sexto → rombo `−100/3`, residuo cero.
+- `+16⅔ cents` en modo doceavo → cuadrado `+50/3`, residuo cero.
 
-| Subdivisión | Valor convencional | Grafía |
-| --- | ---: | --- |
-| ¼ tono, preferido | 50 cents | Stein–Zimmermann, SMuFL E282/E280 |
-| ¼ tono alternativo | 50 cents | Ferneyhough, SMuFL E48E/E48F (grafías con cifra 4) |
-| ⅙ tono | 33⅓ cents | Sims, SMuFL E2A4/E2A1 |
-| ⅛ tono | 25 cents | Texto literal «⅛ tono» (sin reivindicar un glifo SMuFL propio) |
-| ⅓ tono | 66⅔ cents | Ferneyhough, SMuFL E48A/E48B |
-| ⅔ tono | 133⅓ cents | Ferneyhough, SMuFL E48C/E48D |
-| ¾ tono bemol | −150 cents | Grisey, SMuFL E486; ascenso +150 solo en texto |
+**La precisión sonora no cambia** al modificar el selector, activar otro modo ni elegir otra grafía. La base del explorador es **Do4 temperado**: `440·2^(−9/12) ≈ 261,626 Hz`, distinta de Do4 pitagórico (`440·16/27 ≈ 260,741 Hz`). El deslizador permite incrementos de una décima de cent; los botones fraccionarios conservan los valores internos exactos sin redondearlos a la décima.
 
-**Corrección editorial v1.2:** se rectificaron códigos SMuFL erróneos de la implementación original. El «4 con flecha» puede ser una grafía propia de Ferneyhough; para mejorar la legibilidad se selecciona por defecto el medio sostenido / bemol invertido de Stein–Zimmermann. La familia de Ferneyhough queda disponible con identificación explícita. Los códigos aquí indicados se contrastaron con las tablas oficiales de SMuFL.
+La interfaz incluye un **muestrario accesible** de los cinco pares de signos, con etiquetas de cents y desplazamiento horizontal para pantallas estrechas. El octavo está claramente identificado como extensión textual; no se presenta como símbolo presente en la lámina. La fotografía/imagen enviada por el autor es la referencia visual de trabajo y no se redistribuye como archivo incrustado.
 
-Los glifos SMuFL se cargan mediante Bravura (Steinberg, licencia SIL Open Font License) desde un CDN público. Si el navegador está sin conexión o la fuente no carga, los controles presentan **etiquetas textuales** de fracción de tono con dirección, y las alteraciones convencionales se dibujan con Unicode. La ausencia de la fuente no altera el audio ni los cálculos.
+### Alcance y pruebas
 
-Los presets fraccionarios conservan internamente la fracción exacta de cent (aunque las cifras visibles se redondeen a dos decimales). El deslizador permite modificaciones de una décima de cent. La selección de un preset no debe reducirse a esa resolución.
+El pentagrama representa **alturas** (no duraciones ni reglas de vigencia de alteraciones dentro de un compás). El archivo `notacion-core.mjs` determina la altura semántica; `notacion-glyphs.mjs` dibuja los signos, y `notacion-ui.mjs` realiza las interacciones. Las pruebas verifican todas las fracciones, la grafía de bemol inverso hueco, la consistencia de cents y que cambiar la representación jamás altere las frecuencias.
 
-El explorador trabaja con **Do4 temperado**, cuya frecuencia es `440·2^(−9/12) ≈ 261,626 Hz`. Esto es deliberadamente distinto de Do4 pitagórico (`440·16/27 ≈ 260,741 Hz`). Cambiar la grafía en el explorador conserva el desplazamiento total y la frecuencia.
+## Decisión tipográfica definitiva del laboratorio (v1.3)
 
-La flecha de una etiqueta numérica es únicamente direccional; **las flechas integradas en un glifo pertenecen al valor semántico propio de esa familia de signos**. No deben interpretarse arbitrariamente como comas pitagóricas o sintónicas.
+Auditoría realizada con **los archivos tipográficos originales** de Leland,
+Bravura y Ekmelos, renderizados en un pentagrama común mediante Chrome;
+contraste de metadatos SMuFL, cobertura real de cmap, tamaño y condiciones OFL.
+La referencia **MIDIDESI / Tempera** (Christian Texier, documentación 1993–2002)
+se conserva para estudio histórico, pero **no** se distribuye en la web por no
+constar licencia abierta de redistribución.
 
-Fuentes de los códigos de glifos y sistemas:
-- https://smufl.formats.music/latest/tables/stein-zimmermann-accidentals-24-edo.html
-- https://smufl.formats.music/latest/tables/other-accidentals.html
-- https://smufl.formats.music/latest/tables/sims-accidentals-72-edo.html
-- https://smufl.formats.music/latest/tables/extended-stein-zimmermann-accidentals.html
-- https://github.com/steinbergmedia/bravura (licencia OFL)
+**Decisión:**
 
-**Limitaciones:** la sección dibuja una secuencia de alturas (no una partitura rítmica con reglas de vigencia de alteraciones). El modo contemporáneo no pretende copiar una obra particular de Grisey o Ferneyhough; adopta signos concretos de familias documentadas y define expresamente su interpretación numérica. El soporte de ⅛ de tono es deliberadamente textual hasta validar una convención y una tipografía específicas.
+1. **Leland 0.80** (MuseScore BVBA, SIL OFL 1.1) es la familia **titular** de
+   grabado musical: clave de sol (SMuFL E050), cabeza de negra (E0A4), sostenido
+   (E262), bemol (E260), becuadro (E261) y cuartos de tono Stein–Zimmermann
+   (medio sostenido E282 y bemol inverso **abierto** E280). Esta es la
+   representación estándar; no se trata de una invención editorial.
+2. **Ekmelos 72-EDO** (Thomas Richter, SIL OFL 1.1) se conserva como recurso
+   especializado verificable para fracciones de sexto y doceavo de tono.
+   Contiene Sims E2A0/E2A1/E2A3/E2A4, pero **no E280/E282**. No sustituye por
+   defecto los signos geométricos del taller, que siguen el modelo visual de
+   Danny Wier acordado con el autor.
+3. **SVG vectorial** permanece para los signos geométricos (sextos y doceavos),
+   el octavo ±25 cents (fuera de 72-EDO) y como recurso de seguridad cuando
+   el navegador no pueda cargar Leland. El motor de afinación trabaja
+   exclusivamente con relaciones y cents; jamás infiere frecuencias del glifo.
+4. **Bravura** queda como patrón externo de contraste SMuFL y posible
+   respaldo editorial; no se carga en la aplicación para evitar duplicación
+   tipográfica y peso innecesario.
+
+Las fuentes se **alojan localmente** en `fonts/` sin CDN. Se preservan íntegras
+sus licencias y avisos originales en `fonts/OFL-Leland.txt` y
+`fonts/OFL-Ekmelos.txt`. También se documentan origen y SHA del objeto Git
+en `fonts/README.md`. Esas licencias permiten incluir los originales en una
+aplicación web con los avisos correspondientes; sus nombres reservados se
+mantienen sin alteraciones. No se distribuyen en la salida de ChatGPT.
+
+Verificación: suite JS y checksums SHA-256 de ambos archivos originales;
+prueba real de navegador para carga de fuente y respaldo SVG;
+`tests/typography-compare.html` es una **herramienta de QA**, no un nuevo
+experimento del taller. La muestra gráfica está disponible como artefacto
+de la ejecución «Monocordio — auditoría tipográfica» de GitHub Actions.
 
 ## Catálogo ampliado de relaciones pitagóricas
 
@@ -101,6 +140,65 @@ El monocordio ofrece **19 proporciones seleccionables** clasificadas en consonan
 | Doble octava | 1:4 | 4:1 |
 
 Se añade también el unísono 1:1. Estas razones solo involucran potencias de 2 y 3 (sistema pitagórico); no se presentan intervalos que requieran el factor 5 como si fueran pitagóricos.
+
+## v1.3 — Tetraktys y las medias musicales
+
+### La tetraktys como modelo sonoro
+
+La **tetraktys** muestra diez puntos distribuidos en cuatro filas:
+`1 + 2 + 3 + 4 = 10`. Se asigna a cada fila su número como múltiplo de frecuencia fundamental `f₀ = 220 Hz` (La3). Es un modelo pedagógico, **no** una afirmación de que el diagrama antiguo constituyera por sí mismo una partitura o una construcción organológica documentada.
+
+| Fila | Frecuencia | Razón de frecuencia | Fracción vibrante respecto de L |
+| --- | ---: | ---: | ---: |
+| 1 | 220 Hz | 1:1 | 1:1 |
+| 2 | 440 Hz | 2:1 | 1:2 |
+| 3 | 660 Hz | 3:1 | 1:3 |
+| 4 | 880 Hz | 4:1 | 1:4 |
+
+Las relaciones internas de frecuencias son 1→2 = 2:1 (octava), 2→3 = 3:2 (quinta), 3→4 = 4:3 (cuarta). Se pueden seleccionar los puntos o sus controles accesibles, escuchar la secuencia o simultáneamente y enviar la fila seleccionada al puente.
+
+### Media aritmética y armónica de los extremos 6 y 12
+
+Para extremos `a = 6` y `b = 12`, las medias **de los números que representan frecuencias** son:
+
+- Media aritmética: `A = (a+b)/2 = 9`.
+- Media armónica: `H = 2ab/(a+b) = 8`.
+- La media geométrica `√72 ≈ 8,485` queda entre ambas y se usa como contraste matemático; no es uno de los cuatro términos enteros.
+
+De este modo la serie `6 : 8 : 9 : 12`, con `6 = 220 Hz`, permite escuchar las relaciones:
+
+| Número | Papel | Frecuencia | Relación con 6 (frecuencia) | Longitud con respecto a L |
+| --- | --- | ---: | ---: | ---: |
+| 6 | Extremo inferior | 220 Hz | 1:1 | 1:1 |
+| 8 | Media armónica | 293⅓ Hz | 4:3 | 3:4 |
+| 9 | Media aritmética | 330 Hz | 3:2 | 2:3 |
+| 12 | Extremo superior | 440 Hz | 2:1 | 1:2 |
+
+Las dos medias difieren por `9:8`, el tono pitagórico. La distinción entre media de **frecuencias** y media de **longitudes** importa: al trasladar el modelo al monocordio se invierten las fracciones.
+
+**Arquitectura:** `armonia-core.mjs` contiene todas las proporciones, el cálculo de las medias y los datos de los tonos. `armonia.mjs` dibuja ambos SVG y genera audio local mediante Web Audio API; `armonia.css` compone la interfaz. Se comunica con la vista original mediante el evento opcional `monocordio-set-fraction`. El monocordio sigue funcionando independientemente.
+
+**Verificación:** la suite `tests/armonia.test.mjs` controla diez puntos, relaciones y medias exactas, correspondencia de las longitudes con las frecuencias del instrumento, cambio de fundamental y rechazo de datos inválidos. El audio, los controles SVG/teclado y el desplazamiento del puente requieren además una prueba manual en navegador real.
+
+## Diagnóstico de versiones y caché del navegador
+
+Tras actualizar el HTML a los signos vectoriales, se observó en una captura un comportamiento mixto: el HTML mostraba los nuevos botones de doceavos de tono mientras que el módulo antiguo de JavaScript escribía `+50,00 ¢` a la izquierda de la nota y seguía mencionando Stein–Zimmermann. Ello es compatible con un recurso JavaScript anterior servido desde caché.
+
+Para evitar que las distintas piezas compartan una URL cacheada, los ocho recursos principales y todos los imports ES entre módulos incluyen la misma etiqueta de revisión: **`TYPO-20261010-01`**. La página muestra el indicador `Motor SVG activo · TYPO-20261010-01` únicamente cuando el módulo de notación terminó de dibujar la muestra y el ejemplo. No se debe dar por validada visualmente una captura en la que aparezca `Motor de alteraciones SVG: esperando confirmación de carga`.
+
+Comprobación local:
+
+```bash
+cd ~/webdealevi
+git switch feature/monocordio-v1.3-tetraktys-medias
+git pull --ff-only
+grep 'TYPO-20261010-01' aplicaciones/monocordio/index.html
+python3 -m http.server 8000
+```
+
+Abrir `http://localhost:8000/aplicaciones/monocordio/`, recargar completamente (`Cmd + Shift + R`) y confirmar **Motor SVG activo**. Si no aparece, revisar si el servidor se ejecutó desde una carpeta distinta, si la rama es incorrecta o si Chrome sigue reutilizando módulos antiguos. Como prueba adicional, desactivar temporalmente la caché en DevTools > Network antes de recargar.
+
+GitHub Actions contiene un control de **Chrome headless real** que espera el indicador de motor activo y comprueba la presencia en el DOM de las figuras `quarter-sharp` y `reverse-flat-outline`. Aun con ese control, la legibilidad fina en Safari y Mac requiere revisión humana.
 
 ## Uso
 

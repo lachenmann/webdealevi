@@ -1,0 +1,93 @@
+name: Monocordio — auditoría tipográfica
+on:
+  push:
+    branches:
+      - feature/monocordio-v1.3-tetraktys-medias
+    paths:
+      - "aplicaciones/monocordio/tests/typography-compare.html"
+      - "aplicaciones/monocordio/notacion*.mjs"
+      - "aplicaciones/monocordio/escala.mjs"
+      - "aplicaciones/monocordio/notacion.css"
+      - "aplicaciones/monocordio/fonts/**"
+      - "aplicaciones/monocordio/index.html"
+      - ".github/workflows/monocordio-font-audit.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  specimen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Recuperar originales tipográficos abiertos
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p aplicaciones/monocordio/tests/fonts
+          cd aplicaciones/monocordio/tests/fonts
+          curl -fsSL --retry 3 -o Leland.otf https://raw.githubusercontent.com/MuseScoreFonts/Leland/main/Leland.otf
+          curl -fsSL --retry 3 -o Bravura.otf https://raw.githubusercontent.com/steinbergmedia/bravura/master/redist/otf/Bravura.otf
+          curl -fsSL --retry 3 -o Ekmelos.otf https://raw.githubusercontent.com/tr-igem/ekmelos/main/fonts/otf/Ekmelos.otf
+          curl -fsSL --retry 3 -o Ekmelos72edo.woff2 https://raw.githubusercontent.com/tr-igem/ekmelos/main/fonts/woff/Ekmelos72edo.woff2
+          file *.otf *.woff2
+          sha256sum *.otf *.woff2
+      - name: Analizar mapas de caracteres y cobertura
+        shell: bash
+        run: |
+          python3 -m pip install --quiet fonttools brotli
+          python3 - <<'PY'
+          import json
+          from fontTools.ttLib import TTFont
+          from pathlib import Path
+          root=Path("aplicaciones/monocordio/tests/fonts")
+          checks={
+            "Leland.otf":[0xE050,0xE0A4,0xE260,0xE261,0xE262,0xE280,0xE282],
+            "Bravura.otf":[0xE050,0xE0A4,0xE260,0xE261,0xE262,0xE280,0xE282],
+            "Ekmelos.otf":[0xE050,0xE0A4,0xE260,0xE261,0xE262,0xE280,0xE282,0xE2A0,0xE2A1,0xE2A3,0xE2A4],
+            "Ekmelos72edo.woff2":[0xE280,0xE282,0xE2A0,0xE2A1,0xE2A3,0xE2A4]
+          }
+          report={}
+          for name,required in checks.items():
+              face=TTFont(root/name)
+              cmap=face.getBestCmap()
+              absent=[f"U+{cp:04X}" for cp in required if cp not in cmap]
+              report[name]={"glyphs":len(cmap),"bytes":(root/name).stat().st_size,
+                            "absent":absent}
+              print(name,json.dumps(report[name],ensure_ascii=False))
+              if absent and name != "Ekmelos72edo.woff2":
+                  raise SystemExit("Faltan símbolos esenciales en "+name)
+          assert report["Ekmelos72edo.woff2"]["absent"] == ["U+E280", "U+E282"], "Comprobar separación entre Leland y Ekmelos 72"
+          print("FONT_COVERAGE_JSON="+json.dumps(report))
+          PY
+      - name: Renderizar specimen en Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          BROWSER="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium)"
+          python3 -m http.server 8766 --bind 127.0.0.1 >/tmp/musicfont-server.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          for i in $(seq 1 20); do
+            curl -fsS http://127.0.0.1:8766/aplicaciones/monocordio/tests/typography-compare.html -o /dev/null && break
+            sleep 0.25
+          done
+          "$BROWSER" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
+            --hide-scrollbars --window-size=1440,1150 --virtual-time-budget=4500 \
+            --dump-dom "http://127.0.0.1:8766/aplicaciones/monocordio/tests/typography-compare.html" \
+            > /tmp/font-audit-dom.html 2>/tmp/font-audit-chrome.log
+          grep -q 'data-fonts-ready="true"' /tmp/font-audit-dom.html
+          "$BROWSER" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
+            --hide-scrollbars --window-size=1440,1150 --virtual-time-budget=4500 \
+            --screenshot=/tmp/musicfonts.png \
+            "http://127.0.0.1:8766/aplicaciones/monocordio/tests/typography-compare.html" \
+            >/tmp/font-audit-shot.log 2>&1
+          file /tmp/musicfonts.png /tmp/musicapp.png /tmp/music-scale.png
+      - uses: actions/upload-artifact@v4
+        with:
+          name: monocordio-comparacion-tipografica
+          path: |
+            /tmp/musicfonts.png
+            /tmp/musicapp.png
+            /tmp/music-scale.png
+          retention-days: 7

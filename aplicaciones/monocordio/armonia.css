@@ -1,0 +1,78 @@
+/* v1.3 · Tetraktys y medias musicales. Aislado de las pantallas v1.0–1.2 */
+.harmony-panel {
+  margin-top: 38px;
+  border: 1px solid var(--line);
+  background: linear-gradient(165deg, #201922, #120f16);
+  border-radius: 19px;
+  padding: 31px 31px 26px;
+  box-shadow: 0 15px 55px #05040950;
+}
+.harmony-lead { max-width: 850px; margin: 0 0 31px; }
+.harmony-lead .eyebrow { margin: 0 0 8px; }
+.harmony-lead h2 { font-size: clamp(1.8rem, 3.5vw, 2.45rem); margin: 0 0 13px; }
+.harmony-lead p:not(.eyebrow) { color: #d8cacc; margin: 0; }
+.harmony-lead strong, .harmony-module-title strong { color: #f0dbb7; }
+.harmony-module {
+  border: 1px solid #65505a;
+  border-radius: 15px;
+  background: #17131a;
+  padding: 25px 24px 23px;
+  margin-bottom: 21px;
+}
+.harmony-module-title { display: flex; align-items: flex-start; gap: 18px; margin: 0 0 20px; }
+.harmony-index { border: 1px solid #9e794d; border-radius: 50%; color: #f4d69d; min-width: 42px; height: 42px; display: grid; place-items: center; font-family: Georgia, serif; font-size: 1.3rem; }
+.harmony-module-title h3 { margin: 0 0 7px; font-size: clamp(1.5rem, 2.5vw, 1.9rem); color: #f8dfba; }
+.harmony-module-title p { color: #cbc0c5; font-size: .94rem; margin: 0; max-width: 770px; }
+.harmony-layout { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, .9fr); gap: 22px; align-items: start; }
+.harmony-visual { border: 1px solid #51434a; border-radius: 12px; margin: 0; min-width: 0; padding: 13px; background: radial-gradient(ellipse at 50% 45%, #42302f66, #100e14 77%); }
+.harmony-visual svg { width: 100%; display: block; height: auto; touch-action: manipulation; }
+.harmony-visual figcaption { color: #b5a8b1; border-top: 1px solid #594b513a; padding: 10px 6px 2px; margin-top: 3px; font-size: .77rem; line-height: 1.5; }
+.harmony-control { border-radius: 12px; background: #211923; padding: 17px 16px; border: 1px solid #46373f; min-width: 0; }
+.harmony-label { color: var(--gold-light); font-size: .79rem; font-weight: 650; text-transform: uppercase; letter-spacing: .09em; margin: 0 0 12px; }
+.harmony-options { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.harmony-choice { min-width: 0; background: #302630; color: #f3e9df; border: 1px solid #65515b; border-radius: 9px; padding: 10px 8px; text-align: center; }
+.harmony-choice strong { display: block; font-family: Georgia, serif; font-size: 1.23rem; font-weight: 500; line-height: 1.25; color: #f3d6a9; }
+.harmony-choice span { display: block; font-size: .75rem; color: #bfb2bd; margin-top: 2px; }
+.harmony-choice:hover { background: #443335; border-color: #b18b61; }
+.harmony-choice[aria-pressed="true"] { background: #58412e; border-color: var(--gold); box-shadow: inset 0 0 0 1px #bf905653; }
+.harmony-choice[aria-pressed="true"] span { color: #f1dfc4; }
+.harmony-reading { background: #141218; border-left: 3px solid #cca36b; padding: 12px 13px; margin: 17px 0 15px; border-radius: 0 8px 8px 0; font-size: .88rem; color: #ded3ca; line-height: 1.65; min-height: 85px; font-variant-numeric: tabular-nums; }
+.harmony-reading strong { color: #fae0b5; }
+.harmony-actions { display: grid; gap: 8px; }
+.harmony-button { display: block; width: 100%; padding: 11px 12px; border: 1px solid var(--gold); border-radius: 9px; font-weight: 620; text-align: center; line-height: 1.35; }
+.harmony-button:disabled { opacity: .48; cursor: wait; }
+.harmony-status { color: #b9c9c0; min-height: 1.2rem; margin: 11px 0 0; font-size: .79rem; line-height: 1.45; }
+.harmony-explanation { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.harmony-explanation span { border: 1px solid #4a3e44; background: #211922; padding: 8px 12px; border-radius: 7px; color: #d8cbd0; font-size: .82rem; }
+.harmony-explanation strong { color: #f5d7a4; }
+.harmony-equations { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 10px 0 20px; }
+.harmony-equations > div { border: 1px solid #65503b; border-radius: 10px; background: #291f25; padding: 12px 15px; }
+.harmony-equations span { display: block; color: #b9c4bc; font-size: .74rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: .06em; }
+.harmony-equations strong { display: block; font-size: .93rem; font-weight: 630; color: #f3deb9; font-variant-numeric: tabular-nums; }
+.harmony-note { color: #c7b8c0; font-size: .88rem; margin: 0 4px 0; }
+.harmony-note strong { color: #f0d8ab; }
+.harmony-dot { cursor: pointer; }
+.harmony-dot circle { transition: fill 130ms ease, stroke-width 130ms ease; }
+.harmony-dot:hover circle { fill: #fff1bd; }
+@media (max-width: 850px) {
+  .harmony-panel { padding: 22px 12px; margin-top: 24px; }
+  .harmony-module { padding: 16px 12px; }
+  .harmony-layout { grid-template-columns: 1fr; gap: 14px; }
+  .harmony-visual { max-width: 680px; width: 100%; margin: 0 auto; }
+  .harmony-equations { grid-template-columns: 1fr; }
+}
+/* En pantallas pequeñas es preferible desplazar un SVG legible que reducir su texto a 6 px. */
+@media (max-width: 620px) {
+  .harmony-visual { overflow-x: auto; scrollbar-color: #8f7055 #1b1720; }
+  .harmony-visual svg { min-width: 580px; }
+  .harmony-visual figcaption { position: sticky; left: 0; }
+}
+@media (max-width: 440px) {
+  .harmony-index { min-width: 33px; height: 33px; font-size: 1rem; }
+  .harmony-module-title { gap: 9px; }
+  .harmony-control { padding: 14px 10px; }
+  .harmony-explanation span { flex: 1 1 145px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .harmony-dot circle { transition: none; }
+}

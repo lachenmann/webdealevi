@@ -5,6 +5,7 @@ on:
       - feature/monocordio-pitagorico-mvp
       - feature/monocordio-escala-microtonal
       - feature/monocordio-v1.2-notacion-avanzada
+      - feature/monocordio-v1.3-tetraktys-medias
     paths:
       - "aplicaciones/monocordio/**"
       - ".github/workflows/monocordio-tests.yml"
@@ -30,5 +31,42 @@ jobs:
           node --check aplicaciones/monocordio/escala.mjs
           node --check aplicaciones/monocordio/notacion-core.mjs
           node --check aplicaciones/monocordio/notacion-ui.mjs
+          node --check aplicaciones/monocordio/notacion-glyphs.mjs
+          node --check aplicaciones/monocordio/armonia-core.mjs
+          node --check aplicaciones/monocordio/armonia.mjs
       - name: Verificar el modelo acústico
         run: node --test aplicaciones/monocordio/tests/*.test.mjs
+      - name: Prueba real de notación SVG en Chrome
+        shell: bash
+        run: |
+          set -euo pipefail
+          BROWSER="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium)"
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/monocordio-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for i in $(seq 1 20); do
+            if curl --silent --fail http://127.0.0.1:8765/aplicaciones/monocordio/ > /dev/null; then break; fi
+            sleep 0.25
+          done
+          "$BROWSER" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --disable-background-networking --virtual-time-budget=4500 --dump-dom \
+            "http://127.0.0.1:8765/aplicaciones/monocordio/?build=TYPO-20261010-01" \
+            > /tmp/monocordio-render.html 2>/tmp/monocordio-chrome.log
+          grep -q 'data-ready="true"' /tmp/monocordio-render.html
+          grep -q 'data-active-build="TYPO-20261010-01"' /tmp/monocordio-render.html
+          grep -q 'data-music-font="Leland"' /tmp/monocordio-render.html
+          grep -q 'class="monocordio-music-notehead"' /tmp/monocordio-render.html
+          grep -q 'data-font-glyph="E282"' /tmp/monocordio-render.html
+          grep -q 'data-notation-glyph="quarter-sharp"' /tmp/monocordio-render.html
+          # El medio sostenido debe estar en el pentagrama del EJEMPLO,
+          # no solamente en el muestrario estático de signos.
+          grep -q 'data-rendered-glyphs="quarter-sharp"' /tmp/monocordio-render.html
+          grep -q 'data-notation-glyph="reverse-flat-outline"' /tmp/monocordio-render.html
+          # Stein–Zimmermann es una atribución CORRECTA de signos estándar;
+          # no usar su nombre como criterio de contenido obsoleto.
+          if grep -q 'id="smufl-font-status"' /tmp/monocordio-render.html ||
+             grep -q 'value="quarter-ferneyhough"' /tmp/monocordio-render.html; then
+            echo "ERROR: se detectaron controles obsoletos de notación." >&2
+            exit 1
+          fi
+          echo "PASS: Leland local, medio sostenido E282 y fallback SVG comprobados en Chrome."

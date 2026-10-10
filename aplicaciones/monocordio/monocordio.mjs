@@ -1,7 +1,7 @@
 import {
   BASE_FREQUENCY, INTERVALS, INTERVAL_GROUPS,
   normalizeFraction, describeFraction
-} from "./core.mjs";
+} from "./core.mjs?v=TYPO-20261010-01";
 
 const $ = id => document.getElementById(id);
 const svg = $("monochord");
@@ -221,6 +221,16 @@ $("play-compare").addEventListener("click", async () => {
   soundPluck(ctx, BASE_FREQUENCY, 0, 1.03);
   soundPluck(ctx, BASE_FREQUENCY / fraction, 1.22, 1.45);
   status.textContent = `Primero ${format(BASE_FREQUENCY)} Hz; después ${format(BASE_FREQUENCY / fraction)} Hz.`;
+});
+
+// Puente de integración opcional para ejercicios matemáticos posteriores.
+window.addEventListener("monocordio-set-fraction", event => {
+  const next = event.detail?.fraction;
+  if (typeof next !== "number" || !Number.isFinite(next) ||
+      next < 0.25 || next > 1) return;
+  updateUI(next);
+  status.textContent = "Puente ajustado desde el laboratorio: longitud " +
+    describeFraction(next).lengthRatio + ". Pulsa la cuerda para escuchar.";
 });
 
 updateUI(INTERVALS[0].fraction);
