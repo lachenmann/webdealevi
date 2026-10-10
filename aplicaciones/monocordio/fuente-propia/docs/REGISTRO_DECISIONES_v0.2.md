@@ -37,6 +37,10 @@ tienen estados diferenciados.
 | EM-D020 | Aprobar Emmentaler/Feta como matrices definitivas de G1 | **APROBADA POR EL AUTOR** · 10-10-2026 | Tres madres extraídas de LilyPond y revisadas visualmente | Ejecutar prototipo G2 sin modificar el sitio |
 | EM-D021 | Reconocer que `sharp.slash.stem` (una barra) ya significa +¼ en LilyPond | **CONFIRMADA EN CÓDIGO FUENTE HISTÓRICO** | `mf/feta-sharps.mf` etiqueta «1/2 sharp (1 beam)» | Mantener +⅛ pendiente de solución sin ambigüedad |
 | EM-D022 | Presentar variantes de ¾ bemol LilyPond bajo código privado provisional | **PROPUESTA G2 NO RATIFICADA** | `flatflat.slash` no implica que el contorno corresponda al E281 de Zimmermann | Comparación iconográfica y musical |
+| EM-D023 | Aprobar las ocho formas de la lámina LilyPond G2 como repertorio visual | **APROBADA POR EL AUTOR** · 10-10-2026 | «Apruebo las fuentes», tras visualizar espécimen | Cerrar G2.1 sin publicar todavía el TTF |
+| EM-D024 | Distinguir aprobación de formas, valor musical y normalización de códigos | **ACLARACIÓN EDITORIAL** | 3 madres G1 + 3 variantes convencionales aceptadas + 2 históricas comparativas | Mantener códigos privados solo para estudios de comparación |
+| EM-D025 | No utilizar el medio sostenido histórico de una barra como octavo de tono | **RESTRICCIÓN VIGENTE** | LilyPond identifica `sharp.slash.stem` como medio sostenido de 1/4 | Diseñar un octavo distinguible sin colisión |
+
 
 
 ## Regla crítica: morfología y semántica no son la misma álgebra
