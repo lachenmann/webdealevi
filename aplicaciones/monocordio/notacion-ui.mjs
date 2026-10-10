@@ -1,8 +1,8 @@
 import {
   demonstrationForOffset, decomposeCents, getSystem,
   NOTATION_SYSTEMS, roundTo
-} from "./notacion-core.mjs";
-import { renderNoteAccidentals } from "./notacion-glyphs.mjs";
+} from "./notacion-core.mjs?v=VEC-20261010-01";
+import { renderNoteAccidentals } from "./notacion-glyphs.mjs?v=VEC-20261010-01";
 
 const byId = id => document.getElementById(id);
 const modeSelect = byId("notation-mode");
