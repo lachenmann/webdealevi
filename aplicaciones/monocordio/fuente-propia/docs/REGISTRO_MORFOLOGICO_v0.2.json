@@ -16,7 +16,6 @@
   "semantic_entries": [
     {
       "id": "natural",
-      "cents": null,
       "primitives": [
         "N_VL",
         "N_VR",
