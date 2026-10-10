@@ -31,6 +31,7 @@ jobs:
           node --check aplicaciones/monocordio/escala.mjs
           node --check aplicaciones/monocordio/notacion-core.mjs
           node --check aplicaciones/monocordio/notacion-ui.mjs
+          node --check aplicaciones/monocordio/notacion-glyphs.mjs
           node --check aplicaciones/monocordio/armonia-core.mjs
           node --check aplicaciones/monocordio/armonia.mjs
       - name: Verificar el modelo acústico
