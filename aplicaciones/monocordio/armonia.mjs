@@ -1,7 +1,7 @@
-import { BASE_FREQUENCY } from "./core.mjs";
+import { BASE_FREQUENCY } from "./core.mjs?v=VEC-20261010-01";
 import {
   TETRAKTYS_TOTAL, buildTetraktys, buildMeanSeries, meanIdentity
-} from "./armonia-core.mjs";
+} from "./armonia-core.mjs?v=VEC-20261010-01";
 
 const byId = id => document.getElementById(id);
 const SVG_NS = "http://www.w3.org/2000/svg";
