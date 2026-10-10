@@ -71,11 +71,11 @@ def show(font_path:Path, manifest:dict, out:Path):
     label(d,desc,x+18,y+52,16,
           WARNING if spec.approval=="HISTORICAL_REFERENCE_ONLY" else GREEN)
     label(d,f"{manifest['glyphs'][name]['glyph_codepoint']}",x+18,y+82,13,MUTED)
-    # Main contour shown at 145px without generated or simulated shapes.
-    big=music_font(font_path,176)
-    d.text((x+167,y+288),chr(spec.codepoint),font=big,fill=INK,anchor='ls')
-    d.line((x+22,y+308,x+w-22,y+308),fill=EDGE,width=1)
-    label(d,"En pauta de 14 px por espacio",x+19,y+323,14,MUTED)
+    # Macro specimen for inspecting engraving curves, not a final staff size.
+    big=music_font(font_path,148)
+    d.text((x+167,y+263),chr(spec.codepoint),font=big,fill=INK,anchor='ls')
+    d.line((x+22,y+338,x+w-22,y+338),fill=EDGE,width=1)
+    label(d,"En pauta de 14 px por espacio",x+19,y+350,14,MUTED)
     staff_y=y+410
     line_staff(d,x+18,x+w-18,staff_y,14)
     small=music_font(font_path,61)
