@@ -102,6 +102,45 @@ El monocordio ofrece **19 proporciones seleccionables** clasificadas en consonan
 
 Se añade también el unísono 1:1. Estas razones solo involucran potencias de 2 y 3 (sistema pitagórico); no se presentan intervalos que requieran el factor 5 como si fueran pitagóricos.
 
+## v1.3 — Tetraktys y las medias musicales
+
+### La tetraktys como modelo sonoro
+
+La **tetraktys** muestra diez puntos distribuidos en cuatro filas:
+`1 + 2 + 3 + 4 = 10`. Se asigna a cada fila su número como múltiplo de frecuencia fundamental `f₀ = 220 Hz` (La3). Es un modelo pedagógico, **no** una afirmación de que el diagrama antiguo constituyera por sí mismo una partitura o una construcción organológica documentada.
+
+| Fila | Frecuencia | Razón de frecuencia | Fracción vibrante respecto de L |
+| --- | ---: | ---: | ---: |
+| 1 | 220 Hz | 1:1 | 1:1 |
+| 2 | 440 Hz | 2:1 | 1:2 |
+| 3 | 660 Hz | 3:1 | 1:3 |
+| 4 | 880 Hz | 4:1 | 1:4 |
+
+Las relaciones internas de frecuencias son 1→2 = 2:1 (octava), 2→3 = 3:2 (quinta), 3→4 = 4:3 (cuarta). Se pueden seleccionar los puntos o sus controles accesibles, escuchar la secuencia o simultáneamente y enviar la fila seleccionada al puente.
+
+### Media aritmética y armónica de los extremos 6 y 12
+
+Para extremos `a = 6` y `b = 12`, las medias **de los números que representan frecuencias** son:
+
+- Media aritmética: `A = (a+b)/2 = 9`.
+- Media armónica: `H = 2ab/(a+b) = 8`.
+- La media geométrica `√72 ≈ 8,485` queda entre ambas y se usa como contraste matemático; no es uno de los cuatro términos enteros.
+
+De este modo la serie `6 : 8 : 9 : 12`, con `6 = 220 Hz`, permite escuchar las relaciones:
+
+| Número | Papel | Frecuencia | Relación con 6 (frecuencia) | Longitud con respecto a L |
+| --- | --- | ---: | ---: | ---: |
+| 6 | Extremo inferior | 220 Hz | 1:1 | 1:1 |
+| 8 | Media armónica | 293⅓ Hz | 4:3 | 3:4 |
+| 9 | Media aritmética | 330 Hz | 3:2 | 2:3 |
+| 12 | Extremo superior | 440 Hz | 2:1 | 1:2 |
+
+Las dos medias difieren por `9:8`, el tono pitagórico. La distinción entre media de **frecuencias** y media de **longitudes** importa: al trasladar el modelo al monocordio se invierten las fracciones.
+
+**Arquitectura:** `armonia-core.mjs` contiene todas las proporciones, el cálculo de las medias y los datos de los tonos. `armonia.mjs` dibuja ambos SVG y genera audio local mediante Web Audio API; `armonia.css` compone la interfaz. Se comunica con la vista original mediante el evento opcional `monocordio-set-fraction`. El monocordio sigue funcionando independientemente.
+
+**Verificación:** la suite `tests/armonia.test.mjs` controla diez puntos, relaciones y medias exactas, correspondencia de las longitudes con las frecuencias del instrumento, cambio de fundamental y rechazo de datos inválidos. El audio, los controles SVG/teclado y el desplazamiento del puente requieren además una prueba manual en navegador real.
+
 ## Uso
 
 Abrir `aplicaciones/monocordio/index.html` desde un servidor web estático (necesario para los módulos ES). Los controles de quinta amplían el conjunto de alturas hasta seis pasos a cada lado; el preset de siete notas y la comparación de coma sustituyen temporalmente la colección actual.
