@@ -38,13 +38,19 @@ def notehead(d,x,y,r=9):
   d.ellipse((x-r,y-r*.62,x+r,y+r*.62),fill=INK)
   d.line(((x+r-1,y),(x+r-1,y-r*3.9)),fill=INK,width=max(1,round(r*.22)))
 
-def preview(font_path:Path,out:Path):
+def preview(font_path:Path,out:Path,origin:str="independent"):
+  if origin not in ("independent", "lilypond"):
+    raise ValueError("Unknown provenance")
+  derivative = origin=="lilypond"
   img=Image.new('RGB',CANVAS,PAPER)
   d=ImageDraw.Draw(img)
   W,H=CANVAS
   d.rectangle((34,34,W-34,H-34),outline=BORDER,width=2)
   d.text((71,54),'ESFERAS MICROTONAL  ·  MATRICES v0.2',font=ui_font(34,True),fill=INK)
-  d.text((73,112),'Bocetos tipográficos originales: bemol · becuadro · sostenido',font=ui_font(19),fill=MUTED)
+  d.text((73,112),
+    'Contornos derivados de LilyPond Emmentaler/Feta · GPL + excepción de fuente'
+    if derivative else 'Bocetos independientes: bemol · becuadro · sostenido',
+    font=ui_font(19),fill=MUTED)
   d.text((73,146),'La fuente v0.1 no se ha sustituido. Valores de afinación fuera de los glifos; aquí se estudian solo las formas.',font=ui_font(15),fill=ACCENT)
   names=[('flat','BEMOL','Asta + curva abierta'),('natural','BECUADRO','Dos astas desfasadas + dos uniones'),('sharp','SOSTENIDO','Dos astas + dos travesaños')]
   cards=[(73+i*484,198,73+i*484+460,724) for i in range(3)]
@@ -71,7 +77,10 @@ def preview(font_path:Path,out:Path):
       staff(d,left,left+344,y,s,stroke=LINE,width=1)
       glyph(d,name,font_path,left+128,y,4*s)
       notehead(d,left+230,y,max(5,int(.65*s)))
-  d.text((74,1275),'BORRADOR G1. Glifos convencionales de nueva factura; no derivados de curvas de MIDIDESI.',font=ui_font(15),fill=MUTED)
+  d.text((74,1275),
+    'BORRADOR G1. Derivado de GNU LilyPond, con atribución y licencia original.'
+    if derivative else 'BORRADOR G1. Bocetos originales, no derivados de MIDIDESI.',
+    font=ui_font(15),fill=MUTED)
   d.text((74,1304),'Evaluar contraformas, ritmo de astas, grosor, anclajes y lectura en tamaños reales antes de diseñar microalteraciones.',font=ui_font(14),fill=ACCENT)
   out.parent.mkdir(parents=True,exist_ok=True)
   img.save(out)
@@ -81,5 +90,6 @@ if __name__=='__main__':
   p=argparse.ArgumentParser()
   p.add_argument('--font',required=True)
   p.add_argument('--out',required=True)
+  p.add_argument('--origin',choices=['independent','lilypond'],default='independent')
   args=p.parse_args()
-  preview(Path(args.font),Path(args.out))
+  preview(Path(args.font),Path(args.out),origin=args.origin)
