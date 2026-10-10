@@ -70,7 +70,7 @@ class OriginalVariantTests(unittest.TestCase):
                          "accidentals.sharp.slash.stem")
         self.assertEqual(one["exact_cents"],
                          {"numerator":50,"denominator":1})
-        self.assertIn("NOT an eighth",one["caveat"])
+        self.assertIn("no es un 1/8",one["caveat"])
         self.assertEqual(one["glyph_codepoint"],"U+F0021")
         self.assertIsNone(one["smufl_name"])
         # No +25 cents allocated in this draft.
