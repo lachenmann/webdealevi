@@ -1,3 +1,32 @@
+/* Tipografía editorial final. Fuentes originales bajo SIL OFL 1.1.
+ * Avisos y licencias: ./fonts/OFL-Leland.txt y ./fonts/OFL-Ekmelos.txt.
+ * Carga local: no depender de CDN ni de fuentes instaladas en el sistema.
+ */
+@font-face {
+  font-family: "LelandMonocordio";
+  src: url("./fonts/Leland.otf") format("opentype");
+  font-weight: normal; font-style: normal; font-display: block;
+}
+@font-face {
+  font-family: "Ekmelos72Monocordio";
+  src: url("./fonts/Ekmelos72edo.woff2") format("woff2");
+  font-weight: normal; font-style: normal; font-display: block;
+}
+.monocordio-music-clef,
+.monocordio-music-notehead,
+.monocordio-music-accidental {
+  font-family: "LelandMonocordio", serif;
+  font-weight: normal;
+  font-style: normal;
+}
+.notation-typeface-credit {
+  margin: 8px 0 12px;
+  color: #c0b6b5;
+  font-size: .78rem;
+  line-height: 1.55;
+}
+.notation-typeface-credit a { color: #f0d3a7; text-decoration: underline; }
+
 /* Monocordio v1.3 · notación vectorial sin dependencias de fuente externas. */
 .notation-settings{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
 .notation-control{display:flex;flex-direction:column;gap:8px}
