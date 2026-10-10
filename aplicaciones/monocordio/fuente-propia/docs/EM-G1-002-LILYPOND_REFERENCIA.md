@@ -33,6 +33,28 @@ METAFONT oficiales:
 - https://github.com/lilypond/lilypond/blob/master/mf/feta-sharps.mf
 - https://github.com/lilypond/lilypond/blob/master/mf/feta-accidentals.mf
 
+## Identidad de origen congelada en la auditoría
+
+La compilación de referencia GitHub Actions usa el paquete original
+**GNU LilyPond 2.24.3**, archivo emmentaler-20.otf, y registra:
+
+- SHA-256: aa01667241dc9ff658c41d3b822aa2735f74dfe09f51d40e7a24fde5b6253eb6.
+- Familia OpenType: Emmentaler-20.
+- Identificadores de origen: accidentals.flat, accidentals.natural,
+  accidentals.sharp.
+- UPM original y UPM del estudio: 1000.
+- Conversión: curvas cúbicas CFF a cuadráticas TrueType (Cu2QuPen,
+  error máximo configurado a 0,5 unidades).
+- Copyright: conservado literalmente desde el campo de aviso de
+  derechos del OTF original y acompañado del aviso de derivación.
+
+La versión y hash de la fuente de origen quedan **fijadas en CI**;
+si una distribución actualiza LilyPond, deberá documentarse
+una nueva revisión en vez de incorporar contornos distintos
+silenciosamente. En otros sistemas locales se permite utilizar un
+OTF original de otra edición, registrando siempre su propia
+versión y hash en el manifiesto.
+
 El código fuente de Feta ya documenta medio sostenido con una o
 dos barras y sostenido de tres cuartos con tres astas, así como
 bemol inverso y tres cuartos descendente. Deben revisarse los
