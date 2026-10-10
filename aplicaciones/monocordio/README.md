@@ -23,9 +23,7 @@ El preset de comparación muestra **Sol♭4** (seis quintas descendentes) y **Fa
 
 ## Notación para músicos
 
-El pentagrama representa **alturas**, no una partitura rítmica. Presenta clave de sol, nombres científicos y alteraciones convencionales, acompañados de la desviación microtonal en **cents** respecto de un sistema temperado de 12 semitonos (12-TET) afinado a La4 = 440 Hz. Una flecha arriba/abajo indica únicamente la dirección: la cifra numérica con signo es la especificación exacta de afinación.
-
-**Importante:** un símbolo genérico de cuarto de tono suele denotar 50 cents y no serviría para representar fielmente las desviaciones pitagóricas de pocos cents o la coma de 23,46 cents. Por ello esta versión utiliza notación de altura + corrección numérica. Podrá añadirse una representación alternativa de alteraciones específicas de coma (p. ej. HEJI) en una etapa posterior con revisión de grafías y fuentes musicales.
+El pentagrama representa alturas y conserva sus relaciones pitagóricas exactas. Todas las correcciones en cents son relativas al temperamento igual de doce semitonos (12-TET) con **La4 = 440 Hz**. La versión refinada utiliza alteraciones SVG dibujadas localmente, agrupadas por fracciones de tono y acompañadas de corrección residual inequívoca. Los símbolos no sustituyen ni redondean la afinación matemática.
 
 ## v1.3 — Notación microtonal unificada por signos vectoriales
 
