@@ -3,6 +3,7 @@ import {
   nextFifth, STEP_MIN, STEP_MAX
 } from "./escala-core.mjs";
 import {notationForNote} from "./notacion-core.mjs";
+import {renderNoteAccidentals} from "./notacion-glyphs.mjs";
 
 const el = id => document.getElementById(id);
 const svg = el("pythagorean-score");
@@ -19,7 +20,6 @@ let activeStep = null;
 let scheduledTimeout = null;
 let notationMode = "exact";
 let notationSubdivision = "quarter";
-let hasSmuflFont = false;
 
 function centsLabel(cents) {
   if (Math.abs(cents) < 0.05) return "0,00 ¢";
@@ -65,24 +65,11 @@ function drawScore(notes) {
       svg.append(svgElement("line",{x1:x-18,y1:212,x2:x+19,y2:212,
         stroke:"#cbc3b7","stroke-width":2}));
     }
-    if(note.accidental!==0){
-      svg.append(svgElement("text", {
-        x: x - (representation.step ? 44 : 32), y:y+9,
-        "font-family":hasSmuflFont?"BravuraMonocordio":"Georgia,serif",
-        "font-size":hasSmuflFont?34:29,fill:"#e8d3b8","text-anchor":"middle"
-      },hasSmuflFont?String.fromCodePoint(representation.standardGlyph):
-        (note.accidental===1?"♯":"♭")));
-    }
-    if(notationMode==="contemporary" && representation.step){
-      const useGlyph=representation.isSmufl && hasSmuflFont;
-      svg.append(svgElement("text",{
-        x:useGlyph ? x-77 : x-106, y:y+8,
-        "font-family":useGlyph?"BravuraMonocordio":"Georgia,serif",
-        "font-size":useGlyph?31:14,fill:"#9fdac1",
-        "text-anchor":useGlyph?"middle":"start"
-      },useGlyph?String.fromCodePoint(representation.glyphCodepoint):
-        centsLabel(representation.indicatedCents)));
-    }
+    // Escritura vectorial coherente con el muestrario de la v1.3;
+    // el módulo tipográfico se usa solo como presentación, nunca para afinar.
+    renderNoteAccidentals(svg,representation,{
+      right:x-38,y,scale:.82,color:"#e8d3b8",showNatural:false
+    });
     svg.append(svgElement("line",{x1:x+10,y1:y,x2:x+10,y2:y-38,
       stroke:"#f6eee3","stroke-width":2.3}));
     svg.append(svgElement("ellipse",{
@@ -261,9 +248,5 @@ window.addEventListener("monocordio-notation-change",event=>{
   if(!["exact","contemporary"].includes(requestedMode))return;
   notationMode=requestedMode;
   notationSubdivision=requestedSystem;
-  render();
-});
-window.addEventListener("monocordio-smufl-ready",event=>{
-  hasSmuflFont=event.detail?.ready===true;
   render();
 });
