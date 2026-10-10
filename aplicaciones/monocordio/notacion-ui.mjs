@@ -1,153 +1,194 @@
 import {
-  demonstrationForOffset, getSystem, roundTo,
-  REFERENCE_C4_12TET
+  demonstrationForOffset, decomposeCents, getSystem,
+  NOTATION_SYSTEMS, roundTo
 } from "./notacion-core.mjs";
+import { renderNoteAccidentals } from "./notacion-glyphs.mjs";
 
 const byId = id => document.getElementById(id);
 const modeSelect = byId("notation-mode");
 const subdivisionSelect = byId("fraction-system");
 const centsSlider = byId("demo-cents");
 const score = byId("fraction-score");
+const legend = byId("notation-key-svg");
 const status = byId("demo-sound-status");
-const SVG_NS = "http://www.w3.org/2000/svg";
-const format = (value, precision = 2) => new Intl.NumberFormat("es-CL", {
-  minimumFractionDigits: precision, maximumFractionDigits: precision
+const NS = "http://www.w3.org/2000/svg";
+const format = (value, precision=2) => new Intl.NumberFormat("es-CL", {
+  minimumFractionDigits:precision, maximumFractionDigits:precision
 }).format(roundTo(value,precision));
-const signed = cents => (cents > 0.00000001 ? "+" : cents < -0.00000001 ? "−" : "")
-  + format(Math.abs(cents)) + " ¢";
-const make = (tag, attributes = {}, content = null) => {
-  const element = document.createElementNS(SVG_NS, tag);
-  for(const [key,value] of Object.entries(attributes)) element.setAttribute(key,String(value));
-  if(content !== null) element.textContent = content;
-  return element;
+const signed = cents => (cents > 1e-9 ? "+" : cents < -1e-9 ? "−" : "") +
+  format(Math.abs(cents)) + " ¢";
+const make = (tag, attributes={}, text=null) => {
+  const result = document.createElementNS(NS,tag);
+  for(const [key,value] of Object.entries(attributes)) result.setAttribute(key,String(value));
+  if(text!==null) result.textContent=text;
+  return result;
 };
-let fontReady = false;
+
 let audioContext = null;
+// Este valor guarda toda la precisión de los presets, incluso cuando
+// el deslizador de presentación muestra solamente una décima.
 let demoOffsetCents = 64;
-function updateFontStatus() {
-  const indicator = byId("smufl-font-status");
-  indicator.textContent = fontReady
-    ? "Fuente musical Bravura cargada. Los signos especiales se muestran como glifos SMuFL reales."
-    : "Fuente musical no disponible: los desplazamientos aparecen expresados en cents, sin imitar signos musicales.";
+
+function svgLabel(target, text, x, y, attrs={}) {
+  target.append(make("text",{
+    x,y,fill:"#eadac0","font-family":"system-ui, sans-serif",
+    "font-size":15,"text-anchor":"middle",...attrs
+  },text));
 }
 
-function showDemo() {
-  const cents = demoOffsetCents;
-  const notation = demonstrationForOffset(cents, subdivisionSelect.value);
-  const system = getSystem(subdivisionSelect.value);
-  const direction = notation.step > 0 ? "ascendente" : notation.step < 0 ? "descendente" : "";
-  const symbolDescription = notation.step
-    ? system.fraction + " tono " + direction + " (" + system.family + ")"
-    : "sin alteración fraccionaria";
-  byId("demo-cents-label").textContent = signed(cents);
-  byId("demo-symbol-name").textContent = symbolDescription;
-  byId("demo-symbol-cents").textContent = signed(notation.indicatedCents);
-  byId("demo-residual").textContent = signed(notation.residualCents);
-  byId("demo-frequency").textContent = format(notation.frequencyHz) + " Hz";
-  for(const preset of document.querySelectorAll("[data-offset]")){
-    preset.setAttribute("aria-pressed",String(Math.abs(cents-Number(preset.dataset.offset))<0.0001));
+function drawGuide(target, x1,x2,yStart=78) {
+  for(const dy of [0,20,40,60,80]) {
+    target.append(make("line",{
+      x1,x2,y1:yStart+dy,y2:yStart+dy,
+      stroke:"#aeb3b7","stroke-width":1
+    }));
   }
-  score.setAttribute("aria-label","Do4 a " + format(notation.frequencyHz) +
-    " hercios; alteración " + symbolDescription + "; corrección adicional " +
-    signed(notation.residualCents) + "; desviación total " + signed(cents));
+}
+
+function renderLegend() {
+  legend.replaceChildren();
+  legend.append(
+    make("rect",{x:0,y:0,width:960,height:245,fill:"#0f1218"}),
+    make("line",{x1:20,y1:115,x2:940,y2:115,stroke:"#534954","stroke-width":1})
+  );
+  NOTATION_SYSTEMS.forEach((unit,index)=>{
+    const cx=100+index*189;
+    const label=index===4 ? "Doceavo de tono" : unit.label.slice(0,-1);
+    svgLabel(legend,label,cx,26,{"font-size":15,fill:"#f4d6a9"});
+    const neg=decomposeCents(-unit.fractionCents,unit.id);
+    const pos=decomposeCents(unit.fractionCents,unit.id);
+    renderNoteAccidentals(legend,neg,{
+      right:cx+9,y:74,scale:1.0,color:"#f2d9b4",showNatural:true
+    });
+    renderNoteAccidentals(legend,pos,{
+      right:cx+9,y:164,scale:1.0,color:"#f2d9b4",showNatural:true
+    });
+    svgLabel(legend,signed(-unit.fractionCents),cx,112,{"font-size":13,fill:"#b5d5c9"});
+    svgLabel(legend,signed(unit.fractionCents),cx,215,{"font-size":13,fill:"#b5d5c9"});
+  });
+  legend.setAttribute("aria-label",NOTATION_SYSTEMS.map(unit=>
+    unit.label+": "+signed(-unit.fractionCents)+" y "+
+    signed(unit.fractionCents)).join("; "));
+}
+
+function renderDemonstration() {
+  const notation=demonstrationForOffset(demoOffsetCents,subdivisionSelect.value);
+  const system=getSystem(subdivisionSelect.value);
+  const signs=[notation.standardSign,notation.microSign].filter(Boolean);
+  const description=signs.length ?
+    (notation.standardSign ? "semitono "+signed(notation.semitoneCents) : "")+
+    (notation.microSign ? (notation.standardSign ? " + " : "")+
+    system.fraction+" tono "+(notation.step>0?"ascendente":"descendente") : "") :
+    "becuadro / sin desplazamiento";
+  byId("demo-cents-label").textContent=signed(demoOffsetCents);
+  byId("demo-symbol-name").textContent=description;
+  byId("demo-symbol-cents").textContent=signed(notation.indicatedCents);
+  byId("demo-residual").textContent=signed(notation.residualCents);
+  byId("demo-frequency").textContent=format(notation.frequencyHz)+" Hz";
+  centsSlider.setAttribute("aria-valuetext",signed(demoOffsetCents));
+  for(const button of document.querySelectorAll("[data-offset]")){
+    button.setAttribute("aria-pressed",String(
+      Math.abs(demoOffsetCents-Number(button.dataset.offset))<1e-8 &&
+      subdivisionSelect.value===button.dataset.unit
+    ));
+  }
+  score.setAttribute("aria-label","Do4 a "+format(notation.frequencyHz)+
+    " hercios. "+description+". Desviación total "+signed(notation.totalCents)+
+    "; desplazamiento de los signos "+signed(notation.indicatedCents)+
+    "; corrección residual "+signed(notation.residualCents)+".");
   score.replaceChildren();
   score.append(make("rect",{x:0,y:0,width:480,height:240,fill:"#0d1014"}));
-  for(const y of [74,94,114,134,154]) {
-    score.append(make("line",{x1:35,y1:y,x2:449,y2:y,stroke:"#aeb4b6","stroke-width":1.2}));
-  }
-  score.append(make("text",{x:45,y:153,"font-size":69,"font-family":"'Noto Music','Apple Symbols',serif",fill:"#f1d4a4"},"𝄞"));
-  score.append(make("line",{x1:227,y1:174,x2:272,y2:174,"stroke-width":2,stroke:"#d6c9b4"}));
-  score.append(make("line",{x1:260,y1:174,x2:260,y2:134,"stroke-width":2,stroke:"#eee0d0"}));
-  score.append(make("ellipse",{cx:248,cy:174,rx:11,ry:7,fill:"#f0ddc5",transform:"rotate(-18 248 174)"}));
-  score.append(make("text",{x:245,y:42,"text-anchor":"middle",fill:"#ecd0a3","font-size":18},
-    "Total " + signed(cents)));
-  if(notation.step!==0) {
-    const glyph = notation.isSmufl && fontReady;
-    score.append(make("text", {
-      x:glyph?201:137,y:glyph?183:181,
-      "font-family":glyph?"BravuraMonocordio":"'Georgia',serif",
-      "font-size":glyph?36:19,fill:"#f3d5a7",
-      "text-anchor":glyph?"middle":"start"
-    },glyph?String.fromCodePoint(notation.glyphCodepoint):signed(notation.indicatedCents)));
-  }
-  score.append(make("text",{
-    x:318,y:178,"font-size":14,fill:"#a7e1c7"
-  },"res. " + signed(notation.residualCents)));
-  score.append(make("text",{
-    x:250,y:222,"font-size":15,"text-anchor":"middle",fill:"#c7b8b5"
-  },"Do4 · La4 = 440 Hz"));
+  drawGuide(score,35,449,74);
+  svgLabel(score,"𝄞",48,152,{
+    "font-family":"'Noto Music','Apple Symbols',serif",
+    "font-size":68,fill:"#f1d4a4"
+  });
+  score.append(make("line",{x1:227,y1:174,x2:274,y2:174,
+    stroke:"#d6c9b4","stroke-width":2}));
+  score.append(make("line",{x1:260,y1:174,x2:260,y2:134,
+    stroke:"#eee0d0","stroke-width":2}));
+  score.append(make("ellipse",{
+    cx:248,cy:174,rx:11,ry:7,fill:"#f0ddc5",
+    transform:"rotate(-18 248 174)"
+  }));
+  renderNoteAccidentals(score,notation,{
+    right:207,y:174,scale:1,color:"#f0d6ad",showNatural:true
+  });
+  svgLabel(score,"Total "+signed(notation.totalCents),248,42,{
+    "font-size":18,fill:"#ecd0a3"
+  });
+  svgLabel(score,"res. "+signed(notation.residualCents),370,183,{
+    "font-size":13,fill:"#a7e1c7"
+  });
+  svgLabel(score,"Do4 · La4 = 440 Hz",248,226,{
+    "font-size":15,fill:"#c7b8b5"
+  });
 }
 
-function updateMode() {
+function refreshMode() {
   const mode=modeSelect.value;
   const system=subdivisionSelect.value;
-  byId("notation-mode-description").textContent = mode==="exact"
-    ? "Modo pitagórico: el pentagrama muestra las alteraciones convencionales y la desviación TOTAL frente al temperamento igual."
-    : "Modo contemporáneo: junto a la alteración convencional se añade una fracción de tono cuando procede. El signo «res.» indica la corrección ADICIONAL. El total continúa visible; la frecuencia original no cambia.";
+  byId("notation-mode-description").textContent=mode==="exact"
+    ? "Modo pitagórico: alteración ordinaria y cents TOTALES. La altura y su razón no cambian."
+    : "Modo contemporáneo: signo cromático + signo de fracción + cents RESIDUALES; el total permanece visible y la afinación es idéntica.";
   window.dispatchEvent(new CustomEvent("monocordio-notation-change",{
     detail:{mode,system}
   }));
-  showDemo();
+  renderDemonstration();
 }
 
-modeSelect.addEventListener("change",updateMode);
-subdivisionSelect.addEventListener("change",updateMode);
+modeSelect.addEventListener("change",refreshMode);
+subdivisionSelect.addEventListener("change",refreshMode);
 centsSlider.addEventListener("input",()=>{
   demoOffsetCents=Number(centsSlider.value);
-  showDemo();
+  renderDemonstration();
 });
-document.querySelectorAll("[data-offset]").forEach(button=>{
+for(const button of document.querySelectorAll("[data-offset]")){
   button.addEventListener("click",()=>{
+    const unit=button.dataset.unit;
+    if(!NOTATION_SYSTEMS.some(item=>item.id===unit)) return;
     demoOffsetCents=Number(button.dataset.offset);
+    subdivisionSelect.value=unit;
     centsSlider.value=String(roundTo(demoOffsetCents,1));
-    showDemo();
+    refreshMode();
   });
-});
+}
 
-byId("play-demo-note").addEventListener("click",async ()=>{
+byId("play-demo-note").addEventListener("click",async()=>{
   const Audio=window.AudioContext || window.webkitAudioContext;
-  if(!Audio){status.textContent="Este navegador no dispone de audio Web API.";return;}
-  try {
+  if(!Audio){status.textContent="Este navegador no permite síntesis Web Audio.";return;}
+  try{
     audioContext??=new Audio();
     if(audioContext.state!=="running") await audioContext.resume();
     const frequency=demonstrationForOffset(demoOffsetCents,subdivisionSelect.value).frequencyHz;
-    const start=audioContext.currentTime+0.01;
+    const when=audioContext.currentTime+0.012;
     const envelope=audioContext.createGain();
-    envelope.gain.setValueAtTime(0.0001,start);
-    envelope.gain.exponentialRampToValueAtTime(0.15,start+0.012);
-    envelope.gain.exponentialRampToValueAtTime(0.0001,start+1.15);
+    envelope.gain.setValueAtTime(0.0001,when);
+    envelope.gain.exponentialRampToValueAtTime(0.15,when+0.012);
+    envelope.gain.exponentialRampToValueAtTime(0.0001,when+1.15);
     envelope.connect(audioContext.destination);
     let live=5;
-    for(let h=1;h<=5;h++){
-      const osc=audioContext.createOscillator();
+    for(let harmonic=1;harmonic<=5;harmonic++){
+      const oscillator=audioContext.createOscillator();
       const partial=audioContext.createGain();
-      osc.type="sine";osc.frequency.value=frequency*h;partial.gain.value=1/h**1.75;
-      osc.connect(partial);partial.connect(envelope);
-      osc.start(start);osc.stop(start+1.16);
-      osc.addEventListener("ended",()=>{
-        osc.disconnect();partial.disconnect();
-        if(!--live)envelope.disconnect();
+      oscillator.type="sine";
+      oscillator.frequency.value=frequency*harmonic;
+      partial.gain.value=1/(harmonic**1.75);
+      oscillator.connect(partial);
+      partial.connect(envelope);
+      oscillator.start(when);
+      oscillator.stop(when+1.16);
+      oscillator.addEventListener("ended",()=>{
+        oscillator.disconnect();
+        partial.disconnect();
+        if(--live===0) envelope.disconnect();
       },{once:true});
     }
-    status.textContent="Ejemplo: "+format(frequency)+" Hz, desplazamiento total "+signed(demoOffsetCents)+".";
+    status.textContent="Do4: "+format(frequency)+" Hz. Desviación total "+signed(demoOffsetCents)+".";
   }catch{
-    status.textContent="No se ha podido reproducir el ejemplo. Comprueba el audio del navegador.";
+    status.textContent="No se ha podido reproducir el ejemplo. Comprueba los permisos de audio.";
   }
 });
 
-updateMode();
-updateFontStatus();
-if(document.fonts && document.fonts.load) {
-  document.fonts.load("36px BravuraMonocordio",String.fromCodePoint(0xE48E))
-    .then(fonts=>{
-      fontReady=fonts.length>0;
-      updateFontStatus();
-      showDemo();
-      window.dispatchEvent(new CustomEvent("monocordio-smufl-ready",{detail:{ready:fontReady}}));
-    }).catch(()=>{
-      fontReady=false;
-      updateFontStatus();
-      showDemo();
-      window.dispatchEvent(new CustomEvent("monocordio-smufl-ready",{detail:{ready:false}}));
-    });
-}
+renderLegend();
+refreshMode();
