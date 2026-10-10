@@ -1,5 +1,33 @@
 # Esferas Microtonal — prototipo de fuente propia
 
+## G1 — Primeras matrices redibujadas (autorizado G0, 10-10-2026)
+
+**Los principios y la gramática documental v0.2 fueron aprobados por el autor.**
+Se han generado desde cero **solamente los tres signos madre**:
+`flat` (E260), `natural` (E261) y `sharp` (E262).
+
+Los archivos v0.2 están aislados en `v02/`:
+
+- [Informe G1 y alcance](docs/EM-G1-001-MATRICES_v0.2.md)
+- [Generador original de las tres matrices](v02/build_mothers.py)
+- [Especímen a tamaños reales de pentagrama](v02/preview_mothers.py)
+- [Pruebas de contornos, pesos y códigos](v02/test_mothers.py)
+
+Para reproducir el primer espécimen en Mac:
+
+```sh
+cd aplicaciones/monocordio/fuente-propia/v02
+python3 build_mothers.py --out build/EsferasMicrotonal-Mothers-v02.ttf
+python3 -m unittest -v test_mothers.py
+python3 preview_mothers.py --font build/EsferasMicrotonal-Mothers-v02.ttf --out build/matrices-v02.png
+open build/matrices-v02.png
+```
+
+**Estado:** `G1_BOCETOS_GENERADOS_PENDIENTES_DE_REVISION_VISUAL`.
+Esta etapa no incluye derivaciones microtonales ni modifica el generador
+`build_font.py` de v0.1, el monocordio publicado ni las ramas PR #4/#6.
+No se distribuyen archivos de fuente como producto terminado.
+
 ## Diseño v0.2 — Documentación formalizada
 
 La revisión del autor de la **muestra de v0.1** identifica exceso de
