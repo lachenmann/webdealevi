@@ -1,9 +1,9 @@
 import {
   DIATONIC_STEPS, PYTHAGOREAN_COMMA, makeCollection,
   nextFifth, STEP_MIN, STEP_MAX
-} from "./escala-core.mjs?v=VEC-20261010-01";
-import {notationForNote} from "./notacion-core.mjs?v=VEC-20261010-01";
-import {renderNoteAccidentals} from "./notacion-glyphs.mjs?v=VEC-20261010-01";
+} from "./escala-core.mjs?v=TYPO-20261010-01";
+import {notationForNote} from "./notacion-core.mjs?v=TYPO-20261010-01";
+import {renderNoteAccidentals} from "./notacion-glyphs.mjs?v=TYPO-20261010-01";
 
 const el = id => document.getElementById(id);
 const svg = el("pythagorean-score");
