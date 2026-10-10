@@ -50,10 +50,10 @@ jobs:
           done
           "$BROWSER" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage \
             --disable-background-networking --virtual-time-budget=4500 --dump-dom \
-            "http://127.0.0.1:8765/aplicaciones/monocordio/?build=VEC-20261010-01" \
+            "http://127.0.0.1:8765/aplicaciones/monocordio/?build=TYPO-20261010-01" \
             > /tmp/monocordio-render.html 2>/tmp/monocordio-chrome.log
           grep -q 'data-ready="true"' /tmp/monocordio-render.html
-          grep -q 'data-active-build="VEC-20261010-01"' /tmp/monocordio-render.html
+          grep -q 'data-active-build="TYPO-20261010-01"' /tmp/monocordio-render.html
           grep -q 'data-notation-glyph="quarter-sharp"' /tmp/monocordio-render.html
           # El medio sostenido debe estar en el pentagrama del EJEMPLO,
           # no solamente en el muestrario estático de signos.
