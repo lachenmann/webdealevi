@@ -106,6 +106,12 @@ Dos signos con igual número de trazos pueden representar valores
 diferentes. La gramática deberá acompañarse de un **registro exacto**
 \(\operatorname{valor}(g,\pi)\) que también indique el perfil \(\pi\).
 
+> **Actualización G2:** el candidato de **+⅛** con un asta
+> y un travesaño no se adopta todavía: LilyPond ya utiliza una
+> forma equivalente como **medio sostenido (+¼)**.
+> La familia siguiente se conserva como hipótesis abstracta, con
+> esta colisión histórica pendiente de resolución. Véase EM-G2-001.
+
 ## V. Familia ascendente: primera propuesta morfológica
 
 Tomando las simplificaciones del sostenido planteadas por el autor y una **interpolación técnica aún no ratificada para +3/8**, en un perfil con `1 tono = 200 cents` se propone:
