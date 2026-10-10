@@ -25,6 +25,7 @@ const make = (tag, attributes={}, text=null) => {
 };
 
 let audioContext = null;
+let musicFontReady = false;
 // Este valor guarda toda la precisión de los presets, incluso cuando
 // el deslizador de presentación muestra solamente una décima.
 let demoOffsetCents = 64;
@@ -58,10 +59,12 @@ function renderLegend() {
     const neg=decomposeCents(-unit.fractionCents,unit.id);
     const pos=decomposeCents(unit.fractionCents,unit.id);
     renderNoteAccidentals(legend,neg,{
-      right:cx+9,y:74,scale:1.0,color:"#f2d9b4",showNatural:true
+      right:cx+9,y:74,scale:1.0,color:"#f2d9b4",showNatural:true,
+      fontReady:musicFontReady
     });
     renderNoteAccidentals(legend,pos,{
-      right:cx+9,y:164,scale:1.0,color:"#f2d9b4",showNatural:true
+      right:cx+9,y:164,scale:1.0,color:"#f2d9b4",showNatural:true,
+      fontReady:musicFontReady
     });
     svgLabel(legend,signed(-unit.fractionCents),cx,112,{"font-size":13,fill:"#b5d5c9"});
     svgLabel(legend,signed(unit.fractionCents),cx,215,{"font-size":13,fill:"#b5d5c9"});
@@ -99,20 +102,37 @@ function renderDemonstration() {
   score.replaceChildren();
   score.append(make("rect",{x:0,y:0,width:480,height:240,fill:"#0d1014"}));
   drawGuide(score,35,449,74);
-  svgLabel(score,"𝄞",48,152,{
-    "font-family":"'Noto Music','Apple Symbols',serif",
-    "font-size":68,fill:"#f1d4a4"
-  });
+  if (musicFontReady) {
+    score.append(make("text",{
+      x:34,y:142,"font-size":76,
+      "class":"monocordio-music-clef",
+      fill:"#f1d4a4"
+    },String.fromCodePoint(0xE050)));
+  } else {
+    svgLabel(score,"𝄞",48,152,{
+      "font-family":"'Noto Music','Apple Symbols',serif",
+      "font-size":68,fill:"#f1d4a4"
+    });
+  }
   score.append(make("line",{x1:227,y1:174,x2:274,y2:174,
     stroke:"#d6c9b4","stroke-width":2}));
   score.append(make("line",{x1:260,y1:174,x2:260,y2:134,
     stroke:"#eee0d0","stroke-width":2}));
-  score.append(make("ellipse",{
-    cx:248,cy:174,rx:11,ry:7,fill:"#f0ddc5",
-    transform:"rotate(-18 248 174)"
-  }));
+  if (musicFontReady) {
+    score.append(make("text",{
+      x:237,y:174,"font-size":50,
+      "class":"monocordio-music-notehead",
+      fill:"#f0ddc5"
+    },String.fromCodePoint(0xE0A4)));
+  } else {
+    score.append(make("ellipse",{
+      cx:248,cy:174,rx:11,ry:7,fill:"#f0ddc5",
+      transform:"rotate(-18 248 174)"
+    }));
+  }
   const renderedGlyphs = renderNoteAccidentals(score,notation,{
-    right:207,y:174,scale:1,color:"#f0d6ad",showNatural:true
+    right:207,y:174,scale:1,color:"#f0d6ad",showNatural:true,
+    fontReady:musicFontReady
   });
   score.setAttribute("data-rendered-glyphs", renderedGlyphs.join(","));
   svgLabel(score,"Total "+signed(notation.totalCents),248,42,{
@@ -200,4 +220,27 @@ if (engineState) {
   engineState.textContent = "Motor SVG activo · VEC-20261010-01 · alteraciones vectoriales verificadas.";
 }
 window.__MONOCORDIO_VECTOR_BUILD = "VEC-20261010-01";
+
+// Una fuente opcional no interrumpe nunca la notación: primero se dibuja SVG,
+// después se actualizan las formas convencionales al cargar Leland local.
+if (document.fonts?.load) {
+  document.fonts.load('53px "LelandMonocordio"',
+    String.fromCodePoint(0xE050,0xE0A4,0xE280,0xE282))
+    .then(fonts=>{
+      musicFontReady = fonts.length > 0;
+      if (!musicFontReady) return;
+      renderLegend();
+      renderDemonstration();
+      if (engineState) {
+        engineState.dataset.musicFont = "Leland";
+        engineState.textContent = "Motor SVG activo · Leland cargada · VEC-20261010-01";
+      }
+      window.dispatchEvent(new CustomEvent("monocordio-music-font-ready",{
+        detail:{ready:true,font:"Leland"}
+      }));
+    }).catch(()=>{
+      // Fallback completo de glifos SVG; no altera afinación ni interfaz.
+      musicFontReady = false;
+    });
+}
 
