@@ -184,7 +184,7 @@ Las dos medias difieren por `9:8`, el tono pitagórico. La distinción entre med
 
 Tras actualizar el HTML a los signos vectoriales, se observó en una captura un comportamiento mixto: el HTML mostraba los nuevos botones de doceavos de tono mientras que el módulo antiguo de JavaScript escribía `+50,00 ¢` a la izquierda de la nota y seguía mencionando Stein–Zimmermann. Ello es compatible con un recurso JavaScript anterior servido desde caché.
 
-Para evitar que las distintas piezas compartan una URL cacheada, los ocho recursos principales y todos los imports ES entre módulos incluyen la misma etiqueta de revisión: **`VEC-20261010-01`**. La página muestra el indicador `Motor SVG activo · VEC-20261010-01` únicamente cuando el módulo de notación terminó de dibujar la muestra y el ejemplo. No se debe dar por validada visualmente una captura en la que aparezca `Motor de alteraciones SVG: esperando confirmación de carga`.
+Para evitar que las distintas piezas compartan una URL cacheada, los ocho recursos principales y todos los imports ES entre módulos incluyen la misma etiqueta de revisión: **`TYPO-20261010-01`**. La página muestra el indicador `Motor SVG activo · TYPO-20261010-01` únicamente cuando el módulo de notación terminó de dibujar la muestra y el ejemplo. No se debe dar por validada visualmente una captura en la que aparezca `Motor de alteraciones SVG: esperando confirmación de carga`.
 
 Comprobación local:
 
@@ -192,7 +192,7 @@ Comprobación local:
 cd ~/webdealevi
 git switch feature/monocordio-v1.3-tetraktys-medias
 git pull --ff-only
-grep 'VEC-20261010-01' aplicaciones/monocordio/index.html
+grep 'TYPO-20261010-01' aplicaciones/monocordio/index.html
 python3 -m http.server 8000
 ```
 
