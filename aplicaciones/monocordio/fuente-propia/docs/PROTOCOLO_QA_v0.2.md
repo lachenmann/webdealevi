@@ -148,15 +148,15 @@ medirse. Hasta entonces la columna «éxito visual» se marcará
 | Puerta | Comprobación | Estado actual |
 | --- | --- | --- |
 | G0 | Documentos v0.2 y valores exactos | **Aprobados por el autor** · 10-10-2026 |
-| G1 | Tres signos madre de LilyPond derivadas y cotejadas | **EM-G1-002 en evaluación**; primer boceto independiente EM-G1-001 sustituido como referencia |
-| G2 | Familia ascendente de trazos | Pendiente |
+| G1 | Tres signos madre de LilyPond derivadas y cotejadas | **APROBADO POR EL AUTOR** · cierre de EM-G1-002; 10-10-2026 |
+| G2 | Familia ascendente de trazos | **AUTORIZADO PARA PROTOTIPOS** · variantes LilyPond; octavo y 3/8 aún no ratificados |
 | G3 | Familia descendente y signos fraccionarios | Pendiente |
 | G4 | Pruebas automáticas v0.2 | Suite G1 añadida; conformidad v0.2 completa pendiente |
 | G5 | Impresión, pantallas y lectura a ciegas | Pendiente |
 | G6 | Licencia GNU y revisión de titulares | Pendiente |
 | G7 | Aprobación del autor para sustituir v0.1 | Pendiente |
 
-La aprobación de G0 **no activa automáticamente G7**. G1 requiere revisión visual explícita de la lámina.
+La aprobación visual de G1 por el autor **no activa G7**. Se autoriza únicamente el trabajo G2; los signos fraccionarios candidatos requerirán su propia revisión visual.
 
 ## 9. Seguridad de publicación
 
