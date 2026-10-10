@@ -1,5 +1,48 @@
 # Esferas Microtonal — prototipo de fuente propia
 
+## G2.2 — Laboratorio comparativo de nuevas microalteraciones
+
+Se han generado **16 candidatos experimentales** a partir de los
+contornos auténticos de GNU LilyPond (Emmentaler/Feta), divididos
+en dos familias de construcción alternativas:
+
+- **A (rayas auxiliares):** de una a cuatro rayas oblicuas
+  separadas del esqueleto original, según el nivel fraccionario.
+- **B (terminales de horquilla):** uno o dos pequeños
+  terminales oblicuos, con asta auxiliar en la opción de
+  tres octavos.
+
+Cada familia cubre dos orientaciones de **1/12, 1/8, 1/6 y 3/8**
+de tono, siempre bajo el perfil `1 tono = 200 cents`.
+El registro mantiene exactamente fracciones `50/3, 25,
+100/3, 75` cents y sus signos negativos.
+
+**Estos 16 dibujos son candidatos NO aprobados y NO estandarizados.**
+No reemplazan ningún signo aprobado en G1 o G2.1. Los códigos
+privados `U+F0100–U+F010F` son solo una herramienta de comparación;
+no tienen significado SMuFL ni estado de norma comunitaria.
+
+- [Análisis de las dos gramáticas y sus riesgos](docs/EM-G2-003-CANDIDATOS_FRACCIONARIOS.md)
+- [Generador original A/B sobre LilyPond](v02/build_lilypond_g22.py)
+- [Pruebas de fracciones, genealogía y diferenciación](v02/test_lilypond_g22.py)
+- [Generador de láminas A/B](v02/preview_lilypond_g22.py)
+
+Para reproducir el estudio con un OTF **original** instalado:
+
+```sh
+cd aplicaciones/monocordio/fuente-propia/v02
+python3 build_lilypond_g22.py --source /ruta/a/emmentaler-20.otf --out build/EsferasG22-Candidatos.ttf
+LILYPOND_FONT_SOURCE=/ruta/a/emmentaler-20.otf python3 -m unittest -v test_lilypond_g22.py
+python3 preview_lilypond_g22.py --font build/EsferasG22-Candidatos.ttf --outdir build/laminas-g22
+```
+
+El TTF se genera transitoriamente para inspección, sin publicarlo
+como tipografía oficial. Se deben evaluar la identificación a
+`s=7 px`, posibles colisiones con líneas de pauta y el contraste
+óptico antes de elegir A, B o una variante híbrida.
+
+**No se modifica el monocordio publicado ni se fusiona PR #5.**
+
 ## G2.1 — Variantes de LilyPond aprobadas visualmente (10-10-2026)
 
 El autor aprobó las **ocho formas** de la lámina G2. Se reconoce como
