@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:nma:schema:event:0.1-draft",
+  "title": "NMA — evento de altura y notación, borrador 0.1",
+  "description": "La validación sintáctica no sustituye a los requisitos matemáticos: gcd=1 y período>1 se verifican por software.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "nma_version",
+    "id",
+    "reference",
+    "sound"
+  ],
+  "properties": {
+    "nma_version": {
+      "const": "0.1-draft"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "frequency_hz"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "frequency_hz": {
+          "$ref": "#/$defs/ratio"
+        }
+      }
+    },
+    "sound": {
+      "$ref": "#/$defs/interval"
+    },
+    "notation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "glyph_names",
+        "accessible_label"
+      ],
+      "properties": {
+        "profile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "written_pitch": {
+          "type": "string",
+          "minLength": 1
+        },
+        "glyph_names": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "accessible_label": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  "$defs": {
+    "positiveIntegerString": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]*$"
+    },
+    "signedIntegerString": {
+      "type": "string",
+      "pattern": "^(?:0|-?[1-9][0-9]*)$"
+    },
+    "ratio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "numerator",
+        "denominator"
+      ],
+      "properties": {
+        "kind": {
+          "const": "ratio"
+        },
+        "numerator": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "denominator": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      }
+    },
+    "ediv": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "period",
+        "steps",
+        "divisions"
+      ],
+      "properties": {
+        "kind": {
+          "const": "ediv"
+        },
+        "period": {
+          "$ref": "#/$defs/ratio"
+        },
+        "steps": {
+          "type": "string",
+          "pattern": "^(?:0|-?[1-9][0-9]*)$"
+        },
+        "divisions": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      }
+    },
+    "centsRational": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "numerator",
+        "denominator"
+      ],
+      "properties": {
+        "kind": {
+          "const": "cents-rational"
+        },
+        "numerator": {
+          "type": "string",
+          "pattern": "^(?:0|-?[1-9][0-9]*)$"
+        },
+        "denominator": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      }
+    },
+    "interval": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ratio"
+        },
+        {
+          "$ref": "#/$defs/ediv"
+        },
+        {
+          "$ref": "#/$defs/centsRational"
+        }
+      ]
+    }
+  }
+}

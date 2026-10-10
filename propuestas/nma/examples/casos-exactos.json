@@ -1,0 +1,170 @@
+{
+  "format": "nma-cases-v0.1",
+  "description": "Casos de referencia exactos: el sonido no se infiere de su representación tipográfica",
+  "cases": [
+    {
+      "nma_version": "0.1-draft",
+      "id": "ji-quinta-3-2",
+      "reference": {
+        "name": "A4",
+        "frequency_hz": {
+          "kind": "ratio",
+          "numerator": "440",
+          "denominator": "1"
+        }
+      },
+      "sound": {
+        "kind": "ratio",
+        "numerator": "3",
+        "denominator": "2"
+      },
+      "notation": {
+        "profile": "nma.ji-reference.v0",
+        "written_pitch": "E5",
+        "glyph_names": [],
+        "accessible_label": "Quinta de entonación justa 3 sobre 2 desde La4"
+      }
+    },
+    {
+      "nma_version": "0.1-draft",
+      "id": "edo12-quinta",
+      "reference": {
+        "name": "A4",
+        "frequency_hz": {
+          "kind": "ratio",
+          "numerator": "440",
+          "denominator": "1"
+        }
+      },
+      "sound": {
+        "kind": "ediv",
+        "period": {
+          "kind": "ratio",
+          "numerator": "2",
+          "denominator": "1"
+        },
+        "divisions": "12",
+        "steps": "7"
+      },
+      "notation": {
+        "profile": "nma.tone-12tet.v0",
+        "written_pitch": "E5",
+        "glyph_names": [],
+        "accessible_label": "Quinta temperada de siete semitonos desde La4"
+      }
+    },
+    {
+      "nma_version": "0.1-draft",
+      "id": "cuarto-bemol-stein",
+      "reference": {
+        "name": "A4",
+        "frequency_hz": {
+          "kind": "ratio",
+          "numerator": "440",
+          "denominator": "1"
+        }
+      },
+      "sound": {
+        "kind": "ediv",
+        "period": {
+          "kind": "ratio",
+          "numerator": "2",
+          "denominator": "1"
+        },
+        "divisions": "24",
+        "steps": "-1"
+      },
+      "notation": {
+        "profile": "nma.tone-12tet.v0",
+        "written_pitch": "A4",
+        "glyph_names": [
+          "accidentalQuarterToneFlatStein"
+        ],
+        "accessible_label": "Bemol inverso abierto Stein: La4 un cuarto de tono descendente"
+      }
+    },
+    {
+      "nma_version": "0.1-draft",
+      "id": "sexto-arriba",
+      "reference": {
+        "name": "A4",
+        "frequency_hz": {
+          "kind": "ratio",
+          "numerator": "440",
+          "denominator": "1"
+        }
+      },
+      "sound": {
+        "kind": "cents-rational",
+        "numerator": "100",
+        "denominator": "3"
+      },
+      "notation": {
+        "profile": "nma.tone-12tet.v0",
+        "written_pitch": "A4",
+        "glyph_names": [
+          "accidentalSims6Up"
+        ],
+        "accessible_label": "Sexto de tono ascendente, cien tercios de cent"
+      }
+    },
+    {
+      "nma_version": "0.1-draft",
+      "id": "octavo-48edo",
+      "reference": {
+        "name": "A4",
+        "frequency_hz": {
+          "kind": "ratio",
+          "numerator": "440",
+          "denominator": "1"
+        }
+      },
+      "sound": {
+        "kind": "ediv",
+        "period": {
+          "kind": "ratio",
+          "numerator": "2",
+          "denominator": "1"
+        },
+        "divisions": "48",
+        "steps": "1"
+      },
+      "notation": {
+        "profile": "nma.tone-12tet.v0",
+        "written_pitch": "A4",
+        "glyph_names": [],
+        "accessible_label": "Octavo de tono ascendente, 25 cents exactos"
+      }
+    },
+    {
+      "nma_version": "0.1-draft",
+      "id": "doceavo-72edo",
+      "reference": {
+        "name": "A4",
+        "frequency_hz": {
+          "kind": "ratio",
+          "numerator": "440",
+          "denominator": "1"
+        }
+      },
+      "sound": {
+        "kind": "ediv",
+        "period": {
+          "kind": "ratio",
+          "numerator": "2",
+          "denominator": "1"
+        },
+        "divisions": "72",
+        "steps": "-1"
+      },
+      "notation": {
+        "profile": "nma.tone-12tet.v0",
+        "written_pitch": "A4",
+        "glyph_names": [
+          "accidentalSims12Down"
+        ],
+        "accessible_label": "Doceavo de tono descendente, cincuenta tercios de cent"
+      }
+    }
+  ]
+}
