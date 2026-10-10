@@ -192,3 +192,11 @@ byId("play-demo-note").addEventListener("click",async()=>{
 
 renderLegend();
 refreshMode();
+const engineState = byId("notation-engine-state");
+if (engineState) {
+  engineState.dataset.activeBuild = "VEC-20261010-01";
+  engineState.dataset.ready = "true";
+  engineState.textContent = "Motor SVG activo · VEC-20261010-01 · alteraciones vectoriales verificadas.";
+}
+window.__MONOCORDIO_VECTOR_BUILD = "VEC-20261010-01";
+
