@@ -149,7 +149,7 @@ medirse. Hasta entonces la columna «éxito visual» se marcará
 | --- | --- | --- |
 | G0 | Documentos v0.2 y valores exactos | **Aprobados por el autor** · 10-10-2026 |
 | G1 | Tres signos madre de LilyPond derivadas y cotejadas | **APROBADO POR EL AUTOR** · cierre de EM-G1-002; 10-10-2026 |
-| G2 | Familia ascendente de trazos | **AUTORIZADO PARA PROTOTIPOS** · variantes LilyPond; octavo y 3/8 aún no ratificados |
+| G2 | Familia ascendente de trazos | **G2.1 compilado y probado** · variantes LilyPond, revisión visual pendiente; octavos y tres octavos sin signo aprobado |
 | G3 | Familia descendente y signos fraccionarios | Pendiente |
 | G4 | Pruebas automáticas v0.2 | Suite G1 añadida; conformidad v0.2 completa pendiente |
 | G5 | Impresión, pantallas y lectura a ciegas | Pendiente |
