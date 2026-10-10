@@ -101,6 +101,25 @@ jobs:
             --out /tmp/esferas-lilypond-g2.png
           file /tmp/esferas-lilypond-g2.png
           test -s /tmp/esferas-lilypond-g2.png
+      - name: Construir 16 candidatos G2.2 (dos gramáticas experimentales)
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 build_lilypond_g22.py --source "$LILYPOND_FONT_SOURCE" \
+            --out /tmp/EsferasMicrotonal-G22-Candidates.ttf
+          file /tmp/EsferasMicrotonal-G22-Candidates.ttf
+      - name: Validar fracciones exactas, procedencia y conflictos de G2.2
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: python3 -m unittest -v test_lilypond_g22.py
+      - name: Generar comparación G2.2 a tamaño de partitura
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 preview_lilypond_g22.py \
+            --font /tmp/EsferasMicrotonal-G22-Candidates.ttf \
+            --outdir /tmp/esferas-g22
+          file /tmp/esferas-g22/*.png
+          test -s /tmp/esferas-g22/esferas-g22-a.png
+          test -s /tmp/esferas-g22/esferas-g22-b.png
+          test -s /tmp/esferas-g22/esferas-g22-comparacion.png
       - name: Conservar únicamente vista y manifiesto (NO TTF)
         uses: actions/upload-artifact@v4
         with:
@@ -114,4 +133,6 @@ jobs:
             /tmp/EsferasMicrotonal-LilyPond-G1.json
             /tmp/esferas-lilypond-g2.png
             /tmp/EsferasMicrotonal-G2-LilyPond.json
+            /tmp/esferas-g22/*.png
+            /tmp/EsferasMicrotonal-G22-Candidates.json
           retention-days: 14
