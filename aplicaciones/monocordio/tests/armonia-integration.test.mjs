@@ -15,12 +15,13 @@ test("los módulos del laboratorio se incluyen una única vez", () => {
 
 test("todos los controles presentes tienen identificadores únicos", () => {
   const ids = [
-    "tetraktys-medias", "tetraktys-diagram", "tetraktys-buttons",
+    "tetraktys-diagram", "tetraktys-buttons",
     "tetraktys-reading", "tetraktys-play", "tetraktys-chord",
     "tetraktys-bridge", "tetraktys-status",
     "means-diagram", "means-buttons", "means-reading", "means-play",
     "means-compare", "means-bridge", "means-status"
   ];
+  assert.equal(html.split('id="tetraktys-medias"').length - 1, 1);
   for (const id of ids) {
     const matches = html.match(new RegExp('id="' + id + '"', "g")) || [];
     assert.equal(matches.length, 1, id);
