@@ -4,7 +4,7 @@
  * Los términos 1,2,3,4 y 6,8,9,12 representan proporciones de FRECUENCIA.
  * Con tensión y densidad lineal constantes, la LONGITUD es inversa.
  */
-import { BASE_FREQUENCY } from "./core.mjs?v=VEC-20261010-01";
+import { BASE_FREQUENCY } from "./core.mjs?v=TYPO-20261010-01";
 
 export const TETRAKTYS_ROWS = Object.freeze([1, 2, 3, 4]);
 export const MEAN_TERMS = Object.freeze([6, 8, 9, 12]);
