@@ -53,7 +53,7 @@ function renderLegend() {
   );
   NOTATION_SYSTEMS.forEach((unit,index)=>{
     const cx=100+index*189;
-    const label=index===4 ? "Doceavo de tono" : unit.label.slice(0,-1);
+    const label=unit.label;
     svgLabel(legend,label,cx,26,{"font-size":15,fill:"#f4d6a9"});
     const neg=decomposeCents(-unit.fractionCents,unit.id);
     const pos=decomposeCents(unit.fractionCents,unit.id);
