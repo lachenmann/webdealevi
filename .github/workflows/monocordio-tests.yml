@@ -5,6 +5,7 @@ on:
       - feature/monocordio-pitagorico-mvp
       - feature/monocordio-escala-microtonal
       - feature/monocordio-v1.2-notacion-avanzada
+      - feature/monocordio-v1.3-tetraktys-medias
     paths:
       - "aplicaciones/monocordio/**"
       - ".github/workflows/monocordio-tests.yml"
@@ -30,5 +31,7 @@ jobs:
           node --check aplicaciones/monocordio/escala.mjs
           node --check aplicaciones/monocordio/notacion-core.mjs
           node --check aplicaciones/monocordio/notacion-ui.mjs
+          node --check aplicaciones/monocordio/armonia-core.mjs
+          node --check aplicaciones/monocordio/armonia.mjs
       - name: Verificar el modelo acústico
         run: node --test aplicaciones/monocordio/tests/*.test.mjs
