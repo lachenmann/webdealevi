@@ -147,16 +147,16 @@ medirse. Hasta entonces la columna «éxito visual» se marcará
 
 | Puerta | Comprobación | Estado actual |
 | --- | --- | --- |
-| G0 | Documentos v0.2 y valores exactos | Documento redactado; autor por aprobar |
-| G1 | Tres signos madre reconstruidos | Pendiente |
+| G0 | Documentos v0.2 y valores exactos | **Aprobados por el autor** · 10-10-2026 |
+| G1 | Tres signos madre reconstruidos | **Bocetos TTF generados; pendiente revisión visual del autor** · EM-G1-001 |
 | G2 | Familia ascendente de trazos | Pendiente |
 | G3 | Familia descendente y signos fraccionarios | Pendiente |
-| G4 | Pruebas automáticas v0.2 | Pendiente |
+| G4 | Pruebas automáticas v0.2 | Suite G1 añadida; conformidad v0.2 completa pendiente |
 | G5 | Impresión, pantallas y lectura a ciegas | Pendiente |
 | G6 | Licencia GNU y revisión de titulares | Pendiente |
 | G7 | Aprobación del autor para sustituir v0.1 | Pendiente |
 
-La firma de G0 **no activa automáticamente G7**.
+La aprobación de G0 **no activa automáticamente G7**. G1 requiere revisión visual explícita de la lámina.
 
 ## 9. Seguridad de publicación
 
