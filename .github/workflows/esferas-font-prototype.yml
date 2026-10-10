@@ -120,6 +120,13 @@ jobs:
           test -s /tmp/esferas-g22/esferas-g22-a.png
           test -s /tmp/esferas-g22/esferas-g22-b.png
           test -s /tmp/esferas-g22/esferas-g22-comparacion.png
+      - name: Medir diferenciación de los 16 candidatos a escala real
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 measure_lilypond_g22.py \
+            --font /tmp/EsferasMicrotonal-G22-Candidates.ttf \
+            --out /tmp/esferas-g22-raster-qa.json
+          test -s /tmp/esferas-g22-raster-qa.json
       - name: Conservar únicamente vista y manifiesto (NO TTF)
         uses: actions/upload-artifact@v4
         with:
@@ -135,4 +142,5 @@ jobs:
             /tmp/EsferasMicrotonal-G2-LilyPond.json
             /tmp/esferas-g22/*.png
             /tmp/EsferasMicrotonal-G22-Candidates.json
+            /tmp/esferas-g22-raster-qa.json
           retention-days: 14
