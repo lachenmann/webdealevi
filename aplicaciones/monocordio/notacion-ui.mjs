@@ -111,9 +111,10 @@ function renderDemonstration() {
     cx:248,cy:174,rx:11,ry:7,fill:"#f0ddc5",
     transform:"rotate(-18 248 174)"
   }));
-  renderNoteAccidentals(score,notation,{
+  const renderedGlyphs = renderNoteAccidentals(score,notation,{
     right:207,y:174,scale:1,color:"#f0d6ad",showNatural:true
   });
+  score.setAttribute("data-rendered-glyphs", renderedGlyphs.join(","));
   svgLabel(score,"Total "+signed(notation.totalCents),248,42,{
     "font-size":18,fill:"#ecd0a3"
   });
