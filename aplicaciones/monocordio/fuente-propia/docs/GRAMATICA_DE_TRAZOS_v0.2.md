@@ -5,6 +5,13 @@
 **Objetivo:** permitir generar y verificar glifos a partir de componentes
 geométricos declarados, con **valores musicales exactos y perfiles versionados**.
 
+**Actualización de procedencia:** las primitivas de las tres madres
+serán analizadas directamente sobre contornos de GNU LilyPond/
+Emmentaler, bajo su opción GNU GPL con excepción tipográfica.
+La retícula y el registro racional permanecen experimentales; la
+geometría de partida ya no es una reconstrucción gráfica independiente.
+Véase [EM-G1-002](./EM-G1-002-LILYPOND_REFERENCIA.md).
+
 ## 1. Dos dominios distintos
 
 Sea \(\mathcal G\) el conjunto de expresiones morfológicas finitas
