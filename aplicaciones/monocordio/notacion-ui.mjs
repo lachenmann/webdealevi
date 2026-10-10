@@ -1,8 +1,8 @@
 import {
   demonstrationForOffset, decomposeCents, getSystem,
   NOTATION_SYSTEMS, roundTo
-} from "./notacion-core.mjs?v=VEC-20261010-01";
-import { renderNoteAccidentals } from "./notacion-glyphs.mjs?v=VEC-20261010-01";
+} from "./notacion-core.mjs?v=TYPO-20261010-01";
+import { renderNoteAccidentals } from "./notacion-glyphs.mjs?v=TYPO-20261010-01";
 
 const byId = id => document.getElementById(id);
 const modeSelect = byId("notation-mode");
@@ -215,11 +215,11 @@ renderLegend();
 refreshMode();
 const engineState = byId("notation-engine-state");
 if (engineState) {
-  engineState.dataset.activeBuild = "VEC-20261010-01";
+  engineState.dataset.activeBuild = "TYPO-20261010-01";
   engineState.dataset.ready = "true";
-  engineState.textContent = "Motor SVG activo · VEC-20261010-01 · alteraciones vectoriales verificadas.";
+  engineState.textContent = "Motor SVG activo · TYPO-20261010-01 · alteraciones vectoriales verificadas.";
 }
-window.__MONOCORDIO_VECTOR_BUILD = "VEC-20261010-01";
+window.__MONOCORDIO_VECTOR_BUILD = "TYPO-20261010-01";
 
 // Una fuente opcional no interrumpe nunca la notación: primero se dibuja SVG,
 // después se actualizan las formas convencionales al cargar Leland local.
@@ -233,7 +233,7 @@ if (document.fonts?.load) {
       renderDemonstration();
       if (engineState) {
         engineState.dataset.musicFont = "Leland";
-        engineState.textContent = "Motor SVG activo · Leland cargada · VEC-20261010-01";
+        engineState.textContent = "Motor SVG activo · Leland cargada · TYPO-20261010-01";
       }
       window.dispatchEvent(new CustomEvent("monocordio-music-font-ready",{
         detail:{ready:true,font:"Leland"}
