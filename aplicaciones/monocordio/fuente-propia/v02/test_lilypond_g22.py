@@ -58,16 +58,16 @@ class G22Proposals(unittest.TestCase):
                              "G2_2_CANDIDATE_NOT_APPROVED")
 
     def test_no_one_bar_quarter_lookalike_is_rebranded_as_eighth(self):
-        self.assertIn("historical quarter-tone",
+        self.assertIn("quarter tone +50c historically",
                       self.meta["historical_one_beam_quarter_warning"])
         self.assertFalse(self.meta["approved"])
         self.assertEqual(self.meta["status"],
                          "CANDIDATES_VISUAL_REVIEW_PENDING")
-        self.assertFalse(any(x["source_glyph"]=="accidentals.sharp.slash.stem"
-                             and x["mark_geometry"]["auxiliary_strokes"]==0
-                             for x in (
-                                 m["geometry"] for m in self.meta["glyphs"].values()
-                             )))
+        self.assertFalse(any(
+            entry["upstream_base"]=="accidentals.sharp.slash.stem"
+            and entry["geometry"]["mark_geometry"]["auxiliary_strokes"]==0
+            for entry in self.meta["glyphs"].values()
+        ))
         self.assertTrue(self.meta["collision_policy"])
 
     def test_all_glyphs_really_derived_from_lilypond_and_modified(self):
