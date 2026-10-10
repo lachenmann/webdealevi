@@ -1,5 +1,59 @@
 # Esferas Microtonal — prototipo de fuente propia
 
+## Diseño v0.2 — Documentación formalizada
+
+La revisión del autor de la **muestra de v0.1** identifica exceso de
+grosor, dimensión y superficies negras y exige corregir el becuadro.
+La v0.2 se plantea como una **gramática derivativa de signos** a partir
+de sostenido, bemol y becuadro, no como una colección de pictogramas.
+
+**Documentos de referencia para iniciar el redibujo (todos en estado
+BORRADOR y sin adopción automática):**
+
+1. [Manifiesto de diseño v0.2](docs/MANIFIESTO_DE_DISENO_v0.2.md)
+   — criterios estéticos, matrices madre y límites de interpretación.
+2. [Gramática de trazos v0.2](docs/GRAMATICA_DE_TRAZOS_v0.2.md)
+   — operaciones, retícula del sostenido, valores exactos y separación
+   entre morfología y semántica.
+3. [Protocolo QA v0.2](docs/PROTOCOLO_QA_v0.2.md)
+   — tamaños de pauta, tinta, legibilidad y puertas de aceptación.
+4. [Registro de decisiones v0.2](docs/REGISTRO_DECISIONES_v0.2.md)
+   — criterios expresos del autor, propuestas y cuestiones abiertas.
+5. [Registro morfológico v0.2 (JSON)](docs/REGISTRO_MORFOLOGICO_v0.2.json)
+   — 14 entradas exactas, con estados y primitivas auditables.
+
+La familia ascendente propuesta es:
+
+`+⅛ = V_L + H_S`; `+¼ = V_L + H_S + H_I`;
+`+⅜ = V_L + V_R + H_S`;
+`+½ = V_L + V_R + H_S + H_I`;
+`+¾ = +½ + V_X`.
+
+**Esta estructura es una retícula de formas, NO una fórmula de
+conversión de número de trazos a cents.** En el perfil de tono de
+200 cents, cada fracción tiene su valor exacto
+`200 × numerador / denominador` en cents.
+
+El **becuadro** debe rediseñarse con dos astas desfasadas y dos
+travesaños, evitando la figura defectuosa de v0.1. Su función real es
+**cancelación contextual** de una alteración, no una frecuencia cero.
+
+Para realizar solamente las **pruebas de consistencia documental**:
+
+```bash
+python3 -m unittest -v test_design_v02.py
+```
+
+El generador `build_font.py` sigue siendo **la v0.1**; estos documentos
+**no han modificado los contornos del TTF ni el grabado del monocordio**.
+Los signos fraccionarios negativos y la familia de sextos/doceavos
+todavía no tienen una gramática gráfica aprobada.
+
+**Relación con NMA:** la propuesta matemática abierta [Notación Microtonal
+Abierta](https://github.com/lachenmann/webdealevi/pull/6) proporciona
+un modelo de perfiles y exactitud; los contornos de esta fuente son una
+implementación tipográfica independiente.
+
 ## Objetivo y procedencia
 
 Construir una tipografía TTF original para el laboratorio **La música de las esferas**, basada en **conceptos musicales generales** y no en los contornos tipográficos ajenos.
@@ -8,12 +62,12 @@ Referencia histórica de terminología: Christian Texier, *MIDIDESI* (1993–200
 
 Esta fuente se genera exclusivamente mediante polígonos, rectas, trazos engrosados y contornos calculados originalmente por `build_font.py`. No mezcla código fuente o font data de otras familias.
 
-## Primera cobertura: exactamente las cinco familias del laboratorio
+## Cobertura del prototipo técnico v0.1 (no aprobada como tipografía final)
 
 | Fracción | Desviación exacta | Código |
 |---|---:|---|
 | Bemol (−1/2 tono) | −100 cents | SMuFL U+E260 |
-| Becuadro | 0 cents | SMuFL U+E261 |
+| Becuadro | Cancelación contextual (en el prototipo v0.1: indicador 0) | SMuFL U+E261 |
 | Sostenido (+1/2 tono) | +100 cents | SMuFL U+E262 |
 | Bemol inverso abierto Stein–Zimmermann (−1/4) | −50 cents | SMuFL U+E280 |
 | Medio sostenido Stein–Zimmermann (+1/4) | +50 cents | SMuFL U+E282 |
@@ -43,7 +97,10 @@ Esto genera localmente **el TTF y un manifiesto JSON**; el TTF no se incorpora a
 
 - El TTF es una primera prueba de ingeniería tipográfica, **no es todavía la tipografía oficial del proyecto**.
 - No reemplaza la actual elección Leland/Ekmelos ni modifica el módulo `notacion-glyphs.mjs`.
-- La licencia de eventual distribución y el nombre definitivo quedan **pendientes de una decisión expresa del autor**.
+- La orientación del usuario es software libre **GNU**. Se propone GPL-3.0-or-later
+  con la excepción oficial de incrustación de fuentes cuando la titularidad
+  y el aviso de copyright se hayan revisado; el nombre definitivo y la
+  publicación tipográfica todavía no están aprobados.
 - Para extender el catálogo de fracciones de MIDIDESI, deben diseñarse nuevas reglas de construcción independientes; no debe importarse ni calcarse su tipografía ni reproducirse su arreglo gráfico protegido.
 
 Fuentes públicas de control: SMuFL (W3C Music Notation Community Group); fuentes originales del catálogo de Tempera disponibles en la documentación histórica del autor del proyecto.
