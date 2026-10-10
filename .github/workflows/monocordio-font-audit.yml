@@ -35,7 +35,7 @@ jobs:
       - name: Analizar mapas de caracteres y cobertura
         shell: bash
         run: |
-          python3 -m pip install --quiet fonttools brotli pillow
+          python3 -m pip install --quiet fonttools brotli
           python3 - <<'PY'
           import json
           from fontTools.ttLib import TTFont
@@ -82,62 +82,7 @@ jobs:
             --screenshot=/tmp/musicfonts.png \
             "http://127.0.0.1:8766/aplicaciones/monocordio/tests/typography-compare.html" \
             >/tmp/font-audit-shot.log 2>&1
-          python3 - <<'PY'
-          from PIL import Image
-          im=Image.open("/tmp/musicfonts.png").convert("RGB")
-          im.save("/tmp/musicfonts.jpg",quality=82,optimize=True)
-          print("FONT_SPECIMEN_DIMENSIONS=",im.size)
-          PY
-          "$BROWSER" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
-            --hide-scrollbars --window-size=1440,1050 --virtual-time-budget=7000 \
-            --dump-dom "http://127.0.0.1:8766/aplicaciones/monocordio/?audit=typografia#fraction-lab" \
-            > /tmp/font-audit-app-dom.html 2>/tmp/font-audit-app-chrome.log
-          grep -q 'data-music-font="Leland"' /tmp/font-audit-app-dom.html
-          grep -q 'class="monocordio-music-notehead"' /tmp/font-audit-app-dom.html
-          npm install --no-save --silent puppeteer-core@24.24.1
-          node <<'JS'
-          const puppeteer = require("puppeteer-core");
-          (async()=>{
-            const browser=await puppeteer.launch({
-              executablePath:process.env.CHROME_BIN ||
-                "/usr/bin/google-chrome",
-              headless:true,
-              args:["--no-sandbox","--disable-dev-shm-usage"]
-            });
-            try {
-              const page=await browser.newPage();
-              await page.setViewport({width:1360,height:1050,deviceScaleFactor:1});
-              await page.goto("http://127.0.0.1:8766/aplicaciones/monocordio/",{
-                waitUntil:"networkidle0"
-              });
-              await page.waitForSelector('[data-music-font="Leland"]',{timeout:12000});
-              await page.evaluate(()=>document.fonts.ready);
-              for(const [selector,filename] of [
-                ["#fraction-lab","/tmp/musicapp.png"],
-                [".score-block","/tmp/music-scale.png"]
-              ]){
-                const element=await page.$(selector);
-                if(!element)throw Error("Elemento no encontrado "+selector);
-                await element.screenshot({path:filename});
-              }
-            } finally {await browser.close()}
-          })().catch(e=>{console.error(e);process.exit(1)});
-          JS
-          python3 - <<'PY'
-          from PIL import Image
-          for n in ["musicapp","music-scale"]:
-              im=Image.open(f"/tmp/{n}.png").convert("RGB")
-              im.save(f"/tmp/{n}.jpg",quality=86,optimize=True)
-              print("FONT_APP_DIMENSIONS=",n,im.size)
-          PY
-          echo "FONT_APP_BASE64_BEGIN"
-          base64 -w 0 /tmp/musicapp.jpg
-          echo
-          echo "FONT_APP_BASE64_END"
-          echo "FONT_SCALE_BASE64_BEGIN"
-          base64 -w 0 /tmp/music-scale.jpg
-          echo
-          echo "FONT_SCALE_BASE64_END"
+          file /tmp/musicfonts.png /tmp/musicapp.png /tmp/music-scale.png
       - uses: actions/upload-artifact@v4
         with:
           name: monocordio-comparacion-tipografica
