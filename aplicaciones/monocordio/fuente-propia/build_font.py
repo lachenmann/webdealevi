@@ -149,16 +149,15 @@ def make_glyph(name):
         else:
             polygon(pen,[(280,525),(422,330),(280,145),(138,330)])
     elif name in ("eighth_down","eighth_up"):
-        # Octágono vacío + punta de dirección: un símbolo explícito de 1/8
-        # no extraído de Tempera, de Sibelius ni de otro alfabeto.
-        outline_regular(pen,8,center=(280,339),radius=173,thickness=42,
+        # Octágono vacío con flecha EXTERIOR visible incluso a 24px.
+        # Esta geometría es nueva y evita toda semejanza con Tempera.
+        outline_regular(pen,8,center=(230,329),radius=140,thickness=39,
                         phase=math.pi/8)
+        stroke(pen,(428,92),(428,567),38)
         if name == "eighth_up":
-            polygon(pen,[(280,527),(350,392),(210,392)])
-            stroke(pen,(280,387),(280,163),43)
+            polygon(pen,[(428,674),(499,549),(357,549)])
         else:
-            polygon(pen,[(280,143),(350,276),(210,276)])
-            stroke(pen,(280,278),(280,512),43)
+            polygon(pen,[(428,-16),(499,110),(357,110)])
     elif name in ("twelfth_down","twelfth_up"):
         stroke(pen,(280,-80),(280,691),36)
         if name == "twelfth_up":
