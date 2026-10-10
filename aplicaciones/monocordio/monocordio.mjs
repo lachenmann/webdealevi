@@ -1,7 +1,7 @@
 import {
   BASE_FREQUENCY, INTERVALS, INTERVAL_GROUPS,
   normalizeFraction, describeFraction
-} from "./core.mjs";
+} from "./core.mjs?v=VEC-20261010-01";
 
 const $ = id => document.getElementById(id);
 const svg = $("monochord");
