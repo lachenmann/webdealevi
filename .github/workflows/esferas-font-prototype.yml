@@ -62,6 +62,12 @@ jobs:
           echo "LILYPOND_FONT_SOURCE=$FONT" >> "$GITHUB_ENV"
           dpkg-query -W lilypond-fonts
           sha256sum "$FONT"
+          # La referencia CI está congelada: LilyPond 2.24.3 de Ubuntu.
+          # Si el paquete cambia, revisar y actualizar explícitamente
+          # el corpus, sin sustituir silenciosamente contornos.
+          printf '%s  %s\n' \
+            'aa01667241dc9ff658c41d3b822aa2735f74dfe09f51d40e7a24fde5b6253eb6' \
+            "$FONT" | sha256sum --check
       - name: Compilar matrices directamente a partir de Emmentaler
         working-directory: aplicaciones/monocordio/fuente-propia/v02
         run: |
