@@ -20,6 +20,7 @@ let activeStep = null;
 let scheduledTimeout = null;
 let notationMode = "exact";
 let notationSubdivision = "quarter";
+let musicFontReady = false;
 
 function centsLabel(cents) {
   if (Math.abs(cents) < 0.05) return "0,00 ¢";
@@ -51,9 +52,11 @@ function drawScore(notes) {
     svg.append(svgElement("line", {x1:from,y1:y,x2:to,y2:y,stroke:"#b9b2aa","stroke-width":1.4}));
   }
   svg.append(svgElement("text", {
-    x:17,y:194,fill:"#e8cd9a","font-size":75,
-    "font-family":"'Noto Music','Apple Symbols','Segoe UI Symbol',serif"
-  },"𝄞"));
+    x:musicFontReady?18:17,y:musicFontReady?173:194,
+    fill:"#e8cd9a","font-size":musicFontReady?91:75,
+    ...(musicFontReady?{"class":"monocordio-music-clef"}:
+      {"font-family":"'Noto Music','Apple Symbols','Segoe UI Symbol',serif"})
+  },musicFontReady?String.fromCodePoint(0xE050):"𝄞"));
 
   notes.forEach((note,index)=>{
     const x=134+index*spacing;
@@ -68,14 +71,23 @@ function drawScore(notes) {
     // Escritura vectorial coherente con el muestrario de la v1.3;
     // el módulo tipográfico se usa solo como presentación, nunca para afinar.
     renderNoteAccidentals(svg,representation,{
-      right:x-38,y,scale:.82,color:"#e8d3b8",showNatural:false
+      right:x-38,y,scale:.82,color:"#e8d3b8",showNatural:false,
+      fontReady:musicFontReady
     });
     svg.append(svgElement("line",{x1:x+10,y1:y,x2:x+10,y2:y-38,
       stroke:"#f6eee3","stroke-width":2.3}));
-    svg.append(svgElement("ellipse",{
-      cx:x,cy:y,rx:11.5,ry:7.7,fill:"#f4e4cc",
-      transform:`rotate(-19 ${x} ${y})`
-    }));
+    if (musicFontReady) {
+      svg.append(svgElement("text",{
+        x:x-11,y,"font-size":51,
+        "class":"monocordio-music-notehead",
+        fill:"#f4e4cc"
+      },String.fromCodePoint(0xE0A4)));
+    } else {
+      svg.append(svgElement("ellipse",{
+        cx:x,cy:y,rx:11.5,ry:7.7,fill:"#f4e4cc",
+        transform:`rotate(-19 ${x} ${y})`
+      }));
+    }
     svg.append(svgElement("text",{
       x,y:58,"text-anchor":"middle","font-size":15,"font-weight":"600",
       fill:positive||negative?"#a1e3c6":"#eacb9e"
@@ -241,6 +253,11 @@ el("play-pythagorean-scale").addEventListener("click", async () => {
 });
 
 render();
+
+window.addEventListener("monocordio-music-font-ready",event=>{
+  musicFontReady = event.detail?.ready === true;
+  render();
+});
 
 window.addEventListener("monocordio-notation-change",event=>{
   const requestedMode=event.detail?.mode;
