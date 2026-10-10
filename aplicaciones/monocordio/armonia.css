@@ -61,6 +61,12 @@
   .harmony-visual { max-width: 680px; width: 100%; margin: 0 auto; }
   .harmony-equations { grid-template-columns: 1fr; }
 }
+/* En pantallas pequeñas es preferible desplazar un SVG legible que reducir su texto a 6 px. */
+@media (max-width: 620px) {
+  .harmony-visual { overflow-x: auto; scrollbar-color: #8f7055 #1b1720; }
+  .harmony-visual svg { min-width: 580px; }
+  .harmony-visual figcaption { position: sticky; left: 0; }
+}
 @media (max-width: 440px) {
   .harmony-index { min-width: 33px; height: 33px; font-size: 1rem; }
   .harmony-module-title { gap: 9px; }
