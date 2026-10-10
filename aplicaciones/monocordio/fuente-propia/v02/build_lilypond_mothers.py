@@ -159,6 +159,14 @@ def build(source_path: str | Path, output_path: str | Path):
         font.setupGlyf(glyf)
         font.setupHorizontalMetrics(metrics)
         font.setupHorizontalHeader(ascent=1150, descent=-750)
+        source_notice = (
+            sf["name"].getDebugName(0)
+            or "Original Emmentaler/Feta copyright: the LilyPond authors."
+        )
+        derived_notice = (
+            source_notice + " | " + COPYRIGHT +
+            " See upstream/LICENSE for the original font exception."
+        )
         font.setupNameTable({
             "familyName": "Esferas Microtonal LilyPond Study",
             "styleName": "Regular",
@@ -166,7 +174,7 @@ def build(source_path: str | Path, output_path: str | Path):
             "psName": "EsferasMicrotonalLilyPondStudy-Regular",
             "uniqueFontIdentifier": "Esferas-Mother-LilyPond-G1-v0.2-study",
             "version": "Version 0.201",
-            "copyright": COPYRIGHT,
+            "copyright": derived_notice,
             "description": (
                 "Derived glyph outlines from GNU LilyPond "
                 "Emmentaler, remapped as SMuFL mothers. GPL-3.0-or-later "
@@ -189,7 +197,8 @@ def build(source_path: str | Path, output_path: str | Path):
             "source_version": sf["name"].getDebugName(5),
             "source_license_choice": SOURCE_LICENSE,
             "upstream_license_text": "v02/upstream/LICENSE",
-            "upstream_copyright_preserved": COPYRIGHT,
+            "upstream_copyright_preserved": derived_notice,
+            "source_copyright_name_table": source_notice,
             "original_upm": sf["head"].unitsPerEm,
             "output_upm": UPM,
             "not_smufl_native": True,
