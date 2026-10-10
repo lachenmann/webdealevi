@@ -1,5 +1,33 @@
 # Esferas Microtonal — prototipo de fuente propia
 
+## G1 cerrado · G2 en desarrollo (aprobación del autor, 10-10-2026)
+
+El autor aprobó expresamente los **tres contornos auténticos de
+Emmentaler/Feta** como matrices definitivas. Se cierra G1 y se autoriza el
+prototipado G2, **sin aprobación anticipada de los nuevos signos**.
+
+La primera entrega G2 reúne ocho glifos procedentes de LilyPond,
+incluyendo las tres matrices G1 y cinco variantes históricas.
+Las fracciones se conservan con enteros exactos en un perfil que
+declara un tono de 200 cents.
+
+- [Informe G2-001, inventario, procedencia y decisiones](docs/EM-G2-001-VARIANTES_LILYPOND.md)
+- [Generador de variantes históricas LilyPond](v02/build_lilypond_g2.py)
+- [Pruebas: fuente, contornos y valores semánticos](v02/test_lilypond_g2.py)
+- [Muestra de G2 a escala de pauta](v02/preview_lilypond_g2.py)
+
+**Advertencia esencial:** la figura de LilyPond de **un asta y un solo
+travesaño** es una variante histórica de **medio sostenido (+¼ de tono)**,
+aunque se parezca a nuestro candidato de **+⅛ de tono**. No se reutilizará
+esa figura con otro significado sin una convención explícita ni se
+presentará como signo estándar de octavo. La opción G2 de tres cuartos
+bemol se documenta con código **privado de estudio**, sin atribuirla
+automáticamente a E281.
+
+**Conservar:** generación G1, prototipo v0.1, elección Leland del
+monocordio, licencia y copyright originales LilyPond. **No fusionar** los
+PR #4/#5 ni sustituir la tipografía publicada sin revisión posterior.
+
 ## Cambio de referencia G1 — GNU LilyPond / Emmentaler
 
 Por instrucción posterior del autor, **las tres matrices madre se tomarán
