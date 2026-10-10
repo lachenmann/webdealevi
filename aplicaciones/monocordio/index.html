@@ -6,14 +6,14 @@
   <meta name="theme-color" content="#100d13">
   <meta name="description" content="Un monocordio pitagórico virtual para explorar con el oído la relación entre longitud, frecuencia e intervalos musicales.">
   <title>Monocordio pitagórico | La música de las esferas</title>
-  <link rel="stylesheet" href="./estilos.css">
-  <script type="module" src="./monocordio.mjs"></script>
-  <script type="module" src="./escala.mjs"></script>
-  <script type="module" src="./notacion-ui.mjs"></script>
-  <script type="module" src="./armonia.mjs"></script>
-  <link rel="stylesheet" href="./escala.css">
-  <link rel="stylesheet" href="./notacion.css">
-  <link rel="stylesheet" href="./armonia.css">
+  <link rel="stylesheet" href="./estilos.css?v=VEC-20261010-01">
+  <script type="module" src="./monocordio.mjs?v=VEC-20261010-01"></script>
+  <script type="module" src="./escala.mjs?v=VEC-20261010-01"></script>
+  <script type="module" src="./notacion-ui.mjs?v=VEC-20261010-01"></script>
+  <script type="module" src="./armonia.mjs?v=VEC-20261010-01"></script>
+  <link rel="stylesheet" href="./escala.css?v=VEC-20261010-01">
+  <link rel="stylesheet" href="./notacion.css?v=VEC-20261010-01">
+  <link rel="stylesheet" href="./armonia.css?v=VEC-20261010-01">
 </head>
 <body>
   <header class="site-header">
@@ -164,6 +164,9 @@
         </div>
       </div>
       <p id="notation-mode-description" class="notation-interpretation">La escala conserva su altura pitagórica; las cifras sobre el pentagrama indican desviaciones totales respecto de 12-TET.</p>
+      <p id="notation-engine-state" class="notation-engine-status" data-expected-build="VEC-20261010-01" role="status" aria-live="polite">
+        Motor de alteraciones SVG: esperando confirmación de carga · VEC-20261010-01.
+      </p>
       <div class="score-block">
         <div class="score-heading">
           <h3>Notación microtonal</h3>
