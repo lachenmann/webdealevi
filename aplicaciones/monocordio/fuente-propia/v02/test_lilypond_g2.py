@@ -36,12 +36,34 @@ class OriginalVariantTests(unittest.TestCase):
         self.assertEqual(self.manifest["edition"],"G2-0.2.2-DRAFT")
         self.assertEqual(self.manifest["font_status"],"STUDY_ONLY_NO_RELEASE")
         self.assertTrue(self.manifest["g1_approved"])
-        self.assertFalse(self.manifest["g2_approved"])
+        self.assertTrue(self.manifest["g2_1_visual_approval"])
+        self.assertFalse(self.manifest["g2_complete"])
+        self.assertFalse(self.manifest["g2_release_approved"])
         self.assertIn("GPL",self.manifest["licence"])
         for key,spec in CATALOGUE.items():
             self.assertIn(spec.source,self.original.getGlyphOrder())
             self.assertEqual(self.manifest["glyphs"][key]["upstream_name"],
                              spec.source)
+
+    def test_visual_approval_does_not_normalize_comparative_variants(self):
+        glyphs=self.manifest["glyphs"]
+        mothers=("flat","natural","sharp")
+        approved=("quarter_flat_stein","quarter_sharp_stein",
+                  "three_quarters_sharp_stein")
+        comparisons=("three_quarters_flat_lilypond",
+                     "quarter_sharp_one_beam_lilypond")
+        for key in mothers:
+            self.assertEqual(glyphs[key]["status"],"G1_APPROVED")
+            self.assertEqual(glyphs[key]["visual_review"],"APPROVED_G1")
+        for key in approved:
+            self.assertEqual(glyphs[key]["status"],"G2_HISTORIC_FORM_VISUALLY_APPROVED")
+            self.assertEqual(glyphs[key]["visual_review"],"APPROVED_G2_HISTORIC_FORM")
+        for key in comparisons:
+            self.assertEqual(glyphs[key]["status"],"HISTORICAL_REFERENCE_ONLY")
+            self.assertEqual(glyphs[key]["visual_review"],
+                             "APPROVED_AS_COMPARATIVE_REFERENCE_ONLY")
+            self.assertIsNone(glyphs[key]["smufl_name"])
+        self.assertFalse(self.manifest["g2_release_approved"])
 
     def test_exact_semantics_not_numbers_of_lines(self):
         g=self.manifest["glyphs"]
