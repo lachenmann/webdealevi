@@ -59,8 +59,11 @@ jobs:
           # no solamente en el muestrario estático de signos.
           grep -q 'data-rendered-glyphs="quarter-sharp"' /tmp/monocordio-render.html
           grep -q 'data-notation-glyph="reverse-flat-outline"' /tmp/monocordio-render.html
-          if grep -q 'Stein–Zimmermann' /tmp/monocordio-render.html; then
-            echo "ERROR: se detectó contenido de notación obsoleto." >&2
+          # Stein–Zimmermann es una atribución CORRECTA de signos estándar;
+          # no usar su nombre como criterio de contenido obsoleto.
+          if grep -q 'id="smufl-font-status"' /tmp/monocordio-render.html ||
+             grep -q 'value="quarter-ferneyhough"' /tmp/monocordio-render.html; then
+            echo "ERROR: se detectaron controles obsoletos de notación." >&2
             exit 1
           fi
           echo "PASS: motor SVG cargado, notas y alteraciones dibujadas en Chrome."
