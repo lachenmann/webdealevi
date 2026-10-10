@@ -137,7 +137,14 @@ def build(source_path: str | Path, output_path: str | Path):
         for glyph_name, (upstream_name, codepoint) in MOTHERS.items():
             glyph, advance, info = _extract_mother(sf, upstream_name)
             glyf[glyph_name] = glyph
-            metrics[glyph_name] = (advance, 0)
+            # TrueType hmtx LSB must agree with the transformed contour.
+            # Otherwise consumers applying hmtx sidebearings shift the drawing
+            # left and lose the upstream-derived intended offset.
+            contour_lsb = round(
+                info["offset_x"] +
+                info["source_bbox"][0] * info["scale"]
+            )
+            metrics[glyph_name] = (advance, contour_lsb)
             detail[glyph_name] = {
                 **info,
                 "smufl_codepoint": f"U+{codepoint:04X}",
