@@ -3,7 +3,7 @@
 **Proyecto:** Esferas Microtonal v0.2  
 **Fecha:** 2026-10-10  
 **Fase:** G2.2 — primer laboratorio comparativo  
-**Estado:** `G2.2_CANDIDATOS_NO_APROBADOS`  
+**Estado:** `G2.2_CANDIDATOS_COMPILADOS_Y_COMPARADOS_NO_APROBADOS`  
 **Precedentes:** G1 aprobado, G2.1 (ocho formas LilyPond) aprobado visualmente.  
 **Licencia del estudio:** GPL-3.0-or-later + excepción tipográfica LilyPond para la parte derivada.
 
@@ -150,7 +150,56 @@ Estas pruebas no demuestran por sí solas la **legibilidad** del dibujo.
 Las conclusiones visuales deberán registrarse tras revisar las láminas,
 no presumirse aprobadas porque el TTF compile correctamente.
 
-## 7. Puertas pendientes
+## 7. Informe de la segunda pasada y medición rasterizada
+
+La primera muestra **no era suficientemente legible** a escala
+de pauta pequeña: sus rayas auxiliares parecían desaparecer. Se
+aumentaron la longitud de los trazos y su separación, conservando
+una geometría lineal ligera (sin bloques macizos).
+
+El script `v02/measure_lilypond_g22.py` comprueba la distinción
+de todos los pares de candidatos a pautas con espacios de
+**7, 9, 12 y 16 px** y genera `esferas-g22-raster-qa.json`.
+El resultado cuantifica la suma de diferencias de intensidad entre
+dos imágenes, normalizada a la intensidad de un píxel negro. No
+debe interpretarse como una probabilidad de reconocimiento humano.
+
+| Pauta | Familia A: diferencia mínima entre signos | Familia B: diferencia mínima |
+| --- | ---: | ---: |
+| 7 px | 4,85 píxeles de tinta equivalentes | 3,16 |
+| 9 px | 7,94 | 5,33 |
+| 12 px | 14,21 | 9,76 |
+| 16 px | 25,23 | 17,21 |
+
+La tabla resume el mínimo observado entre orientaciones
+ascendente y descendente; los resultados íntegros están en el
+JSON de QA generado por GitHub Actions.
+
+**Interpretación:**
+
+- A muestra mayor separación raster entre fracciones, pero su
+  variante de cuatro rayas puede parecer una acumulación excesiva.
+- B resulta visualmente algo más económica, pero sus terminales
+  de posición superior/inferior son más susceptibles de confusión
+  a 7 px. A 12 px, la reducción de área de tinta de B frente a A
+  es pequeña, en torno a **1–2%** para los ejemplos de esta prueba.
+- Ninguna familia presenta candidatos **idénticos** en las imágenes
+  generadas a los tamaños ensayados, pero eso no equivale a un
+  reconocimiento musical correcto.
+- Todavía no hay una relación universal demostrada entre un
+  número de rayas y la fracción del tono que representan.
+  Esta gramática se considera un **código visual propuesto**.
+
+**Juicio provisional:** no congelar A ni B como escritura definitiva.
+Exigir contraste sobre pentagramas impresos y lectura a ciegas;
+considerar una tercera iteración con rasgos aún mejor integrados
+en el esqueleto LilyPond si los músicos no reconocen las diferencias.
+
+Se conservan las láminas de ambas familias y la comparación central.
+La ejecución de CI aprueba estructura, valores y ausencia de
+colisiones pixel-idénticas, **no** la aceptación editorial.
+
+## 8. Puertas pendientes
 
 - [x] Conservar madres G1 y formas G2.1 aprobadas.
 - [x] Codificar dos alternativas reversibles en generadores separados.
