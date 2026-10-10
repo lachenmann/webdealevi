@@ -83,16 +83,31 @@ jobs:
           im.save("/tmp/musicfonts.jpg",quality=82,optimize=True)
           print("FONT_SPECIMEN_DIMENSIONS=",im.size)
           PY
-          echo "FONT_ORIGINAL_LELAND_BEGIN"
-          base64 -w 0 aplicaciones/monocordio/tests/fonts/Leland.otf
+          "$BROWSER" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
+            --hide-scrollbars --window-size=1440,1050 --virtual-time-budget=7000 \
+            --dump-dom "http://127.0.0.1:8766/aplicaciones/monocordio/?audit=typografia#fraction-lab" \
+            > /tmp/font-audit-app-dom.html 2>/tmp/font-audit-app-chrome.log
+          grep -q 'data-music-font="Leland"' /tmp/font-audit-app-dom.html
+          grep -q 'class="monocordio-music-notehead"' /tmp/font-audit-app-dom.html
+          "$BROWSER" --headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu \
+            --hide-scrollbars --window-size=1440,1050 --virtual-time-budget=7000 \
+            --screenshot=/tmp/musicapp.png \
+            "http://127.0.0.1:8766/aplicaciones/monocordio/?audit=typografia#fraction-lab" \
+            >/tmp/font-audit-app-shot.log 2>&1
+          python3 - <<'PY'
+          from PIL import Image
+          im=Image.open("/tmp/musicapp.png").convert("RGB")
+          im.save("/tmp/musicapp.jpg",quality=84,optimize=True)
+          print("FONT_APP_DIMENSIONS=",im.size)
+          PY
+          echo "FONT_APP_BASE64_BEGIN"
+          base64 -w 0 /tmp/musicapp.jpg
           echo
-          echo "FONT_ORIGINAL_LELAND_END"
-          echo "FONT_ORIGINAL_EKMELOS72_BEGIN"
-          base64 -w 0 aplicaciones/monocordio/tests/fonts/Ekmelos72edo.woff2
-          echo
-          echo "FONT_ORIGINAL_EKMELOS72_END"
+          echo "FONT_APP_BASE64_END"
       - uses: actions/upload-artifact@v4
         with:
           name: monocordio-comparacion-tipografica
-          path: /tmp/musicfonts.png
+          path: |
+            /tmp/musicfonts.png
+            /tmp/musicapp.png
           retention-days: 7
