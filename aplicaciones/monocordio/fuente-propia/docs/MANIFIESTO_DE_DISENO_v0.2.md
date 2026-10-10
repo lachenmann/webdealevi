@@ -98,7 +98,7 @@ diferentes. La gramática deberá acompañarse de un **registro exacto**
 
 ## V. Familia ascendente: primera propuesta morfológica
 
-En un perfil con `1 tono = 200 cents`, se propone:
+Tomando las simplificaciones del sostenido planteadas por el autor y una **interpolación técnica aún no ratificada para +3/8**, en un perfil con `1 tono = 200 cents` se propone:
 
 | Fracción de tono | Cents exactos | Construcción abstracta | Estado |
 | --- | ---: | --- | --- |
