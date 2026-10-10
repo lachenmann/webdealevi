@@ -47,3 +47,13 @@
 @media(max-width:780px){
  .notation-key{padding:14px 9px}
 }
+
+/* Confirmación de versión: evita confundir HTML nuevo con JS obsoleto en la caché. */
+.notation-engine-status {
+  border:1px solid #715d49;border-radius:8px;
+  background:#251d20;padding:8px 12px;color:#f2d4a2;
+  margin:9px 0 16px;font-size:.83rem;line-height:1.55
+}
+.notation-engine-status[data-ready="true"] {
+  border-color:#426a5b;color:#b0dec9;background:#18251f
+}
