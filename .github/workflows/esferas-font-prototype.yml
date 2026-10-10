@@ -52,6 +52,32 @@ jobs:
             --out /tmp/esferas-matrices-v02.png
           file /tmp/esferas-matrices-v02.png
           test -s /tmp/esferas-matrices-v02.png
+      - name: Instalar fuentes GNU LilyPond para comparación auténtica
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install --no-install-recommends -y lilypond-fonts
+          FONT="$(find /usr/share/lilypond -name emmentaler-20.otf -type f | sort | head -1)"
+          test -n "$FONT"
+          echo "LILYPOND_FONT_SOURCE=$FONT" >> "$GITHUB_ENV"
+          dpkg-query -W lilypond-fonts
+          sha256sum "$FONT"
+      - name: Compilar matrices directamente a partir de Emmentaler
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 build_lilypond_mothers.py --source "$LILYPOND_FONT_SOURCE" \
+            --out /tmp/EsferasMicrotonal-LilyPond-G1.ttf
+          file /tmp/EsferasMicrotonal-LilyPond-G1.ttf
+      - name: Probar contornos LilyPond, atribución y GPL con excepción
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: python3 -m unittest -v test_lilypond_mothers.py
+      - name: Crear muestra G1 derivada, a escala de pentagrama
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 preview_mothers.py --origin lilypond \
+            --font /tmp/EsferasMicrotonal-LilyPond-G1.ttf \
+            --out /tmp/esferas-matrices-lilypond.png
+          file /tmp/esferas-matrices-lilypond.png
       - name: Conservar únicamente vista y manifiesto (NO TTF)
         uses: actions/upload-artifact@v4
         with:
@@ -61,4 +87,6 @@ jobs:
             /tmp/EsferasMicrotonal-Prototype.json
             /tmp/esferas-matrices-v02.png
             /tmp/EsferasMicrotonal-Mothers-v02.json
+            /tmp/esferas-matrices-lilypond.png
+            /tmp/EsferasMicrotonal-LilyPond-G1.json
           retention-days: 14
