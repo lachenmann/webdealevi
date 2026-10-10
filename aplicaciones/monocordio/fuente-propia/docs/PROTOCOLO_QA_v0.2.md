@@ -149,14 +149,14 @@ medirse. Hasta entonces la columna «éxito visual» se marcará
 | --- | --- | --- |
 | G0 | Documentos v0.2 y valores exactos | **Aprobados por el autor** · 10-10-2026 |
 | G1 | Tres signos madre de LilyPond derivadas y cotejadas | **APROBADO POR EL AUTOR** · cierre de EM-G1-002; 10-10-2026 |
-| G2 | Familia ascendente de trazos | **G2.1 compilado y probado** · variantes LilyPond, revisión visual pendiente; octavos y tres octavos sin signo aprobado |
+| G2 | Variantes históricas y familia microtonal | **G2.1 aprobado visualmente por el autor** · ocho formas LilyPond; octavos, sextos y doceavos aún sin dibujo aprobado |
 | G3 | Familia descendente y signos fraccionarios | Pendiente |
 | G4 | Pruebas automáticas v0.2 | Suite G1 añadida; conformidad v0.2 completa pendiente |
 | G5 | Impresión, pantallas y lectura a ciegas | Pendiente |
 | G6 | Licencia GNU y revisión de titulares | Pendiente |
 | G7 | Aprobación del autor para sustituir v0.1 | Pendiente |
 
-La aprobación visual de G1 por el autor **no activa G7**. Se autoriza únicamente el trabajo G2; los signos fraccionarios candidatos requerirán su propia revisión visual.
+La aprobación visual de G1 y G2.1 por el autor **no activa G7**. Las dos variantes históricas comparativas conservan su carácter informativo y los signos fraccionarios nuevos deberán revisarse por separado. Referencia: [EM-G2-002](./EM-G2-002-APROBACION_TIPOGRAFICA.md).
 
 ## 9. Seguridad de publicación
 
