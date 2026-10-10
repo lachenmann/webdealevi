@@ -30,7 +30,7 @@ jobs:
       - name: Analizar mapas de caracteres y cobertura
         shell: bash
         run: |
-          python3 -m pip install --quiet fonttools brotli
+          python3 -m pip install --quiet fonttools brotli pillow
           python3 - <<'PY'
           import json
           from fontTools.ttLib import TTFont
@@ -50,8 +50,9 @@ jobs:
               report[name]={"glyphs":len(cmap),"bytes":(root/name).stat().st_size,
                             "absent":absent}
               print(name,json.dumps(report[name],ensure_ascii=False))
-              if name != "Ekmelos72edo.woff2" and absent:
+              if absent and name != "Ekmelos72edo.woff2":
                   raise SystemExit("Faltan símbolos esenciales en "+name)
+          assert report["Ekmelos72edo.woff2"]["absent"] == ["U+E280", "U+E282"], "Comprobar separación entre Leland y Ekmelos 72"
           print("FONT_COVERAGE_JSON="+json.dumps(report))
           PY
       - name: Renderizar specimen en Chrome
