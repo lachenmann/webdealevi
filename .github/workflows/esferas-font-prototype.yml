@@ -1,0 +1,146 @@
+name: Esferas Microtonal — prototipo original TTF
+on:
+  push:
+    branches:
+      - feature/monocordio-fuente-microtonal-original
+    paths:
+      - "aplicaciones/monocordio/fuente-propia/**"
+      - ".github/workflows/esferas-font-prototype.yml"
+  pull_request:
+    paths:
+      - "aplicaciones/monocordio/fuente-propia/**"
+      - ".github/workflows/esferas-font-prototype.yml"
+permissions:
+  contents: read
+jobs:
+  build-and-inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar biblioteca tipográfica
+        run: python3 -m pip install --quiet fonttools pillow
+      - name: Generar TTF original de forma transitoria
+        working-directory: aplicaciones/monocordio/fuente-propia
+        run: |
+          python3 build_font.py --out /tmp/EsferasMicrotonal-Prototype.ttf
+          file /tmp/EsferasMicrotonal-Prototype.ttf
+      - name: Probar estructura, glifos, fracciones y tablas
+        working-directory: aplicaciones/monocordio/fuente-propia
+        run: python3 -m unittest -v test_font.py
+      - name: Validar documentación morfológica v0.2
+        working-directory: aplicaciones/monocordio/fuente-propia
+        run: python3 -m unittest -v test_design_v02.py
+      - name: Renderizar lámina sin distribuir archivo de fuente
+        working-directory: aplicaciones/monocordio/fuente-propia
+        run: |
+          python3 preview_font.py --font /tmp/EsferasMicrotonal-Prototype.ttf \
+            --out /tmp/esferas-microtonal-vista.png
+          file /tmp/esferas-microtonal-vista.png
+          test -s /tmp/esferas-microtonal-vista.png
+      - name: Compilar por separado las tres matrices v0.2
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 build_mothers.py --out /tmp/EsferasMicrotonal-Mothers-v02.ttf
+          file /tmp/EsferasMicrotonal-Mothers-v02.ttf
+      - name: Validar becuadro, contornos, métricas y UPM de las matrices v0.2
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: python3 -m unittest -v test_mothers.py
+      - name: Renderizar v0.2 a escala de pentagrama (NO distribuir TTF)
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 preview_mothers.py --font /tmp/EsferasMicrotonal-Mothers-v02.ttf \
+            --out /tmp/esferas-matrices-v02.png
+          file /tmp/esferas-matrices-v02.png
+          test -s /tmp/esferas-matrices-v02.png
+      - name: Instalar fuentes GNU LilyPond para comparación auténtica
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install --no-install-recommends -y lilypond-fonts
+          FONT="$(find /usr/share/lilypond -name emmentaler-20.otf -type f | sort | head -1)"
+          test -n "$FONT"
+          echo "LILYPOND_FONT_SOURCE=$FONT" >> "$GITHUB_ENV"
+          dpkg-query -W lilypond-fonts
+          sha256sum "$FONT"
+          # La referencia CI está congelada: LilyPond 2.24.3 de Ubuntu.
+          # Si el paquete cambia, revisar y actualizar explícitamente
+          # el corpus, sin sustituir silenciosamente contornos.
+          printf '%s  %s\n' \
+            'aa01667241dc9ff658c41d3b822aa2735f74dfe09f51d40e7a24fde5b6253eb6' \
+            "$FONT" | sha256sum --check
+      - name: Compilar matrices directamente a partir de Emmentaler
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 build_lilypond_mothers.py --source "$LILYPOND_FONT_SOURCE" \
+            --out /tmp/EsferasMicrotonal-LilyPond-G1.ttf
+          file /tmp/EsferasMicrotonal-LilyPond-G1.ttf
+      - name: Probar contornos LilyPond, atribución y GPL con excepción
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: python3 -m unittest -v test_lilypond_mothers.py
+      - name: Crear muestra G1 derivada, a escala de pentagrama
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 preview_mothers.py --origin lilypond \
+            --font /tmp/EsferasMicrotonal-LilyPond-G1.ttf \
+            --out /tmp/esferas-matrices-lilypond.png
+          file /tmp/esferas-matrices-lilypond.png
+      - name: Construir prototipo G2 con ocho variantes históricas LilyPond
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 build_lilypond_g2.py --source "$LILYPOND_FONT_SOURCE" \
+            --out /tmp/EsferasMicrotonal-G2-LilyPond.ttf
+          file /tmp/EsferasMicrotonal-G2-LilyPond.ttf
+      - name: Verificar fuente G2, cents exactos, glifos y advertencia sobre octavos
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: python3 -m unittest -v test_lilypond_g2.py
+      - name: Crear espécimen G2 a tamaño de partitura
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 preview_lilypond_g2.py \
+            --font /tmp/EsferasMicrotonal-G2-LilyPond.ttf \
+            --out /tmp/esferas-lilypond-g2.png
+          file /tmp/esferas-lilypond-g2.png
+          test -s /tmp/esferas-lilypond-g2.png
+      - name: Construir 16 candidatos G2.2 (dos gramáticas experimentales)
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 build_lilypond_g22.py --source "$LILYPOND_FONT_SOURCE" \
+            --out /tmp/EsferasMicrotonal-G22-Candidates.ttf
+          file /tmp/EsferasMicrotonal-G22-Candidates.ttf
+      - name: Validar fracciones exactas, procedencia y conflictos de G2.2
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: python3 -m unittest -v test_lilypond_g22.py
+      - name: Generar comparación G2.2 a tamaño de partitura
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 preview_lilypond_g22.py \
+            --font /tmp/EsferasMicrotonal-G22-Candidates.ttf \
+            --outdir /tmp/esferas-g22
+          file /tmp/esferas-g22/*.png
+          test -s /tmp/esferas-g22/esferas-g22-a.png
+          test -s /tmp/esferas-g22/esferas-g22-b.png
+          test -s /tmp/esferas-g22/esferas-g22-comparacion.png
+      - name: Medir diferenciación de los 16 candidatos a escala real
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 measure_lilypond_g22.py \
+            --font /tmp/EsferasMicrotonal-G22-Candidates.ttf \
+            --out /tmp/esferas-g22-raster-qa.json
+          test -s /tmp/esferas-g22-raster-qa.json
+      - name: Conservar únicamente vista y manifiesto (NO TTF)
+        uses: actions/upload-artifact@v4
+        with:
+          name: esferas-microtonal-prototipo-qa
+          path: |
+            /tmp/esferas-microtonal-vista.png
+            /tmp/EsferasMicrotonal-Prototype.json
+            /tmp/esferas-matrices-v02.png
+            /tmp/EsferasMicrotonal-Mothers-v02.json
+            /tmp/esferas-matrices-lilypond.png
+            /tmp/EsferasMicrotonal-LilyPond-G1.json
+            /tmp/esferas-lilypond-g2.png
+            /tmp/EsferasMicrotonal-G2-LilyPond.json
+            /tmp/esferas-g22/*.png
+            /tmp/EsferasMicrotonal-G22-Candidates.json
+            /tmp/esferas-g22-raster-qa.json
+          retention-days: 14
