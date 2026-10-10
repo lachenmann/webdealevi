@@ -30,8 +30,8 @@ export const NOTATION_SYSTEMS = Object.freeze([
   }),
   Object.freeze({
     id: "sixth", label: "Sextos de tono", fraction: "⅙",
-    fractionCents: 100 / 3, family: "Becuadro con flecha",
-    upSign: "natural-up", downSign: "natural-down"
+    fractionCents: 100 / 3, family: "Signos geométricos compactos (±33 ¢ aprox.)",
+    upSign: "pentagon", downSign: "diamond"
   }),
   Object.freeze({
     id: "eighth", label: "Octavos de tono", fraction: "⅛",
