@@ -27,6 +27,9 @@ jobs:
       - name: Probar estructura, glifos, fracciones y tablas
         working-directory: aplicaciones/monocordio/fuente-propia
         run: python3 -m unittest -v test_font.py
+      - name: Validar documentación morfológica v0.2
+        working-directory: aplicaciones/monocordio/fuente-propia
+        run: python3 -m unittest -v test_design_v02.py
       - name: Renderizar lámina sin distribuir archivo de fuente
         working-directory: aplicaciones/monocordio/fuente-propia
         run: |
