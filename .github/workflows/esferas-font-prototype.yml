@@ -1,0 +1,44 @@
+name: Esferas Microtonal — prototipo original TTF
+on:
+  push:
+    branches:
+      - feature/monocordio-fuente-microtonal-original
+    paths:
+      - "aplicaciones/monocordio/fuente-propia/**"
+      - ".github/workflows/esferas-font-prototype.yml"
+  pull_request:
+    paths:
+      - "aplicaciones/monocordio/fuente-propia/**"
+      - ".github/workflows/esferas-font-prototype.yml"
+permissions:
+  contents: read
+jobs:
+  build-and-inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar biblioteca tipográfica
+        run: python3 -m pip install --quiet fonttools pillow
+      - name: Generar TTF original de forma transitoria
+        working-directory: aplicaciones/monocordio/fuente-propia
+        run: |
+          python3 build_font.py --out /tmp/EsferasMicrotonal-Prototype.ttf
+          file /tmp/EsferasMicrotonal-Prototype.ttf
+      - name: Probar estructura, glifos, fracciones y tablas
+        working-directory: aplicaciones/monocordio/fuente-propia
+        run: python3 -m unittest -v test_font.py
+      - name: Renderizar lámina sin distribuir archivo de fuente
+        working-directory: aplicaciones/monocordio/fuente-propia
+        run: |
+          python3 preview_font.py --font /tmp/EsferasMicrotonal-Prototype.ttf \
+            --out /tmp/esferas-microtonal-vista.png
+          file /tmp/esferas-microtonal-vista.png
+          test -s /tmp/esferas-microtonal-vista.png
+      - name: Conservar únicamente vista y manifiesto (NO TTF)
+        uses: actions/upload-artifact@v4
+        with:
+          name: esferas-microtonal-prototipo-qa
+          path: |
+            /tmp/esferas-microtonal-vista.png
+            /tmp/EsferasMicrotonal-Prototype.json
+          retention-days: 14
