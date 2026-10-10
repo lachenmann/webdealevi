@@ -79,10 +79,13 @@ class G22Proposals(unittest.TestCase):
             self.assertGreater(
                 result.numberOfContours,base.numberOfContours,c.key
             )
-            self.assertGreater(
-                result.xMax-result.xMin,base.xMax-base.xMin,c.key
-            )
             record=self.meta["glyphs"][c.key]
+            dims=record["geometry"]
+            raw=dims["source_bbox"]
+            original_width=(raw[2]-raw[0])*dims["scale"]
+            self.assertGreater(
+                result.xMax-result.xMin,original_width,c.key
+            )
             self.assertEqual(record["upstream_base"],c.source)
             self.assertTrue(record["geometry"]["operation"].startswith(
                 "source-outlines-plus-original"
