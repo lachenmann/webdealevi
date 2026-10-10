@@ -55,6 +55,9 @@ jobs:
           grep -q 'data-ready="true"' /tmp/monocordio-render.html
           grep -q 'data-active-build="VEC-20261010-01"' /tmp/monocordio-render.html
           grep -q 'data-notation-glyph="quarter-sharp"' /tmp/monocordio-render.html
+          # El medio sostenido debe estar en el pentagrama del EJEMPLO,
+          # no solamente en el muestrario estático de signos.
+          grep -q 'data-rendered-glyphs="quarter-sharp"' /tmp/monocordio-render.html
           grep -q 'data-notation-glyph="reverse-flat-outline"' /tmp/monocordio-render.html
           if grep -q 'Stein–Zimmermann' /tmp/monocordio-render.html; then
             echo "ERROR: se detectó contenido de notación obsoleto." >&2
