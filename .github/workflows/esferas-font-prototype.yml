@@ -84,6 +84,23 @@ jobs:
             --font /tmp/EsferasMicrotonal-LilyPond-G1.ttf \
             --out /tmp/esferas-matrices-lilypond.png
           file /tmp/esferas-matrices-lilypond.png
+      - name: Construir prototipo G2 con ocho variantes históricas LilyPond
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 build_lilypond_g2.py --source "$LILYPOND_FONT_SOURCE" \
+            --out /tmp/EsferasMicrotonal-G2-LilyPond.ttf
+          file /tmp/EsferasMicrotonal-G2-LilyPond.ttf
+      - name: Verificar fuente G2, cents exactos, glifos y advertencia sobre octavos
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: python3 -m unittest -v test_lilypond_g2.py
+      - name: Crear espécimen G2 a tamaño de partitura
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 preview_lilypond_g2.py \
+            --font /tmp/EsferasMicrotonal-G2-LilyPond.ttf \
+            --out /tmp/esferas-lilypond-g2.png
+          file /tmp/esferas-lilypond-g2.png
+          test -s /tmp/esferas-lilypond-g2.png
       - name: Conservar únicamente vista y manifiesto (NO TTF)
         uses: actions/upload-artifact@v4
         with:
@@ -95,4 +112,6 @@ jobs:
             /tmp/EsferasMicrotonal-Mothers-v02.json
             /tmp/esferas-matrices-lilypond.png
             /tmp/EsferasMicrotonal-LilyPond-G1.json
+            /tmp/esferas-lilypond-g2.png
+            /tmp/EsferasMicrotonal-G2-LilyPond.json
           retention-days: 14
