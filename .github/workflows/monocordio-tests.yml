@@ -54,6 +54,9 @@ jobs:
             > /tmp/monocordio-render.html 2>/tmp/monocordio-chrome.log
           grep -q 'data-ready="true"' /tmp/monocordio-render.html
           grep -q 'data-active-build="TYPO-20261010-01"' /tmp/monocordio-render.html
+          grep -q 'data-music-font="Leland"' /tmp/monocordio-render.html
+          grep -q 'class="monocordio-music-notehead"' /tmp/monocordio-render.html
+          grep -q 'data-font-glyph="E282"' /tmp/monocordio-render.html
           grep -q 'data-notation-glyph="quarter-sharp"' /tmp/monocordio-render.html
           # El medio sostenido debe estar en el pentagrama del EJEMPLO,
           # no solamente en el muestrario estático de signos.
@@ -66,4 +69,4 @@ jobs:
             echo "ERROR: se detectaron controles obsoletos de notación." >&2
             exit 1
           fi
-          echo "PASS: motor SVG cargado, notas y alteraciones dibujadas en Chrome."
+          echo "PASS: Leland local, medio sostenido E282 y fallback SVG comprobados en Chrome."
