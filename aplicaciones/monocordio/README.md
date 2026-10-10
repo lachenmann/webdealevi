@@ -138,6 +138,26 @@ Las dos medias difieren por `9:8`, el tono pitagórico. La distinción entre med
 
 **Verificación:** la suite `tests/armonia.test.mjs` controla diez puntos, relaciones y medias exactas, correspondencia de las longitudes con las frecuencias del instrumento, cambio de fundamental y rechazo de datos inválidos. El audio, los controles SVG/teclado y el desplazamiento del puente requieren además una prueba manual en navegador real.
 
+## Diagnóstico de versiones y caché del navegador
+
+Tras actualizar el HTML a los signos vectoriales, se observó en una captura un comportamiento mixto: el HTML mostraba los nuevos botones de doceavos de tono mientras que el módulo antiguo de JavaScript escribía `+50,00 ¢` a la izquierda de la nota y seguía mencionando Stein–Zimmermann. Ello es compatible con un recurso JavaScript anterior servido desde caché.
+
+Para evitar que las distintas piezas compartan una URL cacheada, los ocho recursos principales y todos los imports ES entre módulos incluyen la misma etiqueta de revisión: **`VEC-20261010-01`**. La página muestra el indicador `Motor SVG activo · VEC-20261010-01` únicamente cuando el módulo de notación terminó de dibujar la muestra y el ejemplo. No se debe dar por validada visualmente una captura en la que aparezca `Motor de alteraciones SVG: esperando confirmación de carga`.
+
+Comprobación local:
+
+```bash
+cd ~/webdealevi
+git switch feature/monocordio-v1.3-tetraktys-medias
+git pull --ff-only
+grep 'VEC-20261010-01' aplicaciones/monocordio/index.html
+python3 -m http.server 8000
+```
+
+Abrir `http://localhost:8000/aplicaciones/monocordio/`, recargar completamente (`Cmd + Shift + R`) y confirmar **Motor SVG activo**. Si no aparece, revisar si el servidor se ejecutó desde una carpeta distinta, si la rama es incorrecta o si Chrome sigue reutilizando módulos antiguos. Como prueba adicional, desactivar temporalmente la caché en DevTools > Network antes de recargar.
+
+GitHub Actions contiene un control de **Chrome headless real** que espera el indicador de motor activo y comprueba la presencia en el DOM de las figuras `quarter-sharp` y `reverse-flat-outline`. Aun con ese control, la legibilidad fina en Safari y Mac requiere revisión humana.
+
 ## Uso
 
 Abrir `aplicaciones/monocordio/index.html` desde un servidor web estático (necesario para los módulos ES). Los controles de quinta amplían el conjunto de alturas hasta seis pasos a cada lado; el preset de siete notas y la comparación de coma sustituyen temporalmente la colección actual.
