@@ -70,6 +70,48 @@ La interfaz incluye un **muestrario accesible** de los cinco pares de signos, co
 
 El pentagrama representa **alturas** (no duraciones ni reglas de vigencia de alteraciones dentro de un compás). El archivo `notacion-core.mjs` determina la altura semántica; `notacion-glyphs.mjs` dibuja los signos, y `notacion-ui.mjs` realiza las interacciones. Las pruebas verifican todas las fracciones, la grafía de bemol inverso hueco, la consistencia de cents y que cambiar la representación jamás altere las frecuencias.
 
+## Decisión tipográfica definitiva del laboratorio (v1.3)
+
+Auditoría realizada con **los archivos tipográficos originales** de Leland,
+Bravura y Ekmelos, renderizados en un pentagrama común mediante Chrome;
+contraste de metadatos SMuFL, cobertura real de cmap, tamaño y condiciones OFL.
+La referencia **MIDIDESI / Tempera** (Christian Texier, documentación 1993–2002)
+se conserva para estudio histórico, pero **no** se distribuye en la web por no
+constar licencia abierta de redistribución.
+
+**Decisión:**
+
+1. **Leland 0.80** (MuseScore BVBA, SIL OFL 1.1) es la familia **titular** de
+   grabado musical: clave de sol (SMuFL E050), cabeza de negra (E0A4), sostenido
+   (E262), bemol (E260), becuadro (E261) y cuartos de tono Stein–Zimmermann
+   (medio sostenido E282 y bemol inverso **abierto** E280). Esta es la
+   representación estándar; no se trata de una invención editorial.
+2. **Ekmelos 72-EDO** (Thomas Richter, SIL OFL 1.1) se conserva como recurso
+   especializado verificable para fracciones de sexto y doceavo de tono.
+   Contiene Sims E2A0/E2A1/E2A3/E2A4, pero **no E280/E282**. No sustituye por
+   defecto los signos geométricos del taller, que siguen el modelo visual de
+   Danny Wier acordado con el autor.
+3. **SVG vectorial** permanece para los signos geométricos (sextos y doceavos),
+   el octavo ±25 cents (fuera de 72-EDO) y como recurso de seguridad cuando
+   el navegador no pueda cargar Leland. El motor de afinación trabaja
+   exclusivamente con relaciones y cents; jamás infiere frecuencias del glifo.
+4. **Bravura** queda como patrón externo de contraste SMuFL y posible
+   respaldo editorial; no se carga en la aplicación para evitar duplicación
+   tipográfica y peso innecesario.
+
+Las fuentes se **alojan localmente** en `fonts/` sin CDN. Se preservan íntegras
+sus licencias y avisos originales en `fonts/OFL-Leland.txt` y
+`fonts/OFL-Ekmelos.txt`. También se documentan origen y SHA del objeto Git
+en `fonts/README.md`. Esas licencias permiten incluir los originales en una
+aplicación web con los avisos correspondientes; sus nombres reservados se
+mantienen sin alteraciones. No se distribuyen en la salida de ChatGPT.
+
+Verificación: suite JS y checksums SHA-256 de ambos archivos originales;
+prueba real de navegador para carga de fuente y respaldo SVG;
+`tests/typography-compare.html` es una **herramienta de QA**, no un nuevo
+experimento del taller. La muestra gráfica está disponible como artefacto
+de la ejecución «Monocordio — auditoría tipográfica» de GitHub Actions.
+
 ## Catálogo ampliado de relaciones pitagóricas
 
 El monocordio ofrece **19 proporciones seleccionables** clasificadas en consonancias fundamentales, intervalos diatónicos, microintervalos pitagóricos, tritonos enarmónicos e intervalos compuestos. Su longitud mínima es una cuarta parte de la cuerda, correspondiente a dos octavas sobre la fundamental.
