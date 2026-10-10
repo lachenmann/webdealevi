@@ -1,126 +1,148 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
-  NOTATION_SYSTEMS, getSystem, decomposeCents,
-  notationForNote, demonstrationForOffset,
-  centsToFrequency, frequencyToCents,
-  REFERENCE_C4_12TET, STANDARD_GLYPHS
+  NOTATION_SYSTEMS, getSystem, decomposeCents, notationForNote,
+  demonstrationForOffset, centsToFrequency, frequencyToCents,
+  REFERENCE_C4_12TET
 } from "../notacion-core.mjs";
 import {makeCollection,DIATONIC_STEPS,makeNote} from "../escala-core.mjs";
 
-test("glifos y semántica SMuFL diferenciados por sistema",()=>{
-  assert.deepEqual(NOTATION_SYSTEMS.map(x=>x.fractionCents),[50,50,100/3,25,200/3,400/3,150]);
-  assert.equal(getSystem("quarter").upGlyph,0xE282);
-  assert.equal(getSystem("quarter").downGlyph,0xE280);
-  assert.equal(getSystem("quarter-ferneyhough").upGlyph,0xE48E);
-  assert.equal(getSystem("quarter-ferneyhough").downGlyph,0xE48F);
-  assert.equal(getSystem("third").downGlyph,0xE48B);
-  assert.equal(getSystem("sixth").upGlyph,0xE2A4);
-  assert.equal(getSystem("eighth").upGlyph,null);
-  assert.equal(getSystem("two-thirds").upGlyph,0xE48C);
-  assert.equal(getSystem("three-quarters-grisey").downGlyph,0xE486);
-  assert.equal(getSystem("three-quarters-grisey").upGlyph,null);
-  assert.equal(STANDARD_GLYPHS["-1"],0xE260);
-  assert.throws(()=>getSystem("seventh"),RangeError);
+const close = (actual,expected,tolerance=1e-9) =>
+  assert.ok(Math.abs(actual-expected)<tolerance,`${actual} difiere de ${expected}`);
+
+test("sólo se ofrecen las cinco fracciones solicitadas: 1/2, 1/4, 1/6, 1/8 y 1/12",()=>{
+  assert.deepEqual(NOTATION_SYSTEMS.map(item=>item.id),[
+    "semitone","quarter","sixth","eighth","twelfth"
+  ]);
+  assert.deepEqual(NOTATION_SYSTEMS.map(item=>item.fractionCents),[
+    100,50,100/3,25,50/3
+  ]);
+  assert.throws(()=>getSystem("third"),RangeError);
+  assert.throws(()=>getSystem("quarter-ferneyhough"),RangeError);
 });
 
-test("+64 cents se representa como cuarto de tono (+50) con residuo +14",()=>{
+test("el cuarto de tono descendente es bemol inverso SIN RELLENO",()=>{
+  assert.equal(getSystem("quarter").downSign,"reverse-flat-outline");
+  assert.equal(getSystem("quarter").upSign,"quarter-sharp");
+  const down=decomposeCents(-50,"quarter");
+  assert.equal(down.microSign,"reverse-flat-outline");
+  assert.equal(down.standardSign,null);
+  assert.equal(down.step,-1);
+  assert.equal(down.residualCents,0);
+  assert.equal(decomposeCents(50,"quarter").microSign,"quarter-sharp");
+});
+
+test("semitonos +/-100 usan signos convencionales",()=>{
+  const up=decomposeCents(100,"semitone");
+  const down=decomposeCents(-100,"semitone");
+  assert.equal(up.standardSign,"sharp");
+  assert.equal(down.standardSign,"flat");
+  assert.equal(up.microSign,null);
+  assert.equal(down.microSign,null);
+  assert.equal(up.residualCents,0);
+  assert.equal(down.residualCents,0);
+});
+
+test("sextos: rombo y pentágono de la lámina, 100/3 cents exactos",()=>{
+  const down=decomposeCents(-100/3,"sixth");
+  const up=decomposeCents(100/3,"sixth");
+  assert.equal(down.microSign,"diamond");
+  assert.equal(up.microSign,"pentagon");
+  close(down.fractionalCents,-100/3);
+  close(up.fractionalCents,100/3);
+  close(down.residualCents,0);
+  close(up.residualCents,0);
+});
+
+test("octavos +/-25 se especifican con una indicación 1/8 visible",()=>{
+  const down=decomposeCents(-25,"eighth");
+  const up=decomposeCents(25,"eighth");
+  assert.equal(down.microSign,"eighth-down");
+  assert.equal(up.microSign,"eighth-up");
+  assert.match(down.fallback,/⅛/);
+  assert.equal(up.residualCents,0);
+});
+
+test("doceavos +/-16⅔ y signos compactos de la lámina",()=>{
+  const down=decomposeCents(-50/3,"twelfth");
+  const up=decomposeCents(50/3,"twelfth");
+  assert.equal(down.microSign,"triangle-half");
+  assert.equal(up.microSign,"square");
+  close(down.fractionalCents,-50/3);
+  close(up.fractionalCents,50/3);
+  close(down.residualCents,0);
+  close(up.residualCents,0);
+});
+
+test("nota arbitraria +64 = cuarto de tono 50 + residual 14",()=>{
   const x=decomposeCents(64,"quarter");
-  assert.equal(x.step,1);
+  assert.equal(x.standardSign,null);
+  assert.equal(x.microSign,"quarter-sharp");
+  assert.equal(x.semitoneCents,0);
+  assert.equal(x.fractionalCents,50);
   assert.equal(x.indicatedCents,50);
   assert.equal(x.residualCents,14);
-  assert.equal(x.totalCents,x.indicatedCents+x.residualCents);
-  assert.equal(x.glyphCodepoint,0xE282);
 });
 
-test("desviación negativa sin confundir los signos",()=>{
-  const x=decomposeCents(-64,"quarter");
-  assert.equal(x.glyphCodepoint,0xE280);
-  assert.equal(x.indicatedCents,-50);
-  assert.equal(x.residualCents,-14);
+test("alteraciones cromáticas compuestas no exigen residuales enormes",()=>{
+  const up=decomposeCents(150,"quarter");
+  const down=decomposeCents(-150,"quarter");
+  assert.equal(up.standardSign,"sharp");
+  assert.equal(up.microSign,"quarter-sharp");
+  assert.equal(down.standardSign,"flat");
+  assert.equal(down.microSign,"reverse-flat-outline");
+  assert.equal(up.residualCents,0);
+  assert.equal(down.residualCents,0);
+  assert.equal(decomposeCents(200,"semitone").standardSign,"double-sharp");
+  assert.equal(decomposeCents(-200,"semitone").standardSign,"double-flat");
 });
 
-test("pequeñas desviaciones pitagóricas nunca se convierten en cuarto de tono",()=>{
-  for(const step of DIATONIC_STEPS) {
-    const note=makeNote(step);
-    const x=notationForNote(note,"contemporary","quarter");
-    assert.equal(x.step,0);
-    assert.equal(x.residualCents,note.centsFrom12TET);
-    assert.equal(x.frequencyHz,note.frequencyHz);
-  }
-});
-
-test("modificar modo y subdivisión no cambia una sola frecuencia pitagórica",()=>{
-  for(const note of makeCollection([-6,...DIATONIC_STEPS,6])){
-    for(const system of NOTATION_SYSTEMS){
-      const exact=notationForNote(note,"exact",system.id);
-      const other=notationForNote(note,"contemporary",system.id);
-      assert.equal(exact.frequencyHz,other.frequencyHz);
-      assert.equal(exact.frequencyHz,note.frequencyHz);
-      assert.ok(Math.abs(other.totalCents-other.indicatedCents-other.residualCents)<1e-12);
+test("cambio de grafía conserva frecuencias y separación total=semitonos+fracción+residuo",()=>{
+  const notes=makeCollection([-6,...DIATONIC_STEPS,6]);
+  for(const note of notes) {
+    for(const unit of NOTATION_SYSTEMS){
+      for(const mode of ["exact","contemporary"]){
+        const p=notationForNote(note,mode,unit.id);
+        assert.equal(p.frequencyHz,note.frequencyHz);
+        close(p.semitoneCents+p.fractionalCents+p.residualCents,p.totalCents,1e-10);
+      }
     }
   }
 });
 
-test("SMuFL exacto Stein, Ferneyhough, Sims y Grisey sin desfases",()=>{
-  const expected = [
-    ["quarter",0xE282,0xE280],
-    ["quarter-ferneyhough",0xE48E,0xE48F],
-    ["sixth",0xE2A4,0xE2A1],
-    ["third",0xE48A,0xE48B],
-    ["two-thirds",0xE48C,0xE48D],
-    ["three-quarters-grisey",null,0xE486]
-  ];
-  for(const [id,up,down] of expected) {
-    assert.equal(getSystem(id).upGlyph,up,id+" up");
-    assert.equal(getSystem(id).downGlyph,down,id+" down");
-  }
-});
-
-test("sextos, octavos y tercios: residuos correctos y caída textual",()=>{
-  const sixth=decomposeCents(48,"sixth");
-  assert.ok(Math.abs(sixth.residualCents-14.66666666667)<1e-8);
-  const eighth=decomposeCents(32,"eighth");
-  assert.equal(eighth.residualCents,7);
-  assert.equal(eighth.isSmufl,false);
-  assert.match(eighth.fallback,/⅛/);
-  const third=decomposeCents(75,"third");
-  assert.ok(Math.abs(third.residualCents-8.3333333333333)<1e-8);
-  assert.equal(third.glyphCodepoint,0xE48A);
-  const twoThirds=decomposeCents(133.3333333333333,"two-thirds");
-  assert.equal(twoThirds.glyphCodepoint,0xE48C);
-  assert.ok(Math.abs(twoThirds.residualCents)<1e-9);
-  const grisey=decomposeCents(-150,"three-quarters-grisey");
-  assert.equal(grisey.glyphCodepoint,0xE486);
-  assert.equal(grisey.residualCents,0);
-  const griseyUp=decomposeCents(150,"three-quarters-grisey");
-  assert.equal(griseyUp.isSmufl,false);
-  assert.match(griseyUp.fallback,/¾/);
-});
-
-test("frecuencia de Do4 temperado y redondeo reversible cents",()=>{
-  assert.ok(Math.abs(REFERENCE_C4_12TET-261.6255653005986)<1e-9);
-  for(const cents of [-80,-50,-24,0,25,33.333333333,64,80]){
-    const demo=demonstrationForOffset(cents,"quarter");
-    assert.ok(Math.abs(frequencyToCents(demo.frequencyHz,demo.referenceHz)-cents)<1e-9);
-    assert.ok(Math.abs(demo.frequencyHz-centsToFrequency(demo.referenceHz,cents))<1e-11);
-  }
-});
-
-test("una altura arbitraria conserva la frecuencia al cambiar todos los sistemas",()=>{
-  for(const cents of [-150,-133.3333333333333,-64,-25,0,64,133.3333333333333,150]){
-    const reference=demonstrationForOffset(cents,NOTATION_SYSTEMS[0].id).frequencyHz;
+test("las alturas fuera de la escala también conservan frecuencia al cambiar sistema",()=>{
+  for(const cents of [-170,-150,-100,-64,-33.3333333333,-25,-50/3,0,50/3,25,64,100,150,170]){
+    const original=demonstrationForOffset(cents,"quarter").frequencyHz;
     for(const system of NOTATION_SYSTEMS){
-      const result=demonstrationForOffset(cents,system.id);
-      assert.equal(result.frequencyHz,reference);
-      assert.ok(Math.abs(result.totalCents-result.indicatedCents-result.residualCents)<1e-10);
+      const state=demonstrationForOffset(cents,system.id);
+      assert.equal(state.frequencyHz,original);
+      close(state.totalCents,
+        state.semitoneCents+state.fractionalCents+state.residualCents,1e-10);
+      close(frequencyToCents(state.frequencyHz,state.referenceHz),cents,1e-9);
     }
   }
 });
 
-test("rechazar datos no finitos y modos desconocidos",()=>{
+test("conservar referencia de La4 y frecuencia de Do4 temperado",()=>{
+  close(REFERENCE_C4_12TET,261.6255653005986);
+  for(const cents of [-100,-50,0,25,50,64,100]){
+    const note=demonstrationForOffset(cents,"eighth");
+    close(note.frequencyHz,centsToFrequency(REFERENCE_C4_12TET,cents),1e-10);
+  }
+});
+
+test("modo exacto no introduce glifos fraccionarios",()=>{
+  for(const note of makeCollection(DIATONIC_STEPS)){
+    const model=notationForNote(note,"exact","twelfth");
+    assert.equal(model.microSign,null);
+    assert.equal(model.standardSign,null);
+    assert.equal(model.totalCents,note.centsFrom12TET);
+  }
+});
+
+test("datos no finitos y modos desconocidos se rechazan",()=>{
   assert.throws(()=>decomposeCents(NaN,"quarter"),RangeError);
-  assert.throws(()=>centsToFrequency(0,30),RangeError);
+  assert.throws(()=>centsToFrequency(0,10),RangeError);
   assert.throws(()=>frequencyToCents(-3,440),RangeError);
-  assert.throws(()=>notationForNote(makeNote(0),"falso"),RangeError);
+  assert.throws(()=>notationForNote(makeNote(0),"incorrecto"),RangeError);
 });
