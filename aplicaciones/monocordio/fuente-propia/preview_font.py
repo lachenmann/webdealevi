@@ -42,9 +42,9 @@ def build_preview(font_path:Path, output:Path):
     heading = system_font(31)
     label = system_font(19)
     small = system_font(15)
-    image = Image.new("RGB",(1320,1310),"#f6f2e9")
+    image = Image.new("RGB",(1320,1370),"#f6f2e9")
     draw=ImageDraw.Draw(image)
-    draw.rectangle([25,28,1295,1283],outline="#b6a58b",width=2)
+    draw.rectangle([25,28,1295,1343],outline="#b6a58b",width=2)
     draw.text((53,49),"ESFERAS · ESTUDIO TIPOGRÁFICO",font=heading,fill="#332b29")
     draw.text((55,97),"Fuente paramétrica original · signos normalizados y extensiones privadas",
               font=label,fill="#6c594d")
@@ -79,7 +79,7 @@ def build_preview(font_path:Path, output:Path):
         draw.text((x+24,y+208),"Muestra 112 px · referencia 48 px →",font=small,
                   fill="#6b5b53")
         draw.text((x+343,y+199),chr(codepoint),font=font_small,fill="#39292c")
-    draw.text((54,1271),"PROTOTIPO · No sustituye partituras históricas ni contiene contornos de MIDIDESI.",
+    draw.text((54,1304),"PROTOTIPO · No sustituye partituras históricas ni contiene contornos de MIDIDESI.",
               font=small,fill="#765d4a")
     output.parent.mkdir(parents=True,exist_ok=True)
     image.save(output)
