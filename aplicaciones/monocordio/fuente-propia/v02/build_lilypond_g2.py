@@ -51,15 +51,15 @@ CATALOGUE = {
     "quarter_flat_stein": Candidate(
         "accidentals.mirroredflat",0xE280,-1,4,
         "Bemol inverso, cuarto descendente","accidentalQuarterToneFlatStein",
-        "G2_SPECIMEN_PENDING"),
+        "G2_HISTORIC_FORM_VISUALLY_APPROVED"),
     "quarter_sharp_stein": Candidate(
         "accidentals.sharp.slashslash.stem",0xE282,1,4,
         "Medio sostenido, asta única y dos barras",
-        "accidentalQuarterToneSharpStein","G2_SPECIMEN_PENDING"),
+        "accidentalQuarterToneSharpStein","G2_HISTORIC_FORM_VISUALLY_APPROVED"),
     "three_quarters_sharp_stein": Candidate(
         "accidentals.sharp.slashslash.stemstemstem",0xE283,3,4,
         "Sostenido de tres astas y dos barras",
-        "accidentalThreeQuarterTonesSharpStein","G2_SPECIMEN_PENDING"),
+        "accidentalThreeQuarterTonesSharpStein","G2_HISTORIC_FORM_VISUALLY_APPROVED"),
     "three_quarters_flat_lilypond": Candidate(
         "accidentals.flatflat.slash",0xF0020,-3,4,
         "3/4 de tono descendente, figura propia de LilyPond",
@@ -122,6 +122,11 @@ def build(original_path: Path | str, destination: Path | str):
                 "exact_cents":cents,
                 "notation_profile":PROFILE if cents else "contextual",
                 "status":spec.approval,
+                "visual_review":(
+                    "APPROVED_G1" if spec.approval=="G1_APPROVED" else
+                    "APPROVED_G2_HISTORIC_FORM" if spec.approval=="G2_HISTORIC_FORM_VISUALLY_APPROVED" else
+                    "APPROVED_AS_COMPARATIVE_REFERENCE_ONLY"
+                ),
                 "role":spec.role,
                 "caveat":spec.caveat or None,
                 "transform":transform,
@@ -161,7 +166,10 @@ def build(original_path: Path | str, destination: Path | str):
             "edition":"G2-0.2.2-DRAFT",
             "font_status":"STUDY_ONLY_NO_RELEASE",
             "g1_approved":True,
-            "g2_approved":False,
+            "g2_1_visual_approval":True,
+            "g2_complete":False,
+            "g2_release_approved":False,
+            "approval_scope":"Ocho glifos vistos en el espécimen: tres madres G1 y cinco variantes G2; dos variantes solo como referencias comparativas, sin aprobar nuevos códigos normativos.",
             "source_project":SOURCE_PROJECT,
             "source_file":original_path.name,
             "source_sha256":hashlib.sha256(original_path.read_bytes()).hexdigest(),
