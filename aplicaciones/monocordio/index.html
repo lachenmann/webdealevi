@@ -155,13 +155,11 @@
         <div class="notation-control">
           <label for="fraction-system">Fracción de tono representada</label>
           <select id="fraction-system">
-            <option value="quarter">¼ tono · 50 cents (Stein–Zimmermann: medio sostenido / bemol invertido)</option>
-            <option value="quarter-ferneyhough">¼ tono · 50 cents (Ferneyhough: signos con cifra)</option>
-            <option value="sixth">⅙ tono · 33,33… cents (Sims)</option>
-            <option value="eighth">⅛ tono · 25 cents (texto explícito)</option>
-            <option value="third">⅓ tono · 66,67… cents (Ferneyhough)</option>
-            <option value="two-thirds">⅔ tono · 133,33… cents (Ferneyhough)</option>
-            <option value="three-quarters-grisey">¾ tono · 150 cents (bemol Grisey)</option>
+            <option value="semitone">Semitono · ½ tono · 100 ¢</option>
+            <option value="quarter" selected>Cuarto de tono · ¼ tono · 50 ¢</option>
+            <option value="sixth">Sexto de tono · ⅙ tono · 33,33… ¢</option>
+            <option value="eighth">Octavo de tono · ⅛ tono · 25 ¢ (signo explícito)</option>
+            <option value="twelfth">Doceavo de tono · ¹⁄₁₂ tono · 16,67… ¢</option>
           </select>
         </div>
       </div>
@@ -174,24 +172,36 @@
         <div class="score-scroll" tabindex="0" role="region" aria-label="Pentagrama desplazable horizontalmente">
           <svg id="pythagorean-score" viewBox="0 0 760 320" role="img" aria-label="Pentagrama con las notas seleccionadas y sus desviaciones en cents"></svg>
         </div>
-        <p class="score-legend"><strong>Lectura:</strong> los símbolos especiales siguen una convención indicada en el selector; <strong>↑/↓ en una etiqueta no suma un intervalo</strong>. El número <strong>total</strong> es siempre la desviación frente a 12-TET (La4 = 440 Hz). En el modo contemporáneo el valor <strong>res.</strong> se suma al valor definido del signo musical: <strong>total = signo + residual</strong>. Los signos de Ferneyhough pueden incorporar cifras como parte de su grafía; para cuartos de tono se ofrece por defecto la variante Stein–Zimmermann.</p>
+        <p class="score-legend"><strong>Lectura:</strong> el número <strong>total</strong> expresa la desviación de altura respecto de la nota cromática en 12-TET con La4 = 440 Hz. En modo contemporáneo, las alteraciones vectoriales añaden un desplazamiento fijo y el valor <strong>res.</strong> es la corrección restante: <strong>total = semitonos + fracción + residual</strong>. Los dibujos no cambian la afinación; para una altura pitagórica prevalece siempre su razón exacta.</p>
       </div>
 
-      <p id="smufl-font-status" class="font-status" role="status" aria-live="polite">Verificando fuente musical de notación…</p>
+      <p class="font-status" role="status">Alteraciones dibujadas directamente en SVG: funcionan sin cargar fuentes musicales externas.</p>
+      <section class="notation-key" aria-labelledby="notation-key-title">
+        <h3 id="notation-key-title">Muestrario de alteraciones</h3>
+        <p>Inspirado en tu lámina de referencia: semitonos y símbolos compactos de cuartos, sextos y doceavos. El cuarto de tono descendente emplea un <strong>bemol inverso sin relleno</strong>. El octavo se identifica textualmente para no atribuirle un signo que no aparece en la lámina.</p>
+        <div class="notation-key-scroll" tabindex="0" role="region" aria-label="Tabla horizontal de signos microtonales">
+          <svg id="notation-key-svg" viewBox="0 0 960 245" role="img" aria-label="Muestrario de cinco fracciones de tono y sus alteraciones descendentes y ascendentes"></svg>
+        </div>
+        <p class="notation-key-hint">Los valores ±33 y ±17 de la lámina están redondeados: aquí ⅙ = 33⅓ ¢ y ¹⁄₁₂ = 16⅔ ¢ exactamente.</p>
+      </section>
       <div class="fraction-lab" id="fraction-lab" aria-labelledby="fraction-lab-title">
         <div class="fraction-intro">
           <h3 id="fraction-lab-title">Explorador de escritura microtonal</h3>
           <p>Demostración independiente: modifica la altura del Do4 temperado, observa cómo se descompone en un glifo fraccionario y un ajuste residual en cents, y escucha la frecuencia resultante.</p>
         </div>
-        <div class="fraction-preset-row" role="group" aria-label="Ejemplos de alteración en cents">
-          <button type="button" data-offset="64">+64 ¢</button>
-          <button type="button" data-offset="-64">−64 ¢</button>
-          <button type="button" data-offset="25">+25 ¢</button>
-          <button type="button" data-offset="-33.3333333333333">−⅙ tono</button>
-          <button type="button" data-offset="66.6666666666667">+⅓ tono</button>
-          <button type="button" data-offset="133.3333333333333">+⅔ tono</button>
-          <button type="button" data-offset="-150">−¾ tono (Grisey)</button>
-          <button type="button" data-offset="0">0 ¢</button>
+        <div class="fraction-preset-row" role="group" aria-label="Alteraciones de referencia en cents">
+          <button type="button" data-offset="-100" data-unit="semitone">♭ −100 ¢</button>
+          <button type="button" data-offset="100" data-unit="semitone">♯ +100 ¢</button>
+          <button type="button" data-offset="-50" data-unit="quarter">−¼ tono</button>
+          <button type="button" data-offset="50" data-unit="quarter">+¼ tono</button>
+          <button type="button" data-offset="-33.33333333333333" data-unit="sixth">−⅙ tono</button>
+          <button type="button" data-offset="33.33333333333333" data-unit="sixth">+⅙ tono</button>
+          <button type="button" data-offset="-25" data-unit="eighth">−⅛ tono</button>
+          <button type="button" data-offset="25" data-unit="eighth">+⅛ tono</button>
+          <button type="button" data-offset="-16.666666666666668" data-unit="twelfth">−¹⁄₁₂ tono</button>
+          <button type="button" data-offset="16.666666666666668" data-unit="twelfth">+¹⁄₁₂ tono</button>
+          <button type="button" data-offset="64" data-unit="quarter">+64 ¢ (¼ +14)</button>
+          <button type="button" data-offset="0" data-unit="quarter">0 ¢</button>
         </div>
         <div class="fraction-workbench">
           <div class="fraction-slider">
@@ -204,14 +214,14 @@
           <div class="fraction-preview">
             <svg id="fraction-score" viewBox="0 0 480 240" role="img" aria-label="Pentagrama con la notación y corrección residual de la nota de ejemplo"></svg>
             <div class="fraction-metrics" aria-live="polite">
-              <span>Glifo: <strong id="demo-symbol-name">¼ tono ascendente</strong></span>
-              <span>Desplazamiento del glifo: <strong id="demo-symbol-cents">+50,00 ¢</strong></span>
+              <span>Signos: <strong id="demo-symbol-name">¼ tono ascendente</strong></span>
+              <span>Desplazamiento indicado: <strong id="demo-symbol-cents">+50,00 ¢</strong></span>
               <span>Corrección adicional: <strong id="demo-residual">+14,00 ¢</strong></span>
               <span>Frecuencia: <strong id="demo-frequency">271,48 Hz</strong></span>
             </div>
           </div>
         </div>
-        <p class="fraction-license">Los signos musicales SMuFL se cargan mediante Bravura (Steinberg, SIL OFL); si no están disponibles, se emplean descripciones textuales inequívocas. Para ⅛ de tono utilizamos deliberadamente una etiqueta textual, no un glifo pretendidamente estándar.</p>
+        <p class="fraction-license">Esta es una convención editorial basada en la lámina aportada, no una atribución de todas las grafías a una única escuela. Las alteraciones se trazan en SVG sin fuentes externas. El octavo se marca como ⅛ con dirección porque la lámina no documenta un signo para ±25 ¢.</p>
       </div>
       <div class="scale-grid" id="pythagorean-notes" aria-label="Notas, razones, frecuencias y correcciones microtonales"></div>
       <div class="scale-footer">
