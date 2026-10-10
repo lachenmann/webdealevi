@@ -31,6 +31,10 @@ tienen estados diferenciados.
 | EM-D014 | Fuente futura GNU GPL-3.0-or-later con excepción oficial de fuente | **PROPUESTA DE LICENCIAMIENTO** | Objetivo software libre GNU | Revisar titulares y avisos |
 | EM-D015 | Mantener Leland en el monocordio mientras madura la v0.2 | **DECISIÓN OPERATIVA** | No comprometer v1.3 | No tocar CSS ni JS publicados |
 | EM-D016 | No identificar un octavo de tono en 72-EDO con un solo paso | **VERIFICADA MATEMÁTICAMENTE** | 25/ (1200/72) = 3/2 | Conservar perfil EDO correcto |
+| EM-D017 | Basarse DIRECTAMENTE en los signos madre originales de LilyPond | **FIJADA POR EL AUTOR** | Emmentaler/Feta: bemol, becuadro, sostenido | Estudio G1 derivado bajo GPL y excepción de incrustación; EM-G1-002 |
+| EM-D018 | Archivar matrices independientes de primer G1 como referencia histórica | **DECISIÓN OPERATIVA** | Sustituidas por fuentes originales LilyPond licenciadas | Preservar EM-G1-001 sin emplearlo en la v0.2 |
+| EM-D019 | Retener la gramática formal, pero separar componentes de la topología real de LilyPond | **PROPUESTA TÉCNICA** | Los outlines originales no son necesariamente cuatro trazos independientes | Estudiar fuente METAFONT antes de escribir derivados G2 |
+
 
 ## Regla crítica: morfología y semántica no son la misma álgebra
 
@@ -85,3 +89,14 @@ de Esferas tendrá una procedencia independiente.
 `G7_FUENTE_AUTORIZADA`. Esta iteración solamente documenta criterios.
 El código de generación v0.1, el TTF resultante y la aplicación del
 monocordio permanecen sin rediseñar.
+
+## Rectificación de procedencia (posterior a EM-D016)
+
+La expresión «no duplicar contornos propietarios» sigue siendo obligatoria
+para tipografías sin permiso; **GNU LilyPond no está en ese supuesto**,
+pues sus contornos se distribuyen expresamente bajo GPL con excepción
+de fuente o SIL OFL. Esferas emplea la opción GNU y declara la
+derivación, con los avisos de copyright oficiales. El proyecto no
+atribuye a sus colaboradores el diseño de las madres originales.
+
+Referencia: [EM-G1-002](./EM-G1-002-LILYPOND_REFERENCIA.md).
