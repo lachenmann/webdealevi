@@ -37,6 +37,21 @@ jobs:
             --out /tmp/esferas-microtonal-vista.png
           file /tmp/esferas-microtonal-vista.png
           test -s /tmp/esferas-microtonal-vista.png
+      - name: Compilar por separado las tres matrices v0.2
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 build_mothers.py --out /tmp/EsferasMicrotonal-Mothers-v02.ttf
+          file /tmp/EsferasMicrotonal-Mothers-v02.ttf
+      - name: Validar becuadro, contornos, métricas y UPM de las matrices v0.2
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: python3 -m unittest -v test_mothers.py
+      - name: Renderizar v0.2 a escala de pentagrama (NO distribuir TTF)
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: |
+          python3 preview_mothers.py --font /tmp/EsferasMicrotonal-Mothers-v02.ttf \
+            --out /tmp/esferas-matrices-v02.png
+          file /tmp/esferas-matrices-v02.png
+          test -s /tmp/esferas-matrices-v02.png
       - name: Conservar únicamente vista y manifiesto (NO TTF)
         uses: actions/upload-artifact@v4
         with:
@@ -44,4 +59,6 @@ jobs:
           path: |
             /tmp/esferas-microtonal-vista.png
             /tmp/EsferasMicrotonal-Prototype.json
+            /tmp/esferas-matrices-v02.png
+            /tmp/EsferasMicrotonal-Mothers-v02.json
           retention-days: 14
