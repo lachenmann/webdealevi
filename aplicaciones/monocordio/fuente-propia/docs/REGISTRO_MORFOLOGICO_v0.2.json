@@ -1,0 +1,259 @@
+{
+  "schema": "esferas-morfologia-draft-v0.2",
+  "status": "candidate-documentation-not-a-font",
+  "normative": false,
+  "unit": {
+    "name": "tone-12tet",
+    "tone_cents": {
+      "numerator": 200,
+      "denominator": 1
+    },
+    "note": "Un tono temperado de 200 cents explícitamente declarado."
+  },
+  "notational_note": "Natural = contextual cancellation; do not assign sound offset 0 without written pitch context.",
+  "legal_note": "Primitive sets are independently documented. No curves, binary outlines or mapping from MIDIDESI/Tempera have been imported.",
+  "morphology_note": "Primitive set cardinality does not yield a numeric cent value. Semantic identity is assigned per explicit profile.",
+  "semantic_entries": [
+    {
+      "id": "natural",
+      "cents": null,
+      "primitives": [
+        "N_VL",
+        "N_VR",
+        "N_HS",
+        "N_HI"
+      ],
+      "smufl": "accidentalNatural",
+      "codepoint": "E261",
+      "status": "standard-reference",
+      "semantics": "contextual-cancellation",
+      "tone_fraction": null,
+      "cents_exact": null
+    },
+    {
+      "id": "sharp_half_up",
+      "primitives": [
+        "V_L",
+        "V_R",
+        "H_S",
+        "H_I"
+      ],
+      "smufl": "accidentalSharp",
+      "codepoint": "E262",
+      "status": "standard-reference",
+      "tone_fraction": {
+        "numerator": 1,
+        "denominator": 2
+      },
+      "cents_exact": {
+        "numerator": 100,
+        "denominator": 1
+      }
+    },
+    {
+      "id": "sharp_quarter_up",
+      "primitives": [
+        "V_L",
+        "H_S",
+        "H_I"
+      ],
+      "smufl": "accidentalQuarterToneSharpStein",
+      "codepoint": "E282",
+      "status": "standard-reference",
+      "tone_fraction": {
+        "numerator": 1,
+        "denominator": 4
+      },
+      "cents_exact": {
+        "numerator": 50,
+        "denominator": 1
+      }
+    },
+    {
+      "id": "sharp_eighth_up",
+      "primitives": [
+        "V_L",
+        "H_S"
+      ],
+      "smufl": null,
+      "codepoint": null,
+      "status": "author-design-hypothesis",
+      "tone_fraction": {
+        "numerator": 1,
+        "denominator": 8
+      },
+      "cents_exact": {
+        "numerator": 25,
+        "denominator": 1
+      }
+    },
+    {
+      "id": "sharp_three_eighths_up",
+      "primitives": [
+        "V_L",
+        "V_R",
+        "H_S"
+      ],
+      "smufl": null,
+      "codepoint": null,
+      "status": "author-design-hypothesis",
+      "tone_fraction": {
+        "numerator": 3,
+        "denominator": 8
+      },
+      "cents_exact": {
+        "numerator": 75,
+        "denominator": 1
+      }
+    },
+    {
+      "id": "sharp_three_quarters_up",
+      "primitives": [
+        "V_L",
+        "V_R",
+        "V_X",
+        "H_S",
+        "H_I"
+      ],
+      "smufl": "accidentalThreeQuarterTonesSharpStein",
+      "codepoint": "E283",
+      "status": "historically-motivated-needs-contour-check",
+      "tone_fraction": {
+        "numerator": 3,
+        "denominator": 4
+      },
+      "cents_exact": {
+        "numerator": 150,
+        "denominator": 1
+      }
+    },
+    {
+      "id": "flat_half_down",
+      "primitives": [
+        "B_V",
+        "B_CURVE_R",
+        "B_OPEN"
+      ],
+      "smufl": "accidentalFlat",
+      "codepoint": "E260",
+      "status": "standard-reference",
+      "tone_fraction": {
+        "numerator": -1,
+        "denominator": 2
+      },
+      "cents_exact": {
+        "numerator": -100,
+        "denominator": 1
+      }
+    },
+    {
+      "id": "flat_quarter_down",
+      "primitives": [
+        "B_V",
+        "B_CURVE_L",
+        "B_OPEN"
+      ],
+      "smufl": "accidentalQuarterToneFlatStein",
+      "codepoint": "E280",
+      "status": "standard-reference",
+      "tone_fraction": {
+        "numerator": -1,
+        "denominator": 4
+      },
+      "cents_exact": {
+        "numerator": -50,
+        "denominator": 1
+      }
+    },
+    {
+      "id": "flat_eighth_down",
+      "primitives": null,
+      "smufl": null,
+      "codepoint": null,
+      "status": "open-design",
+      "tone_fraction": {
+        "numerator": -1,
+        "denominator": 8
+      },
+      "cents_exact": {
+        "numerator": -25,
+        "denominator": 1
+      }
+    },
+    {
+      "id": "flat_three_eighths_down",
+      "primitives": null,
+      "smufl": null,
+      "codepoint": null,
+      "status": "open-design",
+      "tone_fraction": {
+        "numerator": -3,
+        "denominator": 8
+      },
+      "cents_exact": {
+        "numerator": -75,
+        "denominator": 1
+      }
+    },
+    {
+      "id": "sixth_up",
+      "primitives": null,
+      "smufl": null,
+      "codepoint": null,
+      "status": "open-design",
+      "tone_fraction": {
+        "numerator": 1,
+        "denominator": 6
+      },
+      "cents_exact": {
+        "numerator": 100,
+        "denominator": 3
+      }
+    },
+    {
+      "id": "sixth_down",
+      "primitives": null,
+      "smufl": null,
+      "codepoint": null,
+      "status": "open-design",
+      "tone_fraction": {
+        "numerator": -1,
+        "denominator": 6
+      },
+      "cents_exact": {
+        "numerator": -100,
+        "denominator": 3
+      }
+    },
+    {
+      "id": "twelfth_up",
+      "primitives": null,
+      "smufl": null,
+      "codepoint": null,
+      "status": "open-design",
+      "tone_fraction": {
+        "numerator": 1,
+        "denominator": 12
+      },
+      "cents_exact": {
+        "numerator": 50,
+        "denominator": 3
+      }
+    },
+    {
+      "id": "twelfth_down",
+      "primitives": null,
+      "smufl": null,
+      "codepoint": null,
+      "status": "open-design",
+      "tone_fraction": {
+        "numerator": -1,
+        "denominator": 12
+      },
+      "cents_exact": {
+        "numerator": -50,
+        "denominator": 3
+      }
+    }
+  ]
+}
