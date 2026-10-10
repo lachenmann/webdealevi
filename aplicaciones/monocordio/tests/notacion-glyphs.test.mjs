@@ -109,9 +109,35 @@ test("la web integra un único sistema sin Bravura ni sintaxis SMuFL dependiente
   }
   assert.ok(html.includes('id="notation-key-svg"'));
   assert.ok(html.includes('id="fraction-score"'));
-  assert.ok(score.includes('from "./notacion-glyphs.mjs"'));
-  assert.ok(ui.includes('from "./notacion-glyphs.mjs"'));
+  assert.ok(score.includes('from "./notacion-glyphs.mjs?v=VEC-20261010-01"'));
+  assert.ok(ui.includes('from "./notacion-glyphs.mjs?v=VEC-20261010-01"'));
   assert.ok(!css.includes("@font-face"),"No cargar tipografías de alteraciones");
   assert.ok(!ui.includes("document.fonts"),"No depender de fuentes instaladas");
   assert.ok(!score.includes("hasSmuflFont"),"La escala debe utilizar SVG");
+});
+
+test("el HTML y todo el grafo de módulos comparten el mismo identificador de cache",()=>{
+  const dir=new URL("../",import.meta.url);
+  const html=readFileSync(new URL("index.html",dir),"utf8");
+  const expected="VEC-20261010-01";
+  assert.match(html,/id="notation-engine-state"/);
+  assert.match(html,/data-expected-build="VEC-20261010-01"/);
+  for(const asset of ["monocordio.mjs","escala.mjs","notacion-ui.mjs",
+    "armonia.mjs","estilos.css","escala.css","notacion.css","armonia.css"]){
+    assert.ok(html.includes("./"+asset+"?v="+expected),
+      "Archivo raíz sin identificación de caché: "+asset);
+  }
+  for(const file of ["monocordio.mjs","escala.mjs","notacion-ui.mjs",
+    "armonia.mjs","armonia-core.mjs"]){
+    const src=readFileSync(new URL(file,dir),"utf8");
+    const imports=[...src.matchAll(/from\s+["'](\.\/[^"']+\.mjs(?:\?v=[^"']+)?)["']/g)];
+    assert.ok(imports.length>0,file+" debe tener importaciones locales");
+    for(const match of imports){
+      assert.ok(match[1].endsWith("?v="+expected),
+        file+" importa sin fijar versión "+match[1]);
+    }
+  }
+  const ui=readFileSync(new URL("notacion-ui.mjs",dir),"utf8");
+  assert.ok(ui.includes('dataset.ready = "true"'));
+  assert.ok(ui.includes('window.__MONOCORDIO_VECTOR_BUILD'));
 });
