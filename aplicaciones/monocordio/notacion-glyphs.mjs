@@ -20,6 +20,20 @@ const SUPPORTED_SIGNS = [
 ];
 export const NOTATION_SIGNS = Object.freeze([...SUPPORTED_SIGNS]);
 
+// Leland incluye las grafías Stein–Zimmermann oficiales, más las
+// alteraciones convencionales. Las demás familias conservan SVG.
+const LELAND_GLYPHS = Object.freeze({
+  "natural":0xE261,
+  "sharp":0xE262,
+  "flat":0xE260,
+  "double-sharp":0xE263,
+  "double-flat":0xE264,
+  "quarter-sharp":0xE282,
+  "reverse-flat-outline":0xE280
+});
+export const LELAND_STANDARD_GLYPHS = LELAND_GLYPHS;
+
+
 function element(name, attributes={}, text=null) {
   const node = document.createElementNS(XMLNS,name);
   for(const [key,value] of Object.entries(attributes)) node.setAttribute(key,String(value));
@@ -74,6 +88,17 @@ export function makeAccidentalGlyph(id,options={}) {
     "aria-hidden":"true",
     transform:`translate(${options.x ?? 0} ${options.y ?? 0}) scale(${scale})`
   });
+  if (options.fontReady === true && Object.hasOwn(LELAND_GLYPHS,id)) {
+    const cp = LELAND_GLYPHS[id];
+    group.append(element("text",{
+      x:0,y:3,
+      "class":"monocordio-music-accidental",
+      "font-size":53,
+      "text-anchor":"middle",
+      "data-font-glyph":cp.toString(16).toUpperCase()
+    },String.fromCodePoint(cp)));
+    return group;
+  }
   switch(id){
     case "natural": natural(group);break;
     case "flat": flat(group);break;
@@ -137,7 +162,8 @@ export function renderNoteAccidentals(target,plan,opts={}) {
   for(let i=0;i<ids.length;i++) {
     target.append(makeAccidentalGlyph(ids[i],{
       x:x-(ids.length-1-i)*spacing,y,scale,
-      color:opts.color || "#f0d6ad"
+      color:opts.color || "#f0d6ad",
+      fontReady:opts.fontReady === true
     }));
   }
   return ids;
