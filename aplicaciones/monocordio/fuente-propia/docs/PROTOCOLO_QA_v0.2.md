@@ -149,14 +149,14 @@ medirse. Hasta entonces la columna «éxito visual» se marcará
 | --- | --- | --- |
 | G0 | Documentos v0.2 y valores exactos | **Aprobados por el autor** · 10-10-2026 |
 | G1 | Tres signos madre de LilyPond derivadas y cotejadas | **APROBADO POR EL AUTOR** · cierre de EM-G1-002; 10-10-2026 |
-| G2 | Variantes históricas y familia microtonal | **G2.1 aprobado visualmente por el autor** · ocho formas LilyPond; octavos, sextos y doceavos aún sin dibujo aprobado |
-| G3 | Familia descendente y signos fraccionarios | Pendiente |
-| G4 | Pruebas automáticas v0.2 | Suite G1 añadida; conformidad v0.2 completa pendiente |
+| G2 | Variantes históricas y familia microtonal | **G2.1 aprobado**; G2.2 **16 candidatos A/B generados y auditados por raster, todavía NO aprobados** |
+| G3 | Familia descendente y signos fraccionarios | **Candidatos descendentes incluidos en G2.2**, pendiente de lectura musical y aprobación |
+| G4 | Pruebas automáticas v0.2 | G1 y G2.1 aprobados técnicamente; G2.2 añade 7 tests y mediciones raster, conformidad completa pendiente |
 | G5 | Impresión, pantallas y lectura a ciegas | Pendiente |
 | G6 | Licencia GNU y revisión de titulares | Pendiente |
 | G7 | Aprobación del autor para sustituir v0.1 | Pendiente |
 
-La aprobación visual de G1 y G2.1 por el autor **no activa G7**. Las dos variantes históricas comparativas conservan su carácter informativo y los signos fraccionarios nuevos deberán revisarse por separado. Referencia: [EM-G2-002](./EM-G2-002-APROBACION_TIPOGRAFICA.md).
+La aprobación visual de G1 y G2.1 por el autor **no activa G7**. Las dos variantes históricas comparativas conservan su carácter informativo y los signos fraccionarios nuevos **G2.2 no están aprobados** aunque sean distinguibles por píxeles a 7 px. Referencias: [EM-G2-002](./EM-G2-002-APROBACION_TIPOGRAFICA.md) y [EM-G2-003](./EM-G2-003-CANDIDATOS_FRACCIONARIOS.md).
 
 ## 9. Seguridad de publicación
 
