@@ -83,10 +83,14 @@ jobs:
           im.save("/tmp/musicfonts.jpg",quality=82,optimize=True)
           print("FONT_SPECIMEN_DIMENSIONS=",im.size)
           PY
-          echo "FONT_SPECIMEN_BASE64_BEGIN"
-          base64 -w 0 /tmp/musicfonts.jpg
+          echo "FONT_ORIGINAL_LELAND_BEGIN"
+          base64 -w 0 aplicaciones/monocordio/tests/fonts/Leland.otf
           echo
-          echo "FONT_SPECIMEN_BASE64_END"
+          echo "FONT_ORIGINAL_LELAND_END"
+          echo "FONT_ORIGINAL_EKMELOS72_BEGIN"
+          base64 -w 0 aplicaciones/monocordio/tests/fonts/Ekmelos72edo.woff2
+          echo
+          echo "FONT_ORIGINAL_EKMELOS72_END"
       - uses: actions/upload-artifact@v4
         with:
           name: monocordio-comparacion-tipografica
