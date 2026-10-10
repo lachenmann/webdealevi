@@ -7,6 +7,16 @@
 **Origen:** crítica visual de la v0.1 y propuesta del autor de derivar los signos de bemol, becuadro y sostenido  
 **Base normativa:** [gramática de trazos](./GRAMATICA_DE_TRAZOS_v0.2.md) · [criterios de aceptación](./PROTOCOLO_QA_v0.2.md) · [decisiones abiertas](./REGISTRO_DECISIONES_v0.2.md)
 
+## Actualización G1 posterior al manifiesto
+
+**Decisión posterior del autor (EM-G1-002):** el sostenido, bemol
+y becuadro utilizarán los contornos **reales de LilyPond/Emmentaler**.
+Las afirmaciones que siguen sobre creación de las matrices desde
+cero solo describen la hipótesis inicial, **sustituida**. Se conserva
+la gramática de operaciones morfológicas y el objetivo de ligereza,
+sin perder el copyright de los autores de LilyPond. Referencia:
+[EM-G1-002](./EM-G1-002-LILYPOND_REFERENCIA.md).
+
 ## I. Tesis
 
 Una fuente microtonal rigurosa no debe construirse como una colección de
