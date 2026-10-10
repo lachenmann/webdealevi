@@ -46,8 +46,11 @@ class UpstreamDerivationTests(unittest.TestCase):
         self.assertEqual(len(self.report["source_sha256"]),64)
         self.assertEqual(self.report["upstream_font_filename"],
                          Path(SOURCE).name)
-        self.assertEqual(self.report["upstream_copyright_preserved"],
-                         COPYRIGHT)
+        self.assertIn(
+            COPYRIGHT, self.report["upstream_copyright_preserved"])
+        self.assertEqual(
+            self.report["source_copyright_name_table"],
+            self.source["name"].getDebugName(0))
 
     def test_only_three_mothers_and_correct_smufl_remapping(self):
         self.assertEqual(
