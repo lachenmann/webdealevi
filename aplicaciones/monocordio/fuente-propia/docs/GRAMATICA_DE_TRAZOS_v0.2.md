@@ -121,6 +121,20 @@ La evaluación es parcial: no todas las composiciones conducen a
 glifos válidos. `OPT` no debe alterar la identidad semántica
 del glifo, aunque cambie sus medidas.
 
+### Advertencia posterior a G1 (octavo frente a cuarto histórico)
+
+La aprobación de la retícula abstracta **no convierte sus morfologías en
+notaciones nuevas sin conflictos**. LilyPond contiene el glifo
+`accidentals.sharp.slash.stem` — una asta y una barra, definido por
+sus autores como **«1/2 sharp (1 beam)»**, es decir, una variante
+de medio sostenido para **+¼ de tono** en el perfil temperado.
+Se parece exactamente a la propuesta `V_L + H_S` de +⅛,
+por lo que los dos valores **no pueden compartir el mismo contorno
+en el mismo perfil**. El estado de +⅛ pasa a
+`EN ESTUDIO, POTENCIAL CONFLICTO ICONOGRÁFICO`.
+
+Véase [EM-G2-001](./EM-G2-001-VARIANTES_LILYPOND.md).
+
 ## 4. Familia ascendente: retícula de subconjuntos
 
 El sostenido ordinario se abstrae como:
