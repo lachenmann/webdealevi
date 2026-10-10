@@ -27,51 +27,50 @@ El pentagrama representa **alturas**, no una partitura rítmica. Presenta clave 
 
 **Importante:** un símbolo genérico de cuarto de tono suele denotar 50 cents y no serviría para representar fielmente las desviaciones pitagóricas de pocos cents o la coma de 23,46 cents. Por ello esta versión utiliza notación de altura + corrección numérica. Podrá añadirse una representación alternativa de alteraciones específicas de coma (p. ej. HEJI) en una etapa posterior con revisión de grafías y fuentes musicales.
 
-## v1.2 — Convención de notación avanzada
+## v1.3 — Notación microtonal unificada por signos vectoriales
 
-Se ofrecen dos modos para la escala pitagórica, sin afectar jamás los datos acústicos:
+El sistema es una **adaptación editorial de la lámina facilitada por el autor y atribuida por él a Danny Wier**; no se declara que cada nueva solución sea un signo histórico normalizado. Para evitar el problema de los glifos que parecían un «4 con flecha», las alteraciones se dibujan con **SVG propio**. No se carga Bravura, SMuFL ni ninguna fuente tipográfica externa para las alteraciones.
 
-1. **Pitagórico exacto:** nota, alteración convencional y cents **totales** respecto de 12-TET, La4 = 440 Hz.
-2. **Contemporáneo:** nota, alteración usual, signo fraccionario cuando procede y cents **residuales**, además de mostrar los cents totales para control.
+Se mantienen los dos modos del pentagrama de la escala pitagórica:
 
-Se emplea la descomposición matemática:
+- **Exacto:** alteración cromática habitual (si procede) y desviación TOTAL en cents respecto de 12-TET, La4 = 440 Hz. La proporción racional pitagórica sigue fijando la frecuencia.
+- **Contemporáneo:** misma nota, más alteraciones vectoriales cromáticas y/o fraccionarias cuando aproximan la desviación, además de cents residuales; siempre aparece el valor total.
+
+### Fracciones elegidas (tono temperado = 200 cents)
+
+| Subdivisión | Valor de una alteración | Signos en SVG |
+| --- | ---: | --- |
+| Semitono (½ tono) | ±100 cents | Bemol / sostenido tradicionales; también dobles |
+| Cuarto (¼ tono) | ±50 cents | Medio sostenido (+) y **bemol inverso sin relleno** (−) |
+| Sexto (⅙ tono) | ±100/3 cents | Pentágono (+) y rombo (−), según motivos compactos de la lámina |
+| Octavo (⅛ tono) | ±25 cents | Indicación textual explícita ⅛↑ / ⅛↓; **extensión editorial** |
+| Doceavo (¹⁄₁₂ tono) | ±50/3 cents | Cuadrado (+) y medio triángulo (−), conforme a los motivos de ≈±17 cents de la lámina |
+
+Los valores ±33 y ±17 impresos en la referencia están redondeados; la frecuencia de la aplicación se calcula mediante las cantidades exactas `100/3` y `50/3` cents. Los signos compactos no deben identificarse sin más con los estándares de otros compositores.
+
+### Composición de las alteraciones
+
+El algoritmo puede combinar hasta un signo cromático (0, ±100 o ±200 cents) con **una alteración de la fracción seleccionada**. Elige la combinación que minimiza la corrección restante y, en caso de empate, la escritura con menos signos:
 
 ```text
-cents totales = cents del signo fraccionario + cents residuales
+cents totales = cents cromáticos + cents de fracción + cents residuales
 ```
 
-Por ejemplo **Do4 +64,00 cents** (referencia Do4 del temperamento igual) puede escribirse con un signo de **¼ de tono ascendente (+50,00 cents)** y **corrección residual +14,00 cents**. La corrección no se suma dos veces. Para las notas pitagóricas habituales, cuya desviación es muy pequeña, es correcto que no aparezca un signo de cuarto de tono; se mantiene la alteración convencional y su desviación en cents.
+Ejemplos (Do4 temperado de referencia):
 
-### Fracciones y signos
+- `+64 cents` en modo cuarto → `+50` por medio sostenido + `+14` residuales.
+- `−50 cents` en modo cuarto → bemol inverso hueco, residuo cero.
+- `+150 cents` en modo cuarto → sostenido `+100` y cuarto ascendente `+50`.
+- `−33⅓ cents` en modo sexto → rombo `−100/3`, residuo cero.
+- `+16⅔ cents` en modo doceavo → cuadrado `+50/3`, residuo cero.
 
-| Subdivisión | Valor convencional | Grafía |
-| --- | ---: | --- |
-| ¼ tono, preferido | 50 cents | Stein–Zimmermann, SMuFL E282/E280 |
-| ¼ tono alternativo | 50 cents | Ferneyhough, SMuFL E48E/E48F (grafías con cifra 4) |
-| ⅙ tono | 33⅓ cents | Sims, SMuFL E2A4/E2A1 |
-| ⅛ tono | 25 cents | Texto literal «⅛ tono» (sin reivindicar un glifo SMuFL propio) |
-| ⅓ tono | 66⅔ cents | Ferneyhough, SMuFL E48A/E48B |
-| ⅔ tono | 133⅓ cents | Ferneyhough, SMuFL E48C/E48D |
-| ¾ tono bemol | −150 cents | Grisey, SMuFL E486; ascenso +150 solo en texto |
+**La precisión sonora no cambia** al modificar el selector, activar otro modo ni elegir otra grafía. La base del explorador es **Do4 temperado**: `440·2^(−9/12) ≈ 261,626 Hz`, distinta de Do4 pitagórico (`440·16/27 ≈ 260,741 Hz`). El deslizador permite incrementos de una décima de cent; los botones fraccionarios conservan los valores internos exactos sin redondearlos a la décima.
 
-**Corrección editorial v1.2:** se rectificaron códigos SMuFL erróneos de la implementación original. El «4 con flecha» puede ser una grafía propia de Ferneyhough; para mejorar la legibilidad se selecciona por defecto el medio sostenido / bemol invertido de Stein–Zimmermann. La familia de Ferneyhough queda disponible con identificación explícita. Los códigos aquí indicados se contrastaron con las tablas oficiales de SMuFL.
+La interfaz incluye un **muestrario accesible** de los cinco pares de signos, con etiquetas de cents y desplazamiento horizontal para pantallas estrechas. El octavo está claramente identificado como extensión textual; no se presenta como símbolo presente en la lámina. La fotografía/imagen enviada por el autor es la referencia visual de trabajo y no se redistribuye como archivo incrustado.
 
-Los glifos SMuFL se cargan mediante Bravura (Steinberg, licencia SIL Open Font License) desde un CDN público. Si el navegador está sin conexión o la fuente no carga, los controles presentan **etiquetas textuales** de fracción de tono con dirección, y las alteraciones convencionales se dibujan con Unicode. La ausencia de la fuente no altera el audio ni los cálculos.
+### Alcance y pruebas
 
-Los presets fraccionarios conservan internamente la fracción exacta de cent (aunque las cifras visibles se redondeen a dos decimales). El deslizador permite modificaciones de una décima de cent. La selección de un preset no debe reducirse a esa resolución.
-
-El explorador trabaja con **Do4 temperado**, cuya frecuencia es `440·2^(−9/12) ≈ 261,626 Hz`. Esto es deliberadamente distinto de Do4 pitagórico (`440·16/27 ≈ 260,741 Hz`). Cambiar la grafía en el explorador conserva el desplazamiento total y la frecuencia.
-
-La flecha de una etiqueta numérica es únicamente direccional; **las flechas integradas en un glifo pertenecen al valor semántico propio de esa familia de signos**. No deben interpretarse arbitrariamente como comas pitagóricas o sintónicas.
-
-Fuentes de los códigos de glifos y sistemas:
-- https://smufl.formats.music/latest/tables/stein-zimmermann-accidentals-24-edo.html
-- https://smufl.formats.music/latest/tables/other-accidentals.html
-- https://smufl.formats.music/latest/tables/sims-accidentals-72-edo.html
-- https://smufl.formats.music/latest/tables/extended-stein-zimmermann-accidentals.html
-- https://github.com/steinbergmedia/bravura (licencia OFL)
-
-**Limitaciones:** la sección dibuja una secuencia de alturas (no una partitura rítmica con reglas de vigencia de alteraciones). El modo contemporáneo no pretende copiar una obra particular de Grisey o Ferneyhough; adopta signos concretos de familias documentadas y define expresamente su interpretación numérica. El soporte de ⅛ de tono es deliberadamente textual hasta validar una convención y una tipografía específicas.
+El pentagrama representa **alturas** (no duraciones ni reglas de vigencia de alteraciones dentro de un compás). El archivo `notacion-core.mjs` determina la altura semántica; `notacion-glyphs.mjs` dibuja los signos, y `notacion-ui.mjs` realiza las interacciones. Las pruebas verifican todas las fracciones, la grafía de bemol inverso hueco, la consistencia de cents y que cambiar la representación jamás altere las frecuencias.
 
 ## Catálogo ampliado de relaciones pitagóricas
 
