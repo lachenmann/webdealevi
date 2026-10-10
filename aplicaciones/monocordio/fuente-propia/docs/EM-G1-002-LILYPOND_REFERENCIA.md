@@ -1,6 +1,6 @@
 # EM-G1-002 — Matrices originales de GNU LilyPond
 
-**Estado:** cambio de referencia tipográfica solicitado por el autor; revisión visual pendiente.  
+**Estado:** `G1_CERRADO_Y_APROBADO_POR_EL_AUTOR` · 10-10-2026.  
 **Fecha:** 10 de octubre de 2026.  
 **Sustituye como referencia de dibujo:** los bocetos independientes EM-G1-001 (se conservan como historial).  
 **No sustituye:** la gramática matemática y las decisiones de notación aún vigentes.
@@ -113,5 +113,4 @@ Solo se entrega una muestra gráfica y el código reproducible.
 5. Comparar las tres madres sobre pautas de tamaño real.
 6. Registrar la aprobación del autor antes de iniciar G2.
 
-**Estado de la fase:** muestras técnicas producidas;
-no se sustituye todavía la tipografía oficial del proyecto.
+**Estado de la fase:** G1 aprobado por el autor; queda autorizado G2 como **prototipo de variantes**. El monocordio y la fuente publicada siguen intactos; ninguna nueva alteración de G2 queda aprobada automáticamente.
