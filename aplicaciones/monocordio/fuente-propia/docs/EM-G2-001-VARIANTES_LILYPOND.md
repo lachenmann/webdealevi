@@ -1,7 +1,7 @@
 # EM-G2-001 — Variantes microtonales tomadas de GNU LilyPond
 
 **Fase:** G2, primer tramo / investigación tipográfica y espécimen  
-**Estado:** `G2_VARIANTES_IMPLEMENTADAS_EN_ESTUDIO_PENDIENTES_DE_REVISION`  
+**Estado:** `G2.1_APROBADO_VISUALMENTE`; extensión del repertorio pendiente  
 **Fecha:** 2026-10-10  
 **Fundamento:** G1 Emmentaler/Feta aprobado expresamente por el autor.  
 **Alcance:** catálogo experimental de contornos auténticos; no una nueva fuente publicada.
@@ -17,8 +17,7 @@ que no puedan identificarse inequívocamente con signos históricos.
 Los signos de G2 tienen dos estados claramente distintos:
 
 - **G1_APROBADO**: madres `flat`, `natural`, `sharp`.
-- **G2_PENDIENTE**: signos históricos derivados, cuyos contornos ya están
-  convertidos, pero cuya aprobación musical/visual requiere revisión.
+- **G2.1_APROBADO_VISUALMENTE**: los contornos históricos incluidos en la lámina han sido aceptados por el autor. Los dos glifos comparativos siguen sin adoptar codificación normativa. Véase [EM-G2-002](./EM-G2-002-APROBACION_TIPOGRAFICA.md).
 
 ## 2. Catálogo inicial verificado por nombre de fuente
 
@@ -27,11 +26,11 @@ Los signos de G2 tienen dos estados claramente distintos:
 | Bemol | `accidentals.flat` | −100 cents | SMuFL E260 | **G1 aprobado** |
 | Becuadro | `accidentals.natural` | cancelación contextual | SMuFL E261 | **G1 aprobado** |
 | Sostenido | `accidentals.sharp` | +100 cents | SMuFL E262 | **G1 aprobado** |
-| Bemol inverso abierto | `accidentals.mirroredflat` | −50 cents | SMuFL E280 | G2 candidato |
-| Medio sostenido (dos travesaños) | `accidentals.sharp.slashslash.stem` | +50 cents | SMuFL E282 | G2 candidato |
-| Tres cuartos sostenido | `accidentals.sharp.slashslash.stemstemstem` | +150 cents | SMuFL E283 | G2 candidato |
-| Tres cuartos bemol de LilyPond | `accidentals.flatflat.slash` | −150 cents | PUA F0020 | **Referencia histórica**, no afirmar equivalencia con E281 |
-| Medio sostenido (un travesaño) | `accidentals.sharp.slash.stem` | **+50 cents**, no +25 | PUA F0021 | **Referencia histórica**, no asignar +⅛ |
+| Bemol inverso abierto | `accidentals.mirroredflat` | −50 cents | SMuFL E280 | **Forma G2 aprobada** |
+| Medio sostenido (dos travesaños) | `accidentals.sharp.slashslash.stem` | +50 cents | SMuFL E282 | **Forma G2 aprobada** |
+| Tres cuartos sostenido | `accidentals.sharp.slashslash.stemstemstem` | +150 cents | SMuFL E283 | **Forma G2 aprobada** |
+| Tres cuartos bemol de LilyPond | `accidentals.flatflat.slash` | −150 cents | PUA F0020 | **Aceptada como referencia**, no equivalencia con E281 |
+| Medio sostenido (un travesaño) | `accidentals.sharp.slash.stem` | **+50 cents**, no +25 | PUA F0021 | **Aceptada como referencia**, no asignar +⅛ |
 
 Las asignaciones SMuFL son del **TTF derivado de estudio**, no una
 afirmación de que el OTF de LilyPond use internamente esos puntos Unicode.
@@ -136,12 +135,12 @@ del autor antes de implementar derivados originales.
 | Control | Resultado esperado |
 | --- | --- |
 | G1 | Tres madres **aprobadas** |
-| G2.1 | Localizar variantes reales LilyPond y preservar licencia |
+| G2.1 | **APROBADA VISUALMENTE**: variantes reales LilyPond, licencia y genealogía preservadas |
 | G2.2 | Mapeo exacto sin confundir 1/8 con un signo histórico de 1/4 |
 | G2.3 | Convertir contornos y comprobar cajas |
-| G2.4 | Presentar lámina a escalas reales |
+| G2.4 | **Lámina G2.1 revisada y aceptada**; la revisión del repertorio que falta sigue pendiente |
 | G2.5 | Decidir iconografía original para octavos y tres octavos |
 | G2.6 | Aprobar signos antes de publicar TTF |
 
-**La aprobación de G1 no implica aprobación de G2.**
+**El autor aprobó expresamente G2.1 para las ocho formas mostradas, con los dos glifos comparativos limitados a referencias históricas.** La aprobación no se extiende a signos fraccionarios aún no diseñados ni autoriza la publicación del TTF. Véase [EM-G2-002](./EM-G2-002-APROBACION_TIPOGRAFICA.md).
 No se modifica el monocordio web ni se fusionan sus PR.
