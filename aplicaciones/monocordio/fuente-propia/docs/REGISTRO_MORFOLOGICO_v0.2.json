@@ -76,7 +76,7 @@
       ],
       "smufl": null,
       "codepoint": null,
-      "status": "author-design-hypothesis",
+      "status": "design-on-hold-historical-conflict",
       "tone_fraction": {
         "numerator": 1,
         "denominator": 8
@@ -84,7 +84,9 @@
       "cents_exact": {
         "numerator": 25,
         "denominator": 1
-      }
+      },
+      "conflict": "LilyPond accidentals.sharp.slash.stem: el medio sostenido de una barra ya representa +1/4 de tono en un perfil de tono temperado.",
+      "approved": false
     },
     {
       "id": "sharp_three_eighths_up",
