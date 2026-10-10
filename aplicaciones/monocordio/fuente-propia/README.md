@@ -1,5 +1,23 @@
 # Esferas Microtonal — prototipo de fuente propia
 
+## G2.1 — Variantes de LilyPond aprobadas visualmente (10-10-2026)
+
+El autor aprobó las **ocho formas** de la lámina G2. Se reconoce como
+repertorio tipográfico válido para continuar el desarrollo de Esferas
+Microtonal, conservando su procedencia GNU LilyPond/Emmentaler.
+
+De las cinco variantes incorporadas después de G1, tres se aceptan como
+formas convencionales de cuartos y tres cuartos de tono; las otras dos
+solo como **referencias históricas comparativas**, sin otorgarles
+códigos SMuFL nuevos ni cambiar su valor musical.
+
+[Acta de aprobación y límites EM-G2-002](docs/EM-G2-002-APROBACION_TIPOGRAFICA.md)
+
+**La fuente aún no está terminada**: faltan signos inequívocos para
+octavos, sextos y doceavos, y siguen pendientes pruebas de impresión,
+lectura a ciegas, licencia definitiva del paquete y aprobación para
+sustituir cualquier fuente del monocordio. PR #5 permanece en borrador.
+
 ## G1 cerrado · G2 en desarrollo (aprobación del autor, 10-10-2026)
 
 El autor aprobó expresamente los **tres contornos auténticos de
