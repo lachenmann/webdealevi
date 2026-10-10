@@ -10,8 +10,10 @@
   <script type="module" src="./monocordio.mjs"></script>
   <script type="module" src="./escala.mjs"></script>
   <script type="module" src="./notacion-ui.mjs"></script>
+  <script type="module" src="./armonia.mjs"></script>
   <link rel="stylesheet" href="./escala.css">
   <link rel="stylesheet" href="./notacion.css">
+  <link rel="stylesheet" href="./armonia.css">
 </head>
 <body>
   <header class="site-header">
@@ -231,6 +233,97 @@
         </aside>
       </div>
     </section>
+
+    <section class="harmony-panel" id="tetraktys-medias" aria-labelledby="harmony-title">
+      <div class="harmony-lead">
+        <p class="eyebrow">04 · Número, proporción y consonancia</p>
+        <h2 id="harmony-title">La tetraktys y las medias musicales</h2>
+        <p>Dos experimentos para escuchar cómo los números 1, 2, 3 y 4, y la serie 6:8:9:12, contienen relaciones de octava, quinta, cuarta y tono. Las proporciones se aplican a <strong>frecuencias</strong>; sobre el monocordio producen longitudes vibrantes inversamente proporcionales.</p>
+      </div>
+
+      <article class="harmony-module" aria-labelledby="tetraktys-title">
+        <div class="harmony-module-title">
+          <span class="harmony-index">I</span>
+          <div>
+            <h3 id="tetraktys-title">La tetraktys: 1 + 2 + 3 + 4 = 10</h3>
+            <p>Diez puntos distribuidos en cuatro filas: el símbolo tradicional se convierte aquí en un modelo sonoro. La fila de <em>n</em> puntos representa la frecuencia <em>n</em> veces mayor que la fundamental.</p>
+          </div>
+        </div>
+        <div class="harmony-layout">
+          <figure class="harmony-visual">
+            <svg id="tetraktys-diagram" viewBox="0 0 820 405" aria-label="Tetraktys de diez puntos, agrupados en filas de uno, dos, tres y cuatro; selección mediante los controles situados a la derecha" role="img">
+              <title>La tetraktys musical</title>
+              <desc>Un punto en la primera fila, dos en la segunda, tres en la tercera y cuatro en la cuarta. Cada fila representa un término de la serie armónica.</desc>
+            </svg>
+            <figcaption>La figura expresa la estructura numérica 1 + 2 + 3 + 4. Cada fila se puede escuchar de forma independiente.</figcaption>
+          </figure>
+          <div class="harmony-control">
+            <p class="harmony-label">Selecciona una fila</p>
+            <div id="tetraktys-buttons" class="harmony-options" role="group" aria-label="Frecuencias asociadas a las filas"></div>
+            <div id="tetraktys-reading" class="harmony-reading" role="status" aria-live="polite">Fila 1 · Frecuencia 220 Hz · Longitud 1:1.</div>
+            <div class="harmony-actions">
+              <button type="button" class="harmony-button primary" id="tetraktys-play">▶ Escuchar 1 → 2 → 3 → 4</button>
+              <button type="button" class="harmony-button secondary" id="tetraktys-chord">♫ Escuchar simultáneamente</button>
+              <button type="button" class="harmony-button secondary" id="tetraktys-bridge">Mostrar fila en el monocordio</button>
+            </div>
+            <p id="tetraktys-status" class="harmony-status" role="status" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="harmony-explanation">
+          <span><strong>1 → 2:</strong> octava (2:1)</span>
+          <span><strong>2 → 3:</strong> quinta justa (3:2)</span>
+          <span><strong>3 → 4:</strong> cuarta justa (4:3)</span>
+        </div>
+      </article>
+
+      <article class="harmony-module" aria-labelledby="means-title">
+        <div class="harmony-module-title">
+          <span class="harmony-index">II</span>
+          <div>
+            <h3 id="means-title">Las dos medias: 6 : 8 : 9 : 12</h3>
+            <p>Entre los extremos 6 y 12 aparecen dos puntos distintos: la <strong>media armónica, 8</strong>, y la <strong>media aritmética, 9</strong>. Podemos verlos, escuchar su diferencia y llevar cada proporción al puente móvil.</p>
+          </div>
+        </div>
+        <div class="harmony-equations" aria-label="Demostración de las medias">
+          <div>
+            <span>Media armónica</span>
+            <strong>H = 2 × 6 × 12 / (6 + 12) = 8</strong>
+          </div>
+          <div>
+            <span>Media aritmética</span>
+            <strong>A = (6 + 12) / 2 = 9</strong>
+          </div>
+        </div>
+        <div class="harmony-layout">
+          <figure class="harmony-visual">
+            <svg id="means-diagram" viewBox="0 0 820 300" role="img" aria-label="Recta numérica con extremos 6 y 12, media armónica 8 y media aritmética 9">
+              <title>La proporción musical 6:8:9:12</title>
+              <desc>Los cuatro números están ubicados sobre una recta numérica, con 8 y 9 entre los extremos 6 y 12.</desc>
+            </svg>
+            <figcaption>Los puntos se ubican según su valor numérico. Las posiciones del puente en una cuerda real son inversas a estos números.</figcaption>
+          </figure>
+          <div class="harmony-control">
+            <p class="harmony-label">Selecciona un término</p>
+            <div id="means-buttons" class="harmony-options" role="group" aria-label="Extremos y medias"></div>
+            <div id="means-reading" class="harmony-reading" role="status" aria-live="polite">6 · Extremo inferior · Frecuencia 220 Hz.</div>
+            <div class="harmony-actions">
+              <button type="button" class="harmony-button primary" id="means-play">▶ Escuchar 6 → 8 → 9 → 12</button>
+              <button type="button" class="harmony-button secondary" id="means-compare">Comparar 8 y 9</button>
+              <button type="button" class="harmony-button secondary" id="means-bridge">Mostrar término en el monocordio</button>
+            </div>
+            <p id="means-status" class="harmony-status" role="status" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="harmony-explanation">
+          <span><strong>6 → 12:</strong> octava (2:1)</span>
+          <span><strong>6 → 9:</strong> quinta (3:2)</span>
+          <span><strong>6 → 8:</strong> cuarta (4:3)</span>
+          <span><strong>8 → 9:</strong> tono (9:8)</span>
+        </div>
+      </article>
+      <p class="harmony-note"><strong>Convención acústica:</strong> la fundamental es La3 = 220 Hz. Así, en la tetraktys suena 220, 440, 660 y 880 Hz; en la serie 6:8:9:12 suena 220, 293,33…, 330 y 440 Hz. Es una demostración didáctica de proporciones, no una reconstrucción histórica de un experimento atribuido a Pitágoras.</p>
+    </section>
+
   </main>
   <footer>La música de las esferas · Laboratorio digital · <a href="../../index.html#aplicaciones">Alevi Peña</a></footer>
   <noscript>Activa JavaScript para mover el puente y escuchar el instrumento.</noscript>
