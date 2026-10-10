@@ -97,6 +97,16 @@ class DocumentationV02(unittest.TestCase):
             self.assertIsNone(GLYPHS[name]["smufl"])
             self.assertIsNone(GLYPHS[name]["codepoint"])
 
+    def test_eighth_tone_author_hypothesis_is_on_hold_after_lilypond_review(self):
+        item=GLYPHS["sharp_eighth_up"]
+        self.assertEqual(item["status"],"design-on-hold-historical-conflict")
+        self.assertIs(item["approved"],False)
+        self.assertEqual(cents("sharp_eighth_up"),Fraction(25))
+        self.assertIn("sharp.slash.stem",item["conflict"])
+        self.assertIn("1/4",item["conflict"])
+        self.assertIsNone(item["codepoint"])
+        self.assertIsNone(item["smufl"])
+
     def test_known_symbol_registry_uses_SMUFL_correctly(self):
         known = {
             "flat_half_down": ("accidentalFlat", "E260"),
