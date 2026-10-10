@@ -1,15 +1,9 @@
-/* Monocordio v1.2 · notación avanzada — glifos de fuente de referencia SMuFL */
-@font-face{
-  font-family:"BravuraMonocordio";
-  src:url("https://cdn.jsdelivr.net/gh/steinbergmedia/bravura@master/redist/woff/Bravura.woff2") format("woff2");
-  font-weight:normal;font-style:normal;font-display:swap;
-}
+/* Monocordio v1.3 · notación vectorial sin dependencias de fuente externas. */
 .notation-settings{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
 .notation-control{display:flex;flex-direction:column;gap:8px}
 .notation-control label{color:#f1d4a5;font-size:.83rem;letter-spacing:.015em}
 .notation-control select{width:100%;min-width:0;background:#211a24;color:var(--text);border:1px solid #91704c;border-radius:9px;padding:12px 9px}
 .notation-interpretation{font-size:.85rem;color:#bcb3b9;line-height:1.55;margin:7px 0 17px;border-left:2px solid #ab8a5f;padding-left:12px}
-.notation-smufl{font-family:"BravuraMonocordio","Noto Music",serif}
 .fraction-lab{background:#15131a;border:1px solid #55443d;border-radius:13px;margin:22px 0;padding:19px 22px}
 .fraction-intro h3{font-size:1.35rem;margin:0;color:#f8dba9}
 .fraction-intro p{margin:9px 0 18px;font-size:.88rem;max-width:780px;color:#c9bcc0}
@@ -36,3 +30,20 @@
 
 .font-status{font-size:.78rem;color:#c4b6ae;margin:8px 0 14px;padding:7px 10px;
   border-left:2px solid #9b825c;background:#1c191f;border-radius:0 5px 5px 0}
+
+/* Muestrario integrado de las cinco subdivisiones solicitadas. */
+.notation-key{margin:12px 0 23px;padding:18px 18px 12px;border:1px solid #675342;
+  border-radius:12px;background:#14141b}
+.notation-key h3{font-family:Georgia,serif;font-weight:normal;font-size:1.28rem;
+  color:#f6dba8;margin:0 0 8px}
+.notation-key > p{font-size:.86rem;color:#c9c0c0;line-height:1.6;
+  margin:0 0 14px}
+.notation-key strong{color:#f5debb}
+.notation-key-scroll{overflow-x:auto;overflow-y:hidden;border:1px solid #37393c;
+  border-radius:9px;background:#0f1218;scrollbar-color:#80674e #18141a}
+.notation-key-scroll svg{display:block;width:960px;min-width:960px;height:245px}
+.notation-key-scroll:focus-visible{outline:3px solid #74ceb5;outline-offset:2px}
+.notation-key .notation-key-hint{font-size:.8rem;opacity:.9;margin:11px 0 0}
+@media(max-width:780px){
+ .notation-key{padding:14px 9px}
+}
