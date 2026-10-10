@@ -108,8 +108,8 @@ def _draw_extensions(pen,c:Candidate,base_bounds):
     xmin,ymin,xmax,ymax=base_bounds
     center_y=(ymin+ymax)*0.5
     # Decorative information near the sign's RIGHT edge, with enough x room.
-    mark_left=xmax+36
-    mark_length=73
+    mark_left=xmax+14
+    mark_length=112
     middle=center_y-35
     slots={
         "twelfth":1,"eighth":2,"sixth":3,"three_eighths":4
@@ -121,28 +121,28 @@ def _draw_extensions(pen,c:Candidate,base_bounds):
         # A: systematic ranking by hatch count. Not additive in cents.
         # Smallest marks ~0.3 of one 250-unit staff space.
         positions={
-            1:[0],2:[-64,64],3:[-92,0,92],
-            4:[-124,-42,42,124]
+            1:[0],2:[-80,80],3:[-108,0,108],
+            4:[-144,-48,48,144]
         }[count]
         for iy in positions:
             y=middle+iy
             _filled_stroke(pen,mark_left,y,
-                           mark_left+mark_length,y+24,16)
+                           mark_left+mark_length,y+34,27)
     else:
         # B: compact *fork* terminals. Each pattern is differentiated by
         # position/configuration rather than the number of parallel dashes.
-        x=mark_left+16
+        x=mark_left+12
         if unit=="twelfth":
-            _filled_stroke(pen,x,middle+15,x+60,middle+65,17)
+            _filled_stroke(pen,x,middle+45,x+111,middle+126,27)
         elif unit=="eighth":
-            _filled_stroke(pen,x,middle-15,x+60,middle-65,17)
+            _filled_stroke(pen,x,middle-45,x+111,middle-126,27)
         elif unit=="sixth":
-            _filled_stroke(pen,x,middle+12,x+60,middle+60,17)
-            _filled_stroke(pen,x,middle-12,x+60,middle-60,17)
+            _filled_stroke(pen,x,middle+42,x+111,middle+124,27)
+            _filled_stroke(pen,x,middle-42,x+111,middle-124,27)
         elif unit=="three_eighths":
-            _filled_stroke(pen,x,middle+12,x+60,middle+60,17)
-            _filled_stroke(pen,x,middle-12,x+60,middle-60,17)
-            _filled_stroke(pen,x,middle-83,x,middle+83,15)
+            _filled_stroke(pen,x,middle+42,x+111,middle+124,27)
+            _filled_stroke(pen,x,middle-42,x+111,middle-124,27)
+            _filled_stroke(pen,x,middle-136,x,middle+136,25)
         else:raise ValueError(unit)
     # Stroke inventory is explicit; ink mass will be measured before approval.
     return {"mode":c.mode,"semantic_rank":count,
@@ -170,7 +170,7 @@ def _glyph(source:TTFont,c:Candidate):
     result=pen.glyph()
     if result.numberOfContours < 2:
         raise ValueError(f"Candidate glyph unexpectedly empty: {c.key}")
-    mark_right=marks["left_of_aux_marks"]+112
+    mark_right=marks["left_of_aux_marks"]+156
     advance=math.ceil(max(transformed_bounds[2],mark_right)+72)
     meta={
         "source_glyph":c.source,
