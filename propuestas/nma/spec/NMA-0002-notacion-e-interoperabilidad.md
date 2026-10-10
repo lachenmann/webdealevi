@@ -27,16 +27,20 @@ Un evento musical conforme conserva al menos:
   (`A4=440` se permite como **perfil explícito**, no como ley natural).
 - `soundingInterval`: intervalo EXACTO respecto de la referencia, en
   una de las clases de NMA-0001.
-- `writtenPitch`: nombre de grado/letra y registro **si** la notación
-  emplea ese concepto.
-- `notationProfile`: identificador versionado del sistema de alteraciones
-  con el que se interpreta el glifo.
-- `accidentalTokens`: cero o más identificadores de signos (con orden).
-- `display`: glifo SMuFL opcional, alternativa SVG/figura y texto accesible.
+- `notation.written_pitch`: nombre de grado/letra y registro **si**
+  la escritura emplea ese concepto.
+- `notation.profile`: identificador versionado del sistema de alteraciones
+  con el que se interpretan los signos.
+- `notation.glyph_names`: cero o más nombres SMuFL reconocidos y ordenados;
+  la lista vacía es válida si el evento usa signos originales por otro medio.
+- `notation.accessible_label`: texto descriptivo no dependiente de una
+  fuente instalada. El fallback SVG/figura se define en una capa de grabado.
 
-Un evento sin `writtenPitch` PUEDE describir una altura sonora sin
-forzarle una nota diatónica occidental. El campo `writtenPitch` tampoco
-puede sustituir `soundingInterval`.
+Un evento sin `notation.written_pitch` PUEDE describir una altura sonora
+sin forzarle una nota diatónica occidental. La grafía tampoco puede
+sustituir `sound`. El formato JSON del borrador está descrito por
+`schema/nma-event-v0.1.schema.json`; sus campos y tipos son normativos
+solo para la revisión 0.1.
 
 ## 3. Perfiles semánticos de alteración
 
