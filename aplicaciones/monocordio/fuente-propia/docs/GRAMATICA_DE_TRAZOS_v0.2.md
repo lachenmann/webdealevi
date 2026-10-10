@@ -122,7 +122,7 @@ El sostenido ordinario se abstrae como:
 S_{1/2}=\{V_L,V_R,H_S,H_I\}.
 \]
 
-La hipótesis del autor conduce a:
+Los ejemplos planteados por el autor (+1/8, +1/4 y +3/4) y una **hipótesis técnica adicional para +3/8, no aprobada todavía**, conducen a:
 
 \[
 \begin{aligned}
