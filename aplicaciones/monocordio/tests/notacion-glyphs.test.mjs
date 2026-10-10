@@ -111,8 +111,12 @@ test("la web integra un único sistema sin Bravura ni sintaxis SMuFL dependiente
   assert.ok(html.includes('id="fraction-score"'));
   assert.ok(score.includes('from "./notacion-glyphs.mjs?v=VEC-20261010-01"'));
   assert.ok(ui.includes('from "./notacion-glyphs.mjs?v=VEC-20261010-01"'));
-  assert.ok(!css.includes("@font-face"),"No cargar tipografías de alteraciones");
-  assert.ok(!ui.includes("document.fonts"),"No depender de fuentes instaladas");
+  assert.ok(css.includes('@font-face'),"Leland se aloja localmente bajo licencia OFL");
+  assert.ok(css.includes('./fonts/Leland.otf'),"Ruta Leland local");
+  assert.ok(css.includes('./fonts/Ekmelos72edo.woff2'),"Reserva Ekmelos72 local");
+  assert.ok(!css.includes('cdn.jsdelivr.net'),"No cargar fuentes desde CDN");
+  assert.ok(ui.includes('document.fonts.load'),"La fuente se activa tras comprobar la carga");
+  assert.ok(ui.includes('musicFontReady'),"Existe fallback SVG mientras no esté disponible");
   assert.ok(!score.includes("hasSmuflFont"),"La escala debe utilizar SVG");
 });
 
@@ -140,4 +144,19 @@ test("el HTML y todo el grafo de módulos comparten el mismo identificador de ca
   const ui=readFileSync(new URL("notacion-ui.mjs",dir),"utf8");
   assert.ok(ui.includes('dataset.ready = "true"'));
   assert.ok(ui.includes('window.__MONOCORDIO_VECTOR_BUILD'));
+});
+
+test("Leland cubre Stein–Zimmermann y preserva fallback de trazos si falta la fuente",()=>{
+  withMockDocument(()=>{
+    const el=makeAccidentalGlyph("reverse-flat-outline",{fontReady:true});
+    const nodes=flatten(el);
+    const symbol=nodes.find(x=>x.tagName==="text");
+    assert.ok(symbol,"El glifo de Leland no se creó");
+    assert.equal(symbol.textContent,String.fromCodePoint(0xE280));
+    assert.equal(symbol.attrs["data-font-glyph"],"E280");
+    assert.equal(symbol.attrs["class"],"monocordio-music-accidental");
+    assert.ok(!nodes.some(x=>x.tagName==="polygon"));
+    const fallback=makeAccidentalGlyph("reverse-flat-outline",{fontReady:false});
+    assert.ok(flatten(fallback).some(x=>x.tagName==="path" && x.attrs.fill==="none"));
+  });
 });
