@@ -34,6 +34,9 @@ tienen estados diferenciados.
 | EM-D017 | Basarse DIRECTAMENTE en los signos madre originales de LilyPond | **FIJADA POR EL AUTOR** | Emmentaler/Feta: bemol, becuadro, sostenido | Estudio G1 derivado bajo GPL y excepción de incrustación; EM-G1-002 |
 | EM-D018 | Archivar matrices independientes de primer G1 como referencia histórica | **DECISIÓN OPERATIVA** | Sustituidas por fuentes originales LilyPond licenciadas | Preservar EM-G1-001 sin emplearlo en la v0.2 |
 | EM-D019 | Retener la gramática formal, pero separar componentes de la topología real de LilyPond | **PROPUESTA TÉCNICA** | Los outlines originales no son necesariamente cuatro trazos independientes | Estudiar fuente METAFONT antes de escribir derivados G2 |
+| EM-D020 | Aprobar Emmentaler/Feta como matrices definitivas de G1 | **APROBADA POR EL AUTOR** · 10-10-2026 | Tres madres extraídas de LilyPond y revisadas visualmente | Ejecutar prototipo G2 sin modificar el sitio |
+| EM-D021 | Reconocer que `sharp.slash.stem` (una barra) ya significa +¼ en LilyPond | **CONFIRMADA EN CÓDIGO FUENTE HISTÓRICO** | `mf/feta-sharps.mf` etiqueta «1/2 sharp (1 beam)» | Mantener +⅛ pendiente de solución sin ambigüedad |
+| EM-D022 | Presentar variantes de ¾ bemol LilyPond bajo código privado provisional | **PROPUESTA G2 NO RATIFICADA** | `flatflat.slash` no implica que el contorno corresponda al E281 de Zimmermann | Comparación iconográfica y musical |
 
 
 ## Regla crítica: morfología y semántica no son la misma álgebra
