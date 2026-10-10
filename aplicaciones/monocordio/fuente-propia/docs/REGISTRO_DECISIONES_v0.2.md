@@ -21,7 +21,7 @@ tienen estados diferenciados.
 | EM-D004 | Preferir quitar/añadir trazos y usar inversión controlada | **FIJADA POR EL AUTOR** | Sistema derivativo y consistente | Gramática de componentes |
 | EM-D005 | +¼ con una asta menos respecto del sostenido | **FIJADA POR EL AUTOR / REFERENCIA CONVENCIONAL** | Medio sostenido Stein–Zimmermann | Contrastar con E282 |
 | EM-D006 | +⅛ con un asta menos y sin travesaño inferior | **HIPÓTESIS DEL AUTOR** | Reducción de sostenido a dos trazos | Especímenes + prueba de lectura |
-| EM-D007 | +⅜ como sostenido sin travesaño inferior | **HIPÓTESIS DEL AUTOR** | Tres trazos con pareja de astas | Confirmar legibilidad y genealogía |
+| EM-D007 | +⅜ como sostenido sin travesaño inferior | **PROPUESTA TÉCNICA, NO RATIFICADA** | Interpolación sugerida en el diálogo, no atribuida al autor | Confirmar legibilidad, genealogía y autorización |
 | EM-D008 | +¾ con un asta adicional en familia sostenido | **HIPÓTESIS DEL AUTOR / HISTÓRICAMENTE MOTIVADA** | Comparar con variante de un sostenido y medio | Cotejo concreto con Stein E283 |
 | EM-D009 | Bemol inverso de ¼ **abierto** es estándar, no invención personalizada | **FIJADA POR EL AUTOR / VERIFICADA SMuFL** | `accidentalQuarterToneFlatStein` E280 | Mantener identidad y trazo hueco |
 | EM-D010 | Derivar los descendentes del bemol sin pictogramas negros | **FIJADA POR EL AUTOR** | Coherencia y economía | Bocetos −⅛, −⅜, sextos y doceavos |
