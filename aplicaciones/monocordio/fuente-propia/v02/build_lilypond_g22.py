@@ -145,7 +145,8 @@ def _draw_extensions(pen,c:Candidate,base_bounds):
             _filled_stroke(pen,x,middle-83,x,middle+83,15)
         else:raise ValueError(unit)
     # Stroke inventory is explicit; ink mass will be measured before approval.
-    return {"mode":c.mode,"mark_count":count,
+    return {"mode":c.mode,"semantic_rank":count,
+            "auxiliary_strokes":count if c.mode=="A" else {1:1,2:1,3:2,4:3}[count],
             "source_bbox":list(base_bounds),
             "left_of_aux_marks":mark_left,
             "mark_height_units":middle}
