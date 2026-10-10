@@ -5,6 +5,11 @@ on:
       - feature/monocordio-v1.3-tetraktys-medias
     paths:
       - "aplicaciones/monocordio/tests/typography-compare.html"
+      - "aplicaciones/monocordio/notacion*.mjs"
+      - "aplicaciones/monocordio/escala.mjs"
+      - "aplicaciones/monocordio/notacion.css"
+      - "aplicaciones/monocordio/fonts/**"
+      - "aplicaciones/monocordio/index.html"
       - ".github/workflows/monocordio-font-audit.yml"
   workflow_dispatch:
 permissions:
