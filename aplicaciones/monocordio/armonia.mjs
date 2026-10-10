@@ -60,7 +60,7 @@ function drawTetraktys() {
     appendSvgText(svg, String(n), 67, y + 8, {
       size: 26, color: highlighted ? "#ffdea7" : "#a99c9d"
     });
-    appendSvgText(svg, "× f₀", 577, y - 4, {
+    appendSvgText(svg, String(n) + " × f₀", 577, y - 4, {
       align: "start", size: 16,
       color: highlighted ? "#ffdfa4" : "#d7c6b9"
     });
@@ -155,6 +155,13 @@ function makeButtons(rootId, tones, chosenNumber, choose) {
   }
 }
 
+function updateButtons(rootId, selectedNumber) {
+  for (const button of byId(rootId).querySelectorAll("button[data-term]")) {
+    button.setAttribute("aria-pressed",
+      String(Number(button.dataset.term) === selectedNumber));
+  }
+}
+
 function fillReading(rootId, tone, heading) {
   const root = byId(rootId);
   root.replaceChildren();
@@ -172,7 +179,7 @@ function selectTetraktys(number, listen = false) {
   const tone = tetraTones.find(item => item.number === number);
   if (!tone) return;
   selectedTetra = number;
-  makeButtons("tetraktys-buttons", tetraTones, selectedTetra, selectTetraktys);
+  updateButtons("tetraktys-buttons", selectedTetra);
   drawTetraktys();
   fillReading("tetraktys-reading", tone, "Fila " + number + ": " + number + " puntos.");
   if (listen) void playNotes([tone.frequencyHz], byId("tetraktys-status"),
@@ -183,7 +190,7 @@ function selectMeans(number, listen = false) {
   const tone = meanTones.find(item => item.number === number);
   if (!tone) return;
   selectedMean = number;
-  makeButtons("means-buttons", meanTones, selectedMean, selectMeans);
+  updateButtons("means-buttons", selectedMean);
   drawMeans();
   fillReading("means-reading", tone, number + " · " + tone.role);
   if (listen) void playNotes([tone.frequencyHz], byId("means-status"),
@@ -287,5 +294,7 @@ byId("means-bridge").addEventListener("click", () => {
   locateBridge(tone, tone.role, byId("means-status"));
 });
 
+makeButtons("tetraktys-buttons", tetraTones, selectedTetra, selectTetraktys);
+makeButtons("means-buttons", meanTones, selectedMean, selectMeans);
 selectTetraktys(1);
 selectMeans(6);
