@@ -1,6 +1,9 @@
 /**
  * Signos vectoriales de microtonalidad. Adaptación visual de la lámina
  * suministrada por el autor: evita depender del glifo de una fuente.
+ * Los cuartos de tono NO son invenciones propias: se dibujan las formas
+ * estándar Stein–Zimmermann: medio sostenido (SMuFL E282) y bemol
+ * inverso abierto (SMuFL E280), distinto del relleno E480.
  *
  * Convención editorial explícita:
  * - semitono: ♭/♯; cuarto: medio sostenido / bemol INVERSO HUECO;
@@ -87,6 +90,7 @@ export function makeAccidentalGlyph(id,options={}) {
       polygon(group,"-13,9 12,2 12,10 -13,17");
       break;
     case "reverse-flat-outline":
+      // Stein–Zimmermann (SMuFL E280): bemol inverso estándar, abierto.
       // ¡Sin relleno! El asta va A LA DERECHA y la panza a la izquierda.
       line(group,9,-32,9,24,3.4);
       path(group,"M 9 -6 C 0 -12 -13 -7 -13 4 C -13 16 -1 22 9 24",
