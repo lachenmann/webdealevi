@@ -6,20 +6,20 @@
   <meta name="theme-color" content="#100d13">
   <meta name="description" content="Un monocordio pitagórico virtual para explorar con el oído la relación entre longitud, frecuencia e intervalos musicales.">
   <title>Monocordio pitagórico | La música de las esferas</title>
-  <link rel="stylesheet" href="./estilos.css?v=TYPO-20261010-01">
-  <script type="module" src="./monocordio.mjs?v=TYPO-20261010-01"></script>
-  <script type="module" src="./escala.mjs?v=TYPO-20261010-01"></script>
-  <script type="module" src="./notacion-ui.mjs?v=TYPO-20261010-01"></script>
-  <script type="module" src="./armonia.mjs?v=TYPO-20261010-01"></script>
-  <link rel="stylesheet" href="./escala.css?v=TYPO-20261010-01">
-  <link rel="stylesheet" href="./notacion.css?v=TYPO-20261010-01">
-  <link rel="stylesheet" href="./armonia.css?v=TYPO-20261010-01">
+  <link rel="stylesheet" href="./estilos.css?v=PIT-20261010-V05">
+  <script type="module" src="./monocordio.mjs?v=PIT-20261010-V05"></script>
+  <script type="module" src="./escala.mjs?v=PIT-20261010-V05"></script>
+  <script type="module" src="./notacion-ui.mjs?v=PIT-20261010-V05"></script>
+  <script type="module" src="./armonia.mjs?v=PIT-20261010-V05"></script>
+  <link rel="stylesheet" href="./escala.css?v=PIT-20261010-V05">
+  <link rel="stylesheet" href="./notacion.css?v=PIT-20261010-V05">
+  <link rel="stylesheet" href="./armonia.css?v=PIT-20261010-V05">
 </head>
 <body>
   <header class="site-header">
     <div class="topline">
       <a class="back" href="../../index.html#aplicaciones">← Volver al laboratorio</a>
-      <span class="edition">La música de las esferas · Instrumento I</span>
+      <span class="edition">La música de las esferas · Instrumento I · versión de prueba para el taller</span>
     </div>
     <p class="eyebrow">Laboratorio de armonía antigua</p>
     <h1>Monocordio <em>pitagórico</em></h1>
@@ -162,10 +162,17 @@
             <option value="twelfth">Doceavo de tono · ¹⁄₁₂ tono · 16,67… ¢</option>
           </select>
         </div>
+        <div class="notation-control">
+          <label for="notation-typeface">Estilo de alteraciones</label>
+          <select id="notation-typeface">
+            <option value="alevi-v05" selected>Alevi Microtonal v0.5 · experimental</option>
+            <option value="historical">Leland / Stein–Zimmermann · histórico</option>
+          </select>
+        </div>
       </div>
       <p id="notation-mode-description" class="notation-interpretation">La escala conserva su altura pitagórica; las cifras sobre el pentagrama indican desviaciones totales respecto de 12-TET.</p>
-      <p id="notation-engine-state" class="notation-engine-status" data-expected-build="TYPO-20261010-01" role="status" aria-live="polite">
-        Motor de alteraciones SVG: esperando confirmación de carga · TYPO-20261010-01.
+      <p id="notation-engine-state" class="notation-engine-status" data-expected-build="PIT-20261010-V05" role="status" aria-live="polite">
+        Motor de alteraciones SVG: esperando confirmación de carga · PIT-20261010-V05.
       </p>
       <div class="score-block">
         <div class="score-heading">
@@ -185,15 +192,22 @@
         Si falta la fuente, el laboratorio conserva los trazos SVG y la afinación exacta.
       </p>
 
-      <p class="font-status" role="status">Escritura mixta: Leland para claves, notas y alteraciones convencionales; SVG para los símbolos geométricos y como fallback local.</p>
+      <p class="font-status" role="status">El estilo Alevi v0.5 emplea sus glifos originales y fusiones desde la nota natural; Leland conserva claves y cabezas. Si falta Alevi, se utiliza la grafía histórica de respaldo.</p>
       <section class="notation-key" aria-labelledby="notation-key-title">
         <h3 id="notation-key-title">Muestrario de alteraciones</h3>
-        <p>Inspirado en la lámina de referencia: semitonos y símbolos de cuartos, sextos y doceavos. Para cuartos de tono se utilizan los <strong>signos convencionales Stein–Zimmermann</strong>: medio sostenido ascendente y <strong>bemol inverso de contorno abierto</strong> descendente (SMuFL E282/E280, distinto del bemol inverso relleno E480). El octavo se identifica textualmente para no atribuirle un signo que no aparece en la lámina.</p>
+        <p>Compara el aspecto de las cinco subdivisiones del laboratorio. En <strong>Alevi v0.5</strong>, los glifos privados U+F000–U+F023 expresan desviaciones <strong>desde la nota natural</strong>; no son signos SMuFL. El modo histórico mantiene los signos convencionales Stein–Zimmermann y las extensiones anteriores.</p>
         <div class="notation-key-scroll" tabindex="0" role="region" aria-label="Tabla horizontal de signos microtonales">
           <svg id="notation-key-svg" viewBox="0 0 960 245" role="img" aria-label="Muestrario de cinco fracciones de tono y sus alteraciones descendentes y ascendentes"></svg>
         </div>
         <p class="notation-key-hint">Los valores ±33 y ±17 de la lámina están redondeados: aquí ⅙ = 33⅓ ¢ y ¹⁄₁₂ = 16⅔ ¢ exactamente.</p>
       </section>
+      <details class="alevi-corpus" id="alevi-v05-corpus">
+        <summary>Explorar los 41 glifos de Alevi Microtonal v0.5</summary>
+        <p>Versión experimental del taller: cinco alteraciones convencionales y 36 microtonales. Cada glifo se interpreta desde la nota natural. Las fracciones y sus cents son parte de este perfil, no de un estándar universal.</p>
+        <div id="alevi-corpus-grid" class="alevi-corpus-grid" aria-label="Corpus completo de alteraciones Alevi v0.5">
+          <p>Cargando el muestrario de la fuente…</p>
+        </div>
+      </details>
       <div class="fraction-lab" id="fraction-lab" aria-labelledby="fraction-lab-title">
         <div class="fraction-intro">
           <h3 id="fraction-lab-title">Explorador de escritura microtonal</h3>
@@ -210,13 +224,19 @@
           <button type="button" data-offset="25" data-unit="eighth">+⅛ tono</button>
           <button type="button" data-offset="-16.666666666666668" data-unit="twelfth">−¹⁄₁₂ tono</button>
           <button type="button" data-offset="16.666666666666668" data-unit="twelfth">+¹⁄₁₂ tono</button>
+          <button type="button" data-offset="66.66666666666667" data-unit="sixth">+⅓ tono · fusión</button>
+          <button type="button" data-offset="-66.66666666666667" data-unit="sixth">−⅓ tono · fusión</button>
+          <button type="button" data-offset="133.33333333333334" data-unit="sixth">+⅔ tono · fusión</button>
+          <button type="button" data-offset="-133.33333333333334" data-unit="sixth">−⅔ tono · fusión</button>
+          <button type="button" data-offset="150" data-unit="quarter">+¾ tono · fusión</button>
+          <button type="button" data-offset="-150" data-unit="quarter">−¾ tono · fusión</button>
           <button type="button" data-offset="64" data-unit="quarter">+64 ¢ (¼ +14)</button>
           <button type="button" data-offset="0" data-unit="quarter">0 ¢</button>
         </div>
         <div class="fraction-workbench">
           <div class="fraction-slider">
             <label for="demo-cents">Alteración total del Do4 temperado <strong id="demo-cents-label">+64,00 ¢</strong></label>
-            <input id="demo-cents" type="range" min="-170" max="170" step="0.1" value="64">
+            <input id="demo-cents" type="range" min="-260" max="260" step="0.1" value="64">
             <p>Referencia: Do4 = 261,63 Hz (12-TET, La4 = 440 Hz). El ajuste en cents es respecto de esa nota, no del Do pitagórico.</p>
             <button type="button" class="primary" id="play-demo-note">♪ Escuchar ejemplo</button>
             <p id="demo-sound-status" role="status" aria-live="polite"></p>
@@ -231,7 +251,7 @@
             </div>
           </div>
         </div>
-        <p class="fraction-license">Esta es una convención editorial basada en la lámina aportada, no una atribución de todas las grafías a una única escuela. Las claves, notas y alteraciones cromáticas se graban con Leland, alojada localmente y distribuida bajo SIL OFL; los signos geométricos conservan su dibujo SVG. El octavo se marca como ⅛ con dirección porque la lámina no documenta un signo para ±25 ¢.</p>
+        <p class="fraction-license">Escritura experimental Alevi Microtonal v0.5: 200 cents por tono, fracciones exactas, glifos referidos a la <strong>nota natural</strong> y códigos privados que no pertenecen a SMuFL. La fuente no ha recibido aprobación editorial definitiva; la licencia está pendiente de auditoría. Puede cambiarse al modo histórico Leland/Stein–Zimmermann sin modificar el sonido ni los valores matemáticos.</p>
       </div>
       <div class="scale-grid" id="pythagorean-notes" aria-label="Notas, razones, frecuencias y correcciones microtonales"></div>
       <div class="scale-footer">

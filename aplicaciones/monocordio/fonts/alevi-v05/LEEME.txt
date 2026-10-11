@@ -1,0 +1,13 @@
+ALEVI MICROTONAL V05 — PROPUESTA DE NOTACION PROPIA
+41 glifos musicales: cinco tradicionales + 36 microtonales (18 magnitudes, ambas direcciones). Seis compuestos de v03 sustituidos por las fusiones de v04: ±1/3, ±2/3, ±3/4. Sus codigos originales v03 se mantienen; U+F100 a U+F105 del estudio v04 no se usan en esta familia.
+Valores internos: 1/12, 1/8, 1/6, 1/4, 1/3, 3/8, 5/12, 7/12, 5/8, 2/3, 3/4, 5/6, 7/8, 11/12 de tono. Extensiones: 13/12, 9/8, 7/6, 5/4.
+Tono=200 cents. Alteraciones absolutas desde la nota natural; no desplazamientos acumulados desde una alteracion previa.
+Los compuestos son signos aditivos completos, codificados como un solo caracter. Seis comparten ahora el asta; los otros 22 compuestos conservan los componentes separados de v03. Ejemplo: +1/3 = sostenido (+1/2) y sexto descendente (-1/6); -1/3 = bemol (-1/2) y sexto ascendente (+1/6). +3/4 = sostenido + cuarto ascendente.
+Los signos fundamentales no siguen una regla de conteo de barras: su valor lo fija la leyenda. No son simbolos de afinacion justa ni asignaciones estandar para estos valores.
+Los ocho codigos privados iniciales U+F000–U+F007 se mantienen de v02. Nuevos: U+F008–U+F023. Fracciones equivalentes usan el mismo glifo: 2/8=1/4; 2/12=1/6; 4/12=1/3. Semitono y tono siguen usando los tradicionales.
+Integracion v05: fusiones desde fusiones-v04.json; seis sustituciones, 35 contornos musicales sin cambios respecto a v03. Los signos que ganan altura hacia abajo necesitan revision en acordes. Subcontornos solapados: union booleana final pendiente antes de produccion.
+Refinamientos: apertura mayor en bemol inverso abierto; remates de octavo mas largos y unidos; barras descendentes mas gruesas y separadas; espacio interno de 95 unidades entre componentes y margenes laterales de 55.
+Instalacion: doble clic sobre AleviMicrotonal-V05.ttf. Familia distinta Alevi Microtonal V05 para evitar conflicto de cache con v03 y el estudio v04. Copiar caracteres de mapa.csv y aplicar esta fuente. SVG editables, constructor y maestros incluidos.
+1000 unidades/em; 250 unidades/espacio de pentagrama; origen musical y=0.
+Fuente parcial sin hinting. No reemplaza Emmentaler ni configura LilyPond, reproduccion, MIDI o reglas de persistencia de accidentales.
+QA: reapertura de TTF, codigos, limites, metricas, fracciones unicas y prueba raster de la fuente. Lectura en papel y eleccion definitiva aun pendientes.

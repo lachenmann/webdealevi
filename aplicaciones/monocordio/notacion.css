@@ -28,7 +28,7 @@
 .notation-typeface-credit a { color: #f0d3a7; text-decoration: underline; }
 
 /* Monocordio v1.3 · notación vectorial sin dependencias de fuente externas. */
-.notation-settings{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.notation-settings{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0}
 .notation-control{display:flex;flex-direction:column;gap:8px}
 .notation-control label{color:#f1d4a5;font-size:.83rem;letter-spacing:.015em}
 .notation-control select{width:100%;min-width:0;background:#211a24;color:var(--text);border:1px solid #91704c;border-radius:9px;padding:12px 9px}
@@ -85,4 +85,46 @@
 }
 .notation-engine-status[data-ready="true"] {
   border-color:#426a5b;color:#b0dec9;background:#18251f
+}
+
+
+/* Alevi v0.5: se usan los contornos ORIGINALES del TTF, sin reconstruir glifos. */
+@font-face {
+  font-family:"AleviMicrotonalTrial";
+  src:url("./fonts/alevi-v05/AleviMicrotonal-V05.ttf") format("truetype");
+  font-weight:normal;
+  font-style:normal;
+  font-display:block;
+}
+.monocordio-alevi-accidental,
+.alevi-corpus-ink {
+  font-family:"AleviMicrotonalTrial";
+  font-style:normal;
+  font-weight:normal;
+  font-variant-ligatures:none;
+}
+.alevi-corpus {
+  margin:16px 0 25px;
+  padding:15px 16px;
+  border:1px solid #65513f;
+  border-radius:12px;
+  background:#19171d;
+}
+.alevi-corpus summary {
+  cursor:pointer;
+  color:#f1d4a5;
+  font-weight:650;
+}
+.alevi-corpus summary:focus-visible { outline:2px solid #93d9b8; outline-offset:4px }
+.alevi-corpus > p { color:#c8c1bf;font-size:.86rem;line-height:1.6 }
+.alevi-corpus-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px}
+.alevi-corpus-item {text-align:center;display:grid;gap:4px;justify-items:center;padding:11px 7px;
+  background:#111419;border:1px solid #4b4245;border-radius:9px;min-width:0}
+.alevi-corpus-ink {display:block;font-size:70px;line-height:1.4;color:#f0dbbc;min-height:94px}
+.alevi-corpus-item strong {font-size:.85rem;color:#f1d7b2}
+.alevi-corpus-item small {color:#b0d5c4;font-size:.74rem;font-variant-numeric:tabular-nums}
+.alevi-corpus-code {font-size:.69rem;color:#aab1b8;font-family:ui-monospace,monospace}
+@media(max-width:780px) {
+  .alevi-corpus {padding:12px 9px}
+  .alevi-corpus-grid {grid-template-columns:repeat(auto-fit,minmax(110px,1fr))}
 }

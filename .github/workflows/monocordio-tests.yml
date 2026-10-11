@@ -32,6 +32,7 @@ jobs:
           node --check aplicaciones/monocordio/notacion-core.mjs
           node --check aplicaciones/monocordio/notacion-ui.mjs
           node --check aplicaciones/monocordio/notacion-glyphs.mjs
+          node --check aplicaciones/monocordio/alevi-v05.mjs
           node --check aplicaciones/monocordio/armonia-core.mjs
           node --check aplicaciones/monocordio/armonia.mjs
       - name: Verificar el modelo acústico
@@ -50,18 +51,17 @@ jobs:
           done
           "$BROWSER" --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage \
             --disable-background-networking --virtual-time-budget=4500 --dump-dom \
-            "http://127.0.0.1:8765/aplicaciones/monocordio/?build=TYPO-20261010-01" \
+            "http://127.0.0.1:8765/aplicaciones/monocordio/?build=PIT-20261010-V05" \
             > /tmp/monocordio-render.html 2>/tmp/monocordio-chrome.log
           grep -q 'data-ready="true"' /tmp/monocordio-render.html
-          grep -q 'data-active-build="TYPO-20261010-01"' /tmp/monocordio-render.html
+          grep -q 'data-active-build="PIT-20261010-V05"' /tmp/monocordio-render.html
           grep -q 'data-music-font="Leland"' /tmp/monocordio-render.html
           grep -q 'class="monocordio-music-notehead"' /tmp/monocordio-render.html
-          grep -q 'data-font-glyph="E282"' /tmp/monocordio-render.html
-          grep -q 'data-notation-glyph="quarter-sharp"' /tmp/monocordio-render.html
-          # El medio sostenido debe estar en el pentagrama del EJEMPLO,
-          # no solamente en el muestrario estático de signos.
-          grep -q 'data-rendered-glyphs="quarter-sharp"' /tmp/monocordio-render.html
-          grep -q 'data-notation-glyph="reverse-flat-outline"' /tmp/monocordio-render.html
+          grep -q 'data-alevi-font="Alevi v0.5"' /tmp/monocordio-render.html
+          grep -q 'data-alevi-codepoint="F000"' /tmp/monocordio-render.html
+          # La fuente original debe actuar en el pentagrama de demostración.
+          grep -q 'data-rendered-glyphs="alevi:toneQuarterUp"' /tmp/monocordio-render.html
+          grep -q 'id="alevi-corpus-grid"' /tmp/monocordio-render.html
           # Stein–Zimmermann es una atribución CORRECTA de signos estándar;
           # no usar su nombre como criterio de contenido obsoleto.
           if grep -q 'id="smufl-font-status"' /tmp/monocordio-render.html ||
@@ -69,4 +69,4 @@ jobs:
             echo "ERROR: se detectaron controles obsoletos de notación." >&2
             exit 1
           fi
-          echo "PASS: Leland local, medio sostenido E282 y fallback SVG comprobados en Chrome."
+          echo "PASS: Leland para claves; Alevi v0.5 para alteraciones; respaldo SVG disponible."

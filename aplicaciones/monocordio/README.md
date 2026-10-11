@@ -1,3 +1,13 @@
+## Piloto del taller del martes 13-10-2026 — Alevi Microtonal v0.5
+
+**Versión para pruebas, no publicación definitiva de la fuente.** Se incorpora sin modificar el TTF original de Alevi Microtonal v0.5 (41 glifos), su mapa y su documentación en `fonts/alevi-v05/`. El modo principal del laboratorio presenta esta fuente; el modo alternativo conserva Leland/Stein–Zimmermann y las grafías históricas anteriores. Leland sigue dibujando las claves y las cabezas de nota.
+
+La fuente tiene 18 magnitudes ascendentes/descendentes referidas desde la nota **natural**; cuando una combinación de signos coincide con una magnitud, se representa por su glifo fusionado (por ejemplo, +3/4 tono: `tone3of4Up`, PUA F014). Si una combinación no existe en v0.5 se utiliza el respaldo histórico. Los códigos privados no se atribuyen a SMuFL ni se deduce afinación alguna de las siluetas.
+
+Este piloto preserva el monocordio de 19 intervalos, la escala por quintas, la tetraktys, las medias 6:8:9:12 y todas sus frecuencias exactas. Contiene un muestrario desplegable de los 41 signos y botones de prueba de las seis fusiones. No se modifican los contornos de la fuente ni se decide su licencia definitiva.
+
+**Despliegue:** rama de vista previa apilada sobre PR #4. No fusionar automáticamente ni publicar el TTF como edición cerrada. La continuación del trabajo de glifos y NMA corresponde a un proyecto independiente.
+
 # Monocordio pitagórico — laboratorio de escala y notación
 
 Esta aplicación forma parte del taller «La música de las esferas». El monocordio original funciona con una fundamental de La3 = 220 Hz. La sección de escala representa alturas entre Do4 y Do5; la referencia del sistema de afinación es **La4 = 440 Hz**.

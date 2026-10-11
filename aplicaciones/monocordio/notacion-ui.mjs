@@ -1,12 +1,14 @@
 import {
   demonstrationForOffset, decomposeCents, getSystem,
   NOTATION_SYSTEMS, roundTo
-} from "./notacion-core.mjs?v=TYPO-20261010-01";
-import { renderNoteAccidentals } from "./notacion-glyphs.mjs?v=TYPO-20261010-01";
+} from "./notacion-core.mjs?v=PIT-20261010-V05";
+import { renderNoteAccidentals } from "./notacion-glyphs.mjs?v=PIT-20261010-V05";
+import {ALEVI_GLYPHS} from "./alevi-v05.mjs?v=PIT-20261010-V05";
 
 const byId = id => document.getElementById(id);
 const modeSelect = byId("notation-mode");
 const subdivisionSelect = byId("fraction-system");
+const typefaceSelect = byId("notation-typeface");
 const centsSlider = byId("demo-cents");
 const score = byId("fraction-score");
 const legend = byId("notation-key-svg");
@@ -26,6 +28,8 @@ const make = (tag, attributes={}, text=null) => {
 
 let audioContext = null;
 let musicFontReady = false;
+let aleviFontReady = false;
+const usingAlevi=()=>typefaceSelect.value==="alevi-v05" && aleviFontReady;
 // Este valor guarda toda la precisión de los presets, incluso cuando
 // el deslizador de presentación muestra solamente una décima.
 let demoOffsetCents = 64;
@@ -46,6 +50,33 @@ function drawGuide(target, x1,x2,yStart=78) {
   }
 }
 
+function renderAleviCorpus() {
+  const root=byId("alevi-corpus-grid");
+  if (!root || !aleviFontReady) return;
+  root.replaceChildren();
+  for (const tone of ALEVI_GLYPHS) {
+    const item=document.createElement("div");
+    item.className="alevi-corpus-item";
+    item.dataset.centsTicks=String(tone.ticks);
+    const symbol=document.createElement("span");
+    symbol.className="alevi-corpus-ink";
+    symbol.textContent=String.fromCodePoint(tone.codepoint);
+    symbol.setAttribute("aria-hidden","true");
+    const title=document.createElement("strong");
+    title.textContent=(tone.direction>0?"+":tone.direction<0?"−":"")+
+      tone.fraction+" tono";
+    const cents=document.createElement("small");
+    const amount=signed(tone.cents);
+    cents.textContent=(Number.isInteger(tone.cents)?"":"≈ ")+amount;
+    const code=document.createElement("span");
+    code.className="alevi-corpus-code";
+    code.textContent="U+"+tone.codepoint.toString(16).toUpperCase();
+    item.setAttribute("aria-label",title.textContent+", "+amount+
+      ", código privado "+code.textContent);
+    item.append(symbol,title,cents,code);
+    root.append(item);
+  }
+}
 function renderLegend() {
   legend.replaceChildren();
   legend.append(
@@ -60,11 +91,13 @@ function renderLegend() {
     const pos=decomposeCents(unit.fractionCents,unit.id);
     renderNoteAccidentals(legend,neg,{
       right:cx+9,y:74,scale:1.0,color:"#f2d9b4",showNatural:true,
-      fontReady:musicFontReady
+      fontReady:musicFontReady,
+      aleviReady:usingAlevi()
     });
     renderNoteAccidentals(legend,pos,{
       right:cx+9,y:164,scale:1.0,color:"#f2d9b4",showNatural:true,
-      fontReady:musicFontReady
+      fontReady:musicFontReady,
+      aleviReady:usingAlevi()
     });
     svgLabel(legend,signed(-unit.fractionCents),cx,112,{"font-size":13,fill:"#b5d5c9"});
     svgLabel(legend,signed(unit.fractionCents),cx,215,{"font-size":13,fill:"#b5d5c9"});
@@ -132,7 +165,8 @@ function renderDemonstration() {
   }
   const renderedGlyphs = renderNoteAccidentals(score,notation,{
     right:207,y:174,scale:1,color:"#f0d6ad",showNatural:true,
-    fontReady:musicFontReady
+    fontReady:musicFontReady,
+      aleviReady:usingAlevi()
   });
   score.setAttribute("data-rendered-glyphs", renderedGlyphs.join(","));
   svgLabel(score,"Total "+signed(notation.totalCents),248,42,{
@@ -153,13 +187,14 @@ function refreshMode() {
     ? "Modo pitagórico: alteración ordinaria y cents TOTALES. La altura y su razón no cambian."
     : "Modo contemporáneo: signo cromático + signo de fracción + cents RESIDUALES; el total permanece visible y la afinación es idéntica.";
   window.dispatchEvent(new CustomEvent("monocordio-notation-change",{
-    detail:{mode,system}
+    detail:{mode,system,typeface:typefaceSelect.value,aleviReady:aleviFontReady}
   }));
   renderDemonstration();
 }
 
 modeSelect.addEventListener("change",refreshMode);
 subdivisionSelect.addEventListener("change",refreshMode);
+typefaceSelect.addEventListener("change",()=>{renderLegend();refreshMode();});
 centsSlider.addEventListener("input",()=>{
   demoOffsetCents=Number(centsSlider.value);
   renderDemonstration();
@@ -213,34 +248,51 @@ byId("play-demo-note").addEventListener("click",async()=>{
 
 renderLegend();
 refreshMode();
-const engineState = byId("notation-engine-state");
-if (engineState) {
-  engineState.dataset.activeBuild = "TYPO-20261010-01";
-  engineState.dataset.ready = "true";
-  engineState.textContent = "Motor SVG activo · TYPO-20261010-01 · alteraciones vectoriales verificadas.";
+const engineState=byId("notation-engine-state");
+function updateEngineState() {
+  if (!engineState) return;
+  engineState.dataset.activeBuild="PIT-20261010-V05";
+  engineState.dataset.ready="true";
+  engineState.dataset.musicFont=musicFontReady?"Leland":"SVG";
+  engineState.dataset.aleviFont=aleviFontReady?"Alevi v0.5":"fallback";
+  engineState.textContent="Motor de notación activo · PIT-20261010-V05 · "+
+    (musicFontReady?"Leland cargada":"respaldo SVG")+" · "+
+    (aleviFontReady?"Alevi v0.5 cargada":"Alevi pendiente; respaldo disponible")+".";
 }
-window.__MONOCORDIO_VECTOR_BUILD = "TYPO-20261010-01";
+updateEngineState();
+window.__MONOCORDIO_VECTOR_BUILD="PIT-20261010-V05";
 
-// Una fuente opcional no interrumpe nunca la notación: primero se dibuja SVG,
-// después se actualizan las formas convencionales al cargar Leland local.
+// Leland se usa para claves y cabezas, Alevi solo para alteraciones.
+// Ambas cargas son independientes, con respaldo SVG en caso de error.
 if (document.fonts?.load) {
   document.fonts.load('53px "LelandMonocordio"',
     String.fromCodePoint(0xE050,0xE0A4,0xE280,0xE282))
     .then(fonts=>{
-      musicFontReady = fonts.length > 0;
+      musicFontReady=fonts.length>0;
       if (!musicFontReady) return;
       renderLegend();
       renderDemonstration();
-      if (engineState) {
-        engineState.dataset.musicFont = "Leland";
-        engineState.textContent = "Motor SVG activo · Leland cargada · TYPO-20261010-01";
-      }
+      updateEngineState();
       window.dispatchEvent(new CustomEvent("monocordio-music-font-ready",{
         detail:{ready:true,font:"Leland"}
       }));
+    }).catch(()=>{musicFontReady=false;updateEngineState();});
+  document.fonts.load('70px "AleviMicrotonalTrial"',
+    String.fromCodePoint(0xF000,0xF014,0xF023))
+    .then(fonts=>{
+      aleviFontReady=fonts.length>0;
+      if (!aleviFontReady) return;
+      renderAleviCorpus();
+      renderLegend();
+      renderDemonstration();
+      updateEngineState();
+      window.dispatchEvent(new CustomEvent("monocordio-alevi-font-ready",{
+        detail:{ready:true,version:"0.5"}
+      }));
     }).catch(()=>{
-      // Fallback completo de glifos SVG; no altera afinación ni interfaz.
-      musicFontReady = false;
+      aleviFontReady=false;
+      const root=byId("alevi-corpus-grid");
+      if(root)root.textContent="No se pudo cargar Alevi; usa el modo histórico como respaldo.";
+      updateEngineState();
     });
 }
-
