@@ -1,3 +1,9 @@
+## Ampliación cosmogónica y teológica · nota de la tetraktys
+
+La nota desplegable «¿Cómo funciona la tetraktys?» incorpora tres planos: las consonancias musicales en las razones de los cuatro primeros números; la lectura cosmogónica de la unidad a la multiplicidad (punto, línea, superficie, sólido y totalidad del diez); y el valor sagrado atestiguado en el juramento transmitido por Jámblico. Remite también a Teón de Esmirna y advierte que estas fuentes transmiten una tradición posterior, no una enseñanza probadamente autógrafa del Pitágoras histórico.
+
+La intervención es exclusivamente editorial; conserva intactos el diagrama, el audio, los controles, los contornos v0.5 y la estructura del modelo iceberg.
+
 ## Organización editorial por capas («iceberg») para el taller
 
 El catálogo del monocordio abre por defecto solo las consonancias fundamentales; las familias de intervalos de mayor complejidad permanecen cerradas. La página avanza por complejidad creciente: **01 monocordio** (experimentar), **02 tetraktys** (reconocer relaciones), **03 escala** (construir por quintas), **04 medias musicales** (comparar 6:8:9:12) y **05 notación microtonal** (cents, residuos, escritura y 41 glifos Alevi v0.5).

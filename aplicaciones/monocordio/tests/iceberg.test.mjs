@@ -64,6 +64,22 @@ test("notas pedagógicas nativas, cerradas por defecto y navegables por teclado"
   assert.match(css,/\.pedagogical-note summary:focus-visible/);
 });
 
+test("la tetraktys conserva la explicación acústica y añade cosmogonía y teología",()=>{
+  const note=html.match(/<details class="pedagogical-note" id="nota-tetraktys">([\s\S]*?)<\/details>/)?.[1];
+  assert.ok(note,"No se encontró el desplegable de la tetraktys");
+  assert.match(note,/<summary>¿Cómo funciona la tetraktys\?<\/summary>/);
+  assert.match(note,/220, 440, 660 y 880 Hz/);
+  assert.match(note,/octava \(2:1\), quinta \(3:2\) y cuarta \(4:3\)/);
+  assert.match(note,/Su sentido cosmogónico/);
+  assert.match(note,/unidad hacia la multiplicidad/);
+  assert.match(note,/Su sentido teológico/);
+  assert.match(note,/fuente y raíz de la naturaleza/);
+  assert.match(note,/Jámblico/);
+  assert.match(note,/Teón de Esmirna/);
+  assert.match(note,/no pruebas directas de sus enseñanzas personales/);
+  assert.ok(!/<details[^>]*\bopen\b/.test(note),"La nota no debe abrirse automáticamente");
+});
+
 test("sólo las consonancias fundamentales se despliegan en la superficie",()=>{
   const player=readFileSync(new URL("monocordio.mjs",root),"utf8");
   assert.match(player,/panel\.open = group\.id === "fundamentales";/);
