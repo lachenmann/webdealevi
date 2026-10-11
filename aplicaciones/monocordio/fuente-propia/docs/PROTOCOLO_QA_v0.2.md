@@ -149,7 +149,7 @@ medirse. Hasta entonces la columna «éxito visual» se marcará
 | --- | --- | --- |
 | G0 | Documentos v0.2 y valores exactos | **Aprobados por el autor** · 10-10-2026 |
 | G1 | Tres signos madre de LilyPond derivadas y cotejadas | **APROBADO POR EL AUTOR** · cierre de EM-G1-002; 10-10-2026 |
-| G2 | Variantes históricas y familia microtonal | **G2.1 aprobado**; G2.2 **16 candidatos A/B generados y auditados por raster, todavía NO aprobados** |
+| G2 | Variantes históricas y familia microtonal | **G2.1 aprobado**; G2.2 contiene **16 candidatos A/B y 8 de Canva**, todos en estudio; procedencia y exactitud Canva validadas, signos nuevos todavía NO aprobados |
 | G3 | Familia descendente y signos fraccionarios | **Candidatos descendentes incluidos en G2.2**, pendiente de lectura musical y aprobación |
 | G4 | Pruebas automáticas v0.2 | G1 y G2.1 aprobados técnicamente; G2.2 añade 7 tests y mediciones raster, conformidad completa pendiente |
 | G5 | Impresión, pantallas y lectura a ciegas | Pendiente |
