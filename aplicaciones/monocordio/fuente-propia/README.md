@@ -1,5 +1,35 @@
 # Esferas Microtonal — prototipo de fuente propia
 
+## G2.2 — Propuesta Alevi Microtonal v0.2 de Canva incorporada
+
+El autor aportó `Alevi-Microtonal-v02.zip` y autorizó expresamente su
+incorporación. **Se han conservado sin modificación las fuentes editables
+del diseño**, con trece SVG, el maestro de contornos, el generador
+Python y el mapa de caracteres.
+
+- [Comparador visual de las ocho alteraciones](v02/propuestas-canva/alevi-v02/comparador.html)
+- [Archivos de la propuesta Canva](v02/propuestas-canva/alevi-v02/README.md)
+- [Registro de valores racionales y decisiones](v02/propuestas-canva/alevi-v02/REGISTRO_CANVA_NMA_v0.2.json)
+- [Informe EM-G2-003 de incorporación](docs/EM-G2-003-CANVA_ESTUDIO_INCORPORADO.md)
+- [Pruebas de reproducción y conflictos](v02/test_canva_archive.py)
+
+Este estudio añade una tercera referencia gráfica a los **dos
+prototipos A/B ya existentes de G2.2**, sin sustituirlos ni
+convertir ninguno automáticamente en un alfabeto definitivo.
+
+**Restricciones:** el bemol inverso cerrado del ZIP no reemplaza
+el signo estándar abierto Stein–Zimmermann; el sexto ascendente
+de una sola barra requiere diferenciarse del medio sostenido
+histórico; los valores de 1/6 y 1/12 se preservan exactamente
+en fracciones y no mediante los decimales redondeados del CSV.
+
+El ZIP no incluye licencia explícita para esta contribución.
+Su publicación futura como fuente GNU queda sujeta a confirmar
+la titularidad y los avisos correspondientes. **El TTF binario
+aportado no se ha incorporado como descarga**; se genera solo
+transitoriamente en las pruebas de integridad. La fuente principal
+del monocordio continúa siendo Leland.
+
 ## G2.2 — Laboratorio comparativo de nuevas microalteraciones
 
 Se han generado **16 candidatos experimentales** a partir de los
