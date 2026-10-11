@@ -77,7 +77,7 @@ test("copia exacta del TTF experimental y procedencia documental",()=>{
     assert.match(csv,new RegExp(glyph.name+",U\\+"
       +glyph.codepoint.toString(16).toUpperCase()+","));
   assert.match(readFileSync(new URL("ORIGEN.md",folder),"utf8"),
-    /pendiente de auditoría/);
+    /pendientes de auditoría/);
 });
 
 test("fusión tipográfica de semitono y cuarto no cambia los cents",()=>{
