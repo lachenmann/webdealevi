@@ -142,7 +142,7 @@ test("el HTML y todo el grafo de módulos comparten el mismo identificador de ca
     }
   }
   const ui=readFileSync(new URL("notacion-ui.mjs",dir),"utf8");
-  assert.ok(ui.includes('dataset.ready = "true"'));
+  assert.match(ui,/engineState\.dataset\.ready\s*=\s*"true"/);
   assert.ok(ui.includes('window.__MONOCORDIO_VECTOR_BUILD'));
 });
 
