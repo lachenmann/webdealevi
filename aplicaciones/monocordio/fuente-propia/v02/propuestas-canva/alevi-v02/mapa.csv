@@ -1,0 +1,9 @@
+glifo,Unicode privado,fraccion de tono,cents,caracter,forma
+toneQuarterUp,U+F000,+1/4,50.0,,Un asta y dos barras
+toneQuarterDown,U+F001,-1/4,-50.0,,Bemol invertido cerrado
+toneSixthUp,U+F002,+1/6,33.333333333333336,,Un asta y una barra
+toneSixthDown,U+F003,-1/6,-33.333333333333336,,Bemol invertido abierto
+toneEighthUp,U+F004,+1/8,25.0,,Dos barras con remates en escuadra
+toneEighthDown,U+F005,-1/8,-25.0,,Cuenco abierto y una barra alta
+toneTwelfthUp,U+F006,+1/12,16.666666666666668,,Un asta y tres barras
+toneTwelfthDown,U+F007,-1/12,-16.666666666666668,,Cuenco abierto y dos barras altas

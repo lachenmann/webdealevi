@@ -1,0 +1,152 @@
+{
+  "schema": "esferas-canva-v0.2-proposal-2026-10-10",
+  "origin": "Alevi-Microtonal-v02.zip — author-supplied Canva design",
+  "origin_zip_sha256": "5adf7feace8c4d960baa00540e0404efe82bffccd0a66636914f38811f1a49ee",
+  "profile": "nma.tone-12tet.v0",
+  "unit_tone_cents": {
+    "numerator": 200,
+    "denominator": 1
+  },
+  "state": "INTEGRATED_AS_DESIGN_CANDIDATES_NOT_PUBLISHED",
+  "source_license": "NOT_SPECIFIED_IN_ARCHIVE_REQUIRES_REVIEW",
+  "traditional_base": "Canva base-v01 originals; NOT GNU LilyPond/Emmentaler G1",
+  "codepoint_semantics": "Source U+F000–U+F007 are legacy PUA markers, not SMuFL and not new NMA assignments",
+  "entries": [
+    {
+      "id": "toneQuarterUp",
+      "up": true,
+      "source_svg": "toneQuarterUp.svg",
+      "source_private_codepoint": "U+F000",
+      "tone_fraction": {
+        "numerator": 1,
+        "denominator": 4
+      },
+      "cents_exact": {
+        "numerator": 50,
+        "denominator": 1
+      },
+      "adoption_state": "comparison-standard-form",
+      "standard_smufl_codepoint": null,
+      "notes": "Compare against LilyPond +1/4 E282, not a replacement"
+    },
+    {
+      "id": "toneQuarterDown",
+      "up": false,
+      "source_svg": "toneQuarterDown.svg",
+      "source_private_codepoint": "U+F001",
+      "tone_fraction": {
+        "numerator": -1,
+        "denominator": 4
+      },
+      "cents_exact": {
+        "numerator": -50,
+        "denominator": 1
+      },
+      "adoption_state": "blocked-closed-reversed-flat",
+      "standard_smufl_codepoint": null,
+      "notes": "Closed loop conflicts with accepted open Stein–Zimmermann E280"
+    },
+    {
+      "id": "toneSixthUp",
+      "up": true,
+      "source_svg": "toneSixthUp.svg",
+      "source_private_codepoint": "U+F002",
+      "tone_fraction": {
+        "numerator": 1,
+        "denominator": 6
+      },
+      "cents_exact": {
+        "numerator": 100,
+        "denominator": 3
+      },
+      "adoption_state": "blocked-historical-near-collision",
+      "standard_smufl_codepoint": null,
+      "notes": "One stem and one bar resembles LilyPond's historical quarter-sharp"
+    },
+    {
+      "id": "toneSixthDown",
+      "up": false,
+      "source_svg": "toneSixthDown.svg",
+      "source_private_codepoint": "U+F003",
+      "tone_fraction": {
+        "numerator": -1,
+        "denominator": 6
+      },
+      "cents_exact": {
+        "numerator": -100,
+        "denominator": 3
+      },
+      "adoption_state": "needs-visual-distinction",
+      "standard_smufl_codepoint": null,
+      "notes": "Open reversed-flat silhouette may resemble −1/4 E280"
+    },
+    {
+      "id": "toneEighthUp",
+      "up": true,
+      "source_svg": "toneEighthUp.svg",
+      "source_private_codepoint": "U+F004",
+      "tone_fraction": {
+        "numerator": 1,
+        "denominator": 8
+      },
+      "cents_exact": {
+        "numerator": 25,
+        "denominator": 1
+      },
+      "adoption_state": "canva-candidate-for-review",
+      "standard_smufl_codepoint": null,
+      "notes": "Two sharp-like bars with squared terminals; verify legibility and historical distinction"
+    },
+    {
+      "id": "toneEighthDown",
+      "up": false,
+      "source_svg": "toneEighthDown.svg",
+      "source_private_codepoint": "U+F005",
+      "tone_fraction": {
+        "numerator": -1,
+        "denominator": 8
+      },
+      "cents_exact": {
+        "numerator": -25,
+        "denominator": 1
+      },
+      "adoption_state": "canva-candidate-for-review",
+      "standard_smufl_codepoint": null,
+      "notes": "Open reversed-flat with one upper bar; verify at 7px staff-spacing"
+    },
+    {
+      "id": "toneTwelfthUp",
+      "up": true,
+      "source_svg": "toneTwelfthUp.svg",
+      "source_private_codepoint": "U+F006",
+      "tone_fraction": {
+        "numerator": 1,
+        "denominator": 12
+      },
+      "cents_exact": {
+        "numerator": 50,
+        "denominator": 3
+      },
+      "adoption_state": "canva-candidate-for-review",
+      "standard_smufl_codepoint": null,
+      "notes": "One stem plus three sharp-like bars, needs visual reading test"
+    },
+    {
+      "id": "toneTwelfthDown",
+      "up": false,
+      "source_svg": "toneTwelfthDown.svg",
+      "source_private_codepoint": "U+F007",
+      "tone_fraction": {
+        "numerator": -1,
+        "denominator": 12
+      },
+      "cents_exact": {
+        "numerator": -50,
+        "denominator": 3
+      },
+      "adoption_state": "canva-candidate-for-review",
+      "standard_smufl_codepoint": null,
+      "notes": "Open reversed-flat plus two upper bars, needs visual reading test"
+    }
+  ]
+}
