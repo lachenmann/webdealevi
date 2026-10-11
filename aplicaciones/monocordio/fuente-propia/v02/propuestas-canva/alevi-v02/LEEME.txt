@@ -1,0 +1,11 @@
+ALEVI MICROTONAL — ESTUDIO 02
+13 glifos: 5 tradicionales preservados + 8 microtonales nuevos.
+Notación propia. Cada signo establece una alteración absoluta desde la nota natural: ±1/4, ±1/6, ±1/8, ±1/12 de un tono de 200 cents. No expresa una coma de afinación justa.
+La cantidad de barras no es un multiplicador de altura: cada contorno tiene el valor específico de mapa.csv. Una leyenda debe acompañar las partituras.
+No se han diseñado aún los múltiplos (3/4, 5/6, etc.) ni combinaciones con los signos tradicionales.
+SVG editables; fuente TTF instalable. Los glifos nuevos usan códigos privados U+F000 a U+F007; copia los caracteres desde mapa.csv y aplica Alevi Microtonal. No son asignaciones SMuFL oficiales.
+Tamaño: 1000 unidades por em; espacio de pentagrama 250 unidades. Origen vertical musical y=0.
+No es una fuente musical completa ni reemplazo directo de Emmentaler. La fuente por sí sola no configura afinación, MIDI ni reglas de accidentales.
+Contornos originales de esta propuesta, basados en el estudio 01 inspirado en el estilo clásico de LilyPond.
+construir.py y base-v01.json permiten regenerar todos los archivos con fontTools.
+Pendiente: elección definitiva de contornos, espaciado, hinting y pruebas de lectura a tamaño impreso.
