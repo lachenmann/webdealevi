@@ -48,7 +48,7 @@ test("se conservan los 75 controles e identificadores del laboratorio previo",()
 test("notas pedagógicas nativas, cerradas por defecto y navegables por teclado",()=>{
   const opening=[...html.matchAll(/<details\b([^>]*)>/g)];
   const summaries=[...html.matchAll(/<summary\b[^>]*>/g)];
-  assert.ok(opening.length>=11,"Deben existir al menos diez notas y el corpus");
+  assert.ok(opening.length>=10,"Deben existir al menos nueve notas y el corpus");
   assert.equal(opening.length,summaries.length,"Cada desplegable tiene un encabezado");
   for(const [,attr] of opening){
     assert.ok(!/\bopen\b/.test(attr),"No abrir contenido técnico por defecto");
@@ -76,8 +76,19 @@ test("la tetraktys conserva la explicación acústica y añade cosmogonía y teo
   assert.match(note,/fuente y raíz de la naturaleza/);
   assert.match(note,/Jámblico/);
   assert.match(note,/Teón de Esmirna/);
-  assert.match(note,/no pruebas directas de sus enseñanzas personales/);
+  assert.doesNotMatch(note,/no pruebas directas|atribu(?:ción|ciones) tradicional/i);
   assert.ok(!/<details[^>]*\bopen\b/.test(note),"La nota no debe abrirse automáticamente");
+});
+
+test("la página evita interrupciones desmitificadoras y conserva las explicaciones",()=>{
+  assert.ok(!html.includes('id="nota-reconstruccion"'));
+  assert.ok(!html.includes('¿Es una reconstrucción histórica'));
+  assert.ok(!html.includes('atribuciones tradicionales a Pitágoras'));
+  assert.ok(!html.includes('no pruebas directas de sus enseñanzas'));
+  assert.ok(!html.includes('no pretende reproducir'));
+  assert.match(html,/El sonido se genera digitalmente a partir de las frecuencias calculadas/);
+  assert.match(html,/unidad hacia la multiplicidad/);
+  assert.match(html,/fuente y raíz de la naturaleza/);
 });
 
 test("sólo las consonancias fundamentales se despliegan en la superficie",()=>{

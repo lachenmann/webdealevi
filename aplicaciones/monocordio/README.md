@@ -1,6 +1,12 @@
+## Criterio editorial — presentación continua sin desmitificaciones reiteradas
+
+En la vista de taller se ha suprimido la nota «¿Es una reconstrucción histórica de los experimentos de Pitágoras?», así como las aclaraciones negativas repetidas en la tetraktys y la explicación física. El relato se concentra en el funcionamiento musical y en las interpretaciones cosmogónicas y teológicas de la tradición. La distinción técnica entre el modelo ideal y la síntesis digital continúa explicándose positivamente en el apartado de fundamento físico. Se conservan las referencias históricas y la información necesaria sobre los valores exactos y las licencias.
+
+No se alteran la secuencia «iceberg», los cálculos, el sonido, los controles ni los contornos de Alevi Microtonal v0.5.
+
 ## Ampliación cosmogónica y teológica · nota de la tetraktys
 
-La nota desplegable «¿Cómo funciona la tetraktys?» incorpora tres planos: las consonancias musicales en las razones de los cuatro primeros números; la lectura cosmogónica de la unidad a la multiplicidad (punto, línea, superficie, sólido y totalidad del diez); y el valor sagrado atestiguado en el juramento transmitido por Jámblico. Remite también a Teón de Esmirna y advierte que estas fuentes transmiten una tradición posterior, no una enseñanza probadamente autógrafa del Pitágoras histórico.
+La nota desplegable «¿Cómo funciona la tetraktys?» incorpora tres planos: las consonancias musicales en las razones de los cuatro primeros números; la lectura cosmogónica de la unidad a la multiplicidad (punto, línea, superficie, sólido y totalidad del diez); y el valor sagrado atestiguado en el juramento transmitido por Jámblico. Remite también a Teón de Esmirna como fuente para comprender el simbolismo numérico de la tradición.
 
 La intervención es exclusivamente editorial; conserva intactos el diagrama, el audio, los controles, los contornos v0.5 y la estructura del modelo iceberg.
 
@@ -8,7 +14,7 @@ La intervención es exclusivamente editorial; conserva intactos el diagrama, el 
 
 El catálogo del monocordio abre por defecto solo las consonancias fundamentales; las familias de intervalos de mayor complejidad permanecen cerradas. La página avanza por complejidad creciente: **01 monocordio** (experimentar), **02 tetraktys** (reconocer relaciones), **03 escala** (construir por quintas), **04 medias musicales** (comparar 6:8:9:12) y **05 notación microtonal** (cents, residuos, escritura y 41 glifos Alevi v0.5).
 
-Las explicaciones usan elementos HTML nativos `<details>` con `<summary>` inicialmente cerrados: longitud vibrante, tetraktys, quinta, Fa, coma pitagórica, cálculo de medias, atribución histórica, cents, glifos y fundamento físico. Así se reduce el texto visible, sin esconder los controles de experimentación.
+Las explicaciones usan elementos HTML nativos `<details>` con `<summary>` inicialmente cerrados: longitud vibrante, tetraktys, quinta, Fa, coma pitagórica, cálculo de medias, cents, glifos y fundamento físico. Así se reduce el texto visible, sin esconder los controles de experimentación.
 
 Todos los IDs de los módulos originales permanecen en el DOM, aunque se redistribuyan entre secciones. La lógica matemática, los generadores de sonido y los contornos tipográficos originales no se modifican. Este rediseño editorial pertenece al PR de prueba #7 y **no autoriza fusionar ni desplegar en producción**.
 
@@ -228,7 +234,7 @@ GitHub Actions contiene un control de **Chrome headless real** que espera el ind
 
 Abrir `aplicaciones/monocordio/index.html` desde un servidor web estático (necesario para los módulos ES). Los controles de quinta amplían el conjunto de alturas hasta seis pasos a cada lado; el preset de siete notas y la comparación de coma sustituyen temporalmente la colección actual.
 
-El audio se sintetiza localmente con Web Audio API y no pretende ser una grabación histórica del monocordio.
+El audio se sintetiza localmente con Web Audio API a partir de las frecuencias del modelo de cuerda pulsada.
 
 ## Pruebas
 
