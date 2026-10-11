@@ -6,12 +6,14 @@
   <meta name="theme-color" content="#100d13">
   <meta name="description" content="Un monocordio pitagórico virtual para explorar con el oído la relación entre longitud, frecuencia e intervalos musicales.">
   <title>Monocordio pitagórico | La música de las esferas</title>
-  <link rel="stylesheet" href="./estilos.css">
-  <script type="module" src="./monocordio.mjs"></script>
-  <script type="module" src="./escala.mjs"></script>
-  <script type="module" src="./notacion-ui.mjs"></script>
-  <link rel="stylesheet" href="./escala.css">
-  <link rel="stylesheet" href="./notacion.css">
+  <link rel="stylesheet" href="./estilos.css?v=TYPO-20261010-01">
+  <script type="module" src="./monocordio.mjs?v=TYPO-20261010-01"></script>
+  <script type="module" src="./escala.mjs?v=TYPO-20261010-01"></script>
+  <script type="module" src="./notacion-ui.mjs?v=TYPO-20261010-01"></script>
+  <script type="module" src="./armonia.mjs?v=TYPO-20261010-01"></script>
+  <link rel="stylesheet" href="./escala.css?v=TYPO-20261010-01">
+  <link rel="stylesheet" href="./notacion.css?v=TYPO-20261010-01">
+  <link rel="stylesheet" href="./armonia.css?v=TYPO-20261010-01">
 </head>
 <body>
   <header class="site-header">
@@ -153,17 +155,18 @@
         <div class="notation-control">
           <label for="fraction-system">Fracción de tono representada</label>
           <select id="fraction-system">
-            <option value="quarter">¼ tono · 50 cents (Stein–Zimmermann: medio sostenido / bemol invertido)</option>
-            <option value="quarter-ferneyhough">¼ tono · 50 cents (Ferneyhough: signos con cifra)</option>
-            <option value="sixth">⅙ tono · 33,33… cents (Sims)</option>
-            <option value="eighth">⅛ tono · 25 cents (texto explícito)</option>
-            <option value="third">⅓ tono · 66,67… cents (Ferneyhough)</option>
-            <option value="two-thirds">⅔ tono · 133,33… cents (Ferneyhough)</option>
-            <option value="three-quarters-grisey">¾ tono · 150 cents (bemol Grisey)</option>
+            <option value="semitone">Semitono · ½ tono · 100 ¢</option>
+            <option value="quarter" selected>Cuarto de tono · ¼ tono · 50 ¢</option>
+            <option value="sixth">Sexto de tono · ⅙ tono · 33,33… ¢</option>
+            <option value="eighth">Octavo de tono · ⅛ tono · 25 ¢ (signo explícito)</option>
+            <option value="twelfth">Doceavo de tono · ¹⁄₁₂ tono · 16,67… ¢</option>
           </select>
         </div>
       </div>
       <p id="notation-mode-description" class="notation-interpretation">La escala conserva su altura pitagórica; las cifras sobre el pentagrama indican desviaciones totales respecto de 12-TET.</p>
+      <p id="notation-engine-state" class="notation-engine-status" data-expected-build="TYPO-20261010-01" role="status" aria-live="polite">
+        Motor de alteraciones SVG: esperando confirmación de carga · TYPO-20261010-01.
+      </p>
       <div class="score-block">
         <div class="score-heading">
           <h3>Notación microtonal</h3>
@@ -172,24 +175,43 @@
         <div class="score-scroll" tabindex="0" role="region" aria-label="Pentagrama desplazable horizontalmente">
           <svg id="pythagorean-score" viewBox="0 0 760 320" role="img" aria-label="Pentagrama con las notas seleccionadas y sus desviaciones en cents"></svg>
         </div>
-        <p class="score-legend"><strong>Lectura:</strong> los símbolos especiales siguen una convención indicada en el selector; <strong>↑/↓ en una etiqueta no suma un intervalo</strong>. El número <strong>total</strong> es siempre la desviación frente a 12-TET (La4 = 440 Hz). En el modo contemporáneo el valor <strong>res.</strong> se suma al valor definido del signo musical: <strong>total = signo + residual</strong>. Los signos de Ferneyhough pueden incorporar cifras como parte de su grafía; para cuartos de tono se ofrece por defecto la variante Stein–Zimmermann.</p>
+        <p class="score-legend"><strong>Lectura:</strong> el número <strong>total</strong> expresa la desviación de altura respecto de la nota cromática en 12-TET con La4 = 440 Hz. En modo contemporáneo, las alteraciones vectoriales añaden un desplazamiento fijo y el valor <strong>res.</strong> es la corrección restante: <strong>total = semitonos + fracción + residual</strong>. Los dibujos no cambian la afinación; para una altura pitagórica prevalece siempre su razón exacta.</p>
       </div>
+      <p class="notation-typeface-credit">
+        Grabado musical: <strong>Leland</strong> (licencia
+        <a href="./fonts/OFL-Leland.txt">SIL OFL 1.1</a>), con alternativas
+        microtonales documentadas en <strong>Ekmelos 72-EDO</strong>
+        (<a href="./fonts/OFL-Ekmelos.txt">licencia</a>).
+        Si falta la fuente, el laboratorio conserva los trazos SVG y la afinación exacta.
+      </p>
 
-      <p id="smufl-font-status" class="font-status" role="status" aria-live="polite">Verificando fuente musical de notación…</p>
+      <p class="font-status" role="status">Escritura mixta: Leland para claves, notas y alteraciones convencionales; SVG para los símbolos geométricos y como fallback local.</p>
+      <section class="notation-key" aria-labelledby="notation-key-title">
+        <h3 id="notation-key-title">Muestrario de alteraciones</h3>
+        <p>Inspirado en la lámina de referencia: semitonos y símbolos de cuartos, sextos y doceavos. Para cuartos de tono se utilizan los <strong>signos convencionales Stein–Zimmermann</strong>: medio sostenido ascendente y <strong>bemol inverso de contorno abierto</strong> descendente (SMuFL E282/E280, distinto del bemol inverso relleno E480). El octavo se identifica textualmente para no atribuirle un signo que no aparece en la lámina.</p>
+        <div class="notation-key-scroll" tabindex="0" role="region" aria-label="Tabla horizontal de signos microtonales">
+          <svg id="notation-key-svg" viewBox="0 0 960 245" role="img" aria-label="Muestrario de cinco fracciones de tono y sus alteraciones descendentes y ascendentes"></svg>
+        </div>
+        <p class="notation-key-hint">Los valores ±33 y ±17 de la lámina están redondeados: aquí ⅙ = 33⅓ ¢ y ¹⁄₁₂ = 16⅔ ¢ exactamente.</p>
+      </section>
       <div class="fraction-lab" id="fraction-lab" aria-labelledby="fraction-lab-title">
         <div class="fraction-intro">
           <h3 id="fraction-lab-title">Explorador de escritura microtonal</h3>
           <p>Demostración independiente: modifica la altura del Do4 temperado, observa cómo se descompone en un glifo fraccionario y un ajuste residual en cents, y escucha la frecuencia resultante.</p>
         </div>
-        <div class="fraction-preset-row" role="group" aria-label="Ejemplos de alteración en cents">
-          <button type="button" data-offset="64">+64 ¢</button>
-          <button type="button" data-offset="-64">−64 ¢</button>
-          <button type="button" data-offset="25">+25 ¢</button>
-          <button type="button" data-offset="-33.3333333333333">−⅙ tono</button>
-          <button type="button" data-offset="66.6666666666667">+⅓ tono</button>
-          <button type="button" data-offset="133.3333333333333">+⅔ tono</button>
-          <button type="button" data-offset="-150">−¾ tono (Grisey)</button>
-          <button type="button" data-offset="0">0 ¢</button>
+        <div class="fraction-preset-row" role="group" aria-label="Alteraciones de referencia en cents">
+          <button type="button" data-offset="-100" data-unit="semitone">♭ −100 ¢</button>
+          <button type="button" data-offset="100" data-unit="semitone">♯ +100 ¢</button>
+          <button type="button" data-offset="-50" data-unit="quarter">−¼ tono</button>
+          <button type="button" data-offset="50" data-unit="quarter">+¼ tono</button>
+          <button type="button" data-offset="-33.33333333333333" data-unit="sixth">−⅙ tono</button>
+          <button type="button" data-offset="33.33333333333333" data-unit="sixth">+⅙ tono</button>
+          <button type="button" data-offset="-25" data-unit="eighth">−⅛ tono</button>
+          <button type="button" data-offset="25" data-unit="eighth">+⅛ tono</button>
+          <button type="button" data-offset="-16.666666666666668" data-unit="twelfth">−¹⁄₁₂ tono</button>
+          <button type="button" data-offset="16.666666666666668" data-unit="twelfth">+¹⁄₁₂ tono</button>
+          <button type="button" data-offset="64" data-unit="quarter">+64 ¢ (¼ +14)</button>
+          <button type="button" data-offset="0" data-unit="quarter">0 ¢</button>
         </div>
         <div class="fraction-workbench">
           <div class="fraction-slider">
@@ -202,14 +224,14 @@
           <div class="fraction-preview">
             <svg id="fraction-score" viewBox="0 0 480 240" role="img" aria-label="Pentagrama con la notación y corrección residual de la nota de ejemplo"></svg>
             <div class="fraction-metrics" aria-live="polite">
-              <span>Glifo: <strong id="demo-symbol-name">¼ tono ascendente</strong></span>
-              <span>Desplazamiento del glifo: <strong id="demo-symbol-cents">+50,00 ¢</strong></span>
+              <span>Signos: <strong id="demo-symbol-name">¼ tono ascendente</strong></span>
+              <span>Desplazamiento indicado: <strong id="demo-symbol-cents">+50,00 ¢</strong></span>
               <span>Corrección adicional: <strong id="demo-residual">+14,00 ¢</strong></span>
               <span>Frecuencia: <strong id="demo-frequency">271,48 Hz</strong></span>
             </div>
           </div>
         </div>
-        <p class="fraction-license">Los signos musicales SMuFL se cargan mediante Bravura (Steinberg, SIL OFL); si no están disponibles, se emplean descripciones textuales inequívocas. Para ⅛ de tono utilizamos deliberadamente una etiqueta textual, no un glifo pretendidamente estándar.</p>
+        <p class="fraction-license">Esta es una convención editorial basada en la lámina aportada, no una atribución de todas las grafías a una única escuela. Las claves, notas y alteraciones cromáticas se graban con Leland, alojada localmente y distribuida bajo SIL OFL; los signos geométricos conservan su dibujo SVG. El octavo se marca como ⅛ con dirección porque la lámina no documenta un signo para ±25 ¢.</p>
       </div>
       <div class="scale-grid" id="pythagorean-notes" aria-label="Notas, razones, frecuencias y correcciones microtonales"></div>
       <div class="scale-footer">
@@ -231,6 +253,97 @@
         </aside>
       </div>
     </section>
+
+    <section class="harmony-panel" id="tetraktys-medias" aria-labelledby="harmony-title">
+      <div class="harmony-lead">
+        <p class="eyebrow">04 · Número, proporción y consonancia</p>
+        <h2 id="harmony-title">La tetraktys y las medias musicales</h2>
+        <p>Dos experimentos para escuchar cómo los números 1, 2, 3 y 4, y la serie 6:8:9:12, contienen relaciones de octava, quinta, cuarta y tono. Las proporciones se aplican a <strong>frecuencias</strong>; sobre el monocordio producen longitudes vibrantes inversamente proporcionales.</p>
+      </div>
+
+      <article class="harmony-module" aria-labelledby="tetraktys-title">
+        <div class="harmony-module-title">
+          <span class="harmony-index">I</span>
+          <div>
+            <h3 id="tetraktys-title">La tetraktys: 1 + 2 + 3 + 4 = 10</h3>
+            <p>Diez puntos distribuidos en cuatro filas: el símbolo tradicional se convierte aquí en un modelo sonoro. La fila de <em>n</em> puntos representa la frecuencia <em>n</em> veces mayor que la fundamental.</p>
+          </div>
+        </div>
+        <div class="harmony-layout">
+          <figure class="harmony-visual">
+            <svg id="tetraktys-diagram" viewBox="0 0 820 405" aria-label="Tetraktys de diez puntos, agrupados en filas de uno, dos, tres y cuatro; selección mediante los controles situados a la derecha" role="img">
+              <title>La tetraktys musical</title>
+              <desc>Un punto en la primera fila, dos en la segunda, tres en la tercera y cuatro en la cuarta. Cada fila representa un término de la serie armónica.</desc>
+            </svg>
+            <figcaption>La figura expresa la estructura numérica 1 + 2 + 3 + 4. Cada fila se puede escuchar de forma independiente.</figcaption>
+          </figure>
+          <div class="harmony-control">
+            <p class="harmony-label">Selecciona una fila</p>
+            <div id="tetraktys-buttons" class="harmony-options" role="group" aria-label="Frecuencias asociadas a las filas"></div>
+            <div id="tetraktys-reading" class="harmony-reading" role="status" aria-live="polite">Fila 1 · Frecuencia 220 Hz · Longitud 1:1.</div>
+            <div class="harmony-actions">
+              <button type="button" class="harmony-button primary" id="tetraktys-play">▶ Escuchar 1 → 2 → 3 → 4</button>
+              <button type="button" class="harmony-button secondary" id="tetraktys-chord">♫ Escuchar simultáneamente</button>
+              <button type="button" class="harmony-button secondary" id="tetraktys-bridge">Mostrar fila en el monocordio</button>
+            </div>
+            <p id="tetraktys-status" class="harmony-status" role="status" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="harmony-explanation">
+          <span><strong>1 → 2:</strong> octava (2:1)</span>
+          <span><strong>2 → 3:</strong> quinta justa (3:2)</span>
+          <span><strong>3 → 4:</strong> cuarta justa (4:3)</span>
+        </div>
+      </article>
+
+      <article class="harmony-module" aria-labelledby="means-title">
+        <div class="harmony-module-title">
+          <span class="harmony-index">II</span>
+          <div>
+            <h3 id="means-title">Las dos medias: 6 : 8 : 9 : 12</h3>
+            <p>Entre los extremos 6 y 12 aparecen dos puntos distintos: la <strong>media armónica, 8</strong>, y la <strong>media aritmética, 9</strong>. Podemos verlos, escuchar su diferencia y llevar cada proporción al puente móvil.</p>
+          </div>
+        </div>
+        <div class="harmony-equations" aria-label="Demostración de las medias">
+          <div>
+            <span>Media armónica</span>
+            <strong>H = 2 × 6 × 12 / (6 + 12) = 8</strong>
+          </div>
+          <div>
+            <span>Media aritmética</span>
+            <strong>A = (6 + 12) / 2 = 9</strong>
+          </div>
+        </div>
+        <div class="harmony-layout">
+          <figure class="harmony-visual">
+            <svg id="means-diagram" viewBox="0 0 820 300" role="img" aria-label="Recta numérica con extremos 6 y 12, media armónica 8 y media aritmética 9">
+              <title>La proporción musical 6:8:9:12</title>
+              <desc>Los cuatro números están ubicados sobre una recta numérica, con 8 y 9 entre los extremos 6 y 12.</desc>
+            </svg>
+            <figcaption>Los puntos se ubican según su valor numérico. Las posiciones del puente en una cuerda real son inversas a estos números.</figcaption>
+          </figure>
+          <div class="harmony-control">
+            <p class="harmony-label">Selecciona un término</p>
+            <div id="means-buttons" class="harmony-options" role="group" aria-label="Extremos y medias"></div>
+            <div id="means-reading" class="harmony-reading" role="status" aria-live="polite">6 · Extremo inferior · Frecuencia 220 Hz.</div>
+            <div class="harmony-actions">
+              <button type="button" class="harmony-button primary" id="means-play">▶ Escuchar 6 → 8 → 9 → 12</button>
+              <button type="button" class="harmony-button secondary" id="means-compare">Comparar 8 y 9</button>
+              <button type="button" class="harmony-button secondary" id="means-bridge">Mostrar término en el monocordio</button>
+            </div>
+            <p id="means-status" class="harmony-status" role="status" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="harmony-explanation">
+          <span><strong>6 → 12:</strong> octava (2:1)</span>
+          <span><strong>6 → 9:</strong> quinta (3:2)</span>
+          <span><strong>6 → 8:</strong> cuarta (4:3)</span>
+          <span><strong>8 → 9:</strong> tono (9:8)</span>
+        </div>
+      </article>
+      <p class="harmony-note"><strong>Convención acústica:</strong> la fundamental es La3 = 220 Hz. Así, en la tetraktys suena 220, 440, 660 y 880 Hz; en la serie 6:8:9:12 suena 220, 293,33…, 330 y 440 Hz. Es una demostración didáctica de proporciones, no una reconstrucción histórica de un experimento atribuido a Pitágoras.</p>
+    </section>
+
   </main>
   <footer>La música de las esferas · Laboratorio digital · <a href="../../index.html#aplicaciones">Alevi Peña</a></footer>
   <noscript>Activa JavaScript para mover el puente y escuchar el instrumento.</noscript>
