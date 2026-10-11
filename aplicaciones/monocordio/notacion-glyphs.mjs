@@ -1,3 +1,4 @@
+import {aleviGlyphForCents} from "./alevi-v05.mjs?v=PIT-20261010-V05";
 /**
  * Signos vectoriales de microtonalidad. Adaptación visual de la lámina
  * suministrada por el autor: evita depender del glifo de una fuente.
@@ -149,6 +150,29 @@ export function makeAccidentalGlyph(id,options={}) {
  * opts.right es el último centro de signo a la izquierda de la cabeza.
  */
 export function renderNoteAccidentals(target,plan,opts={}) {
+  // En el perfil Alevi, se SUMAN los cents de la alteración convencional
+  // nominal y los indicados, pero el resultado se escribe con un glifo
+  // único referido a la nota natural. Nunca se suman valores de glifos.
+  if (opts.aleviReady === true && Number.isFinite(plan.indicatedCents)) {
+    const naturalCents=(Number.isInteger(plan.baseAccidental) ?
+      plan.baseAccidental*100 : 0)+plan.indicatedCents;
+    const alevi=aleviGlyphForCents(naturalCents);
+    if (alevi) {
+      if (alevi.ticks===0 && !opts.showNatural) return [];
+      const textNode=element("text",{
+        x:opts.right ?? 0,y:opts.y ?? 0,
+        "font-size":(opts.aleviFontSize ?? 69)*(opts.scale ?? 1),
+        "text-anchor":"middle",
+        fill:opts.color || "#f0d6ad",
+        "class":"monocordio-alevi-accidental",
+        "data-notation-glyph":"alevi-"+alevi.name,
+        "data-alevi-codepoint":alevi.codepoint.toString(16).toUpperCase(),
+        "data-alevi-ticks":alevi.ticks
+      },String.fromCodePoint(alevi.codepoint));
+      target.append(textNode);
+      return ["alevi:"+alevi.name];
+    }
+  }
   const ids=[];
   if(plan.baseAccidental===-1) ids.push("flat");
   if(plan.baseAccidental===1) ids.push("sharp");

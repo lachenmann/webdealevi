@@ -109,8 +109,8 @@ test("la web integra un único sistema sin Bravura ni sintaxis SMuFL dependiente
   }
   assert.ok(html.includes('id="notation-key-svg"'));
   assert.ok(html.includes('id="fraction-score"'));
-  assert.ok(score.includes('from "./notacion-glyphs.mjs?v=TYPO-20261010-01"'));
-  assert.ok(ui.includes('from "./notacion-glyphs.mjs?v=TYPO-20261010-01"'));
+  assert.ok(score.includes('from "./notacion-glyphs.mjs?v=PIT-20261010-V05"'));
+  assert.ok(ui.includes('from "./notacion-glyphs.mjs?v=PIT-20261010-V05"'));
   assert.ok(css.includes('@font-face'),"Leland se aloja localmente bajo licencia OFL");
   assert.ok(css.includes('./fonts/Leland.otf'),"Ruta Leland local");
   assert.ok(css.includes('./fonts/Ekmelos72edo.woff2'),"Reserva Ekmelos72 local");
@@ -123,9 +123,9 @@ test("la web integra un único sistema sin Bravura ni sintaxis SMuFL dependiente
 test("el HTML y todo el grafo de módulos comparten el mismo identificador de cache",()=>{
   const dir=new URL("../",import.meta.url);
   const html=readFileSync(new URL("index.html",dir),"utf8");
-  const expected="TYPO-20261010-01";
+  const expected="PIT-20261010-V05";
   assert.match(html,/id="notation-engine-state"/);
-  assert.match(html,/data-expected-build="TYPO-20261010-01"/);
+  assert.match(html,/data-expected-build="PIT-20261010-V05"/);
   for(const asset of ["monocordio.mjs","escala.mjs","notacion-ui.mjs",
     "armonia.mjs","estilos.css","escala.css","notacion.css","armonia.css"]){
     assert.ok(html.includes("./"+asset+"?v="+expected),
@@ -142,7 +142,7 @@ test("el HTML y todo el grafo de módulos comparten el mismo identificador de ca
     }
   }
   const ui=readFileSync(new URL("notacion-ui.mjs",dir),"utf8");
-  assert.ok(ui.includes('dataset.ready = "true"'));
+  assert.match(ui,/engineState\.dataset\.ready\s*=\s*"true"/);
   assert.ok(ui.includes('window.__MONOCORDIO_VECTOR_BUILD'));
 });
 

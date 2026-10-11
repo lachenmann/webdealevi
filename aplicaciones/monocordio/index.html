@@ -6,31 +6,32 @@
   <meta name="theme-color" content="#100d13">
   <meta name="description" content="Un monocordio pitagórico virtual para explorar con el oído la relación entre longitud, frecuencia e intervalos musicales.">
   <title>Monocordio pitagórico | La música de las esferas</title>
-  <link rel="stylesheet" href="./estilos.css?v=TYPO-20261010-01">
-  <script type="module" src="./monocordio.mjs?v=TYPO-20261010-01"></script>
-  <script type="module" src="./escala.mjs?v=TYPO-20261010-01"></script>
-  <script type="module" src="./notacion-ui.mjs?v=TYPO-20261010-01"></script>
-  <script type="module" src="./armonia.mjs?v=TYPO-20261010-01"></script>
-  <link rel="stylesheet" href="./escala.css?v=TYPO-20261010-01">
-  <link rel="stylesheet" href="./notacion.css?v=TYPO-20261010-01">
-  <link rel="stylesheet" href="./armonia.css?v=TYPO-20261010-01">
+  <link rel="stylesheet" href="./estilos.css?v=PIT-20261010-V05">
+  <script type="module" src="./monocordio.mjs?v=PIT-20261010-V05"></script>
+  <script type="module" src="./escala.mjs?v=PIT-20261010-V05"></script>
+  <script type="module" src="./notacion-ui.mjs?v=PIT-20261010-V05"></script>
+  <script type="module" src="./armonia.mjs?v=PIT-20261010-V05"></script>
+  <link rel="stylesheet" href="./escala.css?v=PIT-20261010-V05">
+  <link rel="stylesheet" href="./notacion.css?v=PIT-20261010-V05">
+  <link rel="stylesheet" href="./armonia.css?v=PIT-20261010-V05">
 </head>
 <body>
   <header class="site-header">
     <div class="topline">
       <a class="back" href="../../index.html#aplicaciones">← Volver al laboratorio</a>
-      <span class="edition">La música de las esferas · Instrumento I</span>
+      <span class="edition">La música de las esferas · Instrumento I · versión de prueba para el taller</span>
     </div>
     <p class="eyebrow">Laboratorio de armonía antigua</p>
     <h1>Monocordio <em>pitagórico</em></h1>
     <p class="lead">Mueve el puente, pulsa la cuerda y escucha cómo una proporción se transforma en un intervalo.</p>
+    <p class="iceberg-intro">Empieza jugando con el sonido. Al descender encontrarás nuevas relaciones y experimentos más profundos; abre las notas explicativas solo cuando quieras saber más.</p>
   </header>
 
   <main>
     <section class="instrument-panel" aria-labelledby="instrument-heading">
       <div class="panel-head">
         <div>
-          <p class="eyebrow">01 · Experimentación</p>
+          <p class="eyebrow">01 · Escuchar y experimentar</p>
           <h2 id="instrument-heading">La cuerda y el número</h2>
         </div>
         <span class="indicator" id="interval-name">Unísono</span>
@@ -95,9 +96,9 @@
       <div class="controls">
         <label for="length-control" class="control-heading">Longitud vibrante de la cuerda</label>
         <input type="range" id="length-control" min="0.25" max="1" step="0.001" value="1" aria-describedby="slider-help">
-        <p class="helper" id="slider-help">Arrastra el puente sobre el instrumento o utiliza este control con el teclado. La longitud vibrante puede variar desde ¼ de cuerda hasta la cuerda completa; la longitud cero queda excluida. Las razones exactas se seleccionan en el catálogo de abajo.</p>
-        <div class="preset-label">Explorador de razones pitagóricas</div>
-        <p class="ratio-help">Cada botón representa una fracción exacta de <strong>longitud vibrante</strong>. Su relación de frecuencias es la inversa; las frecuencias se calculan con la razón exacta, incluso si el deslizador redondea su posición.</p>
+        <p class="helper" id="slider-help">Arrastra el puente o usa el deslizador con el teclado. Prueba primero la octava, la quinta y la cuarta.</p>
+        <div class="preset-label">Elige un intervalo para escuchar</div>
+        <p class="ratio-help">Comienza por las consonancias fundamentales. Si quieres seguir investigando, abre las otras familias de intervalos.</p>
         <div id="ratio-groups" class="ratio-groups" aria-label="Intervalos pitagóricos por categorías"></div>
         <div class="sound-actions">
           <button type="button" id="play-current" class="primary">▶ Pulsar cuerda</button>
@@ -115,152 +116,20 @@
     </section>
 
 
-    <section class="explainer" aria-labelledby="formula-title">
-      <div>
-        <p class="eyebrow">02 · Fundamento físico</p>
-        <h2 id="formula-title">La proporción que se escucha</h2>
-        <p>Si la tensión y la densidad lineal permanecen constantes, la frecuencia fundamental es inversamente proporcional a la longitud de la parte vibrante.</p>
-        <div class="equation" aria-label="f prima dividido entre f cero es igual a L dividido entre L prima, igual a uno dividido entre x">f′ / f₀ = L / L′ = 1 / x</div>
-        <p>En este laboratorio <em>x</em> es la fracción vibrante de la cuerda y <em>f₀</em> se fija en 220 Hz. Acortar la cuerda a la mitad eleva el sonido una octava.</p>
-      </div>
-      <aside>
-        <h3>Nota sobre la reconstrucción</h3>
-        <p>El modelo representa un monocordio ideal y utiliza síntesis digital de cuerda pulsada. Las relaciones acústicas son exactas dentro del modelo; el timbre no pretende reproducir fielmente un instrumento antiguo.</p>
-        <p>Las atribuciones tradicionales del descubrimiento a Pitágoras deben distinguirse de la evidencia histórica disponible.</p>
-      </aside>
-    </section>
 
-    <section class="scale-panel" id="laboratorio-escala" aria-labelledby="scale-heading">
-      <div class="scale-heading">
-        <p class="eyebrow">03 · Afinación y notación</p>
-        <h2 id="scale-heading">Construye la escala pitagórica</h2>
-        <p>Genera notas mediante quintas puras <strong>3:2</strong>. Las notas se trasladan por octavas al registro de Do4 a Do5, sin modificar su afinación. Cada nota aparece escrita en clave de sol con su desviación microtonal exacta, expresada en <strong>cents (¢)</strong>.</p>
+    <details class="pedagogical-note" id="nota-cuerda">
+      <summary>¿Por qué cambia el sonido cuando muevo el puente?</summary>
+      <div class="pedagogical-body">
+        <p>Cuanto más corta es la parte vibrante, más agudo es el sonido. Si la longitud se reduce a la mitad, la frecuencia se duplica: escuchamos una <strong>octava</strong>. Una longitud de dos tercios produce la quinta justa (3:2 entre frecuencias).</p>
+        <p>El instrumento supone constantes la tensión y la densidad de la cuerda. Prueba las distintas razones y escúchalas.</p>
       </div>
-      <div class="scale-actions" role="group" aria-label="Construir la escala">
-        <button type="button" id="add-negative-fifth" class="scale-control">← Quinta descendente</button>
-        <button type="button" id="add-positive-fifth" class="scale-control">Quinta ascendente →</button>
-        <button type="button" id="build-diatonic" class="scale-control scale-featured">Escala diatónica (7 notas)</button>
-        <button type="button" id="show-comma" class="scale-control">Fa♯ frente a Sol♭</button>
-        <button type="button" id="reset-scale" class="scale-control">Reiniciar</button>
-      </div>
-      <p class="scale-chain" id="fifths-chain" aria-live="polite">Cadena de quintas: Do</p>
-      <div class="notation-settings" aria-label="Opciones de escritura musical">
-        <div class="notation-control">
-          <label for="notation-mode">Representación de la escala</label>
-          <select id="notation-mode">
-            <option value="exact">Pitagórica: alteración usual + cents totales</option>
-            <option value="contemporary">Contemporánea: fracción + cents residuales</option>
-          </select>
-        </div>
-        <div class="notation-control">
-          <label for="fraction-system">Fracción de tono representada</label>
-          <select id="fraction-system">
-            <option value="semitone">Semitono · ½ tono · 100 ¢</option>
-            <option value="quarter" selected>Cuarto de tono · ¼ tono · 50 ¢</option>
-            <option value="sixth">Sexto de tono · ⅙ tono · 33,33… ¢</option>
-            <option value="eighth">Octavo de tono · ⅛ tono · 25 ¢ (signo explícito)</option>
-            <option value="twelfth">Doceavo de tono · ¹⁄₁₂ tono · 16,67… ¢</option>
-          </select>
-        </div>
-      </div>
-      <p id="notation-mode-description" class="notation-interpretation">La escala conserva su altura pitagórica; las cifras sobre el pentagrama indican desviaciones totales respecto de 12-TET.</p>
-      <p id="notation-engine-state" class="notation-engine-status" data-expected-build="TYPO-20261010-01" role="status" aria-live="polite">
-        Motor de alteraciones SVG: esperando confirmación de carga · TYPO-20261010-01.
-      </p>
-      <div class="score-block">
-        <div class="score-heading">
-          <h3>Notación microtonal</h3>
-          <span>A4 = 440 Hz · clave de sol</span>
-        </div>
-        <div class="score-scroll" tabindex="0" role="region" aria-label="Pentagrama desplazable horizontalmente">
-          <svg id="pythagorean-score" viewBox="0 0 760 320" role="img" aria-label="Pentagrama con las notas seleccionadas y sus desviaciones en cents"></svg>
-        </div>
-        <p class="score-legend"><strong>Lectura:</strong> el número <strong>total</strong> expresa la desviación de altura respecto de la nota cromática en 12-TET con La4 = 440 Hz. En modo contemporáneo, las alteraciones vectoriales añaden un desplazamiento fijo y el valor <strong>res.</strong> es la corrección restante: <strong>total = semitonos + fracción + residual</strong>. Los dibujos no cambian la afinación; para una altura pitagórica prevalece siempre su razón exacta.</p>
-      </div>
-      <p class="notation-typeface-credit">
-        Grabado musical: <strong>Leland</strong> (licencia
-        <a href="./fonts/OFL-Leland.txt">SIL OFL 1.1</a>), con alternativas
-        microtonales documentadas en <strong>Ekmelos 72-EDO</strong>
-        (<a href="./fonts/OFL-Ekmelos.txt">licencia</a>).
-        Si falta la fuente, el laboratorio conserva los trazos SVG y la afinación exacta.
-      </p>
-
-      <p class="font-status" role="status">Escritura mixta: Leland para claves, notas y alteraciones convencionales; SVG para los símbolos geométricos y como fallback local.</p>
-      <section class="notation-key" aria-labelledby="notation-key-title">
-        <h3 id="notation-key-title">Muestrario de alteraciones</h3>
-        <p>Inspirado en la lámina de referencia: semitonos y símbolos de cuartos, sextos y doceavos. Para cuartos de tono se utilizan los <strong>signos convencionales Stein–Zimmermann</strong>: medio sostenido ascendente y <strong>bemol inverso de contorno abierto</strong> descendente (SMuFL E282/E280, distinto del bemol inverso relleno E480). El octavo se identifica textualmente para no atribuirle un signo que no aparece en la lámina.</p>
-        <div class="notation-key-scroll" tabindex="0" role="region" aria-label="Tabla horizontal de signos microtonales">
-          <svg id="notation-key-svg" viewBox="0 0 960 245" role="img" aria-label="Muestrario de cinco fracciones de tono y sus alteraciones descendentes y ascendentes"></svg>
-        </div>
-        <p class="notation-key-hint">Los valores ±33 y ±17 de la lámina están redondeados: aquí ⅙ = 33⅓ ¢ y ¹⁄₁₂ = 16⅔ ¢ exactamente.</p>
-      </section>
-      <div class="fraction-lab" id="fraction-lab" aria-labelledby="fraction-lab-title">
-        <div class="fraction-intro">
-          <h3 id="fraction-lab-title">Explorador de escritura microtonal</h3>
-          <p>Demostración independiente: modifica la altura del Do4 temperado, observa cómo se descompone en un glifo fraccionario y un ajuste residual en cents, y escucha la frecuencia resultante.</p>
-        </div>
-        <div class="fraction-preset-row" role="group" aria-label="Alteraciones de referencia en cents">
-          <button type="button" data-offset="-100" data-unit="semitone">♭ −100 ¢</button>
-          <button type="button" data-offset="100" data-unit="semitone">♯ +100 ¢</button>
-          <button type="button" data-offset="-50" data-unit="quarter">−¼ tono</button>
-          <button type="button" data-offset="50" data-unit="quarter">+¼ tono</button>
-          <button type="button" data-offset="-33.33333333333333" data-unit="sixth">−⅙ tono</button>
-          <button type="button" data-offset="33.33333333333333" data-unit="sixth">+⅙ tono</button>
-          <button type="button" data-offset="-25" data-unit="eighth">−⅛ tono</button>
-          <button type="button" data-offset="25" data-unit="eighth">+⅛ tono</button>
-          <button type="button" data-offset="-16.666666666666668" data-unit="twelfth">−¹⁄₁₂ tono</button>
-          <button type="button" data-offset="16.666666666666668" data-unit="twelfth">+¹⁄₁₂ tono</button>
-          <button type="button" data-offset="64" data-unit="quarter">+64 ¢ (¼ +14)</button>
-          <button type="button" data-offset="0" data-unit="quarter">0 ¢</button>
-        </div>
-        <div class="fraction-workbench">
-          <div class="fraction-slider">
-            <label for="demo-cents">Alteración total del Do4 temperado <strong id="demo-cents-label">+64,00 ¢</strong></label>
-            <input id="demo-cents" type="range" min="-170" max="170" step="0.1" value="64">
-            <p>Referencia: Do4 = 261,63 Hz (12-TET, La4 = 440 Hz). El ajuste en cents es respecto de esa nota, no del Do pitagórico.</p>
-            <button type="button" class="primary" id="play-demo-note">♪ Escuchar ejemplo</button>
-            <p id="demo-sound-status" role="status" aria-live="polite"></p>
-          </div>
-          <div class="fraction-preview">
-            <svg id="fraction-score" viewBox="0 0 480 240" role="img" aria-label="Pentagrama con la notación y corrección residual de la nota de ejemplo"></svg>
-            <div class="fraction-metrics" aria-live="polite">
-              <span>Signos: <strong id="demo-symbol-name">¼ tono ascendente</strong></span>
-              <span>Desplazamiento indicado: <strong id="demo-symbol-cents">+50,00 ¢</strong></span>
-              <span>Corrección adicional: <strong id="demo-residual">+14,00 ¢</strong></span>
-              <span>Frecuencia: <strong id="demo-frequency">271,48 Hz</strong></span>
-            </div>
-          </div>
-        </div>
-        <p class="fraction-license">Esta es una convención editorial basada en la lámina aportada, no una atribución de todas las grafías a una única escuela. Las claves, notas y alteraciones cromáticas se graban con Leland, alojada localmente y distribuida bajo SIL OFL; los signos geométricos conservan su dibujo SVG. El octavo se marca como ⅛ con dirección porque la lámina no documenta un signo para ±25 ¢.</p>
-      </div>
-      <div class="scale-grid" id="pythagorean-notes" aria-label="Notas, razones, frecuencias y correcciones microtonales"></div>
-      <div class="scale-footer">
-        <button type="button" class="primary" id="play-pythagorean-scale">▶ Escuchar notas en orden ascendente</button>
-        <p id="scale-audio-status" role="status" aria-live="polite">Selecciona una nota para escuchar su altura exacta.</p>
-      </div>
-      <div class="scale-details">
-        <div class="scale-explanation">
-          <h3>¿Por qué falta Fa en la serie ascendente?</h3>
-          <p>Desde Do, seis quintas ascendentes producen Do–Sol–Re–La–Mi–Si–Fa♯. Para obtener los siete grados de la escala diatónica de Do, necesitamos en cambio <strong>Fa–Do–Sol–Re–La–Mi–Si</strong>: Fa procede de una quinta descendente. Cada intervalo se reduce a una sola octava para comparar las alturas.</p>
-          <p>En nuestro modelo, <strong>La4 = 440 Hz</strong> es la referencia. Por ello Do4 se obtiene mediante la relación pitagórica inversa de tres quintas: <strong>Do4 = 440 · 16/27 Hz</strong>. El monocordio de la sección anterior mantiene su cuerda fundamental en La3 = 220 Hz.</p>
-        </div>
-        <aside class="comma-card" id="comma-explanation">
-          <h3>La coma pitagórica</h3>
-          <p>Fa♯, obtenido mediante seis quintas ascendentes desde Do, es más agudo que Sol♭, obtenido mediante seis quintas descendentes. La diferencia es una coma pitagórica:</p>
-          <div class="comma-equation">(3/2)¹² ÷ 2⁷ = 531441/524288</div>
-          <strong id="comma-cents">≈ 23,46 ¢</strong>
-          <p>Escucha las dos notas con el botón «Fa♯ frente a Sol♭». Son enarmónicas en el temperamento igual, pero no en la afinación pitagórica.</p>
-        </aside>
-      </div>
-    </section>
-
-    <section class="harmony-panel" id="tetraktys-medias" aria-labelledby="harmony-title">
+    </details>
+    <section class="harmony-panel iceberg-tetra" id="tetraktys-medias" aria-labelledby="harmony-title">
       <div class="harmony-lead">
-        <p class="eyebrow">04 · Número, proporción y consonancia</p>
-        <h2 id="harmony-title">La tetraktys y las medias musicales</h2>
-        <p>Dos experimentos para escuchar cómo los números 1, 2, 3 y 4, y la serie 6:8:9:12, contienen relaciones de octava, quinta, cuarta y tono. Las proporciones se aplican a <strong>frecuencias</strong>; sobre el monocordio producen longitudes vibrantes inversamente proporcionales.</p>
+        <p class="eyebrow">02 · Descubrir relaciones</p>
+        <h2 id="harmony-title">La tetraktys: números que suenan</h2>
+        <p>Diez puntos, cuatro filas y una sorpresa: las relaciones entre los primeros números pueden escucharse como intervalos. Selecciona una fila o escucha la serie completa.</p>
       </div>
-
       <article class="harmony-module" aria-labelledby="tetraktys-title">
         <div class="harmony-module-title">
           <span class="harmony-index">I</span>
@@ -296,22 +165,75 @@
         </div>
       </article>
 
+      <details class="pedagogical-note" id="nota-tetraktys">
+        <summary>¿Cómo funciona la tetraktys?</summary>
+        <div class="pedagogical-body">
+          <p><strong>El número que se escucha.</strong> La tetraktys reúne diez puntos en cuatro filas: <strong>1 + 2 + 3 + 4 = 10</strong>. En este laboratorio sus filas representan 220, 440, 660 y 880 Hz. Así aparecen las relaciones de octava (2:1), quinta (3:2) y cuarta (4:3).</p>
+          <p><strong>Su sentido cosmogónico.</strong> Para la tradición pitagórica, la figura podía representar el despliegue de la <strong>unidad hacia la multiplicidad</strong> y el orden del cosmos. Los primeros cuatro números se asociaron simbólicamente con el punto, la línea, la superficie y el cuerpo sólido. Su suma, <strong>10</strong> —la década—, expresaba plenitud o totalidad.</p>
+          <p><strong>Su sentido teológico.</strong> No era solamente una operación matemática: la tetraktys fue venerada como símbolo sagrado. Jámblico conserva un juramento que la presenta como «fuente y raíz de la naturaleza». La armonía musical podía escucharse, así, como manifestación de un orden universal.</p>
+          <p><small>Fuentes: <a href="https://theosophylib.com/tt/life-of-pythagoras/" target="_blank" rel="noopener noreferrer">Jámblico, <cite>Vida pitagórica</cite></a>, y <a href="https://theosophylib.com/tt/on-the-tetractys/" target="_blank" rel="noopener noreferrer">Teón de Esmirna, <cite>Sobre la tetraktys</cite></a>.</small></p>
+        </div>
+      </details>
+    </section>
+
+    <section class="scale-panel iceberg-scale" id="laboratorio-escala" aria-labelledby="scale-heading">
+      <div class="scale-heading">
+        <p class="eyebrow">03 · Construir una escala</p>
+        <h2 id="scale-heading">Construye la escala pitagórica</h2>
+        <p>Construye una escala a partir de quintas justas, escucha las notas y descubre qué sucede al añadir o restar quintas. La escritura más técnica queda para el final.</p>
+      </div>
+      <div class="scale-actions" role="group" aria-label="Construir la escala">
+        <button type="button" id="add-negative-fifth" class="scale-control">← Quinta descendente</button>
+        <button type="button" id="add-positive-fifth" class="scale-control">Quinta ascendente →</button>
+        <button type="button" id="build-diatonic" class="scale-control scale-featured">Escala diatónica (7 notas)</button>
+        <button type="button" id="show-comma" class="scale-control">Fa♯ frente a Sol♭</button>
+        <button type="button" id="reset-scale" class="scale-control">Reiniciar</button>
+      </div>
+      <p class="scale-chain" id="fifths-chain" aria-live="polite">Cadena de quintas: Do</p>
+      <details class="pedagogical-note" id="nota-escala">
+        <summary>¿Cómo se construye una escala con quintas?</summary>
+        <div class="pedagogical-body">
+          <p>Una quinta justa tiene la razón de frecuencias <strong>3:2</strong>. Desde Do, avanzamos y retrocedemos por quintas, y trasladamos las alturas por octavas hasta reunirlas en un mismo registro.</p>
+          <p>Para obtener las siete notas de Do mayor necesitamos también una quinta descendente, que proporciona Fa.</p>
+        </div>
+      </details>
+      <div class="scale-grid" id="pythagorean-notes" aria-label="Notas, razones, frecuencias y correcciones microtonales"></div>
+      <div class="scale-footer">
+        <button type="button" class="primary" id="play-pythagorean-scale">▶ Escuchar notas en orden ascendente</button>
+        <p id="scale-audio-status" role="status" aria-live="polite">Selecciona una nota para escuchar su altura exacta.</p>
+      </div>
+      <details class="pedagogical-note" id="nota-fa">
+        <summary>¿Por qué Fa requiere una quinta descendente?</summary>
+        <div class="scale-explanation">
+          <h3>¿Por qué falta Fa en la serie ascendente?</h3>
+          <p>Desde Do, seis quintas ascendentes producen Do–Sol–Re–La–Mi–Si–Fa♯. Para obtener los siete grados de la escala diatónica de Do, necesitamos en cambio <strong>Fa–Do–Sol–Re–La–Mi–Si</strong>: Fa procede de una quinta descendente. Cada intervalo se reduce a una sola octava para comparar las alturas.</p>
+          <p>En nuestro modelo, <strong>La4 = 440 Hz</strong> es la referencia. Por ello Do4 se obtiene mediante la relación pitagórica inversa de tres quintas: <strong>Do4 = 440 · 16/27 Hz</strong>. El monocordio de la sección anterior mantiene su cuerda fundamental en La3 = 220 Hz.</p>
+        </div>
+      </details>
+      <details class="pedagogical-note" id="nota-coma">
+        <summary>¿Por qué Fa♯ y Sol♭ suenan diferentes?</summary>
+        <aside class="comma-card" id="comma-explanation">
+          <h3>La coma pitagórica</h3>
+          <p>Fa♯, obtenido mediante seis quintas ascendentes desde Do, es más agudo que Sol♭, obtenido mediante seis quintas descendentes. La diferencia es una coma pitagórica:</p>
+          <div class="comma-equation">(3/2)¹² ÷ 2⁷ = 531441/524288</div>
+          <strong id="comma-cents">≈ 23,46 ¢</strong>
+          <p>Escucha las dos notas con el botón «Fa♯ frente a Sol♭». Son enarmónicas en el temperamento igual, pero no en la afinación pitagórica.</p>
+        </aside>
+      </details>
+    </section>
+
+    <section class="harmony-panel iceberg-means" id="laboratorio-medias" aria-labelledby="means-heading">
+      <div class="harmony-lead">
+        <p class="eyebrow">04 · Comparar proporciones</p>
+        <h2 id="means-heading">Las medias musicales: 6 : 8 : 9 : 12</h2>
+        <p>Entre dos extremos hay distintas formas de encontrar un punto intermedio. Descubre, escucha y compara la media armónica y la aritmética.</p>
+      </div>
       <article class="harmony-module" aria-labelledby="means-title">
         <div class="harmony-module-title">
           <span class="harmony-index">II</span>
           <div>
             <h3 id="means-title">Las dos medias: 6 : 8 : 9 : 12</h3>
             <p>Entre los extremos 6 y 12 aparecen dos puntos distintos: la <strong>media armónica, 8</strong>, y la <strong>media aritmética, 9</strong>. Podemos verlos, escuchar su diferencia y llevar cada proporción al puente móvil.</p>
-          </div>
-        </div>
-        <div class="harmony-equations" aria-label="Demostración de las medias">
-          <div>
-            <span>Media armónica</span>
-            <strong>H = 2 × 6 × 12 / (6 + 12) = 8</strong>
-          </div>
-          <div>
-            <span>Media aritmética</span>
-            <strong>A = (6 + 12) / 2 = 9</strong>
           </div>
         </div>
         <div class="harmony-layout">
@@ -341,7 +263,163 @@
           <span><strong>8 → 9:</strong> tono (9:8)</span>
         </div>
       </article>
-      <p class="harmony-note"><strong>Convención acústica:</strong> la fundamental es La3 = 220 Hz. Así, en la tetraktys suena 220, 440, 660 y 880 Hz; en la serie 6:8:9:12 suena 220, 293,33…, 330 y 440 Hz. Es una demostración didáctica de proporciones, no una reconstrucción histórica de un experimento atribuido a Pitágoras.</p>
+      <details class="pedagogical-note" id="nota-medias">
+        <summary>¿Cómo se calculan las dos medias?</summary>
+        <div class="pedagogical-body">
+          <p>Entre 6 y 12, la <strong>media armónica</strong> es 8 y la <strong>media aritmética</strong> es 9.</p>
+        <div class="harmony-equations" aria-label="Demostración de las medias">
+          <div>
+            <span>Media armónica</span>
+            <strong>H = 2 × 6 × 12 / (6 + 12) = 8</strong>
+          </div>
+          <div>
+            <span>Media aritmética</span>
+            <strong>A = (6 + 12) / 2 = 9</strong>
+          </div>
+        </div>
+          <p>En frecuencias, 6:12 forman una octava; 6:8, una cuarta; 6:9, una quinta; y 8:9, un tono. Las longitudes correspondientes del monocordio son inversamente proporcionales.</p>
+        </div>
+      </details>
+    </section>
+
+    <section class="scale-panel notation-advanced" id="laboratorio-notacion" aria-labelledby="notation-title">
+      <div class="scale-heading">
+        <p class="eyebrow">05 · Profundizar · Notación</p>
+        <h2 id="notation-title">Afinación y escritura microtonal</h2>
+        <p>El sonido y el signo con el que lo escribimos no son lo mismo. Compara la escritura histórica con Alevi Microtonal v0.5 y escucha desplazamientos de altura exactos.</p>
+      </div>
+      <details class="pedagogical-note" id="nota-cents">
+        <summary>¿Qué es un cent?</summary>
+        <div class="pedagogical-body">
+          <p>Un <strong>cent (¢)</strong> es una unidad logarítmica de comparación de alturas. En el temperamento igual de doce semitonos, 100 cents equivalen a un semitono, 200 a un tono y 1200 a una octava.</p>
+          <p>Las desviaciones de la escala se miden frente a ese temperamento, sin cambiar las frecuencias pitagóricas.</p>
+        </div>
+      </details>
+      <div class="notation-settings" aria-label="Opciones de escritura musical">
+        <div class="notation-control">
+          <label for="notation-mode">Representación de la escala</label>
+          <select id="notation-mode">
+            <option value="exact">Pitagórica: alteración usual + cents totales</option>
+            <option value="contemporary">Contemporánea: fracción + cents residuales</option>
+          </select>
+        </div>
+        <div class="notation-control">
+          <label for="fraction-system">Fracción de tono representada</label>
+          <select id="fraction-system">
+            <option value="semitone">Semitono · ½ tono · 100 ¢</option>
+            <option value="quarter" selected>Cuarto de tono · ¼ tono · 50 ¢</option>
+            <option value="sixth">Sexto de tono · ⅙ tono · 33,33… ¢</option>
+            <option value="eighth">Octavo de tono · ⅛ tono · 25 ¢ (signo explícito)</option>
+            <option value="twelfth">Doceavo de tono · ¹⁄₁₂ tono · 16,67… ¢</option>
+          </select>
+        </div>
+        <div class="notation-control">
+          <label for="notation-typeface">Estilo de alteraciones</label>
+          <select id="notation-typeface">
+            <option value="alevi-v05" selected>Alevi Microtonal v0.5 · experimental</option>
+            <option value="historical">Leland / Stein–Zimmermann · histórico</option>
+          </select>
+        </div>
+      </div>
+      <p id="notation-mode-description" class="notation-interpretation">La escala conserva su altura pitagórica; las cifras sobre el pentagrama indican desviaciones totales respecto de 12-TET.</p>
+      <p id="notation-engine-state" class="notation-engine-status" data-expected-build="PIT-20261010-V05" role="status" aria-live="polite">
+        Motor de alteraciones SVG: esperando confirmación de carga · PIT-20261010-V05.
+      </p>
+      <div class="score-block">
+        <div class="score-heading">
+          <h3>La escala escrita en un pentagrama</h3>
+          <span>A4 = 440 Hz · clave de sol</span>
+        </div>
+        <div class="score-scroll" tabindex="0" role="region" aria-label="Pentagrama desplazable horizontalmente">
+          <svg id="pythagorean-score" viewBox="0 0 760 320" role="img" aria-label="Pentagrama con las notas seleccionadas y sus desviaciones en cents"></svg>
+        </div>
+        <p class="score-legend"><strong>Lectura:</strong> el número <strong>total</strong> expresa la desviación de altura respecto de la nota cromática en 12-TET con La4 = 440 Hz. En modo contemporáneo, las alteraciones vectoriales añaden un desplazamiento fijo y el valor <strong>res.</strong> es la corrección restante: <strong>total = semitonos + fracción + residual</strong>. Los dibujos no cambian la afinación; para una altura pitagórica prevalece siempre su razón exacta.</p>
+      </div>
+      <p class="notation-typeface-credit">
+        Grabado musical: <strong>Leland</strong> (licencia
+        <a href="./fonts/OFL-Leland.txt">SIL OFL 1.1</a>), con alternativas
+        microtonales documentadas en <strong>Ekmelos 72-EDO</strong>
+        (<a href="./fonts/OFL-Ekmelos.txt">licencia</a>).
+        Si falta la fuente, el laboratorio conserva los trazos SVG y la afinación exacta.
+      </p>
+
+      <p class="font-status" role="status">El estilo Alevi v0.5 emplea sus glifos originales y fusiones desde la nota natural; Leland conserva claves y cabezas. Si falta Alevi, se utiliza la grafía histórica de respaldo.</p>
+      <details class="pedagogical-note" id="nota-alevi">
+        <summary>¿Cómo se leen las alteraciones de Alevi Microtonal?</summary>
+        <div class="pedagogical-body">
+          <p>Cada glifo expresa una desviación respecto de la <strong>nota natural</strong> en un perfil donde un tono tiene 200 cents. Las fusiones equivalen a un único desplazamiento: no se aplican modificaciones sucesivas.</p>
+          <p>Una desviación de +64 cents, por ejemplo, puede indicarse con el glifo de +50 cents y un residuo de +14 cents. El signo jamás determina el sonido: cambiar de notación no altera su frecuencia.</p>
+          <p>Los códigos privados U+F000–U+F023 son propios de esta fuente experimental, no códigos SMuFL.</p>
+        </div>
+      </details>
+      <div class="fraction-lab" id="fraction-lab" aria-labelledby="fraction-lab-title">
+        <div class="fraction-intro">
+          <h3 id="fraction-lab-title">Explorador de escritura microtonal</h3>
+          <p>Demostración independiente: modifica la altura del Do4 temperado, observa cómo se descompone en un glifo fraccionario y un ajuste residual en cents, y escucha la frecuencia resultante.</p>
+        </div>
+        <div class="fraction-preset-row" role="group" aria-label="Alteraciones de referencia en cents">
+          <button type="button" data-offset="-100" data-unit="semitone">♭ −100 ¢</button>
+          <button type="button" data-offset="100" data-unit="semitone">♯ +100 ¢</button>
+          <button type="button" data-offset="-50" data-unit="quarter">−¼ tono</button>
+          <button type="button" data-offset="50" data-unit="quarter">+¼ tono</button>
+          <button type="button" data-offset="-33.33333333333333" data-unit="sixth">−⅙ tono</button>
+          <button type="button" data-offset="33.33333333333333" data-unit="sixth">+⅙ tono</button>
+          <button type="button" data-offset="-25" data-unit="eighth">−⅛ tono</button>
+          <button type="button" data-offset="25" data-unit="eighth">+⅛ tono</button>
+          <button type="button" data-offset="-16.666666666666668" data-unit="twelfth">−¹⁄₁₂ tono</button>
+          <button type="button" data-offset="16.666666666666668" data-unit="twelfth">+¹⁄₁₂ tono</button>
+          <button type="button" data-offset="66.66666666666667" data-unit="sixth">+⅓ tono · fusión</button>
+          <button type="button" data-offset="-66.66666666666667" data-unit="sixth">−⅓ tono · fusión</button>
+          <button type="button" data-offset="133.33333333333334" data-unit="sixth">+⅔ tono · fusión</button>
+          <button type="button" data-offset="-133.33333333333334" data-unit="sixth">−⅔ tono · fusión</button>
+          <button type="button" data-offset="150" data-unit="quarter">+¾ tono · fusión</button>
+          <button type="button" data-offset="-150" data-unit="quarter">−¾ tono · fusión</button>
+          <button type="button" data-offset="64" data-unit="quarter">+64 ¢ (¼ +14)</button>
+          <button type="button" data-offset="0" data-unit="quarter">0 ¢</button>
+        </div>
+        <div class="fraction-workbench">
+          <div class="fraction-slider">
+            <label for="demo-cents">Alteración total del Do4 temperado <strong id="demo-cents-label">+64,00 ¢</strong></label>
+            <input id="demo-cents" type="range" min="-260" max="260" step="0.1" value="64">
+            <p>Referencia: Do4 = 261,63 Hz (12-TET, La4 = 440 Hz). El ajuste en cents es respecto de esa nota, no del Do pitagórico.</p>
+            <button type="button" class="primary" id="play-demo-note">♪ Escuchar ejemplo</button>
+            <p id="demo-sound-status" role="status" aria-live="polite"></p>
+          </div>
+          <div class="fraction-preview">
+            <svg id="fraction-score" viewBox="0 0 480 240" role="img" aria-label="Pentagrama con la notación y corrección residual de la nota de ejemplo"></svg>
+            <div class="fraction-metrics" aria-live="polite">
+              <span>Signos: <strong id="demo-symbol-name">¼ tono ascendente</strong></span>
+              <span>Desplazamiento indicado: <strong id="demo-symbol-cents">+50,00 ¢</strong></span>
+              <span>Corrección adicional: <strong id="demo-residual">+14,00 ¢</strong></span>
+              <span>Frecuencia: <strong id="demo-frequency">271,48 Hz</strong></span>
+            </div>
+          </div>
+        </div>
+        <p class="fraction-license">Escritura experimental Alevi Microtonal v0.5: 200 cents por tono, fracciones exactas, glifos referidos a la <strong>nota natural</strong> y códigos privados que no pertenecen a SMuFL. La fuente no ha recibido aprobación editorial definitiva; la licencia está pendiente de auditoría. Puede cambiarse al modo histórico Leland/Stein–Zimmermann sin modificar el sonido ni los valores matemáticos.</p>
+      </div>
+      <section class="notation-key" aria-labelledby="notation-key-title">
+        <h3 id="notation-key-title">Muestrario de alteraciones</h3>
+        <p>Compara el aspecto de las cinco subdivisiones del laboratorio. En <strong>Alevi v0.5</strong>, los glifos privados U+F000–U+F023 expresan desviaciones <strong>desde la nota natural</strong>; no son signos SMuFL. El modo histórico mantiene los signos convencionales Stein–Zimmermann y las extensiones anteriores.</p>
+        <div class="notation-key-scroll" tabindex="0" role="region" aria-label="Tabla horizontal de signos microtonales">
+          <svg id="notation-key-svg" viewBox="0 0 960 245" role="img" aria-label="Muestrario de cinco fracciones de tono y sus alteraciones descendentes y ascendentes"></svg>
+        </div>
+        <p class="notation-key-hint">Los valores ±33 y ±17 de la lámina están redondeados: aquí ⅙ = 33⅓ ¢ y ¹⁄₁₂ = 16⅔ ¢ exactamente.</p>
+      </section>
+      <details class="alevi-corpus" id="alevi-v05-corpus">
+        <summary>Explorar los 41 glifos de Alevi Microtonal v0.5</summary>
+        <p>Versión experimental del taller: cinco alteraciones convencionales y 36 microtonales. Cada glifo se interpreta desde la nota natural. Las fracciones y sus cents son parte de este perfil, no de un estándar universal.</p>
+        <div id="alevi-corpus-grid" class="alevi-corpus-grid" aria-label="Corpus completo de alteraciones Alevi v0.5">
+          <p>Cargando el muestrario de la fuente…</p>
+        </div>
+      </details>
+      <details class="pedagogical-note" id="nota-fisica">
+        <summary id="formula-title">¿Cuál es el fundamento físico del monocordio?</summary>
+        <div class="pedagogical-body">
+          <p>Si la tensión y la densidad lineal de una cuerda permanecen constantes, su frecuencia fundamental es inversamente proporcional a su longitud vibrante:</p>
+          <div class="equation" aria-label="f prima dividido entre f cero es igual a L dividido entre L prima, igual a uno dividido entre x">f′ / f₀ = L / L′ = 1 / x</div>
+          <p><em>x</em> es la fracción de cuerda que vibra y <em>f₀</em> la frecuencia de la cuerda completa, aquí 220 Hz. El sonido se genera digitalmente a partir de las frecuencias calculadas.</p>
+        </div>
+      </details>
     </section>
 
   </main>

@@ -1,7 +1,7 @@
 import {
   BASE_FREQUENCY, INTERVALS, INTERVAL_GROUPS,
   normalizeFraction, describeFraction
-} from "./core.mjs?v=TYPO-20261010-01";
+} from "./core.mjs?v=PIT-20261010-V05";
 
 const $ = id => document.getElementById(id);
 const svg = $("monochord");
@@ -20,7 +20,7 @@ function renderIntervalCatalog() {
     const items = INTERVALS.filter(item => item.group === group.id);
     const panel = document.createElement("details");
     panel.className = "ratio-group";
-    panel.open = ["fundamentales","escala"].includes(group.id);
+    panel.open = group.id === "fundamentales";
     const summary = document.createElement("summary");
     summary.textContent = group.label + " (" + items.length + ")";
     panel.append(summary);

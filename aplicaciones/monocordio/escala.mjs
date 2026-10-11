@@ -1,9 +1,9 @@
 import {
   DIATONIC_STEPS, PYTHAGOREAN_COMMA, makeCollection,
   nextFifth, STEP_MIN, STEP_MAX
-} from "./escala-core.mjs?v=TYPO-20261010-01";
-import {notationForNote} from "./notacion-core.mjs?v=TYPO-20261010-01";
-import {renderNoteAccidentals} from "./notacion-glyphs.mjs?v=TYPO-20261010-01";
+} from "./escala-core.mjs?v=PIT-20261010-V05";
+import {notationForNote} from "./notacion-core.mjs?v=PIT-20261010-V05";
+import {renderNoteAccidentals} from "./notacion-glyphs.mjs?v=PIT-20261010-V05";
 
 const el = id => document.getElementById(id);
 const svg = el("pythagorean-score");
@@ -21,6 +21,8 @@ let scheduledTimeout = null;
 let notationMode = "exact";
 let notationSubdivision = "quarter";
 let musicFontReady = false;
+let aleviFontReady = false;
+let aleviTypefaceSelected = true;
 
 function centsLabel(cents) {
   if (Math.abs(cents) < 0.05) return "0,00 ¢";
@@ -72,7 +74,8 @@ function drawScore(notes) {
     // el módulo tipográfico se usa solo como presentación, nunca para afinar.
     renderNoteAccidentals(svg,representation,{
       right:x-38,y,scale:.82,color:"#e8d3b8",showNatural:false,
-      fontReady:musicFontReady
+      fontReady:musicFontReady,
+      aleviReady:aleviTypefaceSelected && aleviFontReady
     });
     svg.append(svgElement("line",{x1:x+10,y1:y,x2:x+10,y2:y-38,
       stroke:"#f6eee3","stroke-width":2.3}));
@@ -265,5 +268,12 @@ window.addEventListener("monocordio-notation-change",event=>{
   if(!["exact","contemporary"].includes(requestedMode))return;
   notationMode=requestedMode;
   notationSubdivision=requestedSystem;
+  aleviTypefaceSelected=event.detail?.typeface==="alevi-v05";
+  aleviFontReady=event.detail?.aleviReady===true;
+  render();
+});
+
+window.addEventListener("monocordio-alevi-font-ready",event=>{
+  aleviFontReady=event.detail?.ready===true;
   render();
 });
