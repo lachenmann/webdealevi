@@ -20,7 +20,7 @@ function renderIntervalCatalog() {
     const items = INTERVALS.filter(item => item.group === group.id);
     const panel = document.createElement("details");
     panel.className = "ratio-group";
-    panel.open = ["fundamentales","escala"].includes(group.id);
+    panel.open = group.id === "fundamentales";
     const summary = document.createElement("summary");
     summary.textContent = group.label + " (" + items.length + ")";
     panel.append(summary);

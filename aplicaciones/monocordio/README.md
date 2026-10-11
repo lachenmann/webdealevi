@@ -1,6 +1,6 @@
 ## Organización editorial por capas («iceberg») para el taller
 
-La página avanza por complejidad creciente: **01 monocordio** (experimentar), **02 tetraktys** (reconocer relaciones), **03 escala** (construir por quintas), **04 medias musicales** (comparar 6:8:9:12) y **05 notación microtonal** (cents, residuos, escritura y 41 glifos Alevi v0.5).
+El catálogo del monocordio abre por defecto solo las consonancias fundamentales; las familias de intervalos de mayor complejidad permanecen cerradas. La página avanza por complejidad creciente: **01 monocordio** (experimentar), **02 tetraktys** (reconocer relaciones), **03 escala** (construir por quintas), **04 medias musicales** (comparar 6:8:9:12) y **05 notación microtonal** (cents, residuos, escritura y 41 glifos Alevi v0.5).
 
 Las explicaciones usan elementos HTML nativos `<details>` con `<summary>` inicialmente cerrados: longitud vibrante, tetraktys, quinta, Fa, coma pitagórica, cálculo de medias, atribución histórica, cents, glifos y fundamento físico. Así se reduce el texto visible, sin esconder los controles de experimentación.
 

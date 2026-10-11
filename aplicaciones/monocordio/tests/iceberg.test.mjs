@@ -64,6 +64,13 @@ test("notas pedagógicas nativas, cerradas por defecto y navegables por teclado"
   assert.match(css,/\.pedagogical-note summary:focus-visible/);
 });
 
+test("sólo las consonancias fundamentales se despliegan en la superficie",()=>{
+  const player=readFileSync(new URL("monocordio.mjs",root),"utf8");
+  assert.match(player,/panel\.open = group\.id === "fundamentales";/);
+  assert.match(html,/Elige un intervalo para escuchar/);
+  assert.match(html,/abre las otras familias de intervalos/);
+});
+
 test("la versión iceberg mantiene Alevi v0.5 y el modelo acústico intactos",()=>{
   assert.match(html,/PIT-20261010-V05/);
   assert.match(html,/value="alevi-v05" selected/);
