@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alevi Microtonal v0.2 — comparador de Canva</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f6f2ea;color:#302926}
+*{box-sizing:border-box}
+body{margin:0}
+main{max-width:1140px;margin:auto;padding:30px 22px 45px}
+h1,h2{font-family:Georgia,serif;font-weight:normal}
+h1{font-size:clamp(27px,4vw,42px);margin:0 0 8px}
+h2{font-size:24px;color:#69472f;margin:27px 0 12px}
+p{line-height:1.55;color:#655950;max-width:900px}
+small{font-size:13px}
+table{border-collapse:collapse}
+nav a,a{color:#5d3c25}
+header{border-bottom:1px solid #c5b7a7;padding-bottom:20px;margin-bottom:24px}
+.alert{background:#fff8ef;border:1px solid #be9471;border-radius:9px;padding:13px 15px;margin:18px 0}
+.alert strong{color:#7a3526}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.card{background:#fff;border:1px solid #cfc1b1;border-radius:11px;padding:15px;min-width:0}
+.card[data-review="warning"]{border-color:#b47656}
+.card h3{margin:0;font-size:18px;font-weight:640}
+.card p{margin:6px 0 8px;font-size:13px}
+.figure{display:flex;gap:18px;align-items:center;min-height:170px}
+.figure img{width:120px;height:158px;object-fit:contain;flex-shrink:0}
+.figure .staff{position:relative;min-width:165px;width:100%;height:109px;background:repeating-linear-gradient(to bottom,transparent 0,transparent 15px,#beb6ac 15px,#beb6ac 16px,transparent 16px,transparent 19px);background-size:100% 95px;background-repeat:no-repeat;background-position:0 18px}
+.staff img{width:58px;height:99px;position:absolute;left:18px;top:2px}
+.notehead{display:block;position:absolute;left:115px;top:47px;border-radius:50%;width:19px;height:12px;transform:rotate(-20deg);background:#302926}
+.notehead:before{content:"";position:absolute;right:1px;bottom:7px;width:2px;height:43px;background:#302926}
+.frac{color:#875a3f;font-weight:600;font-variant-numeric:tabular-nums}
+.advisory{font-size:13px;color:#783c2f;background:#fff4e9;padding:8px;border-radius:6px}
+footer{font-size:12px;padding-top:24px;color:#70665b}
+@media(max-width:690px){.grid{grid-template-columns:1fr}.figure img{width:95px}.figure .staff{min-width:130px}.staff img{width:50px}.notehead{left:95px}}
+@media print{main{padding:0}.card{break-inside:avoid}.grid{gap:8px}.alert{border:1px solid #777}}
+</style>
+</head>
+<body><main>
+<header>
+<p>ESFERAS MICROTONAL · ARCHIVO DE DISEÑO G2.2</p>
+<h1>Propuesta de Canva — Alevi Microtonal v0.2</h1>
+<p>Ocho símbolos editables recuperados del ZIP proporcionado por el autor.
+Los valores musicales se entienden dentro del perfil que define un tono
+como <strong>200 cents</strong>. Este muestrario no activa una nueva tipografía
+en el monocordio ni sustituye los signos convencionales de LilyPond.</p>
+<p><a href="README.md">Documentación y advertencias</a> ·
+<a href="REGISTRO_CANVA_NMA_v0.2.json">Valores exactos y estados (JSON)</a></p>
+<div class="alert"><strong>Atención:</strong> el cuarto de tono descendente está dibujado
+con panza cerrada (distinto del Stein–Zimmermann abierto aprobado); la
+morfología del sexto ascendente de una barra puede confundirse con un
+cuarto de tono histórico. Estas formas se incluyen fielmente para su
+evaluación, no para redefinir esas convenciones.</div>
+</header>
+<h2>Familias de alteraciones — ascendente y descendente</h2>
+<div class="grid">
+<article class="card"><h3>+¼ de tono</h3><p class="frac">+50 cents · <code>toneQuarterUp</code></p><div class="figure"><img src="toneQuarterUp.svg" alt="Un asta vertical y dos barras oblicuas"><div class="staff"><img src="toneQuarterUp.svg" alt=""><span class="notehead"></span></div></div><p>Comparación con el medio sostenido estándar E282.</p></article>
+<article class="card" data-review="warning"><h3>−¼ de tono</h3><p class="frac">−50 cents · <code>toneQuarterDown</code></p><div class="figure"><img src="toneQuarterDown.svg" alt="Bemol inverso de panza cerrada"><div class="staff"><img src="toneQuarterDown.svg" alt=""><span class="notehead"></span></div></div><p class="advisory">No sustituye al bemol inverso abierto Stein–Zimmermann E280.</p></article>
+<article class="card" data-review="warning"><h3>+⅙ de tono</h3><p class="frac">+100/3 cents · <code>toneSixthUp</code></p><div class="figure"><img src="toneSixthUp.svg" alt="Un asta vertical y una barra oblicua"><div class="staff"><img src="toneSixthUp.svg" alt=""><span class="notehead"></span></div></div><p class="advisory">Revisar semejanza con medio sostenido histórico de una barra (+¼).</p></article>
+<article class="card" data-review="warning"><h3>−⅙ de tono</h3><p class="frac">−100/3 cents · <code>toneSixthDown</code></p><div class="figure"><img src="toneSixthDown.svg" alt="Bemol inverso abierto"><div class="staff"><img src="toneSixthDown.svg" alt=""><span class="notehead"></span></div></div><p class="advisory">Comprobar distinción a escala de pauta respecto de −¼.</p></article>
+<article class="card"><h3>+⅛ de tono</h3><p class="frac">+25 cents · <code>toneEighthUp</code></p><div class="figure"><img src="toneEighthUp.svg" alt="Asta y dos barras con remates en escuadra"><div class="staff"><img src="toneEighthUp.svg" alt=""><span class="notehead"></span></div></div><p>Nuevo candidato con diferenciación por remates.</p></article>
+<article class="card"><h3>−⅛ de tono</h3><p class="frac">−25 cents · <code>toneEighthDown</code></p><div class="figure"><img src="toneEighthDown.svg" alt="Bemol abierto con barra alta"><div class="staff"><img src="toneEighthDown.svg" alt=""><span class="notehead"></span></div></div><p>Nuevo candidato de la familia del bemol inverso.</p></article>
+<article class="card"><h3>+¹⁄₁₂ de tono</h3><p class="frac">+50/3 cents · <code>toneTwelfthUp</code></p><div class="figure"><img src="toneTwelfthUp.svg" alt="Asta con tres barras oblicuas"><div class="staff"><img src="toneTwelfthUp.svg" alt=""><span class="notehead"></span></div></div><p>Tres barras, lectura exacta definida por el registro.</p></article>
+<article class="card"><h3>−¹⁄₁₂ de tono</h3><p class="frac">−50/3 cents · <code>toneTwelfthDown</code></p><div class="figure"><img src="toneTwelfthDown.svg" alt="Bemol inverso abierto con dos barras altas"><div class="staff"><img src="toneTwelfthDown.svg" alt=""><span class="notehead"></span></div></div><p>Candidato para la familia descendente.</p></article>
+</div>
+<footer>Estudio documental G2.2 · no es la fuente musical publicada · los SVG se preservan sin modificar · licencia específica por confirmar antes de liberar el paquete.</footer>
+</main></body></html>
