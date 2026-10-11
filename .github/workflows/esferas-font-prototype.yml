@@ -127,6 +127,20 @@ jobs:
             --font /tmp/EsferasMicrotonal-G22-Candidates.ttf \
             --out /tmp/esferas-g22-raster-qa.json
           test -s /tmp/esferas-g22-raster-qa.json
+      - name: Auditar propuesta de Canva (fuentes exactas + SVG y TTF regenerados)
+        working-directory: aplicaciones/monocordio/fuente-propia/v02
+        run: python3 -m unittest -v test_canva_archive.py
+      - name: Generar solamente el espécimen SVG de Canva para revisión
+        shell: bash
+        run: |
+          set -euo pipefail
+          SOURCE="aplicaciones/monocordio/fuente-propia/v02/propuestas-canva/alevi-v02"
+          TMP="$(mktemp -d)"
+          trap 'rm -rf "$TMP"' EXIT
+          cp "$SOURCE/construir.py" "$SOURCE/base-v01.json" "$TMP/"
+          python3 "$TMP/construir.py"
+          cp "$TMP/muestra-microtonal.svg" /tmp/esferas-canva-estudio-v02.svg
+          test -s /tmp/esferas-canva-estudio-v02.svg
       - name: Conservar únicamente vista y manifiesto (NO TTF)
         uses: actions/upload-artifact@v4
         with:
@@ -140,6 +154,8 @@ jobs:
             /tmp/EsferasMicrotonal-LilyPond-G1.json
             /tmp/esferas-lilypond-g2.png
             /tmp/EsferasMicrotonal-G2-LilyPond.json
+            /tmp/esferas-canva-estudio-v02.svg
+            aplicaciones/monocordio/fuente-propia/v02/propuestas-canva/alevi-v02/REGISTRO_CANVA_NMA_v0.2.json
             /tmp/esferas-g22/*.png
             /tmp/EsferasMicrotonal-G22-Candidates.json
             /tmp/esferas-g22-raster-qa.json
