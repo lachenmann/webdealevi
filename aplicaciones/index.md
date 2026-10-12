@@ -4,6 +4,17 @@ description: "Instrumentos y aplicaciones digitales de Alevi Peña."
 page-layout: full
 ---
 
+<style>
+.application-list { gap: 2rem; }
+.application-entry > p { margin: 0; }
+.application-entry .application-description {
+  margin: 0.75rem 0.2rem 0;
+  color: var(--alevi-muted, #c2cbd2);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+</style>
+
 <div class="section-index">
 
 <header class="section-index-intro">
@@ -14,46 +25,31 @@ page-layout: full
 <section class="section-index-group" aria-labelledby="aplicaciones-heading">
 <h2 id="aplicaciones-heading" class="section-index-group-title">Aplicaciones</h2>
 
-<div class="section-button-list">
-<a class="section-button" href="/aplicaciones/ruedabruniana/rueda_luliana_bruniana_simplificada.html" target="_blank" rel="noopener">
+<div class="section-button-list application-list">
+
+<article class="application-entry">
+<a class="section-button" href="/aplicaciones/ruedabruniana/rueda_luliana_bruniana_simplificada.html" target="_blank" rel="noopener" aria-describedby="rueda-description">
 <span class="section-button-text">
 <span class="section-button-title">Rueda Bruniana: De Umbris Idearum</span>
 <span class="section-button-meta">Aplicación interactiva · abre en una nueva pestaña</span>
 </span>
 <span class="section-button-arrow" aria-hidden="true">→</span>
 </a>
-<a class="section-button" href="https://lachenmann.github.io/webdealevi/aplicaciones/monocordio/" target="_blank" rel="noopener">
+<p id="rueda-description" class="application-description">Explora el arte de la memoria y la combinación de símbolos con cinco ruedas concéntricas inspiradas en <em>De Umbris Idearum</em> de Giordano Bruno.</p>
+</article>
+
+<article class="application-entry">
+<a class="section-button" href="https://lachenmann.github.io/webdealevi/aplicaciones/monocordio/" target="_blank" rel="noopener" aria-describedby="monocordio-description">
 <span class="section-button-text">
 <span class="section-button-title">Monocordio Pitagórico: La música de las esferas</span>
 <span class="section-button-meta">Instrumento interactivo · abre en una nueva pestaña</span>
 </span>
 <span class="section-button-arrow" aria-hidden="true">→</span>
 </a>
+<p id="monocordio-description" class="application-description">Experimenta con una cuerda y un puente móvil para descubrir cómo la longitud y las proporciones se convierten en frecuencias e intervalos musicales.</p>
+</article>
+
 </div>
 </section>
-
-<section class="section-index-group" aria-labelledby="rueda-bruniana-heading">
-<h2 id="rueda-bruniana-heading" class="section-index-group-title">Rueda Bruniana</h2>
-
-<div class="section-index-copy">
-<p><strong>Instrumento de experimentación combinatoria y mnemotécnica.</strong> Está inspirado en <em>De Umbris Idearum</em> de Giordano Bruno y conserva su HTML/JS independiente fuera del layout de Quarto.</p>
-
-<p>La interfaz dispone cinco ruedas concéntricas que pueden girarse de forma independiente. Los anillos trabajan con conjuntos latino, griego, hebreo, rúnico y zodiacal y se alinean bajo un indicador central para producir combinaciones.</p>
-
-<ul>
-<li>panel de correspondencias asociado a la combinación activa;</li>
-<li>glosario consultable de símbolos y alfabetos;</li>
-<li>controles para generar combinaciones y guardar resultados dentro de la interfaz;</li>
-<li>capa sonora activable;</li>
-<li>panel de lectura titulado <em>El Tratado</em>.</li>
-</ul>
-
-<p><strong>Alcance editorial.</strong> La herramienta debe entenderse como instrumento digital inspirado en materiales brunianos y combinatorios, no como facsímil, reconstrucción histórica exacta ni edición crítica digital de <em>De Umbris Idearum</em>.</p>
-
-<p><strong>Requisitos técnicos.</strong> Se ejecuta en un navegador web moderno. El HTML carga Tailwind CSS desde CDN y tipografías de Google Fonts, por lo que parte de su presentación depende de recursos externos disponibles en red.</p>
-</div>
-</section>
-
-<p class="section-index-note">La ruta ejecutable se mantiene estable en <code>/aplicaciones/ruedabruniana/rueda_luliana_bruniana_simplificada.html</code>. La migración no modifica el código de la aplicación.</p>
 
 </div>
