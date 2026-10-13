@@ -1,0 +1,130 @@
+/* Tipografía editorial final. Fuentes originales bajo SIL OFL 1.1.
+ * Avisos y licencias: ./fonts/OFL-Leland.txt y ./fonts/OFL-Ekmelos.txt.
+ * Carga local: no depender de CDN ni de fuentes instaladas en el sistema.
+ */
+@font-face {
+  font-family: "LelandMonocordio";
+  src: url("./fonts/Leland.otf") format("opentype");
+  font-weight: normal; font-style: normal; font-display: block;
+}
+@font-face {
+  font-family: "Ekmelos72Monocordio";
+  src: url("./fonts/Ekmelos72edo.woff2") format("woff2");
+  font-weight: normal; font-style: normal; font-display: block;
+}
+.monocordio-music-clef,
+.monocordio-music-notehead,
+.monocordio-music-accidental {
+  font-family: "LelandMonocordio", serif;
+  font-weight: normal;
+  font-style: normal;
+}
+.notation-typeface-credit {
+  margin: 8px 0 12px;
+  color: #c0b6b5;
+  font-size: .78rem;
+  line-height: 1.55;
+}
+.notation-typeface-credit a { color: #f0d3a7; text-decoration: underline; }
+
+/* Monocordio v1.3 · notación vectorial sin dependencias de fuente externas. */
+.notation-settings{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0}
+.notation-control{display:flex;flex-direction:column;gap:8px}
+.notation-control label{color:#f1d4a5;font-size:.83rem;letter-spacing:.015em}
+.notation-control select{width:100%;min-width:0;background:#211a24;color:var(--text);border:1px solid #91704c;border-radius:9px;padding:12px 9px}
+.notation-interpretation{font-size:.85rem;color:#bcb3b9;line-height:1.55;margin:7px 0 17px;border-left:2px solid #ab8a5f;padding-left:12px}
+.fraction-lab{background:#15131a;border:1px solid #55443d;border-radius:13px;margin:22px 0;padding:19px 22px}
+.fraction-intro h3{font-size:1.35rem;margin:0;color:#f8dba9}
+.fraction-intro p{margin:9px 0 18px;font-size:.88rem;max-width:780px;color:#c9bcc0}
+.fraction-preset-row{display:flex;flex-wrap:wrap;gap:8px}
+.fraction-preset-row button{border-radius:8px;border:1px solid #785d49;color:#ffe2af;background:#302630;padding:7px 14px;font-weight:600}
+.fraction-preset-row button:hover,.fraction-preset-row button[aria-pressed="true"]{background:#5a3e30;border-color:#cba36e}
+.fraction-workbench{display:grid;grid-template-columns:minmax(185px,1fr) minmax(280px,1.4fr);gap:24px;padding-top:21px}
+.fraction-slider label{display:flex;justify-content:space-between;gap:9px;align-items:center;flex-wrap:wrap;font-size:.87rem}
+.fraction-slider label strong{font-variant-numeric:tabular-nums;color:#f3d49e}
+.fraction-slider input{display:block;width:100%;margin:21px 0 13px;accent-color:var(--gold)}
+.fraction-slider p{color:#c1b2b9;font-size:.82rem}
+.fraction-slider button{border:1px solid #a78b65;border-radius:9px;padding:11px 15px}
+.fraction-preview{background:#0d1014;border:1px solid #404449;border-radius:11px;padding:4px 12px 12px;min-width:0}
+#fraction-score{width:100%;max-width:480px;display:block;margin:auto}
+.fraction-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;margin:8px 0 0}
+.fraction-metrics span{color:#aaadb3;font-size:.77rem}
+.fraction-metrics strong{display:block;color:#e9ddc7;font-size:.92rem;font-variant-numeric:tabular-nums}
+.fraction-license{color:#b6a9ad;font-size:.78rem;margin:17px 0 0;line-height:1.55}
+@media(max-width:780px){
+  .notation-settings,.fraction-workbench{grid-template-columns:1fr}
+  .fraction-lab{padding:16px 13px}
+  .fraction-metrics{grid-template-columns:1fr 1fr}
+}
+
+.font-status{font-size:.78rem;color:#c4b6ae;margin:8px 0 14px;padding:7px 10px;
+  border-left:2px solid #9b825c;background:#1c191f;border-radius:0 5px 5px 0}
+
+/* Muestrario integrado de las cinco subdivisiones solicitadas. */
+.notation-key{margin:12px 0 23px;padding:18px 18px 12px;border:1px solid #675342;
+  border-radius:12px;background:#14141b}
+.notation-key h3{font-family:Georgia,serif;font-weight:normal;font-size:1.28rem;
+  color:#f6dba8;margin:0 0 8px}
+.notation-key > p{font-size:.86rem;color:#c9c0c0;line-height:1.6;
+  margin:0 0 14px}
+.notation-key strong{color:#f5debb}
+.notation-key-scroll{overflow-x:auto;overflow-y:hidden;border:1px solid #37393c;
+  border-radius:9px;background:#0f1218;scrollbar-color:#80674e #18141a}
+.notation-key-scroll svg{display:block;width:960px;min-width:960px;height:245px}
+.notation-key-scroll:focus-visible{outline:3px solid #74ceb5;outline-offset:2px}
+.notation-key .notation-key-hint{font-size:.8rem;opacity:.9;margin:11px 0 0}
+@media(max-width:780px){
+ .notation-key{padding:14px 9px}
+}
+
+/* Confirmación de versión: evita confundir HTML nuevo con JS obsoleto en la caché. */
+.notation-engine-status {
+  border:1px solid #715d49;border-radius:8px;
+  background:#251d20;padding:8px 12px;color:#f2d4a2;
+  margin:9px 0 16px;font-size:.83rem;line-height:1.55
+}
+.notation-engine-status[data-ready="true"] {
+  border-color:#426a5b;color:#b0dec9;background:#18251f
+}
+
+
+/* Alevi v0.5: se usan los contornos ORIGINALES del TTF, sin reconstruir glifos. */
+@font-face {
+  font-family:"AleviMicrotonalTrial";
+  src:url("./fonts/alevi-v05/AleviMicrotonal-V05.ttf") format("truetype");
+  font-weight:normal;
+  font-style:normal;
+  font-display:block;
+}
+.monocordio-alevi-accidental,
+.alevi-corpus-ink {
+  font-family:"AleviMicrotonalTrial";
+  font-style:normal;
+  font-weight:normal;
+  font-variant-ligatures:none;
+}
+.alevi-corpus {
+  margin:16px 0 25px;
+  padding:15px 16px;
+  border:1px solid #65513f;
+  border-radius:12px;
+  background:#19171d;
+}
+.alevi-corpus summary {
+  cursor:pointer;
+  color:#f1d4a5;
+  font-weight:650;
+}
+.alevi-corpus summary:focus-visible { outline:2px solid #93d9b8; outline-offset:4px }
+.alevi-corpus > p { color:#c8c1bf;font-size:.86rem;line-height:1.6 }
+.alevi-corpus-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px}
+.alevi-corpus-item {text-align:center;display:grid;gap:4px;justify-items:center;padding:11px 7px;
+  background:#111419;border:1px solid #4b4245;border-radius:9px;min-width:0}
+.alevi-corpus-ink {display:block;font-size:70px;line-height:1.4;color:#f0dbbc;min-height:94px}
+.alevi-corpus-item strong {font-size:.85rem;color:#f1d7b2}
+.alevi-corpus-item small {color:#b0d5c4;font-size:.74rem;font-variant-numeric:tabular-nums}
+.alevi-corpus-code {font-size:.69rem;color:#aab1b8;font-family:ui-monospace,monospace}
+@media(max-width:780px) {
+  .alevi-corpus {padding:12px 9px}
+  .alevi-corpus-grid {grid-template-columns:repeat(auto-fit,minmax(110px,1fr))}
+}
