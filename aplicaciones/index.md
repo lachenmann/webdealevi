@@ -39,7 +39,7 @@ page-layout: full
 </article>
 
 <article class="application-entry">
-<a class="section-button" href="https://lachenmann.github.io/webdealevi/aplicaciones/monocordio/" target="_blank" rel="noopener" aria-describedby="monocordio-description">
+<a class="section-button" href="/aplicaciones/monocordio/" target="_blank" rel="noopener" aria-describedby="monocordio-description">
 <span class="section-button-text">
 <span class="section-button-title">Monocordio Pitagórico: La música de las esferas</span>
 <span class="section-button-meta">Instrumento interactivo · abre en una nueva pestaña</span>
