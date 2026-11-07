@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Telar — instrucciones</title>
+<meta name="description" content="Instrucciones de Telar: cómo se escriben los ritmos, los hilos, los campos y los procesos.">
+<link rel="stylesheet" href="./estilos.css">
+<script>
+  (function () {
+    var tema = null;
+    try { tema = localStorage.getItem('telar.tema'); } catch (e) { /* sin almacenamiento */ }
+    if (tema !== 'dark' && tema !== 'light') tema = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.dataset.theme = tema;
+  })();
+</script>
+</head>
+<body class="ayuda-pagina">
+<main class="ayuda-doc">
+  <p class="ayuda-volver"><a href="./index.html">← Volver a Telar</a></p>
+  <h1>Instrucciones de Telar</h1>
+  <p class="ayuda-entrada">Lo imprescindible, sobre todo lo que no se deduce a simple vista. Los ejemplos de ritmo y de campos los calcula Telar al abrir esta página.</p>
+
+  <nav aria-label="Contenido">
+    <ul class="ayuda-indice">
+      <li><a href="#inicio">Empezar</a></li>
+      <li><a href="#urdimbre">Compases y tempo</a></li>
+      <li><a href="#ritmos">Ritmos</a></li>
+      <li><a href="#hilos">Hilos</a></li>
+      <li><a href="#campos">Campos</a></li>
+      <li><a href="#procesos">Procesos</a></li>
+      <li><a href="#series">Series</a></li>
+      <li><a href="#matriz">Matrices rítmicas</a></li>
+      <li><a href="#salidas">Sonido y archivos</a></li>
+      <li><a href="#problemas">Si algo no sale</a></li>
+    </ul>
+  </nav>
+
+  <section id="inicio">
+    <h2>Empezar</h2>
+    <p>Telar tiene dos modos, arriba a la izquierda. <b>Partitura</b> genera una pieza completa; <b>Material</b> genera series, matrices y tablas para trabajar en otro programa o a mano. Los dos comparten el mismo proyecto.</p>
+    <ul>
+      <li><b>Nuevo</b> abre un proyecto casi vacío. <b>Abrir un ejemplo</b> carga una pieza ya armada, y es la forma más rápida de ver qué hace cada control.</li>
+      <li>El trabajo se guarda solo, pero únicamente en este navegador. Para conservarlo o llevarlo a otro equipo, descárgalo con <b>Proyecto</b> y recupéralo con <b>Abrir…</b>.</li>
+      <li><b>Deshacer</b> retrocede por cambios terminados: un campo de texto cuenta como un cambio cuando sales de él.</li>
+      <li><b>Semilla</b> solo afecta a lo que tiene azar: subdivisión, fusión, rarefacción y las series generadas. Con la misma semilla, la pieza sale idéntica.</li>
+    </ul>
+  </section>
+
+  <section id="urdimbre">
+    <h2>Compases y tempo</h2>
+    <p>El ciclo de compases se repite hasta completar la pieza: <code>4/4 3/8 3/10</code> con 7 compases da 4/4, 3/8, 3/10, 4/4, 3/8, 3/10, 4/4.</p>
+    <p><b>Compases irracionales.</b> Un denominador que no es potencia de 2 es irracional. <code>3/10</code> dura exactamente tres décimos de redonda, y se escribe como tres corcheas bajo una tupla 5:4.</p>
+    <p><b>Pulsos.</b> El compás se reparte en pulsos, y eso decide cuántos patrones rítmicos caben en él:</p>
+    <ul>
+      <li>Con denominador menor que 16, cada unidad es un pulso: <code>6/8</code> tiene seis.</li>
+      <li>Con denominador 16 o mayor, los pulsos se agrupan solos: <code>7/16</code> se reparte en 2+2+3.</li>
+      <li>Puedes fijar la agrupación a mano: <code>3+3/8</code> tiene dos pulsos y <code>2+3/16</code>, dos.</li>
+    </ul>
+    <p><b>Tempo.</b> Eliges la figura que recibe los pulsos. Cambiarla no ajusta el número: <code>corchea = 60</code> va a la mitad de velocidad que <code>negra = 60</code>.</p>
+  </section>
+
+  <section id="ritmos">
+    <h2>Ritmos</h2>
+    <p>Un patrón es una lista de <b>pesos relativos</b>, no de figuras. <code>2 1</code> reparte la duración disponible en dos partes, y la primera dura el doble. Telar decide después la escritura y las tuplas.</p>
+    <table class="tabla-material ayuda-tabla">
+      <thead><tr><th scope="col">Escribes</th><th scope="col">Significa</th></tr></thead>
+      <tbody>
+        <tr><td><code>3 1</code></td><td>Dos notas, en proporción 3 a 1</td></tr>
+        <tr><td><code>2(1 1 1)</code></td><td>Una duración de peso 2, dividida en tres</td></tr>
+        <tr><td><code>-1</code></td><td>Silencio de peso 1</td></tr>
+        <tr><td><code>+1</code></td><td>Peso 1, ligado a la nota anterior</td></tr>
+      </tbody>
+    </table>
+    <figure class="ejemplo" data-patron="1 2(1 1 1) 1" data-compas="2/4"><figcaption><code>1 2(1 1 1) 1</code> llenando un compás de 2/4</figcaption></figure>
+    <figure class="ejemplo" data-patron="3(1 -1 2(1 1 1)) 2(1 +1)" data-compas="3/4"><figcaption><code>3(1 -1 2(1 1 1)) 2(1 +1)</code>: anidación, silencio y ligadura, en 3/4</figcaption></figure>
+    <figure class="ejemplo" data-patron="1 1 1 1 1" data-compas="3/10"><figcaption><code>1 1 1 1 1</code> llenando un compás irracional de 3/10</figcaption></figure>
+    <p><b>¿Qué llena un patrón?</b> Es lo que más cambia el resultado:</p>
+    <ul>
+      <li><b>Un pulso:</b> cada pulso del compás toma el siguiente patrón. En 4/4 se consumen cuatro patrones por compás, y la música sale muy densa.</li>
+      <li><b>Un compás:</b> cada compás toma un patrón entero. Es lo adecuado para escribir compás por compás.</li>
+    </ul>
+    <p>Cada línea es un patrón, y los patrones forman un ciclo propio, independiente del de compases. <b>Cambia cada</b> repite cada patrón varias veces; <b>Fase</b> empieza el ciclo más adelante. Bajo el cuadro, cada tira muestra el patrón en proporción: el bloque lleno es nota, el hueco es silencio, el tono intermedio es ligadura y la franja rojiza encima es un grupo.</p>
+  </section>
+
+  <section id="hilos">
+    <h2>Hilos</h2>
+    <p>Altura, densidad, dinámica y articulación son ciclos <b>independientes</b>. La idea central de Telar es que tengan longitudes distintas, para que se desfasen entre sí y con el ritmo.</p>
+    <ul>
+      <li>Avanzan <b>por ataques</b>: un silencio o una nota ligada no consumen valor.</li>
+      <li><b>Cada</b> repite cada valor varios ataques. <b>Fase</b> empieza más adelante en el ciclo.</li>
+      <li>Si avanzan <b>por tiempo</b>, cambian cada cierto número de negras, sea cual sea el ritmo. Se cuentan en negras aunque la unidad del tempo sea otra.</li>
+    </ul>
+    <p><b>Altura: índices o notas.</b> Puedes mezclar las dos formas:</p>
+    <ul>
+      <li><code>Do4 Sib3 Re4+</code> escribe esas notas. El <code>+</code> y el <code>-</code> suben o bajan un cuarto de tono: <code>Re4+</code>, <code>La-3</code>.</li>
+      <li><code>0 5 2</code> son <b>posiciones en el campo</b>, ordenado de grave a agudo y limitado al ámbito de la voz. El 0 es la nota más grave disponible. Si el número supera la lista, vuelve a empezar, de modo que el mismo índice puede dar otra nota cuando cambia el campo o el instrumento.</li>
+    </ul>
+    <p><b>Densidad.</b> Con <code>3</code>, un ataque toca tres notas: la que marca la altura y otras tomadas del campo, de dos en dos posiciones hacia arriba. Está limitada por las <b>notas simultáneas</b> de la voz: los vientos tocan una, salvo que lo cambies.</p>
+    <p><b>Articulación.</b> <code>-</code> nada, <code>.</code> picado, <code>!</code> muy picado, <code>_</code> tenuto, <code>&gt;</code> acento, <code>^</code> marcato. <b>Dinámica:</b> de <code>ppp</code> a <code>fff</code>, o <code>-</code> para no indicar ninguna.</p>
+    <p><b>Las cifras de cada voz.</b> Junto al nombre verás algo como <code>7·5·15·7 → 105</code>: los periodos de altura, densidad, dinámica y articulación, y cada cuántos ataques coinciden los cuatro. La vista <b>Tejido</b> lo muestra en una matriz: cada fila es un hilo y cada columna un ataque. Una marca oscura indica que un ciclo reinicia; una roja, que reinician todos a la vez.</p>
+    <p><b>Ámbito, clave y polifonía.</b> Se abre dentro de cada voz. Vacío, usa lo habitual del instrumento. Sirve para técnicas extendidas o para otro intérprete. Una nota escrita fuera del ámbito se pliega por octavas, y Telar lo avisa.</p>
+  </section>
+
+  <section id="campos">
+    <h2>Campos</h2>
+    <p>Un campo es la reserva de alturas de donde leen los índices. Si solo escribes notas directas, el campo solo se usa para añadir las notas de la densidad.</p>
+    <p><b>Multiplicación interválica.</b> El acorde A se transporta por cada intervalo de B, medido desde la primera nota de B.</p>
+    <p class="resultado" data-campo='{"tipo":"multiplicacion","modo":"intervalos","a":"Do4 Mi4","b":"Do4 Re4 Sol4"}'><code>Do4 Mi4</code> × <code>Do4 Re4 Sol4</code> →</p>
+    <p><b>Multiplicación en anillo.</b> Suma y resta las frecuencias de cada par de notas. El resultado se redondea al cuarto de tono.</p>
+    <p class="resultado" data-campo='{"tipo":"multiplicacion","modo":"anillo","a":"La4","b":"Do4"}'><code>La4</code> en anillo con <code>Do4</code> →</p>
+    <p><b>Criba.</b> <code>m@r</code> toma las posiciones cuyo resto al dividir por <code>m</code> es <code>r</code>, contando desde la nota <b>Desde</b>, que es la posición 0. Se combinan con <code>|</code> (o), <code>&amp;</code> (y), <code>!</code> (no) y paréntesis.</p>
+    <p class="resultado" data-campo='{"tipo":"criba","expresion":"5@0 | 7@2","desde":"Do4","hasta":"Do6","unidad":"semitono"}'><code>5@0 | 7@2</code> desde Do4 hasta Do6, en semitonos →</p>
+    <p class="resultado" data-campo='{"tipo":"criba","expresion":"(3@0 | 4@1) &amp; !2@0","desde":"Do4","hasta":"Do5","unidad":"cuarto"}'><code>(3@0 | 4@1) &amp; !2@0</code> desde Do4 hasta Do5, en cuartos de tono →</p>
+    <p><b>Espectro.</b> Cada parcial <code>n</code> suena a <code>f·nᵉ</code>. Con <b>Estiramiento</b> 1 es la serie armónica; por encima se abre y por debajo se comprime. Parciales admite rangos: <code>1-8 11 13</code>. Pasa el puntero sobre una nota para ver cuántos cents se apartó al redondear.</p>
+    <p class="resultado" data-campo='{"tipo":"espectro","fundamental":"La2","parciales":"1-8","estiramiento":1}'>Parciales <code>1-8</code> de La2 →</p>
+    <p><b>Varios campos.</b> Cada uno dura los compases que indiques y, al acabar la lista, vuelve a empezar. Con <b>Interpolación</b>, cada posición de un campo viaja hacia su homóloga del siguiente durante toda la sección, así que aparecen alturas que no están en ninguno de los dos.</p>
+    <p>Si un campo deja menos de tres notas en el ámbito de una voz, Telar pliega por octavas las que quedaban fuera, para que tenga material.</p>
+  </section>
+
+  <section id="procesos">
+    <h2>Procesos</h2>
+    <p>Un proceso cambia el material a lo largo del tiempo. Tres controles valen para casi todos:</p>
+    <ul>
+      <li><b>De</b> y <b>A</b>: el valor al principio y al final de la ventana.</li>
+      <li><b>Empieza</b> y <b>Termina</b>: la ventana, de 0 a 1 sobre <b>toda la pieza</b>. Fuera de ella, el proceso no actúa.</li>
+      <li><b>Curva:</b> cómo va de un valor a otro. Con <b>campana</b> va de De hacia A y regresa a De.</li>
+    </ul>
+    <table class="tabla-material ayuda-tabla">
+      <thead><tr><th scope="col">Proceso</th><th scope="col">De y A son</th><th scope="col">Efecto</th></tr></thead>
+      <tbody>
+        <tr><td>Subdivisión</td><td>Probabilidad, de 0 a 1</td><td>Una nota puede convertirse en tupla</td></tr>
+        <tr><td>Fusión</td><td>Probabilidad, de 0 a 1</td><td>Un ataque puede ligarse con el anterior</td></tr>
+        <tr><td>Rarefacción</td><td>Probabilidad, de 0 a 1</td><td>Calla esa fracción de ataques</td></tr>
+        <tr><td>Transposición</td><td>Semitonos; 0,5 es un cuarto de tono</td><td>Mueve las alturas</td></tr>
+        <tr><td>Compresión</td><td>Factor; 1 no cambia nada</td><td>Multiplica los intervalos respecto del eje</td></tr>
+        <tr><td>Deriva dinámica</td><td>Grados de dinámica</td><td>Sube o baja los matices</td></tr>
+      </tbody>
+    </table>
+    <p><b>Filtro de banda:</b> sus límites grave y agudo se mueven de un valor a otro, y lo que queda fuera calla o se pliega por octavas. <b>Criba de ataques:</b> solo suenan los ataques cuyo número pasa la criba, contando desde 0.</p>
+    <p><b>El orden importa.</b> Subdivisión y fusión actúan primero, sobre el ritmo. Después se tejen los hilos, y luego actúan los demás, de arriba abajo en la lista. Por eso filtrar <b>no desplaza</b> los ciclos: lo que sigue sonando conserva la altura que tenía.</p>
+  </section>
+
+  <section id="series">
+    <h2>Series (modo Material)</h2>
+    <p>Escribe la serie con números (<code>0 11 3</code>) o nombres (<code>Do Si Mib</code>). Con módulo 24, los números cuentan cuartos de tono: el 2 es Do#, no Re.</p>
+    <p><b>Cómo leer la matriz.</b> La primera fila es tu serie y la primera columna, su inversión.</p>
+    <ul>
+      <li>Hacia la derecha se lee <code>O</code> (original); hacia la izquierda, <code>R</code> (retrógrado), con los rótulos de los lados.</li>
+      <li>Hacia abajo se lee <code>I</code> (inversión); hacia arriba, <code>RI</code>, con los rótulos de arriba y abajo.</li>
+      <li>El número es la transposición respecto de tu serie, no la nota: <code>O3</code> es la serie tres unidades más arriba.</li>
+    </ul>
+    <p><b>Usar en la partitura</b> convierte la serie en el único campo de la pieza, y cada voz la recorre en orden cerca del centro de su registro. <b>Deshacer</b> lo revierte.</p>
+  </section>
+
+  <section id="matriz">
+    <h2>Matrices rítmicas (modo Material)</h2>
+    <p>Parte de una lista de proporciones. Cada fila la rota, y cada valor se divide en otra rotación de la misma lista, tantos niveles como pidas. Con <code>3 1 2</code> y dos niveles, la primera fila es <code>3(1 2 3) 1(2 3 1) 2(3 1 2)</code>.</p>
+    <p>Crece muy deprisa: cada nivel multiplica el número de valores. Si una división baja de la figura mínima de 1/128, o supera seis tuplas anidadas, Telar la funde en una sola nota y lo avisa. Más niveles piden compases más largos.</p>
+    <p><b>Usar en esta voz</b> copia las filas a los ritmos de esa voz, a razón de un compás por fila.</p>
+  </section>
+
+  <section id="salidas">
+    <h2>Sonido y archivos</h2>
+    <p><b>Muestras.</b> Se descargan de VSCO 2 Community Edition al pulsar <b>Escuchar</b>, solo las que la pieza necesita, así que la primera vez tarda más. La dinámica elige la capa grabada y la articulación, la muestra. Para no usar la red, elige <b>Síntesis</b>.</p>
+    <p>Viola y violonchelo suenan como secciones, y en piano y arpa las articulaciones apenas se notan, porque el banco no trae otra cosa. Muy fuera del ámbito grabado, el timbre pierde naturalidad.</p>
+    <p><b>Qué exporta cada botón.</b> En modo Partitura, y en las pestañas Campos e Hilos, los botones de la cabecera actúan sobre la pieza. En las pestañas Series y Matriz rítmica, sobre ese material.</p>
+    <table class="tabla-material ayuda-tabla">
+      <thead><tr><th scope="col">Formato</th><th scope="col">Conviene saber</th></tr></thead>
+      <tbody>
+        <tr><td>LilyPond</td><td>Requiere la versión 2.26</td></tr>
+        <tr><td>MusicXML</td><td>Los compases irracionales pueden no admitirse en todos los editores: compruébalo en el tuyo</td></tr>
+        <tr><td>MIDI</td><td>El formato no admite compases irracionales: las notas caen en su sitio, pero la rejilla del secuenciador no coincidirá. Los cuartos de tono usan pitch bend, en un canal aparte</td></tr>
+        <tr><td>CSV</td><td>Impórtalo como texto: si no, <code>1/10</code> puede convertirse en fecha y <code>-1 2</code> en fórmula</td></tr>
+      </tbody>
+    </table>
+    <p><b>Imprimir</b> (en Material) da una hoja para trabajar a mano; un salto de página puede cortar un pentagrama. Para una partitura cuidada, usa LilyPond.</p>
+  </section>
+
+  <section id="problemas">
+    <h2>Si algo no sale</h2>
+    <dl class="ayuda-problemas">
+      <dt>Sale demasiado denso</dt>
+      <dd>Cada patrón está llenando un pulso. Cambia <b>Cada patrón llena</b> a <b>un compás</b>, o usa patrones más simples.</dd>
+      <dt>Las notas saltan de registro</dt>
+      <dd>Los índices recorren un campo que abarca muchas octavas. Usa índices contiguos, un campo más estrecho, o escribe las notas.</dd>
+      <dt>Una voz tiene compases enteros en silencio</dt>
+      <dd>Lo más probable es un filtro de banda o una rarefacción. Revisa sus ventanas, o quita los procesos uno a uno.</dd>
+      <dt>Un viento no toca acordes</dt>
+      <dd>Está limitado a una nota. Sube <b>Notas simultáneas</b> en <i>Ámbito, clave y polifonía</i>.</dd>
+      <dt>Una nota no suena donde la escribí</dt>
+      <dd>Se plegó por quedar fuera del ámbito. Amplíalo en la voz.</dd>
+      <dt>Un campo aparece en rojo</dt>
+      <dd>Tiene un error de escritura. El mensaje debajo lo explica, y mientras tanto se conserva el último resultado válido.</dd>
+    </dl>
+  </section>
+</main>
+<script type="module" src="./interfaz/ayuda.mjs"></script>
+</body>
+</html>

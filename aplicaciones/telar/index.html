@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Telar — material composicional</title>
+<meta name="description" content="Telar teje ritmo anidado, polifonía paramétrica, campos armónicos y procesos en el tiempo. Funciona en el navegador y exporta a LilyPond, MusicXML y MIDI.">
+<link rel="stylesheet" href="./estilos.css">
+<script>
+  // Antes del primer pintado, para que el modo oscuro no parpadee.
+  (function () {
+    var tema = null;
+    try { tema = localStorage.getItem('telar.tema'); } catch (e) { /* sin almacenamiento */ }
+    if (tema !== 'dark' && tema !== 'light') tema = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.dataset.theme = tema;
+  })();
+</script>
+</head>
+<body>
+<header class="cabecera">
+  <div class="marca">
+    <a class="volver" href="/aplicaciones/" title="Volver al sitio">←</a>
+    <h1>Telar</h1>
+  </div>
+  <div class="titulo-pieza">
+    <label for="titulo-pieza" class="visual-oculto">Título de la pieza</label>
+    <input id="titulo-pieza" type="text" spellcheck="false" autocomplete="off" placeholder="Título">
+  </div>
+  <div class="grupo">
+    <button id="nuevo" class="boton" type="button" title="Empezar un proyecto en blanco; Deshacer lo revierte">Nuevo</button>
+    <label for="ejemplos" class="visual-oculto">Ejemplos</label>
+    <select id="ejemplos"><option value="">Abrir un ejemplo…</option></select>
+    <label class="boton" for="abrir">Abrir…</label>
+    <input id="abrir" class="visual-oculto" type="file" accept=".json,application/json">
+    <a class="boton" href="./ayuda.html" target="_blank" rel="noopener">Ayuda</a>
+    <button id="deshacer" class="boton" type="button" title="Deshacer" aria-label="Deshacer">↶</button>
+    <button id="rehacer" class="boton" type="button" title="Rehacer" aria-label="Rehacer">↷</button>
+  </div>
+  <div class="grupo semilla">
+    <label for="semilla">Semilla</label>
+    <input id="semilla" type="number" min="0" step="1" title="Fija las decisiones de azar de los procesos: la misma semilla da siempre la misma pieza.">
+    <button id="dado" class="boton" type="button" title="Probar otra semilla">Otra</button>
+  </div>
+  <button id="tema" class="interruptor" type="button" role="switch" aria-checked="false">
+    <span class="interruptor-pista" aria-hidden="true"></span>Modo oscuro
+  </button>
+  <div class="grupo grupo-derecha">
+    <button id="tocar" class="boton boton-principal" type="button" aria-pressed="false">▶ Escuchar</button>
+    <span class="exporta">
+      <button class="boton" type="button" data-exportar="ly">LilyPond</button>
+      <button class="boton" type="button" data-exportar="xml">MusicXML</button>
+      <button class="boton" type="button" data-exportar="mid">MIDI</button>
+      <button class="boton" type="button" data-exportar="json" title="Guardar el proyecto para volver a abrirlo">Proyecto</button>
+    </span>
+  </div>
+</header>
+
+<main class="mesa">
+  <section class="taller" aria-label="Taller">
+    <div class="modos" role="group" aria-label="Qué quieres generar">
+      <button type="button" data-modo="partitura" aria-pressed="true"><b>Partitura</b><span>una pieza completa</span></button>
+      <button type="button" data-modo="material" aria-pressed="false"><b>Material</b><span>series, matrices y tablas</span></button>
+    </div>
+    <p id="aviso-errores" class="aviso-errores" role="alert" hidden></p>
+    <div id="taller"></div>
+    <details class="sintaxis">
+      <summary>Cómo se usa</summary>
+      <ol>
+        <li>Abre un ejemplo, cambia cualquier valor o pulsa <b>Nuevo</b> para escribirlo todo desde cero: la partitura se rehace al momento.</li>
+        <li>En <b>Urdimbre</b> eliges los compases. En <b>Hilos</b>, los ritmos y los ciclos de cada voz.</li>
+        <li>En <b>Campos</b> defines de qué alturas se alimenta la pieza. En <b>Procesos</b>, cómo cambia todo a lo largo del tiempo.</li>
+        <li>Mira <b>Tejido</b> para ver cómo se desfasan los ciclos. Escucha y exporta cuando te convenza.</li>
+        <li>Si prefieres materia prima para tu software o tu manuscrito, cambia arriba a <b>Material</b>: series, matrices rítmicas y tablas listas para descargar o imprimir.</li>
+      </ol>
+      <p>Las partes menos evidentes se explican en la <a href="./ayuda.html" target="_blank" rel="noopener">ayuda</a>; cada paso tiene su «?».</p>
+    </details>
+  </section>
+
+  <section class="tela-marco" aria-label="Resultado">
+    <div class="tela-barra">
+      <div id="pestanas" role="tablist" class="pestanas" aria-label="Vista del resultado"></div>
+      <p id="estado" class="estado" aria-live="polite"></p>
+      <label class="zoom" title="Las muestras se descargan de VSCO 2 CE (licencia CC0) al pulsar Escuchar. La síntesis no usa la red.">Sonido
+        <select id="sonido">
+          <option value="muestras">Muestras (VSCO)</option>
+          <option value="sintesis">Síntesis</option>
+        </select>
+      </label>
+      <label class="zoom">Tamaño <input id="zoom" type="range" min="5" max="11" step="0.5" value="7"></label>
+    </div>
+    <div id="voces-audio-marco" class="voces-audio-marco">
+      <span id="suenan">Suenan:</span>
+      <div id="voces-audio" class="casillas"></div>
+      <p id="nota-export" class="nota-export"></p>
+    </div>
+    <ul id="avisos" class="avisos" hidden></ul>
+    <div id="tela" class="tela">
+      <div id="vista-partitura"></div>
+      <div id="vista-tejido" hidden></div>
+      <div id="vista-material" hidden></div>
+    </div>
+  </section>
+</main>
+<script type="module" src="./interfaz/ui.mjs"></script>
+</body>
+</html>
