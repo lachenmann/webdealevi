@@ -1,9 +1,9 @@
 // Interfaz: cuatro pasos a la izquierda, la tela a la derecha.
 
-import { generar, validar, periodosDe, TIPOS_PROCESO, curvaProceso, MAX_VOCES } from '../nucleo/motor.mjs';
-import { INSTRUMENTOS, evaluarCampo, leerCriba, nombreAltura } from '../nucleo/armonia.mjs';
+import { generar, validar, periodosDe, TIPOS_PROCESO, curvaProceso, MAX_VOCES, UNIDADES_TEMPO, ORDEN_UNIDADES } from '../nucleo/motor.mjs';
+import { INSTRUMENTOS, CLAVES, evaluarCampo, leerCriba, nombreAltura, instrumentoDeVoz } from '../nucleo/armonia.mjs';
 import { leerPatrones, ErrorTelar } from '../nucleo/ritmo.mjs';
-import { EJEMPLOS, EJEMPLO_INICIAL, copiarProyecto } from '../nucleo/ejemplos.mjs';
+import { EJEMPLOS, EJEMPLO_INICIAL, copiarProyecto, proyectoEnBlanco } from '../nucleo/ejemplos.mjs';
 import { exportarLilyPond } from '../nucleo/export-lilypond.mjs';
 import { exportarMusicXML } from '../nucleo/export-musicxml.mjs';
 import { exportarMIDI } from '../nucleo/export-midi.mjs';
@@ -96,7 +96,7 @@ function cargarGuardado() {
 
 /* ---------- Campos de formulario ---------- */
 
-function entrada(ruta, etiqueta, { tipo = 'text', ayuda, opciones, area, min, max, paso, numero, clase } = {}) {
+function entrada(ruta, etiqueta, { tipo = 'text', ayuda, opciones, area, min, max, paso, numero, clase, sugerencia } = {}) {
   const id = `c-${ruta.replace(/\./g, '-')}`;
   const valor = leerRuta(ruta);
   let control;
@@ -113,7 +113,7 @@ function entrada(ruta, etiqueta, { tipo = 'text', ayuda, opciones, area, min, ma
     control = h('textarea', { id, 'data-ruta': ruta, rows: area, spellcheck: 'false', oninput: cambio, onchange: fin });
     control.value = valor ?? '';
   } else {
-    control = h('input', { id, type: tipo, 'data-ruta': ruta, min, max, step: paso, spellcheck: 'false', autocomplete: 'off', oninput: cambio, onchange: fin });
+    control = h('input', { id, type: tipo, 'data-ruta': ruta, min, max, step: paso, placeholder: sugerencia, spellcheck: 'false', autocomplete: 'off', oninput: cambio, onchange: fin });
     control.value = valor ?? '';
   }
   return h('div', { class: `campo${clase ? ` ${clase}` : ''}` },
@@ -123,9 +123,15 @@ function entrada(ruta, etiqueta, { tipo = 'text', ayuda, opciones, area, min, ma
     h('p', { class: 'error-campo', 'data-error': ruta, hidden: true }));
 }
 
+const SECCION_AYUDA = { 1: 'urdimbre', 2: 'hilos', 3: 'campos', 4: 'procesos', I: 'series', II: 'matriz', III: 'campos' };
+
 const paso = (numero, titulo, resumen, abierto, ...contenido) =>
   h('details', { class: 'paso', open: abierto, 'data-paso': numero },
-    h('summary', {}, h('span', { class: 'paso-num' }, numero), h('span', { class: 'paso-tit' }, titulo), h('span', { class: 'paso-res' }, resumen)),
+    h('summary', {},
+      h('span', { class: 'paso-num' }, numero),
+      h('span', { class: 'paso-tit' }, titulo),
+      h('span', { class: 'paso-res' }, resumen),
+      h('a', { class: 'paso-ayuda', href: `./ayuda.html#${SECCION_AYUDA[numero]}`, target: '_blank', rel: 'noopener', title: `Ayuda sobre ${titulo}`, 'aria-label': `Ayuda sobre ${titulo}` }, '?')),
     h('div', { class: 'paso-cuerpo' }, contenido));
 
 /* ---------- Paneles ---------- */
@@ -192,7 +198,8 @@ function panelTiempo() {
     }),
     h('div', { class: 'fila' },
       entrada('tiempo.numCompases', 'Compases', { tipo: 'number', numero: true, min: 1, max: 200 }),
-      entrada('tempo', 'Negra =', { tipo: 'number', numero: true, min: 10, max: 300 })));
+      entrada('unidadTempo', 'Unidad de tempo', { opciones: ORDEN_UNIDADES.map((k) => [k, UNIDADES_TEMPO[k].nombre]) }),
+      entrada('tempo', 'Pulsos por minuto', { tipo: 'number', numero: true, min: 10, max: 300 })));
 }
 
 function panelVoces() {
@@ -229,6 +236,15 @@ const quitar = (lista, i, destino) => (e) => {
   regenerar();
 };
 
+function maxAcordeDe(v) {
+  try {
+    return instrumentoDeVoz(v)?.maxAcorde ?? 1;
+  } catch (e) {
+    if (!(e instanceof ErrorTelar)) throw e;
+    return 1;
+  }
+}
+
 function tarjetaVoz(v, i) {
   const r = `voces.${i}`;
   const hiloFila = (tipo, etiqueta, ayuda) => {
@@ -253,12 +269,21 @@ function tarjetaVoz(v, i) {
       ayuda: 'Pesos relativos. 2(1 1 1) es una duración de peso 2 dividida en tres. -1 es silencio y +1 liga con lo anterior.',
     }),
     h('div', { class: 'tiras', 'data-tiras': i }),
+    h('details', { class: 'ambito', 'data-tarjeta': `ambito-${i}`, open: tarjetasAbiertas.has(`ambito-${i}`) },
+      h('summary', {}, 'Ámbito, clave y polifonía'),
+      h('p', { class: 'ayuda' }, 'Vacío, usa lo habitual del instrumento. Amplíalo para técnicas extendidas o para otro intérprete.'),
+      h('div', { class: 'fila' },
+        entrada(`${r}.grave`, 'Límite grave', { sugerencia: nombreAltura(INSTRUMENTOS[v.instrumento]?.min ?? 120) }),
+        entrada(`${r}.agudo`, 'Límite agudo', { sugerencia: nombreAltura(INSTRUMENTOS[v.instrumento]?.max ?? 120) })),
+      h('div', { class: 'fila' },
+        entrada(`${r}.clave`, 'Clave', { opciones: [['', `Habitual (${CLAVES[INSTRUMENTOS[v.instrumento]?.clave] ?? ''})`], ...Object.entries(CLAVES)] }),
+        entrada(`${r}.maxAcorde`, 'Notas simultáneas', { tipo: 'number', numero: true, min: 1, max: 9, sugerencia: String(INSTRUMENTOS[v.instrumento]?.maxAcorde ?? 1) }))),
     h('div', { class: 'fila' },
       entrada(`${r}.ritmo.unidad`, 'Cada patrón llena', { opciones: [['pulso', 'un pulso'], ['compas', 'un compás']] }),
       entrada(`${r}.ritmo.paso`, 'Cambia cada', { tipo: 'number', numero: true, min: 1 }),
       entrada(`${r}.ritmo.fase`, 'Fase', { tipo: 'number', numero: true, min: 0 })),
-    hiloFila('altura', 'Altura', 'Índices del campo armónico en el registro del instrumento: 0 es la nota más grave.'),
-    hiloFila('densidad', 'Densidad', `Notas por ataque, limitadas a ${INSTRUMENTOS[v.instrumento]?.maxAcorde ?? 1} en este instrumento.`),
+    hiloFila('altura', 'Altura', 'Alturas escritas (Do4 Sib3 Re4+) o índices del campo en el registro de la voz: 0 es la nota más grave.'),
+    hiloFila('densidad', 'Densidad', `Notas por ataque, hasta ${maxAcordeDe(v)} en esta voz.`),
     hiloFila('dinamica', 'Dinámica', 'ppp pp p mp mf f ff fff'),
     hiloFila('articulacion', 'Articulación', '- nada · . picado · ! muy picado · _ tenuto · > acento · ^ marcato'));
 }
@@ -533,7 +558,7 @@ function pintarModo() {
 }
 
 function pararSiSuena() {
-  if (reproductor.activo) {
+  if (reproductor.activo || reproductor.cargando) {
     reproductor.parar();
     finReproduccion();
   }
@@ -691,6 +716,9 @@ function pintarEstado() {
 const reproductor = new Reproductor({
   alAvanzar: (t) => moverCursor(t),
   alTerminar: () => finReproduccion(),
+  alProgreso: (hechas, total) => {
+    $('tocar').textContent = `Cargando ${hechas}/${total} · Parar`;
+  },
 });
 
 function moverCursor(t) {
@@ -722,19 +750,41 @@ function finReproduccion() {
   if (c) c.hidden = true;
 }
 
+const CLAVE_SONIDO = 'telar.sonido';
+
+function iniciarSonido() {
+  const s = $('sonido');
+  try {
+    const guardado = localStorage.getItem(CLAVE_SONIDO);
+    if (guardado === 'muestras' || guardado === 'sintesis') s.value = guardado;
+  } catch { /* sin almacenamiento */ }
+  s.addEventListener('change', () => {
+    pararSiSuena();
+    try { localStorage.setItem(CLAVE_SONIDO, s.value); } catch { /* sin almacenamiento */ }
+  });
+}
+
 async function alternarReproduccion() {
-  if (reproductor.activo) {
+  if (reproductor.activo || reproductor.cargando) {
     reproductor.parar();
     finReproduccion();
     return;
   }
   const part = partActual();
   if (!part) return;
+  const usarMuestras = $('sonido').value === 'muestras';
+  $('tocar').setAttribute('aria-pressed', 'true');
+  $('tocar').textContent = usarMuestras ? 'Cargando… · Parar' : '■ Parar';
   try {
-    await reproductor.tocar(part, modo === 'partitura' ? silenciadas : new Set());
+    const r = await reproductor.tocar(part, modo === 'partitura' ? silenciadas : new Set(), { muestras: usarMuestras });
+    if (!r) return; // cancelado durante la carga
     $('tocar').textContent = '■ Parar';
-    $('tocar').setAttribute('aria-pressed', 'true');
+    if (r.fallidas) {
+      $('nota-export').textContent = `${r.fallidas} muestra(s) no se pudieron descargar: esas notas suenan con síntesis.`;
+      if (modo === 'material') $('voces-audio-marco').hidden = false;
+    }
   } catch (e) {
+    finReproduccion();
     $('estado').textContent = e.message;
   }
 }
@@ -824,8 +874,21 @@ function iniciarTema() {
   });
 }
 
+function nuevoProyecto() {
+  const materialPrevio = proyecto?.material;
+  proyecto = asegurarMaterial({ ...proyectoEnBlanco(), material: materialPrevio });
+  tarjetasAbiertas.clear();
+  tarjetasAbiertas.add('voz-0');
+  $('nota-export').textContent = 'Proyecto en blanco. Deshacer recupera el anterior.';
+  recordar();
+  pintarPaneles();
+  regenerar();
+}
+
 function iniciar() {
   iniciarTema();
+  iniciarSonido();
+  $('nuevo').addEventListener('click', nuevoProyecto);
   const selector = $('ejemplos');
   selector.append(...Object.entries(EJEMPLOS).map(([k, e]) => h('option', { value: k }, e.nombre)));
   selector.addEventListener('change', (e) => {

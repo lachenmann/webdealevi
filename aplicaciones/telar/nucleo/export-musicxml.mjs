@@ -8,7 +8,7 @@ const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 const TIPO = { 1: 'whole', 2: 'half', 4: 'quarter', 8: 'eighth', 16: '16th', 32: '32nd', 64: '64th', 128: '128th' };
 const SIGNO = { 0: 'natural', 0.5: 'quarter-sharp', 1: 'sharp', 1.5: 'three-quarters-sharp', '-0.5': 'quarter-flat', '-1': 'flat' };
 const ART = { staccato: 'staccato', staccatissimo: 'staccatissimo', tenuto: 'tenuto', acento: 'accent', marcato: 'strong-accent' };
-const CLAVE = { sol: ['G', 2], fa: ['F', 4], do3: ['C', 3] };
+const CLAVE = { sol: ['G', 2], fa: ['F', 4], do3: ['C', 3], do4: ['C', 4] };
 
 /** Divisiones por negra: el mínimo que vuelve enteras todas las duraciones. */
 export function divisionesDe(part) {
@@ -126,7 +126,7 @@ export function exportarMusicXML(part) {
         x.push('</attributes>');
       }
       if (i === 0 && v.indice === 0) {
-        x.push(`<direction placement="above"><direction-type><metronome><beat-unit>quarter</beat-unit><per-minute>${part.tempo}</per-minute></metronome></direction-type><sound tempo="${part.tempo}"/></direction>`);
+        x.push(`<direction placement="above"><direction-type><metronome><beat-unit>${TIPO[part.unidadTempo.valor]}</beat-unit>${'<beat-unit-dot/>'.repeat(part.unidadTempo.puntos)}<per-minute>${part.tempo}</per-minute></metronome></direction-type><sound tempo="${part.negrasPorMinuto}"/></direction>`);
       }
       const abiertas = [];
       for (const f of m.figuras) {

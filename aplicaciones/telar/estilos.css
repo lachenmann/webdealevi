@@ -28,6 +28,8 @@
   --control: #ffffff;
   --tarjeta: #ffffff;
   --hoja: #ffffff;
+  /* La notación es siempre tinta sobre papel: el modo oscuro no la cambia. */
+  --papel-musica: #ffffff;
   --nota: #111111;
   --pauta: #555555;
   --rotulo: #666666;
@@ -59,9 +61,6 @@
   --control: #25241f;
   --tarjeta: #201f1c;
   --hoja: #1f1e1b;
-  --nota: #ece8df;
-  --pauta: #8c887e;
-  --rotulo: #a9a498;
   --aviso-fondo: #3a3118;
   --aviso-borde: #6b5a25;
   --tira-nota: #d8d3c7;
@@ -91,10 +90,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .semilla label { color: var(--tenue); font-size: 12.5px; }
 .semilla input { width: 66px; }
 .boton, .grupo select, .semilla input { border: 1px solid var(--linea); background: var(--control); border-radius: 4px; padding: 4px 9px; min-height: 30px; }
-.boton { cursor: pointer; display: inline-flex; align-items: center; }
+.boton { cursor: pointer; display: inline-flex; align-items: center; color: inherit; text-decoration: none; }
 .boton:hover:not(:disabled) { border-color: var(--tenue); }
 .boton:disabled { opacity: .4; cursor: default; }
-.boton-principal { background: var(--hilo); border-color: var(--hilo); color: var(--sobre-hilo); font-weight: 600; min-width: 96px; justify-content: center; }
+.boton-principal { background: var(--hilo); border-color: var(--hilo); color: var(--sobre-hilo); font-weight: 600; min-width: 96px; justify-content: center; white-space: nowrap; }
 .boton-principal:hover:not(:disabled) { background: var(--hilo-fuerte); border-color: var(--hilo-fuerte); }
 .interruptor { display: inline-flex; align-items: center; gap: 6px; min-height: 30px; border: 0; background: none; padding: 0 2px; cursor: pointer; color: var(--tenue); font-size: 12.5px; }
 .interruptor-pista { position: relative; width: 32px; height: 18px; border-radius: 9px; border: 1px solid var(--linea); background: var(--control); }
@@ -113,13 +112,14 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .estado { margin: 0; color: var(--tenue); font-size: 12.5px; font-variant-numeric: tabular-nums; flex: 1; min-width: 180px; }
 .zoom { color: var(--tenue); font-size: 12.5px; display: flex; align-items: center; gap: 5px; }
 .zoom input { width: 84px; accent-color: var(--hilo); }
+.zoom select { border: 1px solid var(--linea); background: var(--control); border-radius: 4px; padding: 2px 4px; min-height: 26px; }
 .voces-audio-marco { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; padding: 3px 12px; font-size: 12.5px; color: var(--tenue); background: var(--papel); border-bottom: 1px solid var(--linea-suave); }
 .nota-export { margin: 0; color: var(--hilo); }
 .avisos { margin: 0; padding: 6px 12px 6px 28px; background: var(--aviso-fondo); border-bottom: 1px solid var(--aviso-borde); font-size: 12.5px; }
 .tela { flex: 1; overflow: auto; background: var(--mesa); padding: 12px; }
 
 /* Partitura */
-.hoja { position: relative; background: var(--hoja); box-shadow: 0 1px 3px var(--sombra); width: max-content; }
+.hoja { position: relative; background: var(--papel-musica); box-shadow: 0 1px 3px var(--sombra); width: max-content; }
 .partitura { display: block; }
 .partitura line, .campo-vista line { stroke: var(--nota); }
 .partitura line.p, .campo-vista line.p { stroke: var(--pauta); }
@@ -138,6 +138,26 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .tj-hilo { font: 11px var(--sans); fill: var(--tenue); }
 .tj-marca { fill: #0008; }
 .tj-coincide { fill: var(--hilo); }
+
+/* Página de ayuda */
+.ayuda-pagina { display: block; height: auto; background: var(--papel); }
+.ayuda-doc { max-width: 720px; margin: 0 auto; padding: 20px 16px 60px; font-size: 15px; line-height: 1.6; }
+.ayuda-doc h1 { font: italic 400 32px/1.2 var(--serif); margin: 8px 0; }
+.ayuda-doc h2 { font: 600 21px/1.3 var(--serif); margin: 32px 0 8px; padding-top: 10px; border-top: 1px solid var(--linea-suave); }
+.ayuda-doc a { color: var(--hilo); }
+.ayuda-doc code { font: 13.5px var(--mono); background: var(--panel); padding: 1px 4px; border-radius: 3px; }
+.ayuda-doc li { margin-bottom: 4px; }
+.ayuda-volver { margin: 0; font-size: 13.5px; }
+.ayuda-entrada { color: var(--tenue); }
+.ayuda-indice { display: flex; flex-wrap: wrap; gap: 2px 14px; padding: 0; margin: 12px 0 0; list-style: none; font-size: 13.5px; }
+.ayuda-doc .ayuda-tabla { font: 14px/1.4 var(--sans); margin: 10px 0; }
+.ayuda-doc .ayuda-tabla td, .ayuda-doc .ayuda-tabla th { white-space: normal; text-align: left; padding: 4px 8px; }
+.ejemplo { margin: 12px 0; }
+.ejemplo figcaption { font-size: 13.5px; color: var(--tenue); margin-top: 3px; }
+.ejemplo .hoja { max-width: 100%; overflow-x: auto; width: auto; }
+.resultado { font-family: var(--serif); }
+.ayuda-problemas dt { font-weight: 600; margin-top: 10px; }
+.ayuda-problemas dd { margin: 0 0 4px; color: var(--tenue); }
 
 /* Modos */
 .modos { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 8px; }
@@ -163,11 +183,14 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .paso { background: var(--papel); border: 1px solid var(--linea-suave); border-radius: 6px; margin-bottom: 8px; }
 .paso > summary { display: flex; align-items: baseline; gap: 8px; cursor: pointer; padding: 8px 10px; list-style: none; }
 .paso > summary::-webkit-details-marker { display: none; }
-.paso > summary::after { content: "▸"; margin-left: auto; color: var(--tenue); }
+.paso > summary::after { content: "▸"; color: var(--tenue); }
 .paso[open] > summary::after { content: "▾"; }
 .paso-num { font: italic 15px var(--serif); color: var(--hilo); }
 .paso-tit { font: 600 16px var(--serif); }
 .paso-res { color: var(--tenue); font-size: 12.5px; }
+.paso-ayuda { margin-left: auto; width: 18px; height: 18px; flex: none; border: 1px solid var(--linea); border-radius: 50%; color: var(--tenue); font-size: 11.5px; line-height: 16px; text-align: center; text-decoration: none; }
+.paso-ayuda:hover { color: var(--hilo); border-color: var(--hilo); }
+.paso-ayuda + * { margin-left: 0; }
 .paso-cuerpo { padding: 0 10px 10px; }
 .guia { margin: 0 0 8px; color: var(--tenue); font-size: 12.5px; }
 
@@ -186,6 +209,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .fila-hilo .campo { max-width: 33%; }
 
 /* Tarjetas */
+.ambito { margin: 0 0 7px; font-size: 12.5px; }
+.ambito > summary { cursor: pointer; color: var(--tenue); padding: 2px 0; }
 .tarjeta { border: 1px solid var(--linea-suave); border-radius: 5px; padding: 0 8px; margin-bottom: 6px; background: var(--tarjeta); }
 .tarjeta[open] { padding-bottom: 8px; }
 .tarjeta > summary { display: flex; align-items: center; gap: 7px; cursor: pointer; padding: 6px 0; list-style-position: inside; }
@@ -213,7 +238,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .tr-liga { fill: var(--tira-liga); }
 .tr-grupo { fill: var(--hilo-suave); }
 .campo-previa { overflow-x: auto; margin-top: 4px; }
-.campo-vista { display: block; }
+.campo-vista { display: block; background: var(--papel-musica); border-radius: 3px; }
 .curva-base { stroke: var(--linea); }
 .curva-linea { fill: none; stroke: var(--hilo); stroke-width: 1.5; }
 
@@ -233,8 +258,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
 @media print {
-  :root, :root[data-theme="dark"] { color-scheme: light; --hoja: white; --nota: black; --pauta: dimgray; --rotulo: dimgray; --mesa: white; --tinta: black; --tenue: dimgray; --panel: white; --linea-suave: silver; --sombra: transparent; }
+  :root, :root[data-theme="dark"] { color-scheme: light; --hoja: white; --mesa: white; --tinta: black; --tenue: dimgray; --panel: white; --linea-suave: silver; --sombra: transparent; }
   html, body { height: auto; }
+  .ayuda-volver, .ayuda-indice { display: none; }
+  .ayuda-pagina { background: white; }
+  .ayuda-doc a { color: black; }
   .cabecera, .taller, .tela-barra, .voces-audio-marco, .avisos, .material-barra { display: none !important; }
   .tela-marco { display: block; }
   .tabla-material td, .tabla-material th { white-space: normal; }

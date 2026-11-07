@@ -27,16 +27,33 @@ const contraste = (a, b) => {
   return (x + 0.05) / (y + 0.05);
 };
 
-test('el modo oscuro redefine todos los colores del claro', () => {
-  const colores = Object.entries(claro).filter(([, v]) => v.startsWith('#')).map(([k]) => k);
+const NOTACION = ['--papel-musica', '--nota', '--pauta', '--rotulo'];
+
+test('el modo oscuro redefine todos los colores de la interfaz', () => {
+  const colores = Object.entries(claro).filter(([k, v]) => v.startsWith('#') && !NOTACION.includes(k)).map(([k]) => k);
   assert.ok(colores.length > 10);
   for (const k of colores) assert.ok(k in oscuro, `falta ${k}`);
+});
+
+test('el modo oscuro no toca la notación', () => {
+  for (const k of NOTACION) {
+    assert.ok(k in claro, `falta ${k}`);
+    assert.ok(!(k in oscuro), `${k} no debe cambiar con el tema`);
+  }
+  assert.match(css, /\.hoja \{[^}]*background: var\(--papel-musica\)/);
+  assert.match(css, /\.campo-vista \{[^}]*background: var\(--papel-musica\)/);
 });
 
 test('los colores fuera de las variables no fijan el tema', () => {
   const fuera = css.split('\n').filter((l) => !/^\s*--/.test(l) && !/:root/.test(l) && /#[0-9a-f]{3,8}\b/i.test(l));
   // La marca del tejido es la única excepción: va sobre celdas de color en ambos modos.
   assert.deepEqual(fuera.filter((l) => !l.includes('.tj-marca')), []);
+});
+
+test('la notación se lee sobre su papel', () => {
+  assert.ok(contraste(claro['--nota'], claro['--papel-musica']) >= 7);
+  assert.ok(contraste(claro['--rotulo'], claro['--papel-musica']) >= 4.5);
+  assert.ok(contraste(claro['--pauta'], claro['--papel-musica']) >= 3);
 });
 
 for (const [nombre, t] of [['claro', claro], ['oscuro', oscuro]]) {
@@ -48,9 +65,6 @@ for (const [nombre, t] of [['claro', claro], ['oscuro', oscuro]]) {
       ['--tenue', '--papel', 4.5],
       ['--tenue', '--panel', 4.5],
       ['--tenue', '--tarjeta', 4.5],
-      ['--nota', '--hoja', 7],
-      ['--rotulo', '--hoja', 4.5],
-      ['--pauta', '--hoja', 3],
       ['--error', '--error-fondo', 4.5],
       ['--sobre-hilo', '--hilo', 4.5],
     ];

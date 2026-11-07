@@ -8,6 +8,7 @@ const G = {
   claveSol: '', claveDo: '', claveFa: '',
   redonda: '', blanca: '', negra: '', puntillo: '',
 };
+const GLIFO_TEMPO = { 2: '\uE1D3', 4: '\uE1D5', 8: '\uE1D7', 16: '\uE1D9' };
 const DIGITO = (d) => String.fromCharCode(0xe080 + d);
 const CORCHETE = { 8: ['', ''], 16: ['', ''], 32: ['', ''], 64: ['', ''], 128: ['', ''] };
 const SILENCIO = { 1: '', 2: '', 4: '', 8: '', 16: '', 32: '', 64: '', 128: '' };
@@ -18,7 +19,7 @@ const ARTICULACION = {
 };
 const LETRA_DINAMICA = { p: '', m: '', f: '' };
 
-const LINEA_SUPERIOR = { sol: 38, fa: 26, do3: 32 }; // índice diatónico de la línea superior
+const LINEA_SUPERIOR = { sol: 38, fa: 26, do3: 32, do4: 30 }; // índice diatónico de la línea superior
 
 const n2 = (x) => (Math.round(x * 100) / 100).toString();
 const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -396,7 +397,7 @@ export function grabar(part, { ancho = 1000, s = 7, sinCifras = false } = {}) {
   const mapa = [];
   let y = 8;
   let anchoTotal = ancho;
-  const claveGlifo = { sol: [G.claveSol, 3], fa: [G.claveFa, 1], do3: [G.claveDo, 2] };
+  const claveGlifo = { sol: [G.claveSol, 3], fa: [G.claveFa, 1], do3: [G.claveDo, 2], do4: [G.claveDo, 1] };
 
   sistemas.forEach((ms, is) => {
     const ultimo = is === sistemas.length - 1;
@@ -460,7 +461,12 @@ export function grabar(part, { ancho = 1000, s = 7, sinCifras = false } = {}) {
         salida.push(`<text x="${n2(x0 + m.x)}" y="${n2(topePauta + pautas[0].techo - 2.3 * s)}" font-size="${n2(1.5 * s)}" class="tp">${esc(part.etiquetas[m.im])}</text>`);
       }
     } else if (is === 0) {
-      salida.push(`<text x="${x0 + 2.2 * s}" y="${n2(topePauta + pautas[0].techo - 0.7 * s)}" font-size="${n2(1.7 * s)}" class="tp">♩ = ${part.tempo}</text>`);
+      const yTempo = topePauta + pautas[0].techo - 0.7 * s;
+      const { valor, puntos } = part.unidadTempo;
+      const glifo = GLIFO_TEMPO[valor] + G.puntillo.repeat(puntos);
+      const xIgual = x0 + 2.2 * s + (valor >= 8 ? 1.9 : 1.3) * s + puntos * 0.7 * s;
+      salida.push(`<text x="${n2(x0 + 2.2 * s)}" y="${n2(yTempo)}" font-size="${n2(3 * s)}" class="m">${glifo}</text>`);
+      salida.push(`<text x="${n2(xIgual)}" y="${n2(yTempo)}" font-size="${n2(1.7 * s)}" class="tp">= ${part.tempo}</text>`);
     }
     salida.push(`<g>${barras.join('')}</g>`);
 

@@ -298,7 +298,30 @@ export const INSTRUMENTOS = {
   violonchelo: inst('Violonchelo', 'Vc.', 36, 81, 'fa', 42, 2, 'cuerda'),
   contrabajo: inst('Contrabajo', 'Cb.', 28, 67, 'fa', 43, 2, 'cuerda'),
   piano: inst('Piano', 'Pno.', 21, 108, 'sol', 0, 6, 'piano'),
+  flautin: inst('Flautín', 'Fltn.', 74, 108, 'sol', 72, 1, 'soplo'),
+  trompa: inst('Trompa', 'Tpa.', 41, 77, 'fa', 60, 1, 'metal'),
+  trompeta: inst('Trompeta', 'Tpt.', 55, 86, 'sol', 56, 1, 'metal'),
+  trombon: inst('Trombón', 'Tbn.', 40, 72, 'fa', 57, 1, 'metal'),
+  tuba: inst('Tuba', 'Tba.', 28, 65, 'fa', 58, 1, 'metal'),
+  arpa: inst('Arpa', 'Arp.', 24, 103, 'sol', 46, 6, 'piano'),
 };
+
+export const CLAVES = { sol: 'Sol', fa: 'Fa', do3: 'Do en 3.ª (viola)', do4: 'Do en 4.ª (tenor)' };
+
+/** El instrumento de una voz, con el ámbito, la clave y la polifonía que elija el compositor. */
+export function instrumentoDeVoz(v) {
+  const base = INSTRUMENTOS[v.instrumento];
+  if (!base) return base;
+  const propio = (x) => x !== undefined && x !== null && String(x).trim() !== '';
+  return {
+    ...base,
+    id: v.instrumento,
+    min: propio(v.grave) ? leerAltura(v.grave) : base.min,
+    max: propio(v.agudo) ? leerAltura(v.agudo) : base.max,
+    clave: propio(v.clave) ? v.clave : base.clave,
+    maxAcorde: propio(v.maxAcorde) ? Number(v.maxAcorde) : base.maxAcorde,
+  };
+}
 
 /* ---------- Dinámicas y articulaciones ---------- */
 

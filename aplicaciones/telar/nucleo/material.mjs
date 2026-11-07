@@ -5,7 +5,7 @@
 import { mcd } from './fraccion.mjs';
 import { azarFijo } from './azar.mjs';
 import { ErrorTelar, leerCompas } from './ritmo.mjs';
-import { evaluarCampo, frecuencia, leerSerie, nombreAltura, nombreClase, registrar, DINAMICAS, INSTRUMENTOS } from './armonia.mjs';
+import { evaluarCampo, frecuencia, leerSerie, nombreAltura, nombreClase, registrar, DINAMICAS, instrumentoDeVoz } from './armonia.mjs';
 import { generar } from './motor.mjs';
 
 export const materialInicial = () => ({
@@ -16,6 +16,7 @@ export const materialInicial = () => ({
 /** Los proyectos anteriores a este modo no traen material. */
 export function asegurarMaterial(p) {
   const base = materialInicial();
+  p.unidadTempo ??= '4';
   p.material = { serie: { ...base.serie, ...p.material?.serie }, ritmo: { ...base.ritmo, ...p.material?.ritmo } };
   return p;
 }
@@ -400,7 +401,7 @@ export function llevarSerie(proyecto) {
   const s = leerSerie(serie.notas, m);
   proyecto.campos = [{ tipo: 'serie', notas: s.join(' '), modulo: m, compases: Number(proyecto.tiempo.numCompases) || 1 }];
   for (const v of proyecto.voces) {
-    v.hilos.altura = { valores: indicesSerie(s, m, INSTRUMENTOS[v.instrumento]).join(' '), paso: 1, fase: 0, modo: 'ataque' };
+    v.hilos.altura = { valores: indicesSerie(s, m, instrumentoDeVoz(v)).join(' '), paso: 1, fase: 0, modo: 'ataque' };
   }
 }
 

@@ -9,12 +9,31 @@ import {
   colapsarSilencios, duracionDeCompas, escrituraDeCompas,
 } from './ritmo.mjs';
 import {
-  INSTRUMENTOS, DINAMICAS, ARTICULACIONES, VELOCIDADES, evaluarCampo, interpolarCampos,
-  registrar, plegar, leerAltura, leerCriba,
+  INSTRUMENTOS, DINAMICAS, ARTICULACIONES, VELOCIDADES, CLAVES, evaluarCampo, interpolarCampos,
+  registrar, plegar, leerAltura, leerCriba, instrumentoDeVoz,
 } from './armonia.mjs';
 import { escribirMedida } from './escritura.mjs';
 
 export const MAX_VOCES = 7; // cada voz usa dos canales MIDI
+
+// Unidad de tempo: la figura que recibe los pulsos por minuto.
+const unidad = (valor, puntos, nombre, redonda) => ({ valor, puntos, nombre, redonda });
+export const UNIDADES_TEMPO = {
+  '2.': unidad(2, 1, 'Blanca con puntillo', fr(3, 4)),
+  2: unidad(2, 0, 'Blanca', fr(1, 2)),
+  '4.': unidad(4, 1, 'Negra con puntillo', fr(3, 8)),
+  4: unidad(4, 0, 'Negra', fr(1, 4)),
+  '8.': unidad(8, 1, 'Corchea con puntillo', fr(3, 16)),
+  8: unidad(8, 0, 'Corchea', fr(1, 8)),
+  16: unidad(16, 0, 'Semicorchea', fr(1, 16)),
+};
+export const ORDEN_UNIDADES = ['2.', '2', '4.', '4', '8.', '8', '16'];
+
+const NEGRAS_MIN = 4; // el MIDI no admite una negra de más de unos 16 segundos
+const NEGRAS_MAX = 1200;
+
+/** Pulsos de la unidad → negras por minuto. */
+export const negrasPorMinuto = (tempo, clave = '4') => Number(tempo) * UNIDADES_TEMPO[clave].redonda.aNumero() * 4;
 
 const fichas = (t) => String(t).trim().split(/\s+/).filter(Boolean);
 
@@ -25,8 +44,12 @@ export function leerHilo(tipo, hilo) {
   if (!vals.length) throw new ErrorTelar('El ciclo está vacío');
   const valores = vals.map((v) => {
     if (tipo === 'altura') {
-      if (!/^\d+$/.test(v)) throw new ErrorTelar(`«${v}»: las alturas se indican con índices enteros del campo (0, 1, 2…)`);
-      return Number(v);
+      if (/^\d+$/.test(v)) return Number(v);
+      try {
+        return { q: leerAltura(v) }; // altura escrita directamente, sin pasar por el campo
+      } catch {
+        throw new ErrorTelar(`«${v}»: escribe un índice del campo (0, 1, 2…) o una altura (Do4, Sib3, Re4+)`);
+      }
     }
     if (tipo === 'densidad') {
       if (!/^[1-9]$/.test(v)) throw new ErrorTelar(`«${v}»: la densidad es el número de notas por ataque (1–9)`);
@@ -107,6 +130,28 @@ const afecta = (p, iv) => p.voces === 'todas' || p.voces === undefined || (Array
 
 /* ---------- Validación ---------- */
 
+const NOTA_MIDI_MAX = 127;
+
+function validarAmbito(v, i, errores, probar) {
+  if (!INSTRUMENTOS[v.instrumento]) return;
+  for (const k of ['grave', 'agudo']) {
+    if (String(v[k] ?? '').trim() === '') continue;
+    probar(`voces.${i}.${k}`, () => {
+      const q = leerAltura(v[k]);
+      if (q < 0 || q > NOTA_MIDI_MAX * 2) throw new ErrorTelar(`«${v[k]}» queda fuera de lo que admite MIDI`);
+    });
+  }
+  let inst = null;
+  try { inst = instrumentoDeVoz(v); } catch (e) {
+    if (!(e instanceof ErrorTelar)) throw e;
+  }
+  if (inst && inst.min >= inst.max) errores.push({ ruta: `voces.${i}.agudo`, mensaje: 'El límite agudo debe quedar por encima del grave' });
+  if (String(v.clave ?? '').trim() !== '' && !Object.hasOwn(CLAVES, v.clave)) errores.push({ ruta: `voces.${i}.clave`, mensaje: `Clave desconocida: ${v.clave}` });
+  if (String(v.maxAcorde ?? '').trim() !== '' && !(Number.isInteger(Number(v.maxAcorde)) && Number(v.maxAcorde) >= 1 && Number(v.maxAcorde) <= 9)) {
+    errores.push({ ruta: `voces.${i}.maxAcorde`, mensaje: 'Escribe entre 1 y 9 notas simultáneas' });
+  }
+}
+
 export function validar(p) {
   const errores = [];
   const probar = (ruta, f) => {
@@ -121,11 +166,21 @@ export function validar(p) {
   probar('tiempo.compases', () => leerCompases(p.tiempo.compases));
   entero('tiempo.numCompases', p.tiempo.numCompases, 1, 200, 'Compases');
   if (!(Number(p.tempo) >= 10 && Number(p.tempo) <= 300)) errores.push({ ruta: 'tempo', mensaje: 'El tempo debe estar entre 10 y 300' });
+  const claveUnidad = String(p.unidadTempo ?? '4');
+  if (!Object.hasOwn(UNIDADES_TEMPO, claveUnidad)) {
+    errores.push({ ruta: 'unidadTempo', mensaje: `Unidad de tempo desconocida: ${claveUnidad}` });
+  } else if (Number(p.tempo) >= 10 && Number(p.tempo) <= 300) {
+    const negras = negrasPorMinuto(p.tempo, claveUnidad);
+    if (negras < NEGRAS_MIN || negras > NEGRAS_MAX) {
+      errores.push({ ruta: 'tempo', mensaje: `Con esta unidad equivale a negra = ${negras}; debe quedar entre ${NEGRAS_MIN} y ${NEGRAS_MAX}` });
+    }
+  }
   if (!p.voces.length) errores.push({ ruta: 'voces', mensaje: 'Añade al menos una voz' });
   if (p.voces.length > MAX_VOCES) errores.push({ ruta: 'voces', mensaje: `Máximo ${MAX_VOCES} voces` });
   if (!p.campos.length) errores.push({ ruta: 'campos', mensaje: 'Añade al menos un campo' });
   p.voces.forEach((v, i) => {
     probar(`voces.${i}.ritmo.patrones`, () => leerPatrones(v.ritmo.patrones));
+    validarAmbito(v, i, errores, probar);
     entero(`voces.${i}.ritmo.paso`, v.ritmo.paso ?? 1, 1, 64, 'Paso');
     for (const tipo of ['altura', 'densidad', 'dinamica', 'articulacion']) {
       probar(`voces.${i}.hilos.${tipo}.valores`, () => leerHilo(tipo, v.hilos[tipo]));
@@ -262,7 +317,7 @@ function aplicarProcesosDeEventos(p, iv, eventos, total) {
 
 function generarVoz(p, iv, compases, total, campoEn, avisos) {
   const v = p.voces[iv];
-  const instrumento = INSTRUMENTOS[v.instrumento];
+  const instrumento = instrumentoDeVoz(v);
   if (!instrumento) throw new ErrorTelar(`Instrumento desconocido: ${v.instrumento}`, `voces.${iv}.instrumento`);
   const patrones = leerPatrones(v.ritmo.patrones);
   const unidad = v.ritmo.unidad === 'compas' ? 'compas' : 'pulso';
@@ -303,26 +358,31 @@ function generarVoz(p, iv, compases, total, campoEn, avisos) {
   const hilos = {};
   for (const t of ['altura', 'densidad', 'dinamica', 'articulacion']) hilos[t] = leerHilo(t, v.hilos[t]);
   let avisoVacio = false;
+  let fueraDeAmbito = 0;
   const seguimiento = [];
   for (const ev of eventos) {
     if (ev.silencio || ev.liga) continue;
     const negras = ev.inicio.por(fr(4)).aNumero();
     const campo = campoEn(ev.inicio);
     const lista = registrar(campo.map((n) => n.q), instrumento.min, instrumento.max);
-    if (!lista.length) { ev.silencio = true; avisoVacio = true; continue; }
     const idx = valorDeHilo(hilos.altura, ev.ataque, negras);
-    const dens = Math.min(valorDeHilo(hilos.densidad, ev.ataque, negras), instrumento.maxAcorde, lista.length);
-    const pos = idx % lista.length;
-    const notas = [];
-    for (let k = 0; k < dens; k++) {
+    const directa = typeof idx === 'object';
+    if (!lista.length && !directa) { ev.silencio = true; avisoVacio = true; continue; }
+    if (directa && (idx.q < instrumento.min || idx.q > instrumento.max)) fueraDeAmbito++;
+    const dens = Math.min(valorDeHilo(hilos.densidad, ev.ataque, negras), instrumento.maxAcorde, Math.max(lista.length, 1));
+    // Una altura directa suena tal cual; si hay densidad, el campo aporta las notas de encima.
+    const pos = directa ? Math.max(0, lista.findIndex((q) => q >= idx.q)) : idx % lista.length;
+    const notas = directa ? [idx.q] : [];
+    for (let k = directa ? 1 : 0; k < dens; k++) {
       const a = pos + k * 2;
       notas.push(a < lista.length ? lista[a] : lista[Math.max(0, pos - (a - lista.length + 1) * 2) % lista.length]);
     }
     ev.alturas = notas;
     ev.dinamica = valorDeHilo(hilos.dinamica, ev.ataque, negras);
     ev.articulacion = valorDeHilo(hilos.articulacion, ev.ataque, negras);
-    seguimiento.push({ ataque: ev.ataque, inicio: ev.inicio, altura: idx, densidad: dens, dinamica: ev.dinamica, articulacion: ev.articulacion });
+    seguimiento.push({ ataque: ev.ataque, inicio: ev.inicio, altura: directa ? idx.q : idx, densidad: dens, dinamica: ev.dinamica, articulacion: ev.articulacion });
   }
+  if (fueraDeAmbito) avisos.push(`${v.nombre}: ${fueraDeAmbito} altura(s) escritas quedan fuera del ámbito y se pliegan por octavas. Puedes ampliarlo en la voz.`);
   if (avisoVacio) avisos.push(`${v.nombre}: el campo no tiene alturas en su ámbito en algún momento.`);
 
   aplicarProcesosDeEventos(p, iv, eventos, total);
@@ -376,12 +436,15 @@ export function generar(p) {
   return {
     titulo: p.titulo || 'Telar',
     tempo: Number(p.tempo),
+    unidadTempo: UNIDADES_TEMPO[String(p.unidadTempo ?? '4')],
+    claveUnidad: String(p.unidadTempo ?? '4'),
+    negrasPorMinuto: negrasPorMinuto(p.tempo, String(p.unidadTempo ?? '4')),
     compases,
     voces,
     duracion: t,
     avisos,
     ataques,
-    segundos: t.aNumero() * 4 * 60 / Number(p.tempo),
+    segundos: t.aNumero() * 4 * 60 / negrasPorMinuto(p.tempo, String(p.unidadTempo ?? '4')),
   };
 }
 
@@ -400,7 +463,7 @@ export function notasSonoras(voz) {
     for (let j = i + 1; j < ev.length && ev[j].liga && !ev[j].silencio; j++) dur = dur.mas(ev[j].dur);
     const gate = GATE[e.articulacion] ?? fr(19, 20);
     const vel = Math.min(127, VELOCIDADES[e.dinamica ?? 4] + (REFUERZO[e.articulacion] ?? 0));
-    salida.push({ inicio: e.inicio, escrita: dur, sonora: dur.por(gate), alturas: e.alturas, velocidad: vel });
+    salida.push({ inicio: e.inicio, escrita: dur, sonora: dur.por(gate), alturas: e.alturas, velocidad: vel, dinamica: e.dinamica, articulacion: e.articulacion });
   }
   return salida;
 }

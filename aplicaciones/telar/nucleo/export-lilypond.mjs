@@ -11,7 +11,7 @@ const octavaLy = (oct) => {
 };
 
 const ART = { staccato: '-.', staccatissimo: '-!', tenuto: '--', acento: '->', marcato: '-^' };
-const CLAVE = { sol: 'treble', fa: 'bass', do3: 'alto' };
+const CLAVE = { sol: 'treble', fa: 'bass', do3: 'alto', do4: 'tenor' };
 
 const notaLy = (n) => `${n.ly}${octavaLy(n.octava)}${n.signo === 0 ? '!' : ''}`;
 
@@ -72,7 +72,7 @@ export function exportarLilyPond(part) {
     lineas.push('}', '');
   }
   lineas.push('\\score {', '  <<');
-  lineas.push(`    \\new Staff \\with { instrumentName = "${escapar(part.voces[0].instrumento.nombre)}" shortInstrumentName = "${escapar(part.voces[0].instrumento.abrev)}" } { \\tempo 4 = ${part.tempo} \\${nombreVar(0)} }`);
+  lineas.push(`    \\new Staff \\with { instrumentName = "${escapar(part.voces[0].instrumento.nombre)}" shortInstrumentName = "${escapar(part.voces[0].instrumento.abrev)}" } { \\tempo ${part.claveUnidad} = ${part.tempo} \\${nombreVar(0)} }`);
   for (const v of part.voces.slice(1)) {
     lineas.push(`    \\new Staff \\with { instrumentName = "${escapar(v.instrumento.nombre)}" shortInstrumentName = "${escapar(v.instrumento.abrev)}" } { \\${nombreVar(v.indice)} }`);
   }
@@ -88,7 +88,7 @@ export function exportarLilyPond(part) {
   lineas.push('    }');
   lineas.push('  }');
   // El MIDI de LilyPond no admite compases irracionales: se omite el compás, no las notas.
-  lineas.push(`  \\midi { \\tempo 4 = ${part.tempo} \\context { \\Score \\remove "Time_signature_performer" } }`);
+  lineas.push(`  \\midi { \\tempo ${part.claveUnidad} = ${part.tempo} \\context { \\Score \\remove "Time_signature_performer" } }`);
   lineas.push('}', '');
   return lineas.join('\n');
 }

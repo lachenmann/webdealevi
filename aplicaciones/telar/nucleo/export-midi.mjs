@@ -66,7 +66,7 @@ export function exportarMIDI(part) {
 
   const irracionales = part.compases.some((c) => c.irracional);
   const conductor = [];
-  const usPorNegra = Math.round(60000000 / part.tempo);
+  const usPorNegra = Math.round(60000000 / part.negrasPorMinuto);
   conductor.push({ tick: 0, orden: 0, bytes: meta(0x03, texto(part.titulo)) });
   conductor.push({ tick: 0, orden: 1, bytes: meta(0x51, [(usPorNegra >> 16) & 255, (usPorNegra >> 8) & 255, usPorNegra & 255]) });
   let previo = null;

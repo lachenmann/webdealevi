@@ -108,4 +108,28 @@ export const EJEMPLOS = {
 
 export const EJEMPLO_INICIAL = 'trio';
 
+/** Un punto de partida mínimo, para escribir todos los parámetros desde cero. */
+export const proyectoEnBlanco = () => ({
+  version: 1,
+  titulo: 'Sin título',
+  semilla: 1,
+  tempo: 60,
+  unidadTempo: '4',
+  tiempo: { compases: '4/4', numCompases: 4 },
+  transicion: 'corte',
+  campos: [{ tipo: 'lista', notas: 'Do4 Mi4 Sol4', compases: 4 }],
+  voces: [{
+    nombre: 'Voz 1',
+    instrumento: 'piano',
+    ritmo: { patrones: '1', unidad: 'pulso', paso: 1, fase: 0 },
+    hilos: {
+      altura: { valores: 'Do4', paso: 1, fase: 0, modo: 'ataque' },
+      densidad: { valores: '1', paso: 1, fase: 0, modo: 'ataque' },
+      dinamica: { valores: 'mf', paso: 1, fase: 0, modo: 'ataque' },
+      articulacion: { valores: '-', paso: 1, fase: 0, modo: 'ataque' },
+    },
+  }],
+  procesos: [],
+});
+
 export const copiarProyecto = (p) => JSON.parse(JSON.stringify(p));
