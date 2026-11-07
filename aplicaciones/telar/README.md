@@ -16,7 +16,12 @@ Abre `http://localhost:8000/aplicaciones/telar/`. La partitura se rehace con cad
 
 El interruptor **Modo oscuro** de la cabecera cambia toda la interfaz, partitura incluida, y recuerda la elección; si no eliges, sigue el modo del sistema. Al imprimir, la partitura sale siempre en negro sobre blanco.
 
-Se trabaja en cuatro pasos, sin cables ni módulos que conectar:
+Telar tiene dos modos, que se cambian arriba a la izquierda y comparten el mismo proyecto:
+
+- **Partitura:** una pieza completa, descrita a continuación.
+- **Material:** materia prima para tu software o tu manuscrito (véase [Modo Material](#modo-material)).
+
+En el modo Partitura se trabaja en cuatro pasos, sin cables ni módulos que conectar:
 
 | Paso | Qué decides |
 | --- | --- |
@@ -51,7 +56,7 @@ Un patrón llena un pulso o un compás entero, según elijas.
 | --- | --- |
 | Altura | Índices del campo dentro del ámbito del instrumento; 0 es la nota más grave |
 | Densidad | Notas por ataque, limitadas por el instrumento |
-| Dinámica | `ppp pp p mp mf f ff fff` |
+| Dinámica | `ppp pp p mp mf f ff fff`, o `-` para ninguna |
 | Articulación | `-` nada, `.` picado, `!` muy picado, `_` tenuto, `>` acento, `^` marcato |
 
 **Campos.**
@@ -77,6 +82,25 @@ Entre campos puede haber corte o interpolación. Con interpolación, cada posici
 | Deriva dinámica | Desplaza la dinámica en grados |
 
 Los procesos rítmicos actúan siempre primero. Los demás se aplican en el orden de la lista, después de tejer los hilos, de modo que filtrar no desplaza los ciclos.
+
+## Modo Material
+
+| Pestaña | Qué genera |
+| --- | --- |
+| **Series** | Serie en módulo 12 o 24, con intervalos, matriz (O, I, R, RI), rotaciones, rotaciones transpuestas y multiplicaciones de intervalos. En pentagrama, los originales o las 48 formas |
+| **Matriz rítmica** | Filas que rotan una lista de proporciones, anidadas hasta cuatro niveles. Da los patrones en sintaxis de Telar, las duraciones exactas y la notación |
+| **Campos** | Cada campo como tabla: altura, cuartos de tono, MIDI, Hz, desviación en cents y parcial |
+| **Hilos** | Cada ataque de cada voz tras los procesos: compás, inicio y duración exactos, alturas, dinámica, articulación y si suena o fue filtrado |
+
+**Series.** Se escriben con números (`0 11 3`) o nombres (`Do Si Mib`; con módulo 24, `Do+ Re#-`). La fila `On` transpone la serie `n` unidades; `In`, `Rn` y `RIn` son su inversión, su retrógrado y el retrógrado de la inversión. Los botones generan una serie al azar o una de todos los intervalos, fijadas por la semilla. En módulo 24, las de todos los intervalos derivan de la serie en cuña, así que hay menos variedad que en módulo 12.
+
+**Matrices rítmicas.** Con `3 1 2` y dos niveles, la primera fila es `3(1 2 3) 1(2 3 1) 2(3 1 2)`. Un valor negativo es un silencio en las hojas; un grupo anidado siempre suena por dentro.
+
+**Salidas.** Cada pestaña descarga sus tablas en texto alineado, CSV (separado por `;`) o JSON, y **Imprimir** prepara una hoja para trabajar a mano. En Series y Matriz rítmica, los botones de la cabecera hacen sonar y exportan a LilyPond, MusicXML y MIDI ese material. En Campos e Hilos actúan sobre la pieza.
+
+Al abrir el CSV en una hoja de cálculo, importa las columnas como texto: de lo contrario, fracciones como `1/10` pueden convertirse en fechas y patrones como `-1 2` en fórmulas.
+
+**Del material a la pieza.** *Usar en la partitura* convierte la serie en el campo de la pieza y hace que cada voz la recorra en orden, cerca del centro de su registro. *Usar en esta voz* lleva las filas de la matriz a los ritmos de una voz, un compás por fila. Deshacer revierte ambos.
 
 ## Convenciones de escritura
 
@@ -108,6 +132,7 @@ nucleo/     puro y sin DOM
   ritmo       compases, patrones, árboles, división en tuplas
   armonia     alturas, campos, instrumentos
   motor       proyecto → partitura: hilos, procesos, validación
+  material    series, matrices rítmicas, tablas y salidas de texto
   escritura   árbol → figuras, tuplas, haces, ligaduras, signos
   export-*    LilyPond, MusicXML, MIDI
   ejemplos    proyectos de partida
@@ -133,4 +158,5 @@ node --test tests/
 - **Invariantes** sobre los ejemplos y 300 proyectos al azar: cada compás suma exactamente su duración, las figuras son contiguas, toda tupla abierta se cierra y está bien anidada, cada tupla ocupa lo que promete su razón, las ligaduras unen la misma altura y las alturas respetan el ámbito.
 - **Exportaciones**, con lectores independientes de XML y MIDI: duraciones por compás, tuplas por nivel, posición de cada ataque en ticks y pitch bend.
 - **Con LilyPond instalado:** compila los ejemplos sin avisos y compara su MIDI con el modelo. También importa el MusicXML con `musicxml2ly` y hace la misma comparación. Estas pruebas se omiten si no encuentra LilyPond; la ruta se indica con la variable `LILYPOND` y por defecto es `D:/lilypond-2.26.0/bin/lilypond.exe`.
+- **Material:** propiedades de la matriz en módulos 12 y 24, las 48 formas, series de todos los intervalos, invariantes de compás en las matrices rítmicas, formatos de texto, y que una serie llevada a la pieza suene en orden en cada voz.
 - **Grabado:** sin números inválidos, mapa de tiempo monótono y figuras sin solaparse.

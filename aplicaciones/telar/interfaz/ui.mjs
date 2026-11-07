@@ -10,6 +10,11 @@ import { exportarMIDI } from '../nucleo/export-midi.mjs';
 import { grabar, grabarCampo } from './grabado.mjs';
 import { dibujarTejido, dibujarTira, dibujarCurva } from './tejido.mjs';
 import { Reproductor } from './audio.mjs';
+import {
+  asegurarMaterial, validarMaterial, partituraSerie, partituraRitmo, tablasSerie, tablasRitmo, tablasCampos,
+  tablasHilos, aCSV, aTexto, aJSON, serieAzar, serieTodosIntervalos, llevarSerie, llevarRitmo, esAgregado,
+} from '../nucleo/material.mjs';
+import { leerSerie } from '../nucleo/armonia.mjs';
 
 const CLAVE_GUARDADO = 'telar.proyecto.v1';
 const $ = (id) => document.getElementById(id);
@@ -37,6 +42,14 @@ let rehacer = [];
 let temporizador = null;
 const silenciadas = new Set();
 let zoom = 7;
+let modo = 'partitura';
+let material = { serie: null, ritmo: null };
+const CLAVE_MODO = 'telar.modo';
+const vistas = { partitura: 'partitura', material: 'series' };
+const PESTANAS = {
+  partitura: [['partitura', 'Partitura'], ['tejido', 'Tejido']],
+  material: [['series', 'Series'], ['ritmo', 'Matriz rítmica'], ['campos', 'Campos'], ['hilos', 'Hilos']],
+};
 
 const leerRuta = (ruta) => ruta.split('.').reduce((o, k) => (o === undefined ? o : o[k]), proyecto);
 const ponerRuta = (ruta, valor) => {
@@ -60,7 +73,7 @@ function actualizarHistorial() {
 }
 
 function restaurar(foto) {
-  proyecto = JSON.parse(foto);
+  proyecto = asegurarMaterial(JSON.parse(foto));
   pintarPaneles();
   regenerar();
   actualizarHistorial();
@@ -117,7 +130,7 @@ const paso = (numero, titulo, resumen, abierto, ...contenido) =>
 
 /* ---------- Paneles ---------- */
 
-const pasosAbiertos = new Set(['1', '2']);
+const pasosAbiertos = new Set(['1', '2', 'I', 'II']);
 const tarjetasAbiertas = new Set(['voz-0']);
 
 function pintarPaneles() {
@@ -129,12 +142,47 @@ function pintarPaneles() {
     if (d.open) tarjetasAbiertas.add(d.dataset.tarjeta); else tarjetasAbiertas.delete(d.dataset.tarjeta);
   });
   const panel = $('taller');
-  panel.replaceChildren(panelTiempo(), panelVoces(), panelCampos(), panelProcesos());
+  if (modo === 'material') panel.replaceChildren(panelSerie(), panelMatriz(), panelCampos('III'));
+  else panel.replaceChildren(panelTiempo(), panelVoces(), panelCampos(), panelProcesos());
   $('titulo-pieza').value = proyecto.titulo ?? '';
   $('semilla').value = proyecto.semilla ?? 1;
   actualizarPrevias();
   marcarErrores();
   if (foco && $(foco)) $(foco).focus();
+}
+
+function panelSerie() {
+  const m = proyecto.material.serie;
+  const nueva = (generador) => () => {
+    m.giro = (Number(m.giro) || 0) + 1;
+    m.notas = generador(Number(m.modulo), proyecto.semilla, m.giro).join(' ');
+    recordar();
+    pintarPaneles();
+    regenerar();
+  };
+  return paso('I', 'Serie', 'matriz y formas derivadas', pasosAbiertos.has('I'),
+    entrada('material.serie.notas', 'Notas, en orden', {
+      ayuda: 'Números (0 11 3) o nombres (Do Si Mib). Con módulo 24 valen los cuartos de tono: Do+ Re#-.',
+    }),
+    h('div', { class: 'fila' },
+      entrada('material.serie.modulo', 'Módulo', { numero: true, opciones: [[12, '12 semitonos'], [24, '24 cuartos de tono']] }),
+      entrada('material.serie.vista', 'Tablas con', { opciones: [['nombres', 'nombres'], ['numeros', 'números']] })),
+    h('div', { class: 'fila' },
+      entrada('material.serie.pentagrama', 'En pentagrama', { opciones: [['O', 'originales'], ['todas', 'todas las formas']] }),
+      entrada('material.serie.multiplicadores', 'Multiplicar por')),
+    h('div', { class: 'acciones-anadir' },
+      h('button', { class: 'boton-suave', type: 'button', onclick: nueva(serieAzar) }, 'Otra al azar'),
+      h('button', { class: 'boton-suave', type: 'button', onclick: nueva(serieTodosIntervalos) }, 'Otra de todos los intervalos')));
+}
+
+function panelMatriz() {
+  return paso('II', 'Matriz rítmica', 'proporciones que rotan y anidan', pasosAbiertos.has('II'),
+    entrada('material.ritmo.proporciones', 'Proporciones', {
+      ayuda: 'Cada fila rota la lista, y cada valor se divide en otra rotación de la misma lista. Con signo menos, las hojas son silencios.',
+    }),
+    h('div', { class: 'fila' },
+      entrada('material.ritmo.profundidad', 'Niveles', { tipo: 'number', numero: true, min: 1, max: 4 }),
+      entrada('material.ritmo.compas', 'Compás')));
 }
 
 function panelTiempo() {
@@ -215,16 +263,17 @@ function tarjetaVoz(v, i) {
     hiloFila('articulacion', 'Articulación', '- nada · . picado · ! muy picado · _ tenuto · > acento · ^ marcato'));
 }
 
-const NOMBRE_CAMPO = { multiplicacion: 'Multiplicación', criba: 'Criba', espectro: 'Espectro', lista: 'Lista de alturas' };
+const NOMBRE_CAMPO = { multiplicacion: 'Multiplicación', criba: 'Criba', espectro: 'Espectro', lista: 'Lista de alturas', serie: 'Serie' };
 
 const CAMPO_NUEVO = {
   multiplicacion: { tipo: 'multiplicacion', modo: 'intervalos', a: 'Do4 Mi4 Sol#4', b: 'Re4 Fa4', compases: 4 },
   criba: { tipo: 'criba', expresion: '5@0 | 7@2', desde: 'Do3', hasta: 'Do6', unidad: 'semitono', compases: 4 },
   espectro: { tipo: 'espectro', fundamental: 'Do2', parciales: '1-16', estiramiento: 1, compases: 4 },
   lista: { tipo: 'lista', notas: 'Do4 Re4+ Fa4 Sol#4', compases: 4 },
+  serie: { tipo: 'serie', notas: '0 11 3 4 8 7 9 5 6 1 2 10', modulo: 12, compases: 4 },
 };
 
-function panelCampos() {
+function panelCampos(etiqueta = '3') {
   const tarjetas = proyecto.campos.map((c, i) => {
     const r = `campos.${i}`;
     const cuerpo = [];
@@ -244,6 +293,9 @@ function panelCampos() {
         entrada(`${r}.parciales`, 'Parciales', {}),
         entrada(`${r}.estiramiento`, 'Estiramiento', { tipo: 'number', numero: true, min: 0.5, max: 2, paso: 0.01 })));
       cuerpo.push(h('p', { class: 'ayuda' }, 'Cada parcial n suena a f·nᵉ; con e = 1 es armónico. Se redondea al cuarto de tono: pasa el puntero sobre una nota para ver su desviación.'));
+    } else if (c.tipo === 'serie') {
+      cuerpo.push(entrada(`${r}.notas`, 'Clases de altura', { ayuda: 'El campo contiene estas clases en todas las octavas; el orden lo da el hilo de altura de cada voz.' }));
+      cuerpo.push(entrada(`${r}.modulo`, 'Módulo', { numero: true, opciones: [[12, '12 semitonos'], [24, '24 cuartos de tono']] }));
     } else {
       cuerpo.push(entrada(`${r}.notas`, 'Alturas'));
     }
@@ -257,7 +309,7 @@ function panelCampos() {
       h('p', { class: 'error-campo', 'data-error': r, hidden: true }),
       h('div', { class: 'campo-previa', 'data-campo': i }));
   });
-  return paso('3', 'Campos', 'de dónde salen las alturas', pasosAbiertos.has('3'),
+  return paso(etiqueta, 'Campos', 'de dónde salen las alturas', pasosAbiertos.has(etiqueta),
     entrada('transicion', 'Entre un campo y el siguiente', { opciones: [['corte', 'Corte: cambia de golpe'], ['interpolar', 'Interpolación: viaja poco a poco']] }),
     tarjetas,
     h('div', { class: 'acciones-anadir' },
@@ -401,7 +453,7 @@ function actualizarPrevias() {
   });
 }
 
-function marcarErrores(errores = validar(proyecto)) {
+function marcarErrores(errores = erroresActuales()) {
   document.querySelectorAll('[data-error]').forEach((e) => { e.hidden = true; e.textContent = ''; });
   document.querySelectorAll('[aria-invalid]').forEach((e) => e.removeAttribute('aria-invalid'));
   for (const err of errores) {
@@ -413,7 +465,7 @@ function marcarErrores(errores = validar(proyecto)) {
   const aviso = $('aviso-errores');
   if (errores.length) {
     aviso.hidden = false;
-    aviso.textContent = `Hay ${errores.length === 1 ? 'un error' : `${errores.length} errores`}: ${errores[0].mensaje}. La partitura muestra el último resultado válido.`;
+    aviso.textContent = `Hay ${errores.length === 1 ? 'un error' : `${errores.length} errores`}: ${errores[0].mensaje}. Se muestra el último resultado válido.`;
   } else {
     aviso.hidden = true;
   }
@@ -426,15 +478,24 @@ function programarRegeneracion() {
   temporizador = setTimeout(regenerar, 120);
 }
 
+function erroresActuales() {
+  const pieza = validar(proyecto);
+  return modo === 'material' ? [...validarMaterial(proyecto.material), ...pieza] : pieza;
+}
+
 function regenerar() {
   clearTimeout(temporizador);
   actualizarPrevias();
-  const errores = validar(proyecto);
-  marcarErrores(errores);
+  const errPieza = validar(proyecto);
+  const errMaterial = validarMaterial(proyecto.material);
+  marcarErrores(modo === 'material' ? [...errMaterial, ...errPieza] : errPieza);
   guardar();
-  if (errores.length) return;
   try {
-    partitura = generar(proyecto);
+    if (!errPieza.length) partitura = generar(proyecto);
+    if (!errMaterial.length) {
+      const titulo = proyecto.titulo || 'Telar';
+      material = { serie: partituraSerie(proyecto.material, `${titulo}: serie`), ritmo: partituraRitmo(proyecto.material, `${titulo}: matriz rítmica`) };
+    }
   } catch (e) {
     if (!(e instanceof ErrorTelar)) throw e;
     marcarErrores([{ ruta: e.ruta ?? '', mensaje: e.message }]);
@@ -444,25 +505,180 @@ function regenerar() {
   pintarEstado();
 }
 
+/** Lo que suena y se exporta desde la cabecera en la vista actual. */
+function partActual() {
+  if (modo === 'material' && vistas.material === 'series') return material.serie;
+  if (modo === 'material' && vistas.material === 'ritmo') return material.ritmo;
+  return partitura;
+}
+
+function pintarModo() {
+  document.querySelectorAll('[data-modo]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.modo === modo)));
+  $('pestanas').replaceChildren(...PESTANAS[modo].map(([clave, texto]) => h('button', {
+    role: 'tab',
+    type: 'button',
+    'aria-selected': String(vistas[modo] === clave),
+    onclick: () => {
+      vistas[modo] = clave;
+      pararSiSuena();
+      pintarModo();
+      pintarTela();
+      pintarEstado();
+    },
+  }, texto)));
+  const v = vistas[modo];
+  $('vista-partitura').hidden = !(modo === 'partitura' && v === 'partitura');
+  $('vista-tejido').hidden = !(modo === 'partitura' && v === 'tejido');
+  $('vista-material').hidden = modo !== 'material';
+}
+
+function pararSiSuena() {
+  if (reproductor.activo) {
+    reproductor.parar();
+    finReproduccion();
+  }
+}
+
+function cambiarModo(nuevo) {
+  if (nuevo === modo) return;
+  modo = nuevo;
+  try { localStorage.setItem(CLAVE_MODO, modo); } catch { /* sin almacenamiento */ }
+  pararSiSuena();
+  $('nota-export').textContent = '';
+  pintarModo();
+  pintarPaneles();
+  regenerar();
+}
+
 function pintarTela() {
+  const ancho = Math.max(620, $('tela').clientWidth - 24);
+  if (modo === 'material') {
+    $('vista-partitura').replaceChildren();
+    $('vista-tejido').replaceChildren();
+    pintarMaterial(ancho);
+    return;
+  }
+  $('vista-material').replaceChildren();
   if (!partitura) return;
-  const cont = $('tela');
-  const ancho = Math.max(620, cont.clientWidth - 24);
   const g = grabar(partitura, { ancho, s: zoom });
   vista = g;
   $('vista-partitura').innerHTML = `<div class="hoja">${g.svg}<div class="cursor" id="cursor" hidden></div></div>`;
   $('vista-tejido').innerHTML = dibujarTejido(partitura, proyecto);
 }
 
+const LIMITE_FILAS = 300;
+
+function tablaHTML(t) {
+  const celda = (c) => String(c ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const filas = t.filas.slice(0, LIMITE_FILAS);
+  const cabeza = t.columnas.map((c) => `<th scope="col">${celda(c)}</th>`).join('');
+  const cuerpo = filas.map((f) => `<tr>${f.map((c, i) => (i === 0 ? `<th scope="row">${celda(c)}</th>` : `<td>${celda(c)}</td>`)).join('')}</tr>`).join('');
+  const resto = t.filas.length > filas.length ? `<p class="ayuda">Se muestran ${filas.length} de ${t.filas.length} filas; las descargas las incluyen todas.</p>` : '';
+  return `<section class="bloque-tabla"><h2>${celda(t.titulo)}</h2><div class="tabla-marco"><table class="tabla-material"><thead><tr>${cabeza}</tr></thead><tbody>${cuerpo}</tbody></table></div>${resto}</section>`;
+}
+
+function llevarAPartitura(accion, mensaje) {
+  accion();
+  recordar();
+  $('nota-export').textContent = mensaje;
+  regenerar();
+}
+
+function pintarMaterial(ancho) {
+  const v = vistas.material;
+  const m = proyecto.material;
+  const cont = $('vista-material');
+  const piezaValida = !validar(proyecto).length;
+  const materialValido = !validarMaterial(m).length;
+  let tablas = null;
+  let part = null;
+  const acciones = [];
+  if (v === 'series' && materialValido) {
+    tablas = tablasSerie(m.serie);
+    part = material.serie;
+    acciones.push(h('button', {
+      class: 'boton',
+      type: 'button',
+      title: 'Convierte la serie en el campo de la pieza: cada voz la recorre en orden. Deshacer lo revierte.',
+      onclick: () => llevarAPartitura(() => llevarSerie(proyecto), 'La serie es ahora el campo de la partitura. Deshacer lo revierte.'),
+    }, 'Usar en la partitura'));
+  } else if (v === 'ritmo' && materialValido) {
+    part = material.ritmo;
+    tablas = tablasRitmo(m.ritmo, part);
+    const destino = h('select', { 'aria-label': 'Voz de destino' }, proyecto.voces.map((x, i) => h('option', { value: i }, x.nombre)));
+    acciones.push(destino, h('button', {
+      class: 'boton',
+      type: 'button',
+      title: 'Las filas pasan a ser los patrones de esa voz, un compás por fila. Deshacer lo revierte.',
+      onclick: () => llevarAPartitura(() => llevarRitmo(proyecto, Number(destino.value)), `La matriz es ahora el ritmo de ${proyecto.voces[Number(destino.value)].nombre}. Deshacer lo revierte.`),
+    }, 'Usar en esta voz'));
+  } else if (v === 'campos' && piezaValida) {
+    tablas = tablasCampos(proyecto.campos);
+  } else if (v === 'hilos' && piezaValida && partitura) {
+    tablas = tablasHilos(partitura);
+  }
+  if (!tablas) return; // con errores se conserva el último resultado válido
+  const baja = (contenido, ext, tipo) => () => descargar(contenido(), ext, tipo);
+  const barra = h('div', { class: 'material-barra' },
+    h('span', { class: 'material-etiqueta' }, 'Descargar tablas:'),
+    h('button', { class: 'boton', type: 'button', onclick: baja(() => aTexto(tablas), 'txt', 'text/plain;charset=utf-8') }, 'Texto'),
+    h('button', { class: 'boton', type: 'button', onclick: baja(() => `\uFEFF${aCSV(tablas)}`, 'csv', 'text/csv;charset=utf-8') }, 'CSV'),
+    h('button', { class: 'boton', type: 'button', onclick: baja(() => aJSON(tablas), 'json', 'application/json') }, 'JSON'),
+    h('button', { class: 'boton', type: 'button', onclick: () => window.print() }, 'Imprimir'),
+    acciones.length ? h('span', { class: 'material-llevar' }, acciones) : null);
+  const html = tablas.map(tablaHTML).join('');
+  let notacion = '';
+  if (part) {
+    const g = grabar(part, { ancho, s: zoom, sinCifras: v === 'series' });
+    vista = g;
+    notacion = `<div class="hoja">${g.svg}<div class="cursor" id="cursor" hidden></div></div>`;
+  } else {
+    vista = { mapa: [] };
+  }
+  const cuerpo = h('div', { class: 'material-cuerpo', html: v === 'series' ? html + notacion : notacion + html });
+  cont.replaceChildren(barra, cuerpo);
+}
+
+function textoEstadoMaterial() {
+  const v = vistas.material;
+  if (v === 'series' && material.serie) {
+    const m = Number(proyecto.material.serie.modulo);
+    try {
+      const s = leerSerie(proyecto.material.serie.notas, m);
+      return `${s.length} notas · módulo ${m}${esAgregado(s, m) ? ' · agregado completo' : ''} · la cabecera exporta y hace sonar este material`;
+    } catch (e) {
+      if (!(e instanceof ErrorTelar)) throw e;
+      return '';
+    }
+  }
+  if (v === 'ritmo' && material.ritmo) {
+    return `${material.ritmo.compases.length} filas · ${material.ritmo.ataques} ataques · la cabecera exporta y hace sonar este material`;
+  }
+  return 'Tablas de la pieza actual · la cabecera exporta y hace sonar la pieza';
+}
+
 function pintarEstado() {
+  const av = $('avisos');
+  if (modo === 'material') {
+    $('estado').textContent = textoEstadoMaterial();
+    const part = partActual();
+    const lista = part && part !== partitura ? part.avisos : [];
+    av.replaceChildren(...lista.map((t) => h('li', {}, t)));
+    av.hidden = !lista.length;
+    $('voces-audio').replaceChildren();
+    $('voces-audio-marco').hidden = !$('nota-export').textContent;
+    $('suenan').hidden = true;
+    return;
+  }
+  $('voces-audio-marco').hidden = false;
+  $('suenan').hidden = false;
+  if (!partitura) return;
   const seg = Math.round(partitura.segundos);
   const irr = partitura.compases.some((c) => c.irracional);
   $('estado').textContent = `${partitura.compases.length} compases · ${partitura.voces.length} ${partitura.voces.length === 1 ? 'voz' : 'voces'} · ${partitura.ataques} ataques · ${Math.floor(seg / 60)}′${String(seg % 60).padStart(2, '0')}″${irr ? ' · con compases irracionales' : ''}`;
-  const av = $('avisos');
   av.replaceChildren(...partitura.avisos.map((t) => h('li', {}, t)));
   av.hidden = !partitura.avisos.length;
-  const reproducir = $('voces-audio');
-  reproducir.replaceChildren(...partitura.voces.map((v) => h('label', { class: 'casilla' },
+  $('voces-audio').replaceChildren(...partitura.voces.map((v) => h('label', { class: 'casilla' },
     h('input', {
       type: 'checkbox',
       checked: !silenciadas.has(v.indice),
@@ -512,9 +728,10 @@ async function alternarReproduccion() {
     finReproduccion();
     return;
   }
-  if (!partitura) return;
+  const part = partActual();
+  if (!part) return;
   try {
-    await reproductor.tocar(partitura, silenciadas);
+    await reproductor.tocar(part, modo === 'partitura' ? silenciadas : new Set());
     $('tocar').textContent = '■ Parar';
     $('tocar').setAttribute('aria-pressed', 'true');
   } catch (e) {
@@ -524,7 +741,7 @@ async function alternarReproduccion() {
 
 /* ---------- Archivos ---------- */
 
-const nombreArchivo = (ext) => `${(proyecto.titulo || 'telar').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^\w-]+/g, '-').toLowerCase()}.${ext}`;
+const nombreArchivo = (ext) => `${(proyecto.titulo || 'telar').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^\w-]+/g, '-').toLowerCase()}${modo === 'material' ? `-${vistas.material}` : ''}.${ext}`;
 
 function descargar(contenido, ext, tipo) {
   const url = URL.createObjectURL(new Blob([contenido], { type: tipo }));
@@ -536,13 +753,14 @@ function descargar(contenido, ext, tipo) {
 }
 
 function exportar(formato) {
-  if (!partitura) return;
+  const part = partActual();
+  if (!part) return;
   if (formato === 'ly') {
-    descargar(exportarLilyPond(partitura), 'ly', 'text/plain;charset=utf-8');
+    descargar(exportarLilyPond(part), 'ly', 'text/plain;charset=utf-8');
   } else if (formato === 'xml') {
-    descargar(exportarMusicXML(partitura), 'musicxml', 'application/vnd.recordare.musicxml+xml');
+    descargar(exportarMusicXML(part), 'musicxml', 'application/vnd.recordare.musicxml+xml');
   } else if (formato === 'mid') {
-    const m = exportarMIDI(partitura);
+    const m = exportarMIDI(part);
     descargar(m.bytes, 'mid', 'audio/midi');
     const notas = [];
     if (m.irracionales) notas.push('el MIDI no admite compases irracionales: van como marcadores de texto');
@@ -559,7 +777,7 @@ async function abrirArchivo(archivo) {
     if (p?.version !== 1 || !Array.isArray(p.voces) || !Array.isArray(p.campos) || !Array.isArray(p.procesos) || !p.tiempo) {
       throw new Error('no es un proyecto de Telar');
     }
-    proyecto = p;
+    proyecto = asegurarMaterial(p);
     recordar();
     pintarPaneles();
     regenerar();
@@ -573,7 +791,8 @@ async function abrirArchivo(archivo) {
 /* ---------- Arranque ---------- */
 
 function cargarEjemplo(clave) {
-  proyecto = copiarProyecto(EJEMPLOS[clave].proyecto);
+  const materialPrevio = proyecto?.material;
+  proyecto = asegurarMaterial({ ...copiarProyecto(EJEMPLOS[clave].proyecto), material: materialPrevio });
   tarjetasAbiertas.clear();
   tarjetasAbiertas.add('voz-0');
   recordar();
@@ -642,19 +861,19 @@ function iniciar() {
     e.target.value = '';
   });
   $('zoom').addEventListener('input', (e) => { zoom = Number(e.target.value); pintarTela(); });
-  document.querySelectorAll('[data-vista]').forEach((b) => b.addEventListener('click', () => {
-    document.querySelectorAll('[data-vista]').forEach((x) => x.setAttribute('aria-selected', String(x === b)));
-    $('vista-partitura').hidden = b.dataset.vista !== 'partitura';
-    $('vista-tejido').hidden = b.dataset.vista !== 'tejido';
-  }));
+  document.querySelectorAll('[data-modo]').forEach((b) => b.addEventListener('click', () => cambiarModo(b.dataset.modo)));
+  try {
+    if (localStorage.getItem(CLAVE_MODO) === 'material') modo = 'material';
+  } catch { /* sin almacenamiento */ }
   let espera;
   window.addEventListener('resize', () => {
     clearTimeout(espera);
     espera = setTimeout(pintarTela, 150);
   });
 
-  proyecto = cargarGuardado() ?? copiarProyecto(EJEMPLOS[EJEMPLO_INICIAL].proyecto);
+  proyecto = asegurarMaterial(cargarGuardado() ?? copiarProyecto(EJEMPLOS[EJEMPLO_INICIAL].proyecto));
   recordar();
+  pintarModo();
   pintarPaneles();
   regenerar();
   // La medida de los glifos no depende de la fuente, pero el primer pintado sí.

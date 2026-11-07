@@ -68,6 +68,32 @@ const ordenar = (notas) => {
 const Q_MIN = 2 * 12; // Do0
 const Q_MAX = 2 * 120; // Do9
 
+/* ---------- Series ---------- */
+
+/** Nombre de una clase de altura, sin octava. */
+export const nombreClase = (pc, modulo) => deletrear(120 + (modulo === 24 ? pc : pc * 2)).nombre.replace(/-?\d+$/, '');
+
+/** «0 11 3», «Do Si Mib» o «Do+ Re#» → clases de altura en el módulo 12 o 24. */
+export function leerSerie(texto, modulo) {
+  const m = Number(modulo);
+  if (m !== 12 && m !== 24) throw new ErrorTelar('El módulo es 12 (semitonos) o 24 (cuartos de tono)');
+  const fichas = String(texto).trim().split(/[\s,;]+/).filter(Boolean);
+  if (fichas.length < 2) throw new ErrorTelar('Una serie necesita al menos dos notas');
+  if (fichas.length > 24) throw new ErrorTelar('Una serie admite 24 notas como máximo');
+  const s = fichas.map((f) => {
+    if (/^\d+$/.test(f)) {
+      const n = Number(f);
+      if (n >= m) throw new ErrorTelar(`«${f}» no cabe en el módulo ${m}: usa de 0 a ${m - 1}`);
+      return n;
+    }
+    const q = leerAltura(/\d/.test(f) ? f : f.replace(/([+-]?)$/, '4$1'));
+    if (m === 12 && q % 2 !== 0) throw new ErrorTelar(`«${f}» es un cuarto de tono: elige el módulo 24`);
+    return m === 24 ? ((q % 24) + 24) % 24 : (((q / 2) % 12) + 12) % 12;
+  });
+  if (new Set(s).size !== s.length) throw new ErrorTelar('Una serie no repite notas');
+  return s;
+}
+
 /* ---------- Multiplicación ---------- */
 
 /** A×B: A transportado por cada intervalo de B respecto de su primera nota. */
@@ -203,6 +229,13 @@ export function evaluarCampo(c) {
     notas = campoCriba(c);
   } else if (c.tipo === 'espectro') {
     notas = campoEspectro(c);
+  } else if (c.tipo === 'serie') {
+    // Todas las octavas: la voz elige su registro y el orden lo da el hilo de altura.
+    const m = Number(c.modulo);
+    const clases = leerSerie(c.notas, m);
+    notas = [];
+    for (let oct = 0; oct <= 10; oct++) for (const pc of clases) notas.push({ q: oct * 24 + (m === 24 ? pc : pc * 2) });
+    notas = ordenar(notas);
   } else if (c.tipo === 'lista') {
     notas = ordenar(leerAlturas(c.notas).map((q) => ({ q })));
   } else {

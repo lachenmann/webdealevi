@@ -33,8 +33,9 @@ export function leerHilo(tipo, hilo) {
       return Number(v);
     }
     if (tipo === 'dinamica') {
+      if (v === '-') return null; // sin indicación
       const i = DINAMICAS.indexOf(v);
-      if (i < 0) throw new ErrorTelar(`«${v}» no es una dinámica. Usa: ${DINAMICAS.join(' ')}`);
+      if (i < 0) throw new ErrorTelar(`«${v}» no es una dinámica. Usa: ${DINAMICAS.join(' ')}, o - para ninguna`);
       return i;
     }
     if (!Object.hasOwn(ARTICULACIONES, v)) throw new ErrorTelar(`«${v}» no es una articulación. Usa: - (nada) . ! _ > ^`);
@@ -251,7 +252,7 @@ function aplicarProcesosDeEventos(p, iv, eventos, total) {
           ev.alturas = ev.alturas.map((a) => Math.round(eje + (a - eje) * v));
           break;
         case 'dinamica':
-          ev.dinamica = Math.max(0, Math.min(DINAMICAS.length - 1, ev.dinamica + Math.round(v)));
+          if (ev.dinamica !== null) ev.dinamica = Math.max(0, Math.min(DINAMICAS.length - 1, ev.dinamica + Math.round(v)));
           break;
         default:
       }

@@ -19,7 +19,7 @@ function tono(hilo, valor, valores) {
 }
 
 const etiqueta = (hilo, v) => {
-  if (hilo === 'dinamica') return DINAMICAS[v];
+  if (hilo === 'dinamica') return DINAMICAS[v] ?? 'sin dinámica';
   if (hilo === 'articulacion') return v ?? 'sin articulación';
   return String(v);
 };

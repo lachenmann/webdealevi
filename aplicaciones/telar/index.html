@@ -55,6 +55,10 @@
 
 <main class="mesa">
   <section class="taller" aria-label="Taller">
+    <div class="modos" role="group" aria-label="Qué quieres generar">
+      <button type="button" data-modo="partitura" aria-pressed="true"><b>Partitura</b><span>una pieza completa</span></button>
+      <button type="button" data-modo="material" aria-pressed="false"><b>Material</b><span>series, matrices y tablas</span></button>
+    </div>
     <p id="aviso-errores" class="aviso-errores" role="alert" hidden></p>
     <div id="taller"></div>
     <details class="sintaxis">
@@ -64,21 +68,19 @@
         <li>En <b>Urdimbre</b> eliges los compases. En <b>Hilos</b>, los ritmos y los ciclos de cada voz.</li>
         <li>En <b>Campos</b> defines de qué alturas se alimenta la pieza. En <b>Procesos</b>, cómo cambia todo a lo largo del tiempo.</li>
         <li>Mira <b>Tejido</b> para ver cómo se desfasan los ciclos. Escucha y exporta cuando te convenza.</li>
+        <li>Si prefieres materia prima para tu software o tu manuscrito, cambia arriba a <b>Material</b>: series, matrices rítmicas y tablas listas para descargar o imprimir.</li>
       </ol>
     </details>
   </section>
 
   <section class="tela-marco" aria-label="Resultado">
     <div class="tela-barra">
-      <div role="tablist" class="pestanas" aria-label="Vista del resultado">
-        <button role="tab" type="button" data-vista="partitura" aria-selected="true">Partitura</button>
-        <button role="tab" type="button" data-vista="tejido" aria-selected="false">Tejido</button>
-      </div>
+      <div id="pestanas" role="tablist" class="pestanas" aria-label="Vista del resultado"></div>
       <p id="estado" class="estado" aria-live="polite"></p>
       <label class="zoom">Tamaño <input id="zoom" type="range" min="5" max="11" step="0.5" value="7"></label>
     </div>
-    <div class="voces-audio-marco">
-      <span>Suenan:</span>
+    <div id="voces-audio-marco" class="voces-audio-marco">
+      <span id="suenan">Suenan:</span>
       <div id="voces-audio" class="casillas"></div>
       <p id="nota-export" class="nota-export"></p>
     </div>
@@ -86,6 +88,7 @@
     <div id="tela" class="tela">
       <div id="vista-partitura"></div>
       <div id="vista-tejido" hidden></div>
+      <div id="vista-material" hidden></div>
     </div>
   </section>
 </main>

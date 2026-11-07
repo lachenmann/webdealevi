@@ -364,14 +364,14 @@ const tuplaEstandarLocal = ({ actual, normal }) => {
 
 /* ---------- Partitura completa ---------- */
 
-export function grabar(part, { ancho = 1000, s = 7 } = {}) {
+export function grabar(part, { ancho = 1000, s = 7, sinCifras = false } = {}) {
   const margenIzq = 12;
   const voces = part.voces;
   const rotuloAncho = Math.max(4, ...voces.map((v) => v.nombre.length)) * 0.95 * s + 1.2 * s;
   const medidas = part.compases.map((c, im) => {
     const m = medirCompas(voces, im, s);
     const previo = part.compases[im - 1];
-    const cambia = !previo || previo.etiqueta !== c.etiqueta;
+    const cambia = !sinCifras && (!previo || previo.etiqueta !== c.etiqueta);
     return { ...m, im, c, cambia, cifra: cambia ? anchoCifra(c, s) : 0 };
   });
 
@@ -455,7 +455,11 @@ export function grabar(part, { ancho = 1000, s = 7 } = {}) {
     }
     const primero = sistema.medidas[0];
     salida.push(`<text x="${x0}" y="${n2(topePauta + pautas[0].techo - 0.7 * s)}" font-size="${n2(1.45 * s)}" class="n">${primero.im + 1}</text>`);
-    if (is === 0) {
+    if (part.etiquetas) {
+      for (const m of sistema.medidas) {
+        salida.push(`<text x="${n2(x0 + m.x)}" y="${n2(topePauta + pautas[0].techo - 2.3 * s)}" font-size="${n2(1.5 * s)}" class="tp">${esc(part.etiquetas[m.im])}</text>`);
+      }
+    } else if (is === 0) {
       salida.push(`<text x="${x0 + 2.2 * s}" y="${n2(topePauta + pautas[0].techo - 0.7 * s)}" font-size="${n2(1.7 * s)}" class="tp">♩ = ${part.tempo}</text>`);
     }
     salida.push(`<g>${barras.join('')}</g>`);
