@@ -14,6 +14,8 @@ python -m http.server 8000
 
 Abre `http://localhost:8000/aplicaciones/telar/`. La partitura se rehace con cada cambio y el proyecto se guarda en el navegador. El botón **Proyecto** lo descarga como JSON para abrirlo después.
 
+El interruptor **Modo oscuro** de la cabecera cambia toda la interfaz, partitura incluida, y recuerda la elección; si no eliges, sigue el modo del sistema. Al imprimir, la partitura sale siempre en negro sobre blanco.
+
 Se trabaja en cuatro pasos, sin cables ni módulos que conectar:
 
 | Paso | Qué decides |

@@ -6,6 +6,15 @@
 <title>Telar — material composicional</title>
 <meta name="description" content="Telar teje ritmo anidado, polifonía paramétrica, campos armónicos y procesos en el tiempo. Funciona en el navegador y exporta a LilyPond, MusicXML y MIDI.">
 <link rel="stylesheet" href="./estilos.css">
+<script>
+  // Antes del primer pintado, para que el modo oscuro no parpadee.
+  (function () {
+    var tema = null;
+    try { tema = localStorage.getItem('telar.tema'); } catch (e) { /* sin almacenamiento */ }
+    if (tema !== 'dark' && tema !== 'light') tema = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.dataset.theme = tema;
+  })();
+</script>
 </head>
 <body>
 <header class="cabecera">
@@ -30,6 +39,9 @@
     <input id="semilla" type="number" min="0" step="1" title="Fija las decisiones de azar de los procesos: la misma semilla da siempre la misma pieza.">
     <button id="dado" class="boton" type="button" title="Probar otra semilla">Otra</button>
   </div>
+  <button id="tema" class="interruptor" type="button" role="switch" aria-checked="false">
+    <span class="interruptor-pista" aria-hidden="true"></span>Modo oscuro
+  </button>
   <div class="grupo grupo-derecha">
     <button id="tocar" class="boton boton-principal" type="button" aria-pressed="false">▶ Escuchar</button>
     <span class="exporta">

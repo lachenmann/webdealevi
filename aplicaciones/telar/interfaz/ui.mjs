@@ -581,7 +581,32 @@ function cargarEjemplo(clave) {
   regenerar();
 }
 
+/* ---------- Tema ---------- */
+
+const CLAVE_TEMA = 'telar.tema';
+
+function aplicarTema(tema) {
+  document.documentElement.dataset.theme = tema;
+  $('tema').setAttribute('aria-checked', String(tema === 'dark'));
+}
+
+function iniciarTema() {
+  aplicarTema(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+  $('tema').addEventListener('click', () => {
+    const tema = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    aplicarTema(tema);
+    try { localStorage.setItem(CLAVE_TEMA, tema); } catch { /* sin almacenamiento */ }
+  });
+  // Mientras no se elija a mano, sigue al sistema.
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    let elegido = null;
+    try { elegido = localStorage.getItem(CLAVE_TEMA); } catch { /* sin almacenamiento */ }
+    if (!elegido) aplicarTema(e.matches ? 'dark' : 'light');
+  });
+}
+
 function iniciar() {
+  iniciarTema();
   const selector = $('ejemplos');
   selector.append(...Object.entries(EJEMPLOS).map(([k, e]) => h('option', { value: k }, e.nombre)));
   selector.addEventListener('change', (e) => {
