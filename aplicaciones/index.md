@@ -49,6 +49,17 @@ page-layout: full
 <p id="monocordio-description" class="application-description">Experimenta con una cuerda y un puente móvil para descubrir cómo la longitud y las proporciones se convierten en frecuencias e intervalos musicales.</p>
 </article>
 
+<article class="application-entry">
+<a class="section-button" href="/aplicaciones/telar/" target="_blank" rel="noopener" aria-describedby="telar-description">
+<span class="section-button-text">
+<span class="section-button-title">Telar: Material composicional</span>
+<span class="section-button-meta">Taller para compositores · abre en una nueva pestaña</span>
+</span>
+<span class="section-button-arrow" aria-hidden="true">→</span>
+</a>
+<p id="telar-description" class="application-description">Teje ritmo anidado, compases irracionales, polifonía paramétrica, campos armónicos con cuartos de tono y procesos en el tiempo. Genera una partitura completa o material en bruto, y lo exporta a LilyPond, MusicXML y MIDI.</p>
+</article>
+
 </div>
 </section>
 
